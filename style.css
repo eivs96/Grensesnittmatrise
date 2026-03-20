@@ -2364,11 +2364,11 @@ button.is-loading::after {
 
 .dropzone-input {
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    pointer-events: none;
 }
 
 /* ── Document list ── */

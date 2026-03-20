@@ -3607,24 +3607,33 @@ function renderDocumentList() {
     });
 }
 
-// Drag & drop
+// Drag & drop + click to open file picker
 if (docDropzone) {
+    docDropzone.addEventListener("click", function(e) {
+        if (e.target.closest(".doc-item-remove")) return;
+        if (bhUploadInput) bhUploadInput.click();
+    });
+
     ["dragenter", "dragover"].forEach(function(evt) {
         docDropzone.addEventListener(evt, function(e) {
             e.preventDefault();
+            e.stopPropagation();
             docDropzone.classList.add("drag-over");
         });
     });
 
-    ["dragleave", "drop"].forEach(function(evt) {
-        docDropzone.addEventListener(evt, function() {
+    docDropzone.addEventListener("dragleave", function(e) {
+        e.preventDefault();
+        if (!docDropzone.contains(e.relatedTarget)) {
             docDropzone.classList.remove("drag-over");
-        });
+        }
     });
 
     docDropzone.addEventListener("drop", function(e) {
         e.preventDefault();
-        if (e.dataTransfer && e.dataTransfer.files) {
+        e.stopPropagation();
+        docDropzone.classList.remove("drag-over");
+        if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) {
             handleFiles(e.dataTransfer.files);
         }
     });

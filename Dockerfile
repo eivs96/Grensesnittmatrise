@@ -12,13 +12,12 @@ COPY . .
 RUN mkdir -p /app/data && chown -R appuser:appgroup /app/data
 
 ENV NODE_ENV=production
-ENV PORT=3000
 
 USER appuser
 
-EXPOSE 3000
+EXPOSE 8080
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-    CMD node -e "require('http').get('http://localhost:3000/health', (r) => { if (r.statusCode !== 200) throw new Error(); r.resume(); }).on('error', () => { process.exit(1); })"
+    CMD node -e "const port = process.env.PORT || 8080; require('http').get('http://localhost:' + port + '/health', (r) => { if (r.statusCode !== 200) throw new Error(); r.resume(); }).on('error', () => { process.exit(1); })"
 
 CMD ["npm", "start"]

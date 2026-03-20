@@ -1,0 +1,15 @@
+{
+  "name": "grensesnittmatrise",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lokal lagring for teknisk grensesnittmatrise",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "compression": "^1.8.1",
+    "express": "^4.21.2",
+    "sqlite3": "^5.1.7"
+  }
+}

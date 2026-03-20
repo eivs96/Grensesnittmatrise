@@ -3240,7 +3240,17 @@ refreshProjectListButton?.addEventListener("click", async () => {
     await loadProjectList();
     await loadRevisionList(getCurrentProjectId());
 });
-newProjectButton?.addEventListener("click", () => {
+newProjectButton?.addEventListener("click", async () => {
+    if (window.__gmDemo) {
+        try {
+            const res = await fetch("/api/projects");
+            const data = await res.json();
+            if (data.projects && data.projects.length >= 1) {
+                showToast("Demo-modus: Maks 1 prosjekt. Opprett konto for ubegrenset.", "warning");
+                return;
+            }
+        } catch (e) {}
+    }
     const newProjectId = `prosjekt-${Date.now()}`;
     if (projectIdInput) {
         projectIdInput.value = newProjectId;
@@ -3543,7 +3553,13 @@ function getFileExtIcon(filename) {
     return map[ext] || "FIL";
 }
 
+const DEMO_MAX_DOCS = 3;
+
 function addDocument(name, content, size) {
+    if (window.__gmDemo && uploadedDocuments.length >= DEMO_MAX_DOCS) {
+        showToast("Demo-modus: Maks " + DEMO_MAX_DOCS + " dokumenter. Opprett konto for ubegrenset.", "warning");
+        return;
+    }
     uploadedDocuments.push({ name, content, size, id: Date.now() + Math.random() });
     renderDocumentList();
 }

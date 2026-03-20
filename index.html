@@ -47,7 +47,19 @@
             </div>
             <span id="topbar-progress-label">0 %</span>
         </div>
+        <div class="topbar-user" id="topbar-user">
+            <span id="topbar-user-name"></span>
+            <button id="topbar-logout" type="button" class="topbar-logout-btn">Logg ut</button>
+        </div>
     </header>
+
+    <!-- Demo banner -->
+    <div class="demo-banner" id="demo-banner" hidden>
+        <div class="demo-banner-inner">
+            <strong>Demo-modus</strong> — Begrenset til 1 prosjekt og 3 dokumenter.
+            <a href="/login">Opprett konto</a> eller <a href="/#priser">se priser</a> for full tilgang.
+        </div>
+    </div>
 
     <main class="page">
         <section class="hero" id="top">
@@ -587,6 +599,49 @@
 
     <div class="toast-container" id="toast-container"></div>
 
+    <script>
+        // Auth check & demo mode
+        (async function() {
+            var userEl = document.getElementById('topbar-user');
+            var nameEl = document.getElementById('topbar-user-name');
+            var logoutBtn = document.getElementById('topbar-logout');
+            var demoBanner = document.getElementById('demo-banner');
+            var isDemo = true;
+
+            try {
+                var res = await fetch('/auth/me');
+                if (res.ok) {
+                    var data = await res.json();
+                    nameEl.textContent = data.user.name;
+                    userEl.style.display = 'flex';
+                    demoBanner.hidden = true;
+                    isDemo = false;
+                    window.__gmUser = data.user;
+                } else {
+                    userEl.style.display = 'flex';
+                    nameEl.textContent = 'Demo';
+                    demoBanner.hidden = false;
+                    window.__gmDemo = true;
+                }
+            } catch (e) {
+                userEl.style.display = 'flex';
+                nameEl.textContent = 'Demo';
+                demoBanner.hidden = false;
+                window.__gmDemo = true;
+            }
+
+            logoutBtn.addEventListener('click', async function() {
+                if (isDemo) {
+                    window.location.href = '/';
+                    return;
+                }
+                try {
+                    await fetch('/auth/logout', { method: 'POST' });
+                } catch (e) {}
+                window.location.href = '/';
+            });
+        })();
+    </script>
     <script src="script.js" defer></script>
 </body>
 </html>

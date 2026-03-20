@@ -2023,6 +2023,55 @@ h1 {
     animation: progressBar 0.8s ease-out;
 }
 
+/* ── User controls in topbar ── */
+.topbar-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.topbar-logout-btn {
+    padding: 5px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(12, 110, 112, 0.18);
+    background: transparent;
+    color: var(--accent);
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.topbar-logout-btn:hover {
+    background: var(--accent-a10);
+    border-color: var(--accent);
+}
+
+/* ── Demo banner ── */
+.demo-banner {
+    background: var(--warning-bg);
+    border-bottom: 1px solid rgba(193, 131, 55, 0.25);
+    padding: 10px 24px;
+    font-size: 0.88rem;
+    color: var(--warning-text);
+    text-align: center;
+}
+
+.demo-banner-inner {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.demo-banner a {
+    color: var(--accent);
+    font-weight: 700;
+    text-decoration: underline;
+}
+
 .topbar-step-pills {
     display: flex;
     gap: 6px;

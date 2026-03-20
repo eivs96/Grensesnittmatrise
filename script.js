@@ -3619,7 +3619,26 @@ if (bhUploadInput) {
 
 function handleFiles(fileList) {
     Array.from(fileList).forEach(function(file) {
-        if (file.name.toLowerCase().endsWith(".pdf")) {
+        const name = file.name.toLowerCase();
+        if (name.endsWith(".xlsx") || name.endsWith(".xls")) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const workbook = XLSX.read(new Uint8Array(e.target.result), { type: "array" });
+                    let text = "";
+                    workbook.SheetNames.forEach(function(sheetName) {
+                        const sheet = workbook.Sheets[sheetName];
+                        text += "--- " + sheetName + " ---\n";
+                        text += XLSX.utils.sheet_to_csv(sheet) + "\n\n";
+                    });
+                    addDocument(file.name, text.trim(), file.size);
+                    showToast(`"${file.name}" (${workbook.SheetNames.length} ark) lagt til.`, "info");
+                } catch (err) {
+                    showToast(`Kunne ikke lese "${file.name}": ${err.message}`, "error");
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        } else if (file.name.toLowerCase().endsWith(".pdf")) {
             const reader = new FileReader();
             reader.onload = async function(e) {
                 try {

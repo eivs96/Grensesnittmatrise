@@ -3,6 +3,7 @@ const compression = require("compression");
 const path = require("path");
 const fs = require("fs");
 const os = require("os");
+const crypto = require("crypto");
 const sqlite3 = require("sqlite3").verbose();
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 const stripe = stripeSecretKey ? require("stripe")(stripeSecretKey) : null;
@@ -17,6 +18,7 @@ const dataDir = configuredDataDir
     : runtimeDataDir;
 const dbPath = configuredDbPath ? path.resolve(configuredDbPath) : path.join(dataDir, "projects.db");
 const dbDir = path.dirname(dbPath);
+const SESSION_COOKIE_NAME = "gm_session";
 
 if (!fs.existsSync(dbDir)) {
     fs.mkdirSync(dbDir, { recursive: true });
@@ -40,7 +42,108 @@ db.serialize(() => {
             created_at TEXT NOT NULL
         )
     `);
+    db.run(`
+        CREATE TABLE IF NOT EXISTS users (
+            id TEXT PRIMARY KEY,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL UNIQUE,
+            password_hash TEXT NOT NULL,
+            password_salt TEXT NOT NULL,
+            created_at TEXT NOT NULL
+        )
+    `);
+    db.run(`
+        CREATE TABLE IF NOT EXISTS user_sessions (
+            session_id TEXT PRIMARY KEY,
+            user_id TEXT NOT NULL,
+            created_at TEXT NOT NULL,
+            expires_at TEXT NOT NULL
+        )
+    `);
 });
+
+function runQuery(sql, params = []) {
+    return new Promise((resolve, reject) => {
+        db.run(sql, params, function onRun(error) {
+            if (error) {
+                reject(error);
+                return;
+            }
+
+            resolve(this);
+        });
+    });
+}
+
+function getQuery(sql, params = []) {
+    return new Promise((resolve, reject) => {
+        db.get(sql, params, (error, row) => {
+            if (error) {
+                reject(error);
+                return;
+            }
+
+            resolve(row);
+        });
+    });
+}
+
+function parseCookies(req) {
+    const cookieHeader = req.headers.cookie;
+
+    if (!cookieHeader) {
+        return {};
+    }
+
+    return cookieHeader.split(";").reduce((cookies, part) => {
+        const [rawName, ...rawValueParts] = part.trim().split("=");
+
+        if (!rawName) {
+            return cookies;
+        }
+
+        cookies[rawName] = decodeURIComponent(rawValueParts.join("=") || "");
+        return cookies;
+    }, {});
+}
+
+function hashPassword(password, salt) {
+    return crypto.scryptSync(password, salt, 64).toString("hex");
+}
+
+function createSessionCookie(sessionId) {
+    const isProduction = process.env.NODE_ENV === "production";
+    const parts = [
+        `${SESSION_COOKIE_NAME}=${encodeURIComponent(sessionId)}`,
+        "Path=/",
+        "HttpOnly",
+        "SameSite=Lax",
+        "Max-Age=2592000",
+    ];
+
+    if (isProduction) {
+        parts.push("Secure");
+    }
+
+    return parts.join("; ");
+}
+
+function clearSessionCookie() {
+    const isProduction = process.env.NODE_ENV === "production";
+    const parts = [
+        `${SESSION_COOKIE_NAME}=`,
+        "Path=/",
+        "HttpOnly",
+        "SameSite=Lax",
+        "Max-Age=0",
+    ];
+
+    if (isProduction) {
+        parts.push("Secure");
+    }
+
+    return parts.join("; ");
+}
 
 // ── Security headers ──
 app.use((_req, res, next) => {
@@ -69,6 +172,7 @@ app.use(express.static(__dirname, {
 // ── Page routes ──
 app.get("/", (req, res) => res.sendFile(path.join(__dirname, "landing.html")));
 app.get("/app", (req, res) => res.sendFile(path.join(__dirname, "index.html")));
+app.get("/login", (req, res) => res.sendFile(path.join(__dirname, "login.html")));
 
 // ── Rate limiting for API ──
 const rateLimitMap = new Map();
@@ -102,6 +206,166 @@ app.get("/health", (_req, res) => {
 });
 
 // ── API routes ──
+
+app.post("/auth/register", async (req, res) => {
+    try {
+        const name = String(req.body?.name || "").trim();
+        const email = String(req.body?.email || "").trim().toLowerCase();
+        const password = String(req.body?.password || "");
+
+        if (!name || !email || !password) {
+            return res.status(400).json({ error: "Fyll inn navn, e-post og passord." });
+        }
+
+        if (!email.includes("@")) {
+            return res.status(400).json({ error: "Ugyldig e-postadresse." });
+        }
+
+        if (password.length < 8) {
+            return res.status(400).json({ error: "Passordet må ha minst 8 tegn." });
+        }
+
+        const existingUser = await getQuery("SELECT id FROM users WHERE email = ?", [email]);
+
+        if (existingUser) {
+            return res.status(409).json({ error: "Det finnes allerede en konto med denne e-posten." });
+        }
+
+        const userId = crypto.randomUUID();
+        const salt = crypto.randomBytes(16).toString("hex");
+        const passwordHash = hashPassword(password, salt);
+        const createdAt = new Date().toISOString();
+
+        await runQuery(
+            `
+            INSERT INTO users (id, name, email, password_hash, password_salt, created_at)
+            VALUES (?, ?, ?, ?, ?, ?)
+            `,
+            [userId, name, email, passwordHash, salt, createdAt]
+        );
+
+        res.status(201).json({
+            ok: true,
+            user: {
+                id: userId,
+                name,
+                email,
+            },
+        });
+    } catch (error) {
+        console.error("Register error:", error);
+        res.status(500).json({ error: "Kunne ikke opprette konto." });
+    }
+});
+
+app.post("/auth/login", async (req, res) => {
+    try {
+        const email = String(req.body?.email || "").trim().toLowerCase();
+        const password = String(req.body?.password || "");
+
+        if (!email || !password) {
+            return res.status(400).json({ error: "Fyll inn e-post og passord." });
+        }
+
+        const user = await getQuery(
+            `
+            SELECT id, name, email, password_hash, password_salt
+            FROM users
+            WHERE email = ?
+            `,
+            [email]
+        );
+
+        if (!user) {
+            return res.status(401).json({ error: "Feil e-post eller passord." });
+        }
+
+        const attemptedHash = hashPassword(password, user.password_salt);
+
+        if (attemptedHash !== user.password_hash) {
+            return res.status(401).json({ error: "Feil e-post eller passord." });
+        }
+
+        const sessionId = crypto.randomUUID();
+        const createdAt = new Date();
+        const expiresAt = new Date(createdAt.getTime() + 30 * 24 * 60 * 60 * 1000).toISOString();
+
+        await runQuery(
+            `
+            INSERT INTO user_sessions (session_id, user_id, created_at, expires_at)
+            VALUES (?, ?, ?, ?)
+            `,
+            [sessionId, user.id, createdAt.toISOString(), expiresAt]
+        );
+
+        res.setHeader("Set-Cookie", createSessionCookie(sessionId));
+        res.json({
+            ok: true,
+            user: {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+            },
+        });
+    } catch (error) {
+        console.error("Login error:", error);
+        res.status(500).json({ error: "Kunne ikke logge inn." });
+    }
+});
+
+app.get("/auth/me", async (req, res) => {
+    try {
+        const cookies = parseCookies(req);
+        const sessionId = cookies[SESSION_COOKIE_NAME];
+
+        if (!sessionId) {
+            return res.status(401).json({ error: "Ikke logget inn." });
+        }
+
+        const session = await getQuery(
+            `
+            SELECT users.id, users.name, users.email, user_sessions.expires_at
+            FROM user_sessions
+            JOIN users ON users.id = user_sessions.user_id
+            WHERE user_sessions.session_id = ?
+            `,
+            [sessionId]
+        );
+
+        if (!session || new Date(session.expires_at).getTime() < Date.now()) {
+            res.setHeader("Set-Cookie", clearSessionCookie());
+            return res.status(401).json({ error: "Økten er utløpt." });
+        }
+
+        res.json({
+            user: {
+                id: session.id,
+                name: session.name,
+                email: session.email,
+            },
+        });
+    } catch (error) {
+        console.error("Auth me error:", error);
+        res.status(500).json({ error: "Kunne ikke hente bruker." });
+    }
+});
+
+app.post("/auth/logout", async (req, res) => {
+    try {
+        const cookies = parseCookies(req);
+        const sessionId = cookies[SESSION_COOKIE_NAME];
+
+        if (sessionId) {
+            await runQuery("DELETE FROM user_sessions WHERE session_id = ?", [sessionId]);
+        }
+
+        res.setHeader("Set-Cookie", clearSessionCookie());
+        res.json({ ok: true });
+    } catch (error) {
+        console.error("Logout error:", error);
+        res.status(500).json({ error: "Kunne ikke logge ut." });
+    }
+});
 
 app.get("/api/projects", (_req, res) => {
     db.all(

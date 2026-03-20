@@ -18,6 +18,8 @@ const disciplines = [
 ].filter((discipline) => discipline !== "ADK");
 
 const responsibilities = ["P", "L", "M", "K", "F", "I"];
+const uploadedDocuments = [];
+let lastComplexityResult = null;
 const packageControlledDisciplines = ["EL", "Aut", "SD", "Lås og beslag"];
 
 const matrixBody = document.getElementById("matrix-body");
@@ -3512,8 +3514,6 @@ if (analyzeBhButton) {
 // MULTI-DOCUMENT UPLOAD & COMPLEXITY ANALYSIS SYSTEM
 // ══════════════════════════════════════════════════════════════
 
-const uploadedDocuments = [];
-
 const docDropzone = document.getElementById("doc-dropzone");
 const docListSection = document.getElementById("doc-list-section");
 const docList = document.getElementById("doc-list");
@@ -3538,8 +3538,6 @@ const breeamCardLevel = document.getElementById("breeam-card-level");
 const breeamCardDetail = document.getElementById("breeam-card-detail");
 const breeamRowCount = document.getElementById("breeam-row-count");
 const applyBreeamRowsButton = document.getElementById("apply-breeam-rows");
-
-let lastComplexityResult = null;
 
 function formatFileSize(bytes) {
     if (bytes < 1024) return `${bytes} B`;

@@ -4,6 +4,8 @@ const path = require("path");
 const fs = require("fs");
 const os = require("os");
 const sqlite3 = require("sqlite3").verbose();
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+const stripe = stripeSecretKey ? require("stripe")(stripeSecretKey) : null;
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -63,6 +65,10 @@ app.use(express.static(__dirname, {
     maxAge: process.env.NODE_ENV === "production" ? "1d" : 0,
     etag: true,
 }));
+
+// ── Page routes ──
+app.get("/", (req, res) => res.sendFile(path.join(__dirname, "landing.html")));
+app.get("/app", (req, res) => res.sendFile(path.join(__dirname, "index.html")));
 
 // ── Rate limiting for API ──
 const rateLimitMap = new Map();
@@ -282,6 +288,66 @@ app.delete("/api/projects/:id", (req, res) => {
             }
         );
     });
+});
+
+// ── Stripe checkout routes ──
+
+app.post("/api/create-checkout-session", async (req, res) => {
+    if (!stripe) {
+        return res.status(503).json({ error: "Betaling er ikke konfigurert ennÃ¥." });
+    }
+
+    try {
+        const session = await stripe.checkout.sessions.create({
+            mode: "subscription",
+            line_items: [
+                {
+                    price_data: {
+                        currency: "nok",
+                        product_data: {
+                            name: "Grensesnittmatrise – Bedrift",
+                        },
+                        unit_amount: 100000,
+                        recurring: {
+                            interval: "month",
+                        },
+                    },
+                    quantity: 1,
+                },
+            ],
+            success_url: (process.env.BASE_URL || "http://localhost:3000") + "/app?session_id={CHECKOUT_SESSION_ID}",
+            cancel_url: (process.env.BASE_URL || "http://localhost:3000") + "/",
+        });
+
+        res.json({ url: session.url });
+    } catch (error) {
+        console.error("Stripe checkout error:", error);
+        res.status(500).json({ error: "Kunne ikke opprette betalingsøkt." });
+    }
+});
+
+app.get("/api/subscription-status", async (req, res) => {
+    if (!stripe) {
+        return res.status(503).json({ error: "Betaling er ikke konfigurert ennÃ¥." });
+    }
+
+    try {
+        const { session_id } = req.query;
+
+        if (!session_id) {
+            return res.status(400).json({ error: "Mangler session_id." });
+        }
+
+        const session = await stripe.checkout.sessions.retrieve(session_id);
+
+        res.json({
+            status: session.payment_status,
+            customer_email: session.customer_details?.email,
+        });
+    } catch (error) {
+        console.error("Stripe status error:", error);
+        res.status(500).json({ error: "Kunne ikke hente abonnementsstatus." });
+    }
 });
 
 // ── Graceful shutdown ──

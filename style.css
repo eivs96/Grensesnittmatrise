@@ -2436,6 +2436,22 @@ button.is-loading::after {
     animation: fadeInUp 0.4s ease-out;
 }
 
+.breeam-card {
+    border-left: 3px solid #3a8f5c;
+    animation: fadeInUp 0.4s ease-out;
+}
+
+.breeam-card .status-label {
+    color: #3a8f5c;
+}
+
+.breeam-toggle .field-help {
+    font-size: 0.82rem;
+    color: var(--muted);
+    display: block;
+    margin-top: 4px;
+}
+
 .complexity-meter {
     display: flex;
     align-items: center;

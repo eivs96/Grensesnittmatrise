@@ -408,6 +408,7 @@ const sectionDefinitions = {
     500: "500 Tele og automatisering",
     600: "600 Andre installasjoner",
     700: "700 Utendørs",
+    800: "800 BREEAM-NOR v6",
 };
 
 function createRowId() {
@@ -1786,6 +1787,7 @@ function collectProjectState() {
     return {
         projectId: getCurrentProjectId(),
         projectType: projectTypeSelect.value,
+        breeamLevel: getBreeamLevel(),
         tueConfig: getTueConfig(),
         selectedPackages: getSelectedPackages(),
         uploadedBhText,
@@ -2095,6 +2097,7 @@ function applyProjectState(data) {
         }
     }
     projectTypeSelect.value = data.projectType || "bolig";
+    if (breeamLevelSelect) breeamLevelSelect.value = data.breeamLevel || "none";
     bhTextInput.value = data.bhText || "";
     uploadedBhText = data.uploadedBhText || "";
     applySavedTueConfig(data.tueConfig, Array.isArray(data.selectedPackages) ? data.selectedPackages : []);
@@ -2197,6 +2200,9 @@ function resetProjectState() {
     uploadedBhText = "";
     if (projectTypeSelect) {
         projectTypeSelect.value = "bolig";
+    }
+    if (breeamLevelSelect) {
+        breeamLevelSelect.value = "none";
     }
     if (tueCoreModelSelect) {
         tueCoreModelSelect.value = "separate";
@@ -3765,6 +3771,16 @@ const complexityKeywords = {
         keywords: ["enebolig", "hytte", "garasje", "carport", "bod"],
         weight: -5,
         label: "Enkelt prosjekt"
+    },
+    // BREEAM / environmental certification
+    breeam: {
+        keywords: ["breeam", "breeam-nor", "miljøsertifiser", "energimerke", "eos",
+                    "energioppfølging", "undermåler", "undermåling", "sub-metering",
+                    "commissioning", "igangkjøring", "sesongtest", "lekkasjedeteksjon",
+                    "dagslysstyring", "voc-sensor", "co2-sensor", "vannbesparende",
+                    "lysforurensning", "solcelle", "fornybar energi"],
+        weight: 7,
+        label: "BREEAM / miljøsertifisering"
     }
 };
 
@@ -3969,6 +3985,250 @@ function deriveMatrixScope(signals, score, projectType) {
     };
 }
 
+// ══════════════════════════════════════════════════════════════
+// BREEAM-NOR v6 — GRENSESNITT FOR MILJØSERTIFISERING
+// ══════════════════════════════════════════════════════════════
+
+const breeamLevelLabels = {
+    none: "Ingen",
+    pass: "Pass",
+    good: "Good",
+    very_good: "Very Good",
+    excellent: "Excellent",
+    outstanding: "Outstanding"
+};
+
+const breeamLevelOrder = ["pass", "good", "very_good", "excellent", "outstanding"];
+
+function breeamLevelIndex(level) {
+    var idx = breeamLevelOrder.indexOf(level);
+    return idx >= 0 ? idx : -1;
+}
+
+const breeamRows = [
+    {
+        tfm: "800", description: "BREEAM-NOR v6 — Miljøsertifisering",
+        comments: "", marks: {}, section: true, minLevel: "pass"
+    },
+    {
+        tfm: "800", description: "Energimåling — varme (undermåler per system)",
+        comments: "BREEAM Ene 01: Separat måling av varmeforbruk. Rør leverer følerlommer og vannmålere. Aut integrerer mot SD. EL leverer strømmålere for el-varme.",
+        marks: { "Rør:P": "H", "Rør:L": "H", "Rør:M": "H", "EL:K": "H", "Aut:P": "D", "Aut:I": "H", "SD:I": "H" },
+        minLevel: "pass"
+    },
+    {
+        tfm: "800", description: "Energimåling — kjøling (undermåler per system)",
+        comments: "BREEAM Ene 01: Separat måling av kjøleforbruk. Rør leverer målere på kjølekretser. Aut integrerer mot EOS/SD.",
+        marks: { "Rør:P": "H", "Rør:L": "H", "Rør:M": "H", "EL:K": "H", "Aut:P": "D", "Aut:I": "H", "SD:I": "H" },
+        minLevel: "good"
+    },
+    {
+        tfm: "800", description: "Energimåling — ventilasjon (undermåler per aggregat)",
+        comments: "BREEAM Ene 01: Måling av energiforbruk per ventilasjonsaggregat. EL leverer KWh-måler. Aut leser av og sender til SD/EOS.",
+        marks: { "Vent:P": "D", "EL:P": "H", "EL:L": "H", "EL:M": "H", "Aut:I": "H", "SD:I": "H" },
+        minLevel: "pass"
+    },
+    {
+        tfm: "800", description: "Energimåling — belysning (undermåler per sone/etasje)",
+        comments: "BREEAM Ene 01: Separat måling av lysforbruk per etasje eller sone. EL leverer undermålere i fordeling.",
+        marks: { "EL:P": "H", "EL:L": "H", "EL:M": "H", "Aut:I": "H", "SD:I": "H" },
+        minLevel: "good"
+    },
+    {
+        tfm: "800", description: "Energimåling — stikkontakter / utstyr (undermåler)",
+        comments: "BREEAM Ene 01: Separat måling av utstyrsforbruk. EL leverer undermålere.",
+        marks: { "EL:P": "H", "EL:L": "H", "EL:M": "H", "Aut:I": "H", "SD:I": "H" },
+        minLevel: "very_good"
+    },
+    {
+        tfm: "800", description: "Energioppfølgingssystem (EOS) — toppsystem",
+        comments: "BREEAM Ene 01: Samling av alle undermålere i et EOS med trendlogging og alarmgrenser. SD/Aut prosjekterer integrasjon. Alle fag leverer målere med kommunikasjon (BACnet/Modbus).",
+        marks: { "EL:I": "H", "Aut:P": "H", "Aut:L": "H", "Aut:F": "H", "Aut:I": "H", "SD:P": "H", "SD:F": "H", "SD:I": "H" },
+        minLevel: "pass"
+    },
+    {
+        tfm: "810", description: "CO₂-sensorer i oppholdsrom",
+        comments: "BREEAM Hea 02: CO₂-måling i alle rom med varig opphold. Aut/SD prosjekterer, leverer og integrerer. Vent tilpasser kanaler for behovsstyring. EL kabling.",
+        marks: { "Vent:P": "D", "Vent:I": "H", "EL:K": "H", "Aut:P": "H", "Aut:L": "H", "Aut:M": "H", "Aut:F": "H", "SD:I": "H" },
+        minLevel: "good"
+    },
+    {
+        tfm: "810", description: "VOC-sensorer i oppholdsrom",
+        comments: "BREEAM Hea 02 (Excellent+): VOC-måling for å dokumentere inneluftkvalitet. Aut leverer og integrerer mot SD. EL kabling.",
+        marks: { "EL:K": "H", "Aut:P": "H", "Aut:L": "H", "Aut:M": "H", "Aut:F": "H", "SD:I": "H" },
+        minLevel: "excellent"
+    },
+    {
+        tfm: "810", description: "Fuktsensorer i våtrom / tekniske rom",
+        comments: "BREEAM Hea 02: Fuktsensoring for å sikre akseptabelt inneklima og forebygge fuktskader. Aut integrerer mot SD.",
+        marks: { "EL:K": "H", "Aut:P": "H", "Aut:L": "H", "Aut:M": "H", "Aut:F": "H", "SD:I": "H" },
+        minLevel: "very_good"
+    },
+    {
+        tfm: "810", description: "Sonestyring temperatur (individuell per sone)",
+        comments: "BREEAM Hea 04: Individuelle temperatursoner med separat regulering. Aut prosjekterer soneløsning. Rør/Vent dimensjonerer for soneinndeling.",
+        marks: { "Rør:P": "D", "Vent:P": "D", "Aut:P": "H", "Aut:L": "H", "Aut:F": "H", "SD:I": "H" },
+        minLevel: "good"
+    },
+    {
+        tfm: "820", description: "Dagslysstyring — automatisk dimming iht. dagslys",
+        comments: "BREEAM Ene 04: Automatisk dimming av belysning basert på tilgjengelig dagslys. EL prosjekterer og leverer lysstyringsanlegg med dagslyssensorer.",
+        marks: { "EL:P": "H", "EL:L": "H", "EL:M": "H", "EL:K": "H", "EL:F": "H", "Aut:I": "H", "SD:I": "H" },
+        minLevel: "good"
+    },
+    {
+        tfm: "820", description: "Tilstedeværelsessensorer for belysning",
+        comments: "BREEAM Ene 04: Automatisk av/på basert på bevegelse/tilstedeværelse. EL prosjekterer sensorplassering og styring.",
+        marks: { "EL:P": "H", "EL:L": "H", "EL:M": "H", "EL:K": "H", "EL:F": "H" },
+        minLevel: "pass"
+    },
+    {
+        tfm: "820", description: "Utvendig belysning med astronomisk ur / tidstyring",
+        comments: "BREEAM Ene 04/Pol 04: Utvendig belysning med tidsur eller astronomisk klokke for å unngå lysforurensning.",
+        marks: { "EL:P": "H", "EL:L": "H", "EL:M": "H", "EL:F": "H", "Aut:I": "D", "SD:I": "D" },
+        minLevel: "good"
+    },
+    {
+        tfm: "830", description: "Vannmåling — forbruksmåler per system (KV, VV, hagevanning)",
+        comments: "BREEAM Wat 01: Separat vannmåling per forbrukskategori. Rør leverer målere med pulsutgang eller bus. Aut integrerer mot SD/EOS.",
+        marks: { "Rør:P": "H", "Rør:L": "H", "Rør:M": "H", "Aut:I": "H", "SD:I": "H" },
+        minLevel: "pass"
+    },
+    {
+        tfm: "830", description: "Lekkasjedeteksjon — automatisk varsling ved vannlekkasje",
+        comments: "BREEAM Wat 02: Lekkasjedetektorer ved kritiske punkter (teknisk rom, sjakter). Aut/SD varsler ved utløst alarm.",
+        marks: { "Rør:P": "H", "Rør:L": "H", "Rør:M": "H", "EL:K": "H", "Aut:I": "H", "SD:I": "H" },
+        minLevel: "good"
+    },
+    {
+        tfm: "830", description: "Vannbesparende armaturer — dokumentasjon og beregning",
+        comments: "BREEAM Wat 01: Alle sanitærarmaturer dokumenteres med maks vannforbruk (l/min). Rør prosjekterer og spesifiserer.",
+        marks: { "Rør:P": "H", "Rør:L": "H", "Rør:F": "H" },
+        minLevel: "pass"
+    },
+    {
+        tfm: "840", description: "Utvidet igangkjøring (commissioning) — sesongtest",
+        comments: "BREEAM Man 04: Alle tekniske systemer testes i både varme- og kjølesesong. Aut/SD koordinerer sesongtesting. Krever testplan og dokumentasjon.",
+        marks: { "Rør:F": "D", "Vent:F": "D", "EL:F": "D", "Aut:P": "H", "Aut:F": "H", "SD:P": "H", "SD:F": "H", "SD:I": "H" },
+        minLevel: "very_good"
+    },
+    {
+        tfm: "840", description: "Funksjonstest og integrert systemtest (IST)",
+        comments: "BREEAM Man 04: Dokumentert integrert systemtest der alle tekniske systemer verifiseres i samspill.",
+        marks: { "Rør:F": "D", "Vent:F": "D", "EL:F": "D", "Aut:P": "H", "Aut:F": "H", "SD:F": "H", "SD:I": "H" },
+        minLevel: "good"
+    },
+    {
+        tfm: "810", description: "Behovsstyrt ventilasjon (DCV) med CO₂/temp/tilstedeværelse",
+        comments: "BREEAM Ene 02 + Hea 02: Ventilasjonsmengde styres av sensorer i rom. Vent dimensjonerer for DCV. Aut leverer VAV-spjeld/aktuatorer.",
+        marks: { "Vent:P": "H", "Vent:L": "H", "Vent:M": "H", "Vent:F": "D", "EL:K": "H", "Aut:P": "H", "Aut:L": "H", "Aut:F": "H", "SD:I": "H" },
+        minLevel: "good"
+    },
+    {
+        tfm: "820", description: "Lysforurensningsanalyse — utendørsbelysning",
+        comments: "BREEAM Pol 04 (Outstanding): Dokumentert analyse av lysforurensning. EL gjennomfører beregning og velger armaturer med riktig avskjerming.",
+        marks: { "EL:P": "H", "EL:L": "H", "EL:F": "H" },
+        minLevel: "outstanding"
+    },
+    {
+        tfm: "840", description: "Fleksible tekniske føringer for fremtidig ombygging",
+        comments: "BREEAM Wst 06: Tekniske sjakter og føringsveier dimensjoneres med reservekapasitet for fremtidige endringer.",
+        marks: { "Rør:P": "D", "Vent:P": "D", "EL:P": "H", "EL:L": "H", "Aut:P": "D" },
+        minLevel: "very_good"
+    },
+    {
+        tfm: "800", description: "Solcelleanlegg (PV) — produksjonsmåling og integrasjon",
+        comments: "BREEAM Ene 01/04: Solcelleproduksjon måles separat og integreres i EOS. EL leverer vekselretter og måler. SD logger produksjon.",
+        marks: { "EL:P": "H", "EL:L": "H", "EL:M": "H", "EL:K": "H", "EL:F": "H", "Aut:I": "H", "SD:I": "H" },
+        minLevel: "very_good"
+    }
+];
+
+function getBreeamLevel() {
+    return breeamLevelSelect ? breeamLevelSelect.value : "none";
+}
+
+function getFilteredBreeamRows(level) {
+    if (level === "none") return [];
+    var lvlIdx = breeamLevelIndex(level);
+    if (lvlIdx < 0) return [];
+    return breeamRows.filter(function(row) {
+        return breeamLevelIndex(row.minLevel) <= lvlIdx;
+    });
+}
+
+function getBreeamDescription(level) {
+    var descriptions = {
+        pass: "Grunnleggende BREEAM-krav. Energimåling, vannbesparende tiltak og tilstedeværelsesstyring er påkrevd.",
+        good: "Krever undermåling per energipost, CO₂-styrt ventilasjon, dagslysstyring, lekkasjedeteksjon og integrert systemtest.",
+        very_good: "Utvidet undermåling, fuktsensorer, sesongcommissioning, fleksible føringsveier og solcelleintegrasjon.",
+        excellent: "Inkluderer VOC-sensorer for inneluftkvalitet og strenge krav til måling, integrasjon og dokumentasjon.",
+        outstanding: "Høyeste nivå. Lysforurensningsanalyse, full EOS-integrasjon og alle BREEAM-grensesnitt aktiveres."
+    };
+    return descriptions[level] || "";
+}
+
+function renderBreeamCard(level) {
+    if (!breeamCard) return;
+    if (level === "none") {
+        breeamCard.hidden = true;
+        return;
+    }
+    breeamCard.hidden = false;
+    if (breeamCardLevel) breeamCardLevel.textContent = "BREEAM-NOR v6 — " + breeamLevelLabels[level];
+    if (breeamCardDetail) breeamCardDetail.textContent = getBreeamDescription(level);
+    var filteredRows = getFilteredBreeamRows(level);
+    var contentRows = filteredRows.filter(function(r) { return !r.section; });
+    if (breeamRowCount) breeamRowCount.textContent = contentRows.length + " BREEAM-grensesnitt legges til i matrisen.";
+}
+
+if (breeamLevelSelect) {
+    breeamLevelSelect.addEventListener("change", function() {
+        var level = breeamLevelSelect.value;
+        if (breeamHelp) {
+            breeamHelp.textContent = level === "none" ? "" : getBreeamDescription(level);
+        }
+        renderBreeamCard(level);
+        scheduleAutosave();
+    });
+}
+
+if (applyBreeamRowsButton) {
+    applyBreeamRowsButton.addEventListener("click", async function() {
+        var level = getBreeamLevel();
+        if (level === "none") {
+            showToast("Velg et BREEAM-nivå i prosjektinnstillinger først.", "error");
+            return;
+        }
+
+        var breeamFiltered = getFilteredBreeamRows(level);
+        if (!breeamFiltered.length) return;
+
+        // Remove any existing BREEAM rows (TFM 800-849)
+        var cleaned = rows.filter(function(row) {
+            var tfmNum = parseInt(row.tfm, 10);
+            return isNaN(tfmNum) || tfmNum < 800 || tfmNum >= 850;
+        });
+
+        var combined = cleaned.concat(breeamFiltered);
+        replaceRows(combined);
+
+        if (matrixInitialized) {
+            matrixInitialized = false;
+            matrixBuildInProgress = false;
+            await ensureMatrixInitialized({ focusFirstRow: false });
+        }
+
+        var contentCount = breeamFiltered.filter(function(r) { return !r.section; }).length;
+        showToast(
+            contentCount + " BREEAM-NOR v6 (" + breeamLevelLabels[level] + ") grensesnitt lagt til i matrisen.",
+            "success",
+            5000
+        );
+        scheduleAutosave();
+    });
+}
+
 function getAllDocumentText() {
     const parts = [];
     uploadedDocuments.forEach(function(doc) { parts.push(doc.content); });
@@ -4030,12 +4290,24 @@ if (analyzeBhButton) {
         renderTueRecommendation(result.tueRecommendation);
         renderMatrixScope(result.matrixScope);
 
+        // Auto-detect BREEAM from document text and show card
+        var breeamLevel = getBreeamLevel();
+        var hasBreeamSignal = result.signals.some(function(s) { return s.category === "breeam"; });
+        if (hasBreeamSignal && breeamLevel === "none") {
+            // Suggest BREEAM based on detected signals
+            if (breeamLevelSelect) breeamLevelSelect.value = "very_good";
+            breeamLevel = "very_good";
+            showToast("BREEAM-signaler funnet i dokumentene. BREEAM-NOR v6 Very Good er foreslått.", "info", 5000);
+        }
+        renderBreeamCard(breeamLevel);
+
         // Update analysis status
         if (bhAnalysisStatus) {
+            var breeamNote = breeamLevel !== "none" ? (" BREEAM: " + breeamLevelLabels[breeamLevel] + ".") : "";
             bhAnalysisStatus.textContent =
                 `Analysert ${uploadedDocuments.length} dokument(er) + innlimt tekst. ` +
                 `Kompleksitet: ${result.levelLabel} (${result.score}/100). ` +
-                `${result.signals.length} signalkategorier identifisert.`;
+                `${result.signals.length} signalkategorier identifisert.` + breeamNote;
         }
 
         showToast(

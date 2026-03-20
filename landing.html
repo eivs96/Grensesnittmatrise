@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Grensesnittmatrise.no — Fra anbudsdokumenter til ferdig kontraktsvedlegg på minutter. TFM-basert arbeidsflyt for byggeprosjekter.">
+    <meta name="theme-color" content="#0c6e70">
+    <meta name="author" content="Grensesnittmatrise.no">
+    <meta name="robots" content="index, follow">
+
+    <link rel="canonical" href="https://grensesnittmatrise.no">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://grensesnittmatrise.no">
+    <meta property="og:title" content="Grensesnittmatrise.no – Teknisk grensesnittverktøy for byggeprosjekter">
+    <meta property="og:description" content="Fra anbudsdokumenter til ferdig kontraktsvedlegg på minutter. TFM-basert arbeidsflyt for byggeprosjekter.">
+    <meta property="og:locale" content="nb_NO">
+
+    <title>Grensesnittmatrise.no – Teknisk grensesnittverktøy for byggeprosjekter</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ── Landing page overrides ── */
+        body.landing-body {
+            background:
+                radial-gradient(circle at top left, rgba(12, 110, 112, 0.18), transparent 30%),
+                radial-gradient(circle at top right, rgba(193, 131, 55, 0.12), transparent 28%),
+                linear-gradient(180deg, #f8f3ea 0%, var(--bg) 100%);
+        }
+
+        /* ── Topbar ── */
+        .landing-topbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 32px;
+            background: var(--panel);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(200, 191, 174, 0.4);
+        }
+
+        .landing-topbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 1rem;
+            letter-spacing: -0.01em;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .landing-topbar-brand-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 900;
+            letter-spacing: 0.02em;
+            flex-shrink: 0;
+        }
+
+        .landing-topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .landing-btn-ghost {
+            padding: 8px 18px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--grid);
+            background: transparent;
+            color: var(--text);
+            font-weight: 600;
+            font-size: 0.88rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background var(--duration-fast), border-color var(--duration-fast);
+        }
+
+        .landing-btn-ghost:hover {
+            background: var(--accent-a10);
+            border-color: var(--accent);
+        }
+
+        .landing-btn-primary {
+            padding: 8px 20px;
+            border-radius: var(--radius-sm);
+            border: none;
+            background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.88rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity var(--duration-fast), transform var(--duration-fast);
+        }
+
+        .landing-btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        /* ── Wrapper ── */
+        .landing-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ── Hero ── */
+        .landing-hero {
+            text-align: center;
+            padding: 80px 0 60px;
+        }
+
+        .landing-hero h1 {
+            font-size: clamp(2.2rem, 5vw, 3.4rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            color: var(--text);
+            margin: 0 0 16px;
+            line-height: 1.1;
+        }
+
+        .landing-hero h1 span {
+            color: var(--accent);
+        }
+
+        .landing-hero-subtitle {
+            font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+            color: var(--muted);
+            max-width: 640px;
+            margin: 0 auto 36px;
+            line-height: 1.55;
+        }
+
+        .landing-hero-actions {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .landing-btn-large {
+            padding: 14px 32px;
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity var(--duration-fast), transform var(--duration-fast);
+            border: none;
+        }
+
+        .landing-btn-large.primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+            color: #fff;
+            box-shadow: 0 6px 24px rgba(12, 110, 112, 0.25);
+        }
+
+        .landing-btn-large.primary:hover {
+            opacity: 0.92;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 32px rgba(12, 110, 112, 0.3);
+        }
+
+        .landing-btn-large.secondary {
+            background: var(--panel);
+            color: var(--accent);
+            border: 2px solid var(--accent-a25);
+        }
+
+        .landing-btn-large.secondary:hover {
+            background: var(--accent-soft);
+            transform: translateY(-2px);
+        }
+
+        /* ── Section headings ── */
+        .landing-section {
+            padding: 60px 0;
+        }
+
+        .landing-section-title {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 800;
+            text-align: center;
+            margin: 0 0 12px;
+            letter-spacing: -0.02em;
+        }
+
+        .landing-section-lead {
+            text-align: center;
+            color: var(--muted);
+            font-size: 1.05rem;
+            margin: 0 auto 40px;
+            max-width: 540px;
+            line-height: 1.55;
+        }
+
+        /* ── Feature cards ── */
+        .landing-features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .landing-feature-card {
+            background: var(--panel);
+            border: 1px solid rgba(200, 191, 174, 0.35);
+            border-radius: var(--radius-lg);
+            padding: 32px 28px;
+            transition: transform var(--duration-base), box-shadow var(--duration-base);
+        }
+
+        .landing-feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .landing-feature-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-xs);
+            background: var(--accent-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+            font-size: 1.3rem;
+        }
+
+        .landing-feature-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin: 0 0 8px;
+            color: var(--text);
+        }
+
+        .landing-feature-card p {
+            font-size: 0.92rem;
+            color: var(--muted);
+            line-height: 1.55;
+            margin: 0;
+        }
+
+        /* ── Pricing ── */
+        .landing-pricing-card {
+            max-width: 420px;
+            margin: 0 auto;
+            background: var(--panel);
+            border: 2px solid var(--accent-a25);
+            border-radius: var(--radius-lg);
+            padding: 40px 36px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .landing-pricing-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 100px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 0.82rem;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .landing-pricing-card h3 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin: 0 0 8px;
+        }
+
+        .landing-pricing-amount {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--accent);
+            letter-spacing: -0.03em;
+            margin: 12px 0 4px;
+        }
+
+        .landing-pricing-period {
+            font-size: 0.92rem;
+            color: var(--muted);
+            margin-bottom: 28px;
+        }
+
+        .landing-pricing-features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 32px;
+            text-align: left;
+        }
+
+        .landing-pricing-features li {
+            padding: 8px 0;
+            font-size: 0.95rem;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid rgba(200, 191, 174, 0.25);
+        }
+
+        .landing-pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .landing-pricing-features li::before {
+            content: "\2713";
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: var(--accent-soft);
+            color: var(--accent);
+            font-size: 0.75rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .landing-pricing-btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            border-radius: var(--radius-sm);
+            border: none;
+            background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+            color: #fff;
+            font-size: 1.05rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity var(--duration-fast), transform var(--duration-fast);
+        }
+
+        .landing-pricing-btn:hover {
+            opacity: 0.92;
+            transform: translateY(-2px);
+        }
+
+        /* ── Demo CTA ── */
+        .landing-demo {
+            text-align: center;
+            padding: 60px 0 80px;
+        }
+
+        .landing-demo-box {
+            background: var(--accent-soft);
+            border: 1px solid var(--accent-a18);
+            border-radius: var(--radius-lg);
+            padding: 40px 36px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .landing-demo-box h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin: 0 0 10px;
+            color: var(--text);
+        }
+
+        .landing-demo-box p {
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.55;
+            margin: 0 0 24px;
+        }
+
+        /* ── Footer ── */
+        .landing-footer {
+            border-top: 1px solid rgba(200, 191, 174, 0.4);
+            padding: 28px 0;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        .landing-footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .landing-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 640px) {
+            .landing-topbar {
+                padding: 10px 16px;
+            }
+
+            .landing-hero {
+                padding: 50px 0 40px;
+            }
+
+            .landing-pricing-card {
+                padding: 28px 22px;
+            }
+
+            .landing-demo-box {
+                padding: 28px 22px;
+            }
+
+            .landing-hero-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .landing-btn-large {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body class="landing-body">
+
+    <!-- Topbar -->
+    <header class="landing-topbar">
+        <a href="/" class="landing-topbar-brand">
+            <span class="landing-topbar-brand-icon">GM</span>
+            Grensesnittmatrise
+        </a>
+        <div class="landing-topbar-actions">
+            <a href="/app" class="landing-btn-ghost">Logg inn</a>
+            <a href="/app" class="landing-btn-primary">Pr&oslash;v gratis</a>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="landing-hero">
+        <div class="landing-wrapper">
+            <h1><span>Grensesnittmatrise</span>.no</h1>
+            <p class="landing-hero-subtitle">
+                Fra anbudsdokumenter til ferdig kontraktsvedlegg &mdash; p&aring; minutter, ikke dager.
+            </p>
+            <div class="landing-hero-actions">
+                <a href="/app" class="landing-btn-large primary">Pr&oslash;v gratis demo</a>
+                <a href="#priser" class="landing-btn-large secondary">Se priser</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="landing-section">
+        <div class="landing-wrapper">
+            <h2 class="landing-section-title">Alt du trenger for grensesnittmatrisen</h2>
+            <p class="landing-section-lead">
+                Fra import av byggherre-underlag til ferdig kontraktsvedlegg &mdash; samlet i ett verkt&oslash;y.
+            </p>
+            <div class="landing-features-grid">
+                <div class="landing-feature-card">
+                    <div class="landing-feature-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                    </div>
+                    <h3>TFM-basert arbeidsflyt</h3>
+                    <p>F&oslash;lger bransjestandarden for tekniske fagmodeller. Strukturen du kjenner fra prosjekthverdagen.</p>
+                </div>
+                <div class="landing-feature-card">
+                    <div class="landing-feature-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+                    </div>
+                    <h3>Importer BH-underlag</h3>
+                    <p>Last opp PDF, Excel og tekstfiler direkte. Verkt&oslash;yet leser og strukturerer innholdet automatisk.</p>
+                </div>
+                <div class="landing-feature-card">
+                    <div class="landing-feature-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)"><path d="M4 22h14a2 2 0 0 0 2-2V7.5L14.5 2H6a2 2 0 0 0-2 2v4"/><polyline points="14 2 14 8 20 8"/><path d="M2 15h10"/><path d="m9 18 3-3-3-3"/></svg>
+                    </div>
+                    <h3>Eksporter til Excel</h3>
+                    <p>Ferdig kontraktsvedlegg med ett klikk. Klar til &aring; legge ved anbudsdokumentasjonen.</p>
+                </div>
+                <div class="landing-feature-card">
+                    <div class="landing-feature-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)"><path d="M17.5 19H9a7 7 0 1 1 0-14h8.5"/><path d="M17 15l4-4-4-4"/></svg>
+                    </div>
+                    <h3>Skylagring</h3>
+                    <p>Prosjektene dine lagres trygt i skyen. Jobb fra hvilken som helst enhet, n&aring;r som helst.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="landing-section" id="priser">
+        <div class="landing-wrapper">
+            <h2 class="landing-section-title">Enkel og forutsigbar pris</h2>
+            <p class="landing-section-lead">
+                Ett abonnement. Alt inkludert. Ingen skjulte kostnader.
+            </p>
+            <div class="landing-pricing-card">
+                <span class="landing-pricing-badge">Bedrift</span>
+                <h3>Fullt abonnement</h3>
+                <div class="landing-pricing-amount">1 000 kr</div>
+                <div class="landing-pricing-period">per m&aring;ned ekskl. mva.</div>
+                <ul class="landing-pricing-features">
+                    <li>Ubegrenset antall prosjekter</li>
+                    <li>Ubegrenset dokumentopplasting</li>
+                    <li>Skylagring og versjonshistorikk</li>
+                    <li>Eksport til Excel</li>
+                    <li>Support via e-post</li>
+                </ul>
+                <button type="button" class="landing-pricing-btn" id="checkout-btn">
+                    Start abonnement
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo CTA -->
+    <section class="landing-demo">
+        <div class="landing-wrapper">
+            <div class="landing-demo-box">
+                <h3>Pr&oslash;v gratis demo</h3>
+                <p>
+                    Test verkt&oslash;yet uten &aring; opprette konto. Gratisversjonen gir tilgang til 1 prosjekt og opptil 3 dokumenter &mdash; nok til &aring; se hvordan det fungerer.
+                </p>
+                <a href="/app" class="landing-btn-large primary">Start gratis demo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="landing-footer">
+        <div class="landing-wrapper">
+            <p>&copy; 2026 Grensesnittmatrise.no &mdash; Et verkt&oslash;y for norsk byggebransje.</p>
+        </div>
+    </footer>
+
+    <!-- Stripe checkout -->
+    <script>
+        document.getElementById('checkout-btn').addEventListener('click', async function () {
+            this.disabled = true;
+            this.textContent = 'Laster\u2026';
+
+            try {
+                const response = await fetch('/api/create-checkout-session', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                });
+
+                const data = await response.json();
+
+                if (data.url) {
+                    window.location.href = data.url;
+                } else {
+                    alert('Noe gikk galt. Pr\u00f8v igjen senere.');
+                    this.disabled = false;
+                    this.textContent = 'Start abonnement';
+                }
+            } catch (err) {
+                console.error('Checkout error:', err);
+                alert('Kunne ikke opprette betalingssesjon. Pr\u00f8v igjen senere.');
+                this.disabled = false;
+                this.textContent = 'Start abonnement';
+            }
+        });
+    </script>
+
+</body>
+</html>

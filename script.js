@@ -3607,6 +3607,10 @@ function renderDocumentList() {
     });
 }
 
+// Prevent browser from opening dropped files anywhere on the page
+document.addEventListener("dragover", function(e) { e.preventDefault(); });
+document.addEventListener("drop", function(e) { e.preventDefault(); });
+
 // Drag & drop + click to open file picker
 if (docDropzone) {
     docDropzone.addEventListener("click", function(e) {

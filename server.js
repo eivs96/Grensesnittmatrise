@@ -158,6 +158,16 @@ app.use((_req, res, next) => {
     next();
 });
 
+// ── Page routes ──
+app.get("/", (req, res) => res.sendFile(path.join(__dirname, "landing.html")));
+app.get("/app", (req, res) => res.sendFile(path.join(__dirname, "index.html")));
+app.get("/login", (req, res) => res.sendFile(path.join(__dirname, "login.html")));
+app.get("/favicon.ico", (_req, res) => res.status(204).end());
+app.get("/robots.txt", (_req, res) => {
+    res.type("text/plain");
+    res.send("User-agent: *\nAllow: /\n");
+});
+
 // ── Gzip compression ──
 app.use(compression());
 
@@ -165,14 +175,10 @@ app.use(express.json({ limit: "2mb" }));
 
 // ── Static files with caching ──
 app.use(express.static(__dirname, {
+    index: false,
     maxAge: process.env.NODE_ENV === "production" ? "1d" : 0,
     etag: true,
 }));
-
-// ── Page routes ──
-app.get("/", (req, res) => res.sendFile(path.join(__dirname, "landing.html")));
-app.get("/app", (req, res) => res.sendFile(path.join(__dirname, "index.html")));
-app.get("/login", (req, res) => res.sendFile(path.join(__dirname, "login.html")));
 
 // ── Rate limiting for API ──
 const rateLimitMap = new Map();

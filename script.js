@@ -113,9 +113,9 @@ const defaultRows = [
         description: "Pumper",
         comments: "Hovedpumpe(r) til hovedstokken må bestilles med kalender-ur funksjon.",
         marks: {
-            "Dørleverandør:P": "H",
-            "Dørleverandør:L": "H",
-            "Dørleverandør:M": "H",
+            "Rør:P": "H",
+            "Rør:L": "H",
+            "Rør:M": "H",
             "Rør:I": "H",
             "EL:I": "H",
             "Aut:I": "H",
@@ -126,10 +126,9 @@ const defaultRows = [
         description: "Pumper med integrert frekvensomformer",
         comments: "Delansvar RØR: Innregulering (hvis direkte på pumpe).",
         marks: {
-            "Dørleverandør:P": "H",
-            "Dørleverandør:L": "H",
-            "Dørleverandør:M": "H",
-            "Dørleverandør:I": "H",
+            "Rør:P": "H",
+            "Rør:L": "H",
+            "Rør:M": "H",
             "Rør:I": "H",
             "Aut:I": "H",
         },
@@ -139,12 +138,11 @@ const defaultRows = [
         description: "Ekstern frekvensomformer for pumper",
         comments: "",
         marks: {
-            "Dørleverandør:P": "H",
-            "Dørleverandør:L": "H",
-            "Dørleverandør:M": "H",
-            "Dørleverandør:I": "H",
-            "Rør:F": "H",
+            "Rør:P": "H",
+            "Rør:L": "H",
+            "Rør:M": "H",
             "Rør:I": "H",
+            "Rør:F": "H",
             "Aut:I": "H",
         },
     },
@@ -153,9 +151,9 @@ const defaultRows = [
         description: "Akkumulatortanker",
         comments: "",
         marks: {
-            "Dørleverandør:P": "H",
-            "Dørleverandør:L": "H",
-            "Dørleverandør:M": "H",
+            "Rør:P": "H",
+            "Rør:L": "H",
+            "Rør:M": "H",
             "Rør:I": "H",
             "Aut:I": "H",
         },
@@ -165,8 +163,7 @@ const defaultRows = [
         description: "Trykkgiver (rør)",
         comments: "Delansvar RØR: Tegne inn komp. på systemskjema. Rørlegger leverer følerlommer.",
         marks: {
-            "Dørleverandør:P": "D",
-            "Dørleverandør:I": "H",
+            "Rør:P": "D",
             "Rør:I": "H",
             "EL:F": "H",
             "EL:I": "H",
@@ -179,8 +176,8 @@ const defaultRows = [
         description: "Temperaturgiver (rør)",
         comments: "Delansvar RØR: Tegne inn komp. på systemskjema. Rørlegger leverer følerlommer.",
         marks: {
-            "Dørleverandør:P": "D",
-            "Dørleverandør:L": "H",
+            "Rør:P": "D",
+            "Rør:L": "H",
             "Rør:I": "H",
             "EL:F": "H",
             "EL:I": "H",
@@ -194,8 +191,8 @@ const defaultRows = [
         comments:
             "Delansvar RØR: Tegne inn komp. på systemskjema. Leverandør må levere dokumentasjon på måler rettidig. Rørlegger leverer følerlommer.",
         marks: {
-            "Dørleverandør:P": "D",
-            "Dørleverandør:L": "H",
+            "Rør:P": "D",
+            "Rør:L": "H",
             "Rør:I": "H",
             "EL:F": "H",
             "EL:I": "H",
@@ -208,8 +205,7 @@ const defaultRows = [
         description: "To- og treveisventil inkl motor",
         comments: "",
         marks: {
-            "Dørleverandør:P": "D",
-            "Dørleverandør:I": "H",
+            "Rør:P": "D",
             "Rør:I": "H",
             "EL:F": "H",
             "EL:I": "H",
@@ -222,10 +218,9 @@ const defaultRows = [
         description: "Ventiler (automatisk styrt)",
         comments: "Magnetventiler etc.",
         marks: {
-            "Dørleverandør:P": "H",
-            "Dørleverandør:L": "H",
-            "Dørleverandør:M": "H",
-            "Dørleverandør:I": "H",
+            "Rør:P": "H",
+            "Rør:L": "H",
+            "Rør:M": "H",
             "Rør:I": "H",
             "Aut:I": "H",
         },
@@ -235,10 +230,10 @@ const defaultRows = [
         description: "Ventiler (for manuell betjening)",
         comments: "Generelt for ventiler i rørnett (sanitær, varme og kjøling).",
         marks: {
-            "Dørleverandør:P": "H",
-            "Dørleverandør:L": "H",
-            "Dørleverandør:M": "H",
-            "Dørleverandør:I": "H",
+            "Rør:P": "H",
+            "Rør:L": "H",
+            "Rør:M": "H",
+            "Rør:I": "H",
         },
     },
     {
@@ -259,12 +254,12 @@ const defaultRows = [
         description: "Sanitæranlegg",
         comments: "",
         marks: {
-            "Dørleverandør:P": "H",
-            "Dørleverandør:L": "H",
-            "Dørleverandør:M": "H",
-            "Dørleverandør:K": "H",
-            "Dørleverandør:F": "H",
-            "Dørleverandør:I": "H",
+            "Rør:P": "H",
+            "Rør:L": "H",
+            "Rør:M": "H",
+            "Rør:K": "H",
+            "Rør:F": "H",
+            "Rør:I": "H",
             "Aut:I": "H",
         },
     },
@@ -273,10 +268,9 @@ const defaultRows = [
         description: "Vannmåler (inntak)",
         comments: "Leveres med bus for kommunikasjon mot SD.",
         marks: {
-            "Dørleverandør:P": "H",
-            "Dørleverandør:L": "H",
-            "Dørleverandør:M": "H",
-            "Dørleverandør:I": "H",
+            "Rør:P": "H",
+            "Rør:L": "H",
+            "Rør:M": "H",
             "Rør:I": "H",
             "Aut:I": "H",
         },
@@ -287,10 +281,9 @@ const defaultRows = [
         comments:
             "Delansvar RØR: Tegne inn komp. på systemskjema. Alle KV og VV målere leveres av Rør. Alle målere skal kommunisere med BAS-anlegget med IP-kommunikasjon (ModBus eller Bacnet).",
         marks: {
-            "Dørleverandør:P": "H",
-            "Dørleverandør:L": "H",
-            "Dørleverandør:M": "H",
-            "Dørleverandør:I": "H",
+            "Rør:P": "H",
+            "Rør:L": "H",
+            "Rør:M": "H",
             "Rør:I": "H",
             "Aut:I": "H",
         },
@@ -300,10 +293,9 @@ const defaultRows = [
         description: "Tappevannssentral",
         comments: "",
         marks: {
-            "Dørleverandør:P": "H",
-            "Dørleverandør:L": "H",
-            "Dørleverandør:M": "H",
-            "Dørleverandør:I": "H",
+            "Rør:P": "H",
+            "Rør:L": "H",
+            "Rør:M": "H",
             "Rør:I": "H",
             "Aut:I": "H",
         },
@@ -313,10 +305,9 @@ const defaultRows = [
         description: "Vannbehandling legionella",
         comments: "Mulig det blir hettvannspyling via FV-veksler.",
         marks: {
-            "Dørleverandør:P": "H",
-            "Dørleverandør:L": "H",
-            "Dørleverandør:M": "H",
-            "Dørleverandør:I": "H",
+            "Rør:P": "H",
+            "Rør:L": "H",
+            "Rør:M": "H",
             "Rør:I": "H",
             "Aut:I": "H",
         },
@@ -326,10 +317,9 @@ const defaultRows = [
         description: "Sirkulasjonspumpe VV (VVC)",
         comments: "",
         marks: {
-            "Dørleverandør:P": "H",
-            "Dørleverandør:L": "H",
-            "Dørleverandør:M": "H",
-            "Dørleverandør:I": "H",
+            "Rør:P": "H",
+            "Rør:L": "H",
+            "Rør:M": "H",
             "Rør:I": "H",
             "Aut:I": "H",
         },
@@ -339,10 +329,10 @@ const defaultRows = [
         description: "Sluk/drenering luftinntak",
         comments: "",
         marks: {
-            "Dørleverandør:P": "H",
-            "Dørleverandør:L": "H",
-            "Dørleverandør:M": "H",
-            "Dørleverandør:I": "H",
+            "Rør:P": "H",
+            "Rør:L": "H",
+            "Rør:M": "H",
+            "Rør:I": "H",
         },
     },
     {
@@ -350,10 +340,10 @@ const defaultRows = [
         description: "Blandebatteri kjøkkenbenk (ikke storkjøkken)",
         comments: "",
         marks: {
-            "Dørleverandør:P": "H",
-            "Dørleverandør:L": "H",
-            "Dørleverandør:M": "H",
-            "Dørleverandør:I": "H",
+            "Rør:P": "H",
+            "Rør:L": "H",
+            "Rør:M": "H",
+            "Rør:I": "H",
         },
     },
     {
@@ -361,10 +351,10 @@ const defaultRows = [
         description: "Sanitærutstyr og blandebatterier i plassbygde bad og WC",
         comments: "",
         marks: {
-            "Dørleverandør:P": "H",
-            "Dørleverandør:L": "H",
-            "Dørleverandør:M": "H",
-            "Dørleverandør:I": "H",
+            "Rør:P": "H",
+            "Rør:L": "H",
+            "Rør:M": "H",
+            "Rør:I": "H",
         },
     },
     {
@@ -372,10 +362,10 @@ const defaultRows = [
         description: "Utslagsvask inkl. batteri (tekniske rom, BK, etc.)",
         comments: "",
         marks: {
-            "Dørleverandør:P": "H",
-            "Dørleverandør:L": "H",
-            "Dørleverandør:M": "H",
-            "Dørleverandør:I": "H",
+            "Rør:P": "H",
+            "Rør:L": "H",
+            "Rør:M": "H",
+            "Rør:I": "H",
         },
     },
     {
@@ -384,11 +374,11 @@ const defaultRows = [
         comments: "Rørlegger prosjekterer og leverer sluk. Taktekker monterer og rørlegger tilkobler. Arkitekt lager fallplan.",
         marks: {
             "Byggfag:F": "H",
-            "Dørleverandør:P": "H",
-            "Dørleverandør:L": "H",
-            "Dørleverandør:M": "D",
-            "Dørleverandør:K": "H",
-            "Dørleverandør:I": "H",
+            "Rør:P": "H",
+            "Rør:L": "H",
+            "Rør:M": "D",
+            "Rør:K": "H",
+            "Rør:I": "H",
         },
     },
     {
@@ -401,8 +391,7 @@ const defaultRows = [
             "Byggfag:L": "H",
             "Byggfag:M": "H",
             "Byggfag:F": "D",
-            "Dørleverandør:L": "H",
-            "Dørleverandør:I": "H",
+            "Rør:L": "H",
             "Rør:I": "H",
             "Aut:I": "H",
         },
@@ -3526,6 +3515,13 @@ const matrixScopeCard = document.getElementById("matrix-scope-card");
 const matrixScopeSummary = document.getElementById("matrix-scope-summary");
 const matrixScopeDetail = document.getElementById("matrix-scope-detail");
 const applyMatrixScopeButton = document.getElementById("apply-matrix-scope");
+const breeamLevelSelect = document.getElementById("breeam-level");
+const breeamHelp = document.getElementById("breeam-help");
+const breeamCard = document.getElementById("breeam-card");
+const breeamCardLevel = document.getElementById("breeam-card-level");
+const breeamCardDetail = document.getElementById("breeam-card-detail");
+const breeamRowCount = document.getElementById("breeam-row-count");
+const applyBreeamRowsButton = document.getElementById("apply-breeam-rows");
 
 let lastComplexityResult = null;
 
@@ -3623,13 +3619,34 @@ if (bhUploadInput) {
 
 function handleFiles(fileList) {
     Array.from(fileList).forEach(function(file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const content = e.target.result || "";
-            addDocument(file.name, content, file.size);
-            showToast(`"${file.name}" lagt til.`, "info");
-        };
-        reader.readAsText(file);
+        if (file.name.toLowerCase().endsWith(".pdf")) {
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                try {
+                    pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+                    const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(e.target.result) }).promise;
+                    let text = "";
+                    for (let i = 1; i <= pdf.numPages; i++) {
+                        const page = await pdf.getPage(i);
+                        const content = await page.getTextContent();
+                        text += content.items.map(function(item) { return item.str; }).join(" ") + "\n";
+                    }
+                    addDocument(file.name, text.trim(), file.size);
+                    showToast(`"${file.name}" (${pdf.numPages} sider) lagt til.`, "info");
+                } catch (err) {
+                    showToast(`Kunne ikke lese "${file.name}": ${err.message}`, "error");
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        } else {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const content = e.target.result || "";
+                addDocument(file.name, content, file.size);
+                showToast(`"${file.name}" lagt til.`, "info");
+            };
+            reader.readAsText(file);
+        }
     });
 }
 
@@ -4095,3 +4112,116 @@ if (applyMatrixScopeButton) {
         scheduleAutosave();
     });
 }
+
+// ══════════════════════════════════════════════════════════════
+// PHASE SIDEBAR (left vertical stepper)
+// ══════════════════════════════════════════════════════════════
+
+const phaseBtns = [
+    document.getElementById("phase-btn-1"),
+    document.getElementById("phase-btn-2"),
+    document.getElementById("phase-btn-3"),
+    document.getElementById("phase-btn-4"),
+];
+const phaseStatuses = [
+    document.getElementById("phase-status-1"),
+    document.getElementById("phase-status-2"),
+    document.getElementById("phase-status-3"),
+    document.getElementById("phase-status-4"),
+];
+const phaseLines = [
+    document.getElementById("phase-line-1"),
+    document.getElementById("phase-line-2"),
+    document.getElementById("phase-line-3"),
+];
+
+// Phase buttons navigate steps (step 4 = export, maps to step 3 panel)
+phaseBtns.forEach(function(btn) {
+    if (!btn) return;
+    btn.addEventListener("click", function() {
+        var target = Number(btn.dataset.stepTarget);
+        if (target === 4) {
+            setWorkflowStep(3);
+            // Scroll to export section after switching
+            setTimeout(function() {
+                var exportSection = document.getElementById("summary");
+                if (exportSection) exportSection.scrollIntoView({ behavior: "smooth", block: "start" });
+            }, 200);
+        } else if (target >= 1 && target <= 3) {
+            setWorkflowStep(target);
+        }
+    });
+});
+
+function syncPhaseSidebar() {
+    var health = getWorkflowHealth();
+    var stepChecks = [health.step1Checks, health.step2Checks, health.step3Checks];
+
+    // Determine state per phase
+    stepChecks.forEach(function(checks, i) {
+        var allDone = checks.every(function(c) { return c.done; });
+        var anyDone = checks.some(function(c) { return c.done; });
+        var isActive = (i + 1) === currentWorkflowStep;
+
+        var btn = phaseBtns[i];
+        var status = phaseStatuses[i];
+        if (!btn) return;
+
+        btn.classList.remove("active", "done");
+        if (isActive) {
+            btn.classList.add("active");
+        }
+        if (allDone) {
+            btn.classList.add("done");
+        }
+
+        if (status) {
+            if (allDone) {
+                status.textContent = "Ferdig";
+            } else if (isActive) {
+                status.textContent = "Pågår";
+            } else if (anyDone) {
+                status.textContent = "Startet";
+            } else {
+                status.textContent = "Venter";
+            }
+        }
+
+        // Connector line
+        if (phaseLines[i]) {
+            phaseLines[i].classList.toggle("filled", allDone);
+        }
+    });
+
+    // Phase 4 (Export) — active when on step 3 and all checks are done
+    var exportReady = stepChecks[2] && stepChecks[2].every(function(c) { return c.done; });
+    var phase4Btn = phaseBtns[3];
+    var phase4Status = phaseStatuses[3];
+    if (phase4Btn) {
+        phase4Btn.disabled = false;
+        phase4Btn.classList.remove("active", "done");
+        if (exportReady) {
+            phase4Btn.classList.add("done");
+        }
+    }
+    if (phase4Status) {
+        phase4Status.textContent = exportReady ? "Klar" : "Venter";
+    }
+}
+
+// Patch updateWorkflowOverview to also sync sidebar
+var _prevUpdateWorkflowOverview = updateWorkflowOverview;
+updateWorkflowOverview = function patchedUpdateWorkflowOverview2() {
+    _prevUpdateWorkflowOverview();
+    syncPhaseSidebar();
+};
+
+// Patch setWorkflowStep to also sync sidebar active state
+var _prevSetWorkflowStep = setWorkflowStep;
+setWorkflowStep = function patchedSetWorkflowStep2(stepNumber, options) {
+    _prevSetWorkflowStep(stepNumber, options);
+    syncPhaseSidebar();
+};
+
+// Initial sync
+syncPhaseSidebar();

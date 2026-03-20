@@ -27,6 +27,7 @@
 
     <title>Grensesnittmatrise.no – Teknisk grensesnittverktøy</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body>
     <header class="site-topbar" id="site-topbar">
@@ -55,52 +56,51 @@
             </p>
         </section>
 
-        <section class="workflow-shell" aria-label="Arbeidsflyt">
-            <p id="workflow-step-status" class="helper-text" hidden>Steg 1 av 3: Prosjektoppsett</p>
-            <div class="workflow-overview" aria-label="Fremdrift i arbeidsflyt">
-                <article class="workflow-overview-card">
-                    <span class="overview-label">Fremdrift</span>
-                    <strong id="workflow-progress-value">0 %</strong>
-                    <span id="workflow-progress-text" class="overview-detail">Start med prosjektoppsett</span>
-                </article>
-                <article class="workflow-overview-card">
-                    <span class="overview-label">Steg 1</span>
-                    <strong id="step-1-state">Pågår</strong>
-                    <span id="step-1-hint" class="overview-detail">Opprett prosjekt</span>
-                </article>
-                <article class="workflow-overview-card">
-                    <span class="overview-label">Steg 2</span>
-                    <strong id="step-2-state">Venter</strong>
-                    <span id="step-2-hint" class="overview-detail">Last opp dokumenter</span>
-                </article>
-                <article class="workflow-overview-card">
-                    <span class="overview-label">Steg 3</span>
-                    <strong id="step-3-state">Venter</strong>
-                    <span id="step-3-hint" class="overview-detail">Matrise og eksport</span>
-                </article>
+        <!-- Hidden elements for JS compatibility -->
+        <p id="workflow-step-status" hidden>Steg 1 av 3</p>
+        <span id="workflow-progress-value" hidden>0 %</span>
+        <span id="workflow-progress-text" hidden></span>
+        <strong id="step-1-state" hidden>Pågår</strong>
+        <span id="step-1-hint" hidden></span>
+        <strong id="step-2-state" hidden>Venter</strong>
+        <span id="step-2-hint" hidden></span>
+        <strong id="step-3-state" hidden>Venter</strong>
+        <span id="step-3-hint" hidden></span>
+
+        <nav class="phase-sidebar" id="phase-sidebar" aria-label="Prosjektfaser">
+            <div class="phase-sidebar-inner">
+                <button class="phase-item active" type="button" data-step-target="1" id="phase-btn-1">
+                    <span class="phase-number">1</span>
+                    <span class="phase-label">Prosjekt</span>
+                    <span class="phase-status" id="phase-status-1">Pågår</span>
+                </button>
+                <div class="phase-connector"><span class="phase-connector-line" id="phase-line-1"></span></div>
+                <button class="phase-item" type="button" data-step-target="2" id="phase-btn-2">
+                    <span class="phase-number">2</span>
+                    <span class="phase-label">Dokumenter</span>
+                    <span class="phase-status" id="phase-status-2">Venter</span>
+                </button>
+                <div class="phase-connector"><span class="phase-connector-line" id="phase-line-2"></span></div>
+                <button class="phase-item" type="button" data-step-target="3" id="phase-btn-3">
+                    <span class="phase-number">3</span>
+                    <span class="phase-label">Matrise</span>
+                    <span class="phase-status" id="phase-status-3">Venter</span>
+                </button>
+                <div class="phase-connector"><span class="phase-connector-line" id="phase-line-3"></span></div>
+                <button class="phase-item" type="button" data-step-target="4" id="phase-btn-4" disabled>
+                    <span class="phase-number">4</span>
+                    <span class="phase-label">Eksport</span>
+                    <span class="phase-status" id="phase-status-4">Venter</span>
+                </button>
             </div>
-            <div class="workflow-steps" role="tablist" aria-label="Arbeidsflytsteg">
-                <button id="step-tab-1" class="workflow-step active" type="button" data-step-target="1" role="tab" aria-selected="true" aria-controls="step-panel-1">
-                    <span class="workflow-step-number">1</span>
-                    <span class="workflow-step-copy">
-                        <strong>Prosjekt</strong>
-                        <span>Navn og bygningstype</span>
-                    </span>
-                </button>
-                <button id="step-tab-2" class="workflow-step" type="button" data-step-target="2" role="tab" aria-selected="false" aria-controls="step-panel-2">
-                    <span class="workflow-step-number">2</span>
-                    <span class="workflow-step-copy">
-                        <strong>Dokumenter</strong>
-                        <span>Last opp og analyser</span>
-                    </span>
-                </button>
-                <button id="step-tab-3" class="workflow-step" type="button" data-step-target="3" role="tab" aria-selected="false" aria-controls="step-panel-3">
-                    <span class="workflow-step-number">3</span>
-                    <span class="workflow-step-copy">
-                        <strong>Matrise</strong>
-                        <span>Fordel ansvar og eksporter</span>
-                    </span>
-                </button>
+        </nav>
+
+        <section class="workflow-shell" aria-label="Arbeidsflyt">
+            <!-- Hidden tabs for JS compatibility -->
+            <div class="workflow-steps" role="tablist" aria-label="Arbeidsflytsteg" hidden>
+                <button id="step-tab-1" class="workflow-step active" type="button" data-step-target="1" role="tab" aria-selected="true" aria-controls="step-panel-1"></button>
+                <button id="step-tab-2" class="workflow-step" type="button" data-step-target="2" role="tab" aria-selected="false" aria-controls="step-panel-2"></button>
+                <button id="step-tab-3" class="workflow-step" type="button" data-step-target="3" role="tab" aria-selected="false" aria-controls="step-panel-3"></button>
             </div>
 
             <section id="step-panel-1" class="step-panel active" data-step-panel="1" role="tabpanel" aria-labelledby="step-tab-1">
@@ -151,6 +151,18 @@
                         <option value="rehab">Rehabilitering / ombygging</option>
                         <option value="mixeduse">Kombinasjonsbygg</option>
                     </select>
+                </label>
+                <label class="breeam-toggle">
+                    <span>Miljøsertifisering</span>
+                    <select id="breeam-level">
+                        <option value="none">Ingen</option>
+                        <option value="pass">BREEAM-NOR v6 — Pass</option>
+                        <option value="good">BREEAM-NOR v6 — Good</option>
+                        <option value="very_good">BREEAM-NOR v6 — Very Good</option>
+                        <option value="excellent">BREEAM-NOR v6 — Excellent</option>
+                        <option value="outstanding">BREEAM-NOR v6 — Outstanding</option>
+                    </select>
+                    <span id="breeam-help" class="field-help"></span>
                 </label>
             </div>
 
@@ -281,8 +293,8 @@
                 <div class="dropzone-content">
                     <span class="dropzone-icon">+</span>
                     <p class="dropzone-title">Dra og slipp dokumenter her</p>
-                    <p class="dropzone-hint">eller klikk for å velge filer. Støtter .txt, .md, .csv, .json og kopiert tekst.</p>
-                    <input id="bh-upload" type="file" accept=".txt,.md,.csv,.json" multiple class="dropzone-input">
+                    <p class="dropzone-hint">eller klikk for å velge filer. Støtter .txt, .md, .csv, .json, .pdf og kopiert tekst.</p>
+                    <input id="bh-upload" type="file" accept=".txt,.md,.csv,.json,.pdf" multiple class="dropzone-input">
                 </div>
             </div>
 
@@ -344,6 +356,14 @@
                             <p id="matrix-scope-summary" class="status-value"></p>
                             <p id="matrix-scope-detail" class="helper-text"></p>
                             <button id="apply-matrix-scope" type="button" class="secondary-button" style="margin-top: 10px;">Tilpass matrisen</button>
+                        </div>
+
+                        <div id="breeam-card" class="status-card breeam-card" hidden>
+                            <p class="status-label">BREEAM-NOR v6</p>
+                            <p id="breeam-card-level" class="status-value"></p>
+                            <p id="breeam-card-detail" class="helper-text"></p>
+                            <p id="breeam-row-count" class="helper-text"></p>
+                            <button id="apply-breeam-rows" type="button" class="secondary-button" style="margin-top: 10px;">Legg til BREEAM-rader i matrisen</button>
                         </div>
 
             <div id="bh-analysis-insights" class="bh-analysis-insights"></div>

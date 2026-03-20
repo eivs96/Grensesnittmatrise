@@ -68,6 +68,130 @@ body {
 .page {
     width: min(1500px, calc(100% - 32px));
     margin: 28px auto 40px;
+    /* Offset for the fixed sidebar */
+    margin-left: calc(max((100% - 1500px) / 2, 16px) + 80px);
+}
+
+/* ── Phase sidebar (left vertical stepper) ── */
+.phase-sidebar {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 40;
+    padding: 8px;
+}
+
+.phase-sidebar-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    padding: 14px 8px;
+    border-radius: 20px;
+    background: rgba(255, 252, 247, 0.92);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(31, 42, 48, 0.08);
+    box-shadow: 0 8px 32px rgba(28, 38, 40, 0.1);
+}
+
+.phase-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 8px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-radius: 14px;
+    transition: background-color 0.2s ease;
+    width: 64px;
+    font: inherit;
+    color: var(--muted);
+}
+
+.phase-item:hover {
+    background: rgba(12, 110, 112, 0.06);
+}
+
+.phase-item.active {
+    color: var(--accent-strong);
+}
+
+.phase-item.done {
+    color: #276749;
+}
+
+.phase-number {
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.9rem;
+    background: rgba(12, 110, 112, 0.08);
+    color: var(--muted);
+    transition: all 0.25s ease;
+}
+
+.phase-item.active .phase-number {
+    background: var(--accent);
+    color: white;
+    box-shadow: 0 4px 14px rgba(12, 110, 112, 0.3);
+}
+
+.phase-item.done .phase-number {
+    background: #276749;
+    color: white;
+}
+
+.phase-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.phase-status {
+    font-size: 0.6rem;
+    font-weight: 600;
+    opacity: 0.7;
+    line-height: 1;
+}
+
+.phase-item.active .phase-status {
+    opacity: 1;
+    color: var(--accent);
+}
+
+.phase-item.done .phase-status {
+    opacity: 1;
+    color: #276749;
+}
+
+.phase-connector {
+    display: flex;
+    justify-content: center;
+    height: 20px;
+    width: 100%;
+}
+
+.phase-connector-line {
+    display: block;
+    width: 2px;
+    height: 100%;
+    background: rgba(12, 110, 112, 0.12);
+    border-radius: 999px;
+    transition: background-color 0.3s ease;
+}
+
+.phase-connector-line.filled {
+    background: #276749;
 }
 
 .hero,
@@ -1610,8 +1734,13 @@ h1 {
 }
 
 @media (max-width: 900px) {
+    .phase-sidebar {
+        display: none;
+    }
+
     .page {
         width: min(100% - 18px, 1500px);
+        margin-left: auto;
         margin-top: 14px;
     }
 

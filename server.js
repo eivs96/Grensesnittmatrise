@@ -16,6 +16,10 @@ const runtimeDataDir = path.join(os.tmpdir(), "grensesnittmatrise-runtime");
 const dataDir = configuredDataDir
     ? path.resolve(configuredDataDir)
     : runtimeDataDir;
+const staticDir = path.resolve(__dirname);
+const landingPagePath = path.join(staticDir, "landing.html");
+const appPagePath = path.join(staticDir, "index.html");
+const loginPagePath = path.join(staticDir, "login.html");
 const dbPath = configuredDbPath ? path.resolve(configuredDbPath) : path.join(dataDir, "projects.db");
 const dbDir = path.dirname(dbPath);
 const SESSION_COOKIE_NAME = "gm_session";
@@ -145,6 +149,20 @@ function clearSessionCookie() {
     return parts.join("; ");
 }
 
+function sendPage(res, filePath) {
+    res.sendFile(filePath, (error) => {
+        if (!error) {
+            return;
+        }
+
+        console.error("Send file error:", filePath, error);
+
+        if (!res.headersSent) {
+            res.status(error.statusCode || 500).send("Kunne ikke laste siden.");
+        }
+    });
+}
+
 // ── Security headers ──
 app.use((_req, res, next) => {
     res.setHeader("X-Content-Type-Options", "nosniff");
@@ -159,9 +177,9 @@ app.use((_req, res, next) => {
 });
 
 // ── Page routes ──
-app.get("/", (req, res) => res.sendFile(path.join(__dirname, "landing.html")));
-app.get("/app", (req, res) => res.sendFile(path.join(__dirname, "index.html")));
-app.get("/login", (req, res) => res.sendFile(path.join(__dirname, "login.html")));
+app.get("/", (_req, res) => sendPage(res, landingPagePath));
+app.get("/app", (_req, res) => sendPage(res, appPagePath));
+app.get("/login", (_req, res) => sendPage(res, loginPagePath));
 app.get("/favicon.ico", (_req, res) => res.status(204).end());
 app.get("/robots.txt", (_req, res) => {
     res.type("text/plain");
@@ -174,7 +192,7 @@ app.use(compression());
 app.use(express.json({ limit: "2mb" }));
 
 // ── Static files with caching ──
-app.use(express.static(__dirname, {
+app.use(express.static(staticDir, {
     index: false,
     maxAge: process.env.NODE_ENV === "production" ? "1d" : 0,
     etag: true,
@@ -630,7 +648,19 @@ function shutdown() {
 
 process.on("SIGTERM", shutdown);
 process.on("SIGINT", shutdown);
+process.on("uncaughtException", (error) => {
+    console.error("Uncaught exception:", error);
+});
+process.on("unhandledRejection", (reason) => {
+    console.error("Unhandled rejection:", reason);
+});
+
+app.use((error, _req, res, _next) => {
+    console.error("Express error:", error);
+    res.status(500).json({ error: "Uventet serverfeil." });
+});
 
 app.listen(port, () => {
     console.log(`Server kjører på http://localhost:${port}`);
 });
+

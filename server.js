@@ -347,6 +347,56 @@ app.post("/auth/register", async (req, res) => {
     }
 });
 
+app.post("/auth/resend-verification", async (req, res) => {
+    try {
+        const email = String(req.body?.email || "").trim().toLowerCase();
+        if (!email) {
+            return res.status(400).json({ error: "Fyll inn e-post." });
+        }
+
+        const user = await getQuery(
+            "SELECT id, name, email, email_verified, verify_token FROM users WHERE email = ?",
+            [email]
+        );
+
+        if (!user) {
+            return res.json({ ok: true });
+        }
+
+        if (user.email_verified) {
+            return res.json({ ok: true, alreadyVerified: true });
+        }
+
+        let token = user.verify_token;
+        if (!token) {
+            token = crypto.randomBytes(32).toString("hex");
+            await runQuery("UPDATE users SET verify_token = ? WHERE id = ?", [token, user.id]);
+        }
+
+        if (resend) {
+            const verifyUrl = `${BASE_URL}/auth/verify?token=${token}`;
+            await resend.emails.send({
+                from: "Grensesnittmatrise <noreply@grensesnittmatrise.no>",
+                to: [email],
+                subject: "Bekreft din e-postadresse – Grensesnittmatrise.no",
+                html: `
+                    <div style="font-family:sans-serif;max-width:500px;margin:0 auto;padding:32px">
+                        <h2 style="color:#0c6e70">Hei, ${user.name}!</h2>
+                        <p>Klikk knappen under for å bekrefte e-postadressen din:</p>
+                        <a href="${verifyUrl}" style="display:inline-block;padding:14px 28px;background:#0c6e70;color:#fff;text-decoration:none;border-radius:8px;font-weight:700;margin:20px 0">Bekreft e-post</a>
+                        <p style="color:#666;font-size:0.85rem">Eller kopier denne lenken: ${verifyUrl}</p>
+                    </div>
+                `,
+            });
+        }
+
+        res.json({ ok: true });
+    } catch (error) {
+        console.error("Resend verification error:", error);
+        res.status(500).json({ error: "Kunne ikke sende verifiserings-e-post." });
+    }
+});
+
 app.post("/auth/login", async (req, res) => {
     try {
         const email = String(req.body?.email || "").trim().toLowerCase();

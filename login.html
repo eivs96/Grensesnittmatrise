@@ -189,6 +189,13 @@
             display: block;
         }
 
+        .resend-link {
+            color: var(--accent);
+            cursor: pointer;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+
         .login-success {
             background: #e6f0ef;
             color: #206746;
@@ -338,7 +345,27 @@
                 var data = await res.json();
 
                 if (!res.ok) {
-                    showError(data.error || "Innlogging feilet.");
+                    if (res.status === 403) {
+                        errorBox.innerHTML = (data.error || "E-post ikke bekreftet.") +
+                            ' <span class="resend-link" id="resend-verify">Send bekreftelse på nytt</span>';
+                        errorBox.classList.add("visible");
+                        successBox.classList.remove("visible");
+                        document.getElementById("resend-verify").addEventListener("click", async function() {
+                            this.textContent = "Sender...";
+                            try {
+                                await fetch("/auth/resend-verification", {
+                                    method: "POST",
+                                    headers: { "Content-Type": "application/json" },
+                                    body: JSON.stringify({ email: email })
+                                });
+                                showSuccess("Bekreftelseslenke sendt! Sjekk innboksen din.");
+                            } catch (e) {
+                                showError("Kunne ikke sende e-post. Prøv igjen.");
+                            }
+                        });
+                    } else {
+                        showError(data.error || "Innlogging feilet.");
+                    }
                     return;
                 }
 

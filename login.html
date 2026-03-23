@@ -393,10 +393,14 @@
                     return;
                 }
 
-                showSuccess("Konto opprettet! Du kan nå logge inn.");
-                tabLogin.click();
-                document.getElementById("login-email").value = email;
-                document.getElementById("login-password").focus();
+                if (data.needsVerification) {
+                    showSuccess("Konto opprettet! Sjekk e-posten din for å bekrefte kontoen.");
+                } else {
+                    showSuccess("Konto opprettet! Du kan nå logge inn.");
+                    tabLogin.click();
+                    document.getElementById("login-email").value = email;
+                    document.getElementById("login-password").focus();
+                }
             } catch (err) {
                 showError("Noe gikk galt. Prøv igjen.");
             } finally {

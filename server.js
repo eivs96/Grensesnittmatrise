@@ -5,8 +5,12 @@ const fs = require("fs");
 const os = require("os");
 const crypto = require("crypto");
 const sqlite3 = require("sqlite3").verbose();
+const { Resend } = require("resend");
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
 const stripe = stripeSecretKey ? require("stripe")(stripeSecretKey) : null;
+const resendApiKey = process.env.RESEND_API_KEY;
+const resend = resendApiKey ? new Resend(resendApiKey) : null;
+const BASE_URL = process.env.BASE_URL || "http://localhost:3000";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -53,9 +57,14 @@ db.serialize(() => {
             email TEXT NOT NULL UNIQUE,
             password_hash TEXT NOT NULL,
             password_salt TEXT NOT NULL,
+            email_verified INTEGER NOT NULL DEFAULT 0,
+            verify_token TEXT,
             created_at TEXT NOT NULL
         )
     `);
+    // Migrate existing users table if columns are missing
+    db.run(`ALTER TABLE users ADD COLUMN email_verified INTEGER NOT NULL DEFAULT 0`, () => {});
+    db.run(`ALTER TABLE users ADD COLUMN verify_token TEXT`, () => {});
     db.run(`
         CREATE TABLE IF NOT EXISTS user_sessions (
             session_id TEXT PRIMARY KEY,
@@ -180,6 +189,39 @@ app.use((_req, res, next) => {
 app.get("/", (_req, res) => sendPage(res, landingPagePath));
 app.get("/app", (_req, res) => sendPage(res, appPagePath));
 app.get("/login", (_req, res) => sendPage(res, loginPagePath));
+app.get("/auth/verify", async (req, res) => {
+    try {
+        const token = String(req.query.token || "");
+        if (!token) {
+            return res.status(400).send("Ugyldig lenke.");
+        }
+
+        const user = await getQuery("SELECT id, name FROM users WHERE verify_token = ?", [token]);
+        if (!user) {
+            return res.status(400).send("Ugyldig eller utløpt verifiseringslenke.");
+        }
+
+        await runQuery("UPDATE users SET email_verified = 1, verify_token = NULL WHERE id = ?", [user.id]);
+
+        res.send(`
+            <!DOCTYPE html>
+            <html lang="no"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+            <title>E-post bekreftet</title>
+            <style>body{font-family:sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;background:#f3ede2;margin:0}
+            .card{background:#fff;padding:40px;border-radius:20px;text-align:center;max-width:400px;box-shadow:0 10px 40px rgba(0,0,0,0.1)}
+            h1{color:#0c6e70;margin:0 0 12px}p{color:#555;margin:0 0 24px}
+            a{display:inline-block;padding:12px 28px;background:#0c6e70;color:#fff;text-decoration:none;border-radius:10px;font-weight:700}</style>
+            </head><body><div class="card">
+            <h1>E-post bekreftet!</h1>
+            <p>Hei ${user.name}, kontoen din er nå aktivert.</p>
+            <a href="/login">Logg inn</a>
+            </div></body></html>
+        `);
+    } catch (error) {
+        console.error("Verify error:", error);
+        res.status(500).send("Noe gikk galt.");
+    }
+});
 app.get("/favicon.ico", (_req, res) => res.status(204).end());
 app.get("/robots.txt", (_req, res) => {
     res.type("text/plain");
@@ -258,18 +300,41 @@ app.post("/auth/register", async (req, res) => {
         const userId = crypto.randomUUID();
         const salt = crypto.randomBytes(16).toString("hex");
         const passwordHash = hashPassword(password, salt);
+        const verifyToken = crypto.randomBytes(32).toString("hex");
         const createdAt = new Date().toISOString();
 
         await runQuery(
             `
-            INSERT INTO users (id, name, email, password_hash, password_salt, created_at)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO users (id, name, email, password_hash, password_salt, email_verified, verify_token, created_at)
+            VALUES (?, ?, ?, ?, ?, 0, ?, ?)
             `,
-            [userId, name, email, passwordHash, salt, createdAt]
+            [userId, name, email, passwordHash, salt, verifyToken, createdAt]
         );
+
+        // Send verification email
+        if (resend) {
+            const verifyUrl = `${BASE_URL}/auth/verify?token=${verifyToken}`;
+            await resend.emails.send({
+                from: "Grensesnittmatrise <noreply@grensesnittmatrise.no>",
+                to: [email],
+                subject: "Bekreft din e-postadresse – Grensesnittmatrise.no",
+                html: `
+                    <div style="font-family:sans-serif;max-width:500px;margin:0 auto;padding:32px">
+                        <h2 style="color:#0c6e70">Velkommen, ${name}!</h2>
+                        <p>Takk for at du opprettet en konto på Grensesnittmatrise.no.</p>
+                        <p>Klikk knappen under for å bekrefte e-postadressen din:</p>
+                        <a href="${verifyUrl}" style="display:inline-block;padding:14px 28px;background:#0c6e70;color:#fff;text-decoration:none;border-radius:8px;font-weight:700;margin:20px 0">Bekreft e-post</a>
+                        <p style="color:#666;font-size:0.85rem">Eller kopier denne lenken: ${verifyUrl}</p>
+                        <hr style="border:none;border-top:1px solid #eee;margin:24px 0">
+                        <p style="color:#999;font-size:0.8rem">Hvis du ikke opprettet denne kontoen, kan du ignorere denne e-posten.</p>
+                    </div>
+                `,
+            });
+        }
 
         res.status(201).json({
             ok: true,
+            needsVerification: !!resend,
             user: {
                 id: userId,
                 name,
@@ -293,7 +358,7 @@ app.post("/auth/login", async (req, res) => {
 
         const user = await getQuery(
             `
-            SELECT id, name, email, password_hash, password_salt
+            SELECT id, name, email, password_hash, password_salt, email_verified
             FROM users
             WHERE email = ?
             `,
@@ -302,6 +367,10 @@ app.post("/auth/login", async (req, res) => {
 
         if (!user) {
             return res.status(401).json({ error: "Feil e-post eller passord." });
+        }
+
+        if (resend && !user.email_verified) {
+            return res.status(403).json({ error: "Du må bekrefte e-postadressen din først. Sjekk innboksen." });
         }
 
         const attemptedHash = hashPassword(password, user.password_salt);

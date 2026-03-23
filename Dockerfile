@@ -1,5 +1,7 @@
 FROM node:20-alpine
 
+RUN apk add --no-cache python3 make g++
+
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 WORKDIR /app
@@ -15,9 +17,7 @@ ENV NODE_ENV=production
 
 USER appuser
 
-EXPOSE 8080
-
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-    CMD node -e "const port = process.env.PORT || 8080; require('http').get('http://localhost:' + port + '/health', (r) => { if (r.statusCode !== 200) throw new Error(); r.resume(); }).on('error', () => { process.exit(1); })"
+    CMD node -e "const port = process.env.PORT || 3000; require('http').get('http://localhost:' + port + '/health', (r) => { if (r.statusCode !== 200) throw new Error(); r.resume(); }).on('error', () => { process.exit(1); })"
 
 CMD ["npm", "start"]

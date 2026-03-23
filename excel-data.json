@@ -333,17 +333,6 @@
   },
   {
     "tfm": "Generelt utførende",
-    "description": "Varemottak, merking av leveranse, inntransport og lagring av egne varer.",
-    "comments": "",
-    "marks": {
-      "Rør:L": "H",
-      "Vent:L": "H",
-      "EL:L": "H",
-      "Aut:L": "H"
-    }
-  },
-  {
-    "tfm": "Generelt utførende",
     "description": "Hulltaking i murte/støpte konstruksjoner < 50 mm for egne arbeider",
     "comments": "Ikke kjerneboring. Kjerneboring utføres av Consto.",
     "marks": {
@@ -389,8 +378,8 @@
   },
   {
     "tfm": "234 \n244",
-    "description": "Føringsveier - se system 411.",
-    "comments": "",
+    "description": "Dormiljo - grensesnitt mot brannalarm (ABA)",
+    "comments": "Omfatter signaler, koblingspunkt og funksjon ved alarm, frikobling og eventuell romningsfunksjon.",
     "marks": {
       "EL:P": "H",
       "EL:L": "H",
@@ -398,37 +387,18 @@
       "EL:K": "H",
       "EL:F": "H",
       "EL:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
     "tfm": "234 \n244",
-    "description": "Komponenter til brannalarm(542)",
-    "comments": "",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "EL:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Komponenter til adgangskontroll/ innbruddsalarm(543), se respektive system.",
-    "comments": "Benytter samme koblingsboks som elektriker leverer.",
+    "description": "Dormiljo - grensesnitt mot adgangskontroll og innbruddsalarm",
+    "comments": "Omfatter koordinering av las, beslag, dornode, kortleser, alarmkontakt og grensesnittboks.",
     "marks": {
       "Lås og beslag:P": "H",
       "Lås og beslag:L": "H",
@@ -436,26 +406,6 @@
       "Lås og beslag:K": "H",
       "Lås og beslag:F": "H",
       "Lås og beslag:I": "H"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "UPS for dørmiljø - se system 462.",
-    "comments": "Sentral UPS leveres av elektro. Lås og beslag gir effekter og samtidighet til elektro.",
-    "marks": {
-      "Lås og beslag:P": "D",
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "EL:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
     }
   },
   {
@@ -467,12 +417,12 @@
       "Byggfag:M": "H",
       "Dørleverandør:L": "H",
       "Dørleverandør:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "0",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "0",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -483,12 +433,12 @@
       "Lås og beslag:P": "H",
       "Dørleverandør:L": "H",
       "Dørleverandør:M": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "0",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "0",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -500,12 +450,12 @@
       "Byggfag:F": "H",
       "Dørleverandør:L": "H",
       "Dørleverandør:M": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "0",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "0",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -516,12 +466,12 @@
       "Byggfag:P": "H",
       "Byggfag:L": "H",
       "Byggfag:M": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "0",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "0",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -532,12 +482,12 @@
       "Byggfag:P": "H",
       "Byggfag:L": "H",
       "Byggfag:M": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "0",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "0",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -548,12 +498,12 @@
       "Byggfag:P": "H",
       "Byggfag:L": "H",
       "Byggfag:M": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "0",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "0",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -564,12 +514,12 @@
       "Dørleverandør:P": "H",
       "Dørleverandør:L": "H",
       "Dørleverandør:M": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "0",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "0",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -580,12 +530,12 @@
       "Lås og beslag:P": "H",
       "Dørleverandør:L": "H",
       "Dørleverandør:M": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "0",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "0",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -596,12 +546,12 @@
       "Lås og beslag:P": "H",
       "Dørleverandør:L": "H",
       "Dørleverandør:M": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "0",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "0",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -612,12 +562,12 @@
       "Dørleverandør:P": "H",
       "Dørleverandør:L": "H",
       "Dørleverandør:M": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "0",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "0",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -628,12 +578,12 @@
       "Lås og beslag:P": "H",
       "Dørleverandør:L": "H",
       "Dørleverandør:M": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "0",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "0",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -644,12 +594,12 @@
       "Lås og beslag:P": "H",
       "Lås og beslag:L": "H",
       "Lås og beslag:M": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "0",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "0",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -660,12 +610,12 @@
       "Lås og beslag:P": "H",
       "Lås og beslag:L": "H",
       "Lås og beslag:M": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "0",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "0",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -676,12 +626,12 @@
       "Lås og beslag:P": "H",
       "Lås og beslag:L": "H",
       "Lås og beslag:M": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "0",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "0",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -692,12 +642,12 @@
       "Lås og beslag:P": "H",
       "Lås og beslag:L": "H",
       "Lås og beslag:M": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "0",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "0",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -708,12 +658,12 @@
       "Lås og beslag:P": "H",
       "Lås og beslag:L": "H",
       "Lås og beslag:M": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "0",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "0",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -724,12 +674,12 @@
       "Lås og beslag:P": "H",
       "Lås og beslag:L": "H",
       "Lås og beslag:M": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "0",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "0",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -741,12 +691,12 @@
       "Dørleverandør:L": "H",
       "Dørleverandør:M": "H",
       "Dørleverandør:K": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -758,12 +708,12 @@
       "EL:L": "H",
       "EL:M": "H",
       "EL:K": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -775,12 +725,12 @@
       "Lås og beslag:L": "H",
       "Lås og beslag:M": "H",
       "Lås og beslag:K": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -792,12 +742,12 @@
       "Lås og beslag:L": "H",
       "Lås og beslag:M": "H",
       "Lås og beslag:K": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -809,12 +759,12 @@
       "Lås og beslag:L": "H",
       "Lås og beslag:M": "H",
       "Lås og beslag:K": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -826,12 +776,12 @@
       "Lås og beslag:L": "H",
       "Lås og beslag:M": "H",
       "Lås og beslag:K": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -843,12 +793,12 @@
       "Lås og beslag:L": "H",
       "Lås og beslag:M": "H",
       "Lås og beslag:K": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -860,12 +810,12 @@
       "Lås og beslag:L": "H",
       "Lås og beslag:M": "H",
       "Lås og beslag:K": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -878,12 +828,12 @@
       "Lås og beslag:M": "H",
       "Lås og beslag:K": "H",
       "EL:P": "D",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -896,12 +846,12 @@
       "Lås og beslag:M": "H",
       "Lås og beslag:K": "H",
       "EL:P": "D",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -914,12 +864,12 @@
       "Lås og beslag:M": "H",
       "Lås og beslag:K": "H",
       "Lås og beslag:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -933,12 +883,12 @@
       "Lås og beslag:K": "H",
       "Lås og beslag:F": "H",
       "EL:K": "D",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -954,12 +904,12 @@
       "Dørleverandør:F": "H",
       "EL:P": "D",
       "EL:K": "D",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -972,12 +922,12 @@
       "Lås og beslag:M": "H",
       "Lås og beslag:K": "H",
       "EL:P": "D",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -989,12 +939,12 @@
       "Lås og beslag:L": "H",
       "Lås og beslag:M": "H",
       "Lås og beslag:K": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -1007,12 +957,12 @@
       "Dørleverandør:L": "H",
       "Dørleverandør:M": "H",
       "Dørleverandør:K": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "0",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "0",
+      "SD:I": "1"
     }
   },
   {
@@ -1025,12 +975,12 @@
       "Lås og beslag:M": "H",
       "Lås og beslag:K": "H",
       "Lås og beslag:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -1043,12 +993,12 @@
       "Lås og beslag:M": "H",
       "Lås og beslag:K": "H",
       "Lås og beslag:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -1061,12 +1011,12 @@
       "Lås og beslag:M": "H",
       "Lås og beslag:K": "H",
       "EL:P": "D",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -1079,12 +1029,12 @@
       "Lås og beslag:M": "H",
       "Lås og beslag:K": "H",
       "Lås og beslag:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -1098,12 +1048,12 @@
       "Lås og beslag:K": "H",
       "Lås og beslag:F": "H",
       "EL:P": "D",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -1117,12 +1067,12 @@
       "Lås og beslag:K": "H",
       "Lås og beslag:F": "H",
       "EL:P": "D",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -1137,31 +1087,12 @@
       "Lås og beslag:F": "H",
       "EL:P": "D",
       "EL:K": "D",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
-    }
-  },
-  {
-    "tfm": "237",
-    "description": "Solavskjerming",
-    "comments": "",
-    "marks": {}
-  },
-  {
-    "tfm": "237",
-    "description": "Føringsveier - se system 411.",
-    "comments": "",
-    "marks": {
-      "Kontroll:P": "0",
-      "Kontroll:L": "0",
-      "Kontroll:M": "0",
-      "Kontroll:K": "0",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -1176,18 +1107,18 @@
       "EL:K": "H",
       "EL:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
     "tfm": "237",
-    "description": "Betjeningsbryter for solavskjerming (kablet)",
-    "comments": "Delansvar EL: Tegne inn komponent på tegning og i BIM .",
+    "description": "Betjeningsbryter for solavskjerming (tradlos styring og batteripakke)",
+    "comments": "Brukes der solavskjerming leveres som stand-alone losning uten fast lavspent til bryterpunkt.",
     "marks": {
       "Byggfag:P": "H",
       "Byggfag:L": "H",
@@ -1195,18 +1126,18 @@
       "EL:P": "D",
       "EL:M": "H",
       "EL:K": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
-    "tfm": "",
-    "description": "Betjeningsbryter for solavskjerming (trådløs styring og batteripakke)",
-    "comments": "",
+    "tfm": "237",
+    "description": "Betjeningsbryter for solavskjerming (tradlos styring og batteripakke)",
+    "comments": "Brukes der solavskjerming leveres som stand-alone losning uten fast lavspent til bryterpunkt.",
     "marks": {
       "Byggfag:P": "H",
       "Byggfag:L": "H",
@@ -1225,12 +1156,12 @@
       "Byggfag:F": "H",
       "EL:P": "D",
       "EL:K": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -1242,31 +1173,12 @@
       "Byggfag:L": "H",
       "Byggfag:M": "H",
       "EL:K": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
-    }
-  },
-  {
-    "tfm": "249",
-    "description": "Branngardin",
-    "comments": "",
-    "marks": {}
-  },
-  {
-    "tfm": "249",
-    "description": "Føringsveier - se system 411.",
-    "comments": "",
-    "marks": {
-      "Kontroll:P": "0",
-      "Kontroll:L": "0",
-      "Kontroll:M": "0",
-      "Kontroll:K": "0",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -1280,12 +1192,12 @@
       "Byggfag:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -1300,12 +1212,12 @@
       "EL:P": "D",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -1319,19 +1231,13 @@
       "Byggfag:F": "H",
       "EL:P": "D",
       "EL:K": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
-  },
-  {
-    "tfm": "263",
-    "description": "Røykluke",
-    "comments": "",
-    "marks": {}
   },
   {
     "tfm": "263",
@@ -1343,12 +1249,12 @@
       "Byggfag:M": "H",
       "Byggfag:F": "H",
       "EL:K": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -1364,12 +1270,12 @@
       "EL:M": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -1384,12 +1290,12 @@
       "EL:P": "D",
       "EL:L": "D",
       "EL:K": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -1402,37 +1308,26 @@
       "EL:M": "H",
       "EL:K": "H",
       "EL:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
     "tfm": "300",
-    "description": "Generelt - Rørtekniske installasjoner",
-    "comments": "Delansvar EL (overordnet): Tegne inn el-komponenter utenfor teknisk rom på tegning og i BIM .",
-    "marks": {}
-  },
-  {
-    "tfm": "300",
-    "description": "Pumper",
-    "comments": "Hovedpumpe(r) til hovedstokken må bestilles med kalender-ur funksjon",
+    "description": "Pumpe uten frekvensomformer",
+    "comments": "Brukes der pumpe leveres uten integrert frekvensomformer. Grensesnitt mot elkraft, start/stopp, drift/alarm og eventuelle sperresignaler ma avklares.",
     "marks": {
       "Rør:P": "H",
       "Rør:L": "H",
       "Rør:M": "H",
       "Rør:F": "H",
       "EL:K": "H",
-      "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "Aut:I": "D",
+      "SD:I": "D"
     }
   },
   {
@@ -1444,33 +1339,24 @@
       "Rør:L": "H",
       "Rør:M": "H",
       "Rør:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "EL:K": "D",
+      "Aut:I": "D",
+      "SD:I": "D"
     }
   },
   {
     "tfm": "300",
-    "description": "Ekstern frekvensomformer for pumper",
-    "comments": "",
+    "description": "Frekvensomformer for pumpe (separat leveranse)",
+    "comments": "Skal avklare leveranse av frekvensomformer, effektdata, EMC-forutsetninger, servicebryter, signaler og komplett funksjon mot pumpe og SD.",
     "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:F": "H",
+      "Rør:P": "D",
+      "Rør:L": "D",
+      "EL:P": "H",
       "EL:M": "H",
       "EL:K": "H",
-      "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "EL:F": "H",
+      "Aut:I": "D",
+      "SD:I": "D"
     }
   },
   {
@@ -1484,52 +1370,40 @@
       "Rør:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
     "tfm": "300",
-    "description": "Trykkgiver (rør)",
-    "comments": "Delansvar RØR: Tegne inn komp. på systemskjema. Rørlegger leverer følerlommer.",
+    "description": "Trykkgiver pa roranlegg",
+    "comments": "Ror fag angir plassering og prosesskrav. Automasjon leverer signalintegrasjon, skalering og alarmer. Eventuell folerlomme og montasjedetaljer ma avklares.",
     "marks": {
       "Rør:P": "D",
-      "Rør:M": "H",
-      "EL:K": "H",
+      "Rør:M": "D",
       "Aut:P": "H",
       "Aut:L": "H",
       "Aut:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:I": "D"
     }
   },
   {
     "tfm": "300",
-    "description": "Temperaturgiver (rør)",
-    "comments": "Delansvar RØR: Tegne inn komp. på systemskjema. Rørlegger leverer følerlommer.",
+    "description": "Temperaturgiver pa roranlegg",
+    "comments": "Ror fag angir plassering og prosesskrav. Avklar folerlomme, montasje, signalkvalitet og hvem som prover funksjonen mot SD/BMS.",
     "marks": {
       "Rør:P": "D",
-      "Rør:M": "H",
-      "EL:K": "H",
+      "Rør:M": "D",
       "Aut:P": "H",
       "Aut:L": "H",
       "Aut:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:I": "D"
     }
   },
   {
@@ -1544,12 +1418,12 @@
       "Aut:L": "H",
       "Aut:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -1559,17 +1433,10 @@
     "marks": {
       "Rør:P": "D",
       "Rør:M": "H",
-      "EL:K": "H",
       "Aut:P": "H",
       "Aut:L": "H",
       "Aut:F": "H",
-      "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "Aut:I": "D"
     }
   },
   {
@@ -1583,12 +1450,12 @@
       "Rør:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -1600,12 +1467,12 @@
       "Rør:L": "H",
       "Rør:M": "H",
       "Rør:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "0",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "0",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -1619,26 +1486,26 @@
       "EL:K": "H",
       "EL:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
     "tfm": "310",
-    "description": "Sanitæranlegg",
-    "comments": "",
+    "description": "Sanitaranlegg - systemansvar og systemskjema",
+    "comments": "Brukes for overordnet avklaring av systemskjema, plassering av komponenter, malepunkter og grensesnitt mot elkraft og automasjon.",
     "marks": {
       "Rør:P": "H",
       "Rør:L": "H",
       "Rør:M": "H",
       "Rør:K": "H",
       "Rør:F": "H",
-      "Aut:I": "H",
-      "Kontroll:I": "1"
+      "Aut:P": "D",
+      "SD:I": "D"
     }
   },
   {
@@ -1652,31 +1519,26 @@
       "Rør:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
     "tfm": "310",
-    "description": "Vannmåler (generelt)",
-    "comments": "Delansvar RØR: Tegne inn komp. på systemskjema. Alle KV og VV målere leveres av RØR. Alle målere skal kommunisere med BAS-anlegget med IP-kommunikasjon (ModBus eller Bacnet).",
+    "description": "Vannmaler og undermalere for tappevann",
+    "comments": "Gjelder malere utover hovedinntak, inkludert kommunikasjon, adressering, data til SD og ansvaret for komplett leveranse av malepunkter.",
     "marks": {
       "Rør:P": "H",
       "Rør:L": "H",
       "Rør:M": "H",
       "Rør:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "Aut:P": "D",
+      "Aut:I": "D",
+      "SD:I": "D"
     }
   },
   {
@@ -1690,12 +1552,12 @@
       "Rør:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -1709,12 +1571,12 @@
       "Rør:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -1728,12 +1590,12 @@
       "Rør:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -1745,12 +1607,12 @@
       "Rør:L": "H",
       "Rør:M": "H",
       "Rør:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "0",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "0",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -1762,12 +1624,12 @@
       "Rør:L": "H",
       "Rør:M": "H",
       "Rør:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "0",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "0",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -1779,12 +1641,12 @@
       "Rør:L": "H",
       "Rør:M": "H",
       "Rør:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "0",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "0",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -1796,12 +1658,12 @@
       "Rør:L": "H",
       "Rør:M": "H",
       "Rør:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "0",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "0",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -1815,11 +1677,11 @@
       "Rør:M": "D",
       "Rør:K": "H",
       "Rør:F": "H",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -1835,12 +1697,12 @@
       "Rør:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -1854,12 +1716,12 @@
       "Rør:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -1871,14 +1733,10 @@
       "Rør:L": "H",
       "Rør:M": "H",
       "Rør:F": "H",
-      "EL:K": "H",
+      "EL:K": "D",
+      "Aut:P": "D",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:I": "D"
     }
   },
   {
@@ -1892,12 +1750,12 @@
       "EL:F": "D",
       "Aut:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "0",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "0",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -1911,12 +1769,12 @@
       "Aut:M": "H",
       "Aut:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -1930,19 +1788,13 @@
       "Aut:M": "H",
       "Aut:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
-  },
-  {
-    "tfm": "320",
-    "description": "Varmeanlegg",
-    "comments": "",
-    "marks": {}
   },
   {
     "tfm": "320",
@@ -1955,12 +1807,12 @@
       "Rør:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -1974,12 +1826,12 @@
       "Rør:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -1989,12 +1841,12 @@
     "marks": {
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1",
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1",
       "EL:P": "H",
       "EL:L": "H",
       "EL:M": "H",
@@ -2012,12 +1864,12 @@
       "Rør:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -2029,12 +1881,12 @@
       "Rør:L": "H",
       "Rør:M": "H",
       "Rør:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "0",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "0",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -2048,12 +1900,12 @@
       "Rør:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -2068,7 +1920,7 @@
       "Vent:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:I": "1"
+      "SD:I": "1"
     }
   },
   {
@@ -2082,12 +1934,12 @@
       "Aut:M": "H",
       "Aut:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -2101,12 +1953,12 @@
       "Vent:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -2120,19 +1972,13 @@
       "Rør:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
-  },
-  {
-    "tfm": "330",
-    "description": "Slukkeanlegg",
-    "comments": "",
-    "marks": {}
   },
   {
     "tfm": "332",
@@ -2145,12 +1991,12 @@
       "Vent:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -2164,12 +2010,12 @@
       "Rør:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -2182,12 +2028,12 @@
       "Rør:L": "H",
       "Rør:M": "H",
       "Rør:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "0",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "0",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -2201,19 +2047,13 @@
       "Rør:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
-  },
-  {
-    "tfm": "351",
-    "description": "Kjøleromsystemer (kjøkken)",
-    "comments": "",
-    "marks": {}
   },
   {
     "tfm": "351",
@@ -2231,12 +2071,12 @@
       "Aut:L": "D",
       "Aut:F": "D",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -2250,18 +2090,12 @@
       "Aut:M": "H",
       "Aut:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
-  },
-  {
-    "tfm": "352",
-    "description": "Fryseromsystemer (kjøkken)",
-    "comments": "",
-    "marks": {}
   },
   {
     "tfm": "352",
@@ -2278,12 +2112,12 @@
       "Aut:L": "D",
       "Aut:F": "D",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -2297,12 +2131,12 @@
       "Aut:L": "H",
       "Aut:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -2316,19 +2150,13 @@
       "EL:M": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
-  },
-  {
-    "tfm": "353",
-    "description": "Kjølesystemer for virksomhet (datarom, AV-rom, avfallsrom, o.l.)",
-    "comments": "",
-    "marks": {}
   },
   {
     "tfm": "353",
@@ -2341,12 +2169,12 @@
       "Vent:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -2360,12 +2188,12 @@
       "Vent:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -2379,12 +2207,12 @@
       "Vent:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -2400,27 +2228,17 @@
   },
   {
     "tfm": "360",
-    "description": "Luftbehandling",
-    "comments": "Delansvar: Se underpunkter.",
-    "marks": {}
-  },
-  {
-    "tfm": "360",
-    "description": "Ventilasjonsaggregat (intern automatikk)",
-    "comments": "Delansvar EL: Kabling til eksterne følere etc.",
+    "description": "Ventilasjonsaggregat med intern automatikk",
+    "comments": "Skal avklare hvilke funksjoner som ligger i aggregatleveranse, hvilke signaler som utveksles mot SD og hvem som eier komplett reguleringsstrategi.",
     "marks": {
       "Vent:P": "H",
       "Vent:L": "H",
       "Vent:M": "H",
       "Vent:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "EL:K": "D",
+      "Aut:P": "D",
+      "Aut:I": "D",
+      "SD:I": "D"
     }
   },
   {
@@ -2434,12 +2252,12 @@
       "Vent:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -2453,12 +2271,12 @@
       "Rør:K": "H",
       "Rør:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -2472,12 +2290,12 @@
       "Vent:K": "H",
       "Vent:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -2493,12 +2311,12 @@
       "EL:F": "H",
       "EL:I": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "2"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "2"
     }
   },
   {
@@ -2513,12 +2331,12 @@
       "Vent:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -2533,12 +2351,12 @@
       "Vent:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -2552,12 +2370,12 @@
       "EL:K": "H",
       "EL:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -2571,12 +2389,12 @@
       "Vent:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -2589,12 +2407,12 @@
       "Vent:M": "H",
       "Vent:F": "H",
       "EL:K": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -2607,12 +2425,12 @@
       "Rør:M": "H",
       "Rør:F": "H",
       "Vent:P": "D",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "0",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "0",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -2626,19 +2444,13 @@
       "Vent:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
-  },
-  {
-    "tfm": "369",
-    "description": "Brannspjeld",
-    "comments": "",
-    "marks": {}
   },
   {
     "tfm": "369",
@@ -2651,12 +2463,12 @@
       "Vent:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -2670,19 +2482,13 @@
       "Vent:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
-  },
-  {
-    "tfm": "411",
-    "description": "Føringsveier",
-    "comments": "",
-    "marks": {}
   },
   {
     "tfm": "411",
@@ -2694,12 +2500,12 @@
       "EL:M": "H",
       "EL:K": "H",
       "EL:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -2712,12 +2518,12 @@
       "EL:M": "H",
       "EL:K": "H",
       "EL:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -2730,12 +2536,12 @@
       "EL:M": "H",
       "EL:K": "H",
       "EL:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -2750,12 +2556,12 @@
       "EL:M": "D",
       "EL:K": "H",
       "EL:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -2768,12 +2574,12 @@
       "EL:M": "H",
       "EL:K": "H",
       "EL:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -2786,12 +2592,12 @@
       "EL:M": "H",
       "EL:K": "H",
       "EL:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -2806,12 +2612,12 @@
       "EL:M": "H",
       "EL:K": "H",
       "EL:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -2826,12 +2632,12 @@
       "EL:M": "H",
       "EL:K": "H",
       "EL:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -2846,12 +2652,12 @@
       "EL:M": "H",
       "EL:K": "H",
       "EL:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -2859,12 +2665,12 @@
     "description": "Nettstasjon",
     "comments": "Delansvar EL: Dialog og koordinering med nettleverandør.",
     "marks": {
-      "Kontroll:P": "0",
-      "Kontroll:L": "0",
-      "Kontroll:M": "0",
-      "Kontroll:K": "0",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "0",
+      "SD:L": "0",
+      "SD:M": "0",
+      "SD:K": "0",
+      "SD:F": "0",
+      "SD:I": "0"
     }
   },
   {
@@ -2886,9 +2692,9 @@
       "EL:L": "D",
       "EL:M": "D",
       "EL:K": "D",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -2903,19 +2709,13 @@
       "EL:M": "H",
       "EL:K": "H",
       "EL:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
-  },
-  {
-    "tfm": "430",
-    "description": "Lavspent forsyning (gjelder system 430 til 490)",
-    "comments": "",
-    "marks": {}
   },
   {
     "tfm": "430",
@@ -2928,12 +2728,12 @@
       "EL:K": "H",
       "EL:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -2947,12 +2747,12 @@
       "EL:K": "H",
       "EL:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -2966,12 +2766,12 @@
       "EL:K": "H",
       "EL:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -2983,12 +2783,12 @@
       "BH:L": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "0",
-      "Kontroll:L": "1",
-      "Kontroll:M": "0",
-      "Kontroll:K": "1",
-      "Kontroll:F": "0",
-      "Kontroll:I": "1"
+      "SD:P": "0",
+      "SD:L": "1",
+      "SD:M": "0",
+      "SD:K": "1",
+      "SD:F": "0",
+      "SD:I": "1"
     }
   },
   {
@@ -3002,12 +2802,12 @@
       "EL:K": "H",
       "EL:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -3024,12 +2824,6 @@
   },
   {
     "tfm": "434",
-    "description": "Elkraftfordeling til driftstekniske installasjoner",
-    "comments": "",
-    "marks": {}
-  },
-  {
-    "tfm": "434",
     "description": "Fordelinger for VVS-installasjoner (kraft og automatikk)",
     "comments": "",
     "marks": {
@@ -3039,12 +2833,12 @@
       "Aut:M": "H",
       "Aut:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -3058,19 +2852,13 @@
       "EL:K": "H",
       "EL:F": "H",
       "EL:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
-  },
-  {
-    "tfm": "442",
-    "description": "Belysningsutstyr",
-    "comments": "",
-    "marks": {}
   },
   {
     "tfm": "442",
@@ -3092,12 +2880,12 @@
       "EL:M": "H",
       "EL:K": "H",
       "EL:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -3110,19 +2898,13 @@
       "Byggfag:M": "H",
       "Byggfag:F": "H",
       "EL:K": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
-  },
-  {
-    "tfm": "443",
-    "description": "Nødlysutstyr",
-    "comments": "",
-    "marks": {}
   },
   {
     "tfm": "443",
@@ -3135,12 +2917,12 @@
       "EL:K": "H",
       "EL:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -3154,19 +2936,13 @@
       "EL:K": "H",
       "EL:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
-  },
-  {
-    "tfm": "453",
-    "description": "Varmekabler frostsikring (drift)",
-    "comments": "",
-    "marks": {}
   },
   {
     "tfm": "453",
@@ -3182,12 +2958,12 @@
       "EL:F": "H",
       "EL:I": "D",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -3201,12 +2977,12 @@
       "EL:K": "H",
       "EL:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -3220,12 +2996,12 @@
       "EL:K": "H",
       "EL:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -3239,19 +3015,13 @@
       "EL:K": "H",
       "EL:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
-  },
-  {
-    "tfm": "462",
-    "description": "Avbruddsfri kraft (AK)",
-    "comments": "",
-    "marks": {}
   },
   {
     "tfm": "462",
@@ -3271,12 +3041,12 @@
       "EL:F": "H",
       "Aut:P": "D",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -3290,12 +3060,12 @@
       "Lås og beslag:K": "H",
       "Lås og beslag:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -3309,19 +3079,13 @@
       "BH:K": "H",
       "BH:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
-  },
-  {
-    "tfm": "470",
-    "description": "Lokal elkraftproduksjon",
-    "comments": "",
-    "marks": {}
   },
   {
     "tfm": "471",
@@ -3335,12 +3099,12 @@
       "Byggfag:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -3358,17 +3122,17 @@
       "EL:M": "D",
       "EL:K": "D",
       "EL:F": "D",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
     "tfm": "520",
-    "description": "Passivt spredenett (for alle systemer i bygget)",
+    "description": "Passivt spredenett for tekniske og brukerrelaterte systemer",
     "comments": "Avsluttes slik BH ønsker dette",
     "marks": {
       "EL:P": "H",
@@ -3392,12 +3156,12 @@
       "EL:M": "H",
       "EL:K": "H",
       "EL:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -3411,12 +3175,12 @@
       "EL:M": "H",
       "EL:K": "H",
       "EL:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -3430,12 +3194,12 @@
       "EL:K": "H",
       "EL:F": "H",
       "EL:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -3448,30 +3212,26 @@
       "BH:M": "H",
       "BH:K": "H",
       "BH:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
     "tfm": "521",
-    "description": "Switcher for driftsteknisk nett",
-    "comments": "Switcher for teknisk nett leveres av elektriker",
+    "description": "Switcher for driftsteknisk nett og SD",
+    "comments": "Skal avklare hvem som leverer switch, konfigurasjon, VLAN, porter, PoE-behov og dokumentasjon for tekniske systemer.",
     "marks": {
       "EL:P": "H",
       "EL:L": "H",
       "EL:M": "H",
       "EL:K": "H",
       "EL:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "D",
+      "SD:I": "D"
     }
   },
   {
@@ -3484,33 +3244,25 @@
       "BH:M": "H",
       "BH:K": "H",
       "BH:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
     "tfm": "520",
-    "description": "Tildeling av IP-adresser (IP-range)",
-    "comments": "Delansvar: Alle aktører må oppgi behov for IP-adresser. Når det gjelder teknisk nett, så leverer elektro switcher + IP-adresse",
+    "description": "Teknisk nett - IP-adresser, VLAN og nettverkskoordinering",
+    "comments": "Gjelder tekniske systemer som skal pa byggets tekniske nett, inkludert SD, energimalere, heis, AAK, ITV og andre integrerte systemer.",
     "marks": {
-      "BH:P": "H",
-      "BH:L": "H",
-      "Byggfag:P": "D",
-      "Rør:P": "D",
-      "Vent:P": "D",
+      "BH:P": "D",
       "EL:P": "H",
-      "EL:L": "H",
+      "EL:L": "D",
       "Aut:P": "D",
-      "Kontroll:P": "2",
-      "Kontroll:L": "2",
-      "Kontroll:M": "0",
-      "Kontroll:K": "0",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "D",
+      "SD:I": "D"
     }
   },
   {
@@ -3524,18 +3276,18 @@
       "EL:K": "H",
       "EL:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
     "tfm": "542",
-    "description": "Brannalarm (ABA)",
-    "comments": "Delansvar: Se underpunkter.",
+    "description": "Brannalarm (ABA) - systemansvar og hovedleveranse",
+    "comments": "Brukes for overordnet avklaring av sentraler, sl?yfer, nettverk, str?mforsyning og grensesnitt mot tilknyttede systemer.",
     "marks": {
       "EL:P": "H",
       "EL:L": "H",
@@ -3543,18 +3295,18 @@
       "EL:K": "H",
       "EL:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
     "tfm": "542",
-    "description": "Brannteknisk styresignal inn/ut til andre system",
-    "comments": "Delansvar: Anvise plasseringer for alle tilkoblinger.",
+    "description": "Brannalarm - styresignal og grensesnitt mot andre systemer",
+    "comments": "Skal angi hvilke systemer som pavirkes, hvilke signaler som utveksles og hvem som har ansvar for komplett funksjonstest.",
     "marks": {
       "Byggfag:P": "D",
       "Lås og beslag:P": "D",
@@ -3566,12 +3318,12 @@
       "EL:K": "H",
       "EL:F": "H",
       "Aut:P": "D",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -3585,12 +3337,12 @@
       "EL:M": "H",
       "EL:K": "H",
       "EL:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -3603,18 +3355,18 @@
       "EL:L": "H",
       "EL:K": "H",
       "EL:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
     "tfm": "543",
-    "description": "Adgangskontroll (AAK)",
-    "comments": "Delansvar EL:  Kabling/tilkobling frem til sentral/strømforsyning.\nDelansvar øvrig: Se underpunkter.",
+    "description": "Adgangskontroll (AAK) - systemansvar og hovedleveranse",
+    "comments": "Brukes for overordnet avklaring av sentraler, stromforsyning, dornoder, kortlesere, d?rlogikk og integrasjoner mot andre systemer.",
     "marks": {
       "BH:P": "D",
       "Byggfag:P": "D",
@@ -3622,27 +3374,8 @@
       "Lås og beslag:L": "H",
       "Lås og beslag:M": "H",
       "Lås og beslag:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
-    }
-  },
-  {
-    "tfm": "543",
-    "description": "Føringsveier - se system 411.",
-    "comments": "",
-    "marks": {
-      "Kontroll:P": "0",
-      "Kontroll:L": "0",
-      "Kontroll:M": "0",
-      "Kontroll:K": "0",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "EL:K": "D",
+      "SD:I": "D"
     }
   },
   {
@@ -3682,12 +3415,12 @@
       "Lås og beslag:K": "H",
       "Lås og beslag:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -3701,12 +3434,12 @@
       "Lås og beslag:K": "H",
       "Lås og beslag:F": "H",
       "Lås og beslag:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -3719,12 +3452,12 @@
       "Lås og beslag:M": "H",
       "Lås og beslag:K": "H",
       "Lås og beslag:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -3737,12 +3470,12 @@
       "Lås og beslag:M": "H",
       "Lås og beslag:K": "H",
       "Lås og beslag:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -3756,12 +3489,8 @@
       "Lås og beslag:M": "H",
       "Lås og beslag:K": "H",
       "Lås og beslag:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "EL:K": "D",
+      "SD:I": "D"
     }
   },
   {
@@ -3774,12 +3503,12 @@
       "Lås og beslag:M": "H",
       "Lås og beslag:K": "H",
       "Lås og beslag:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -3805,12 +3534,12 @@
       "Byggfag:M": "H",
       "Byggfag:K": "H",
       "Byggfag:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -3824,24 +3553,12 @@
       "Lås og beslag:K": "H",
       "Lås og beslag:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
-    }
-  },
-  {
-    "tfm": "553",
-    "description": "Føringsveier - se system 411.",
-    "comments": "",
-    "marks": {
-      "Kontroll:P": "0",
-      "Kontroll:L": "0",
-      "Kontroll:M": "0",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -3854,12 +3571,12 @@
       "Lås og beslag:M": "H",
       "Lås og beslag:F": "H",
       "EL:K": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -3871,30 +3588,30 @@
       "Lås og beslag:L": "H",
       "Lås og beslag:M": "H",
       "Lås og beslag:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "0",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "0",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
-    "tfm": "543",
-    "description": "Servere for ITV.",
-    "comments": "",
+    "tfm": "553",
+    "description": "Server/VMS for ITV",
+    "comments": "Avklar leveranse av server, lagring, lisens, nettverk, rackplass, UPS-behov og ansvar for oppsett mot kameraer og klienter.",
     "marks": {
       "Lås og beslag:P": "H",
       "Lås og beslag:L": "H",
       "Lås og beslag:M": "H",
       "Lås og beslag:F": "H",
       "EL:K": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -3911,25 +3628,12 @@
       "EL:M": "D",
       "EL:K": "H",
       "EL:F": "D",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
-    }
-  },
-  {
-    "tfm": "555",
-    "description": "Føringsveier - se system 411.",
-    "comments": "",
-    "marks": {
-      "Kontroll:P": "0",
-      "Kontroll:L": "0",
-      "Kontroll:M": "0",
-      "Kontroll:K": "0",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -3942,12 +3646,12 @@
       "EL:M": "H",
       "EL:K": "H",
       "EL:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -3960,18 +3664,18 @@
       "BH:M": "H",
       "BH:K": "H",
       "BH:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
     "tfm": "562",
-    "description": "Sentral driftskontroll og automatisering (sentralutstyr)",
-    "comments": "",
+    "description": "Sentral driftskontroll og automatisering - sentralutstyr",
+    "comments": "Omfatter server/gateway/sentralutstyr, lisens, database, backup og ansvaret for komplett oppkobling mot underliggende anlegg.",
     "marks": {
       "EL:M": "H",
       "EL:K": "H",
@@ -3979,12 +3683,12 @@
       "Aut:L": "H",
       "Aut:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -3998,18 +3702,18 @@
       "Aut:L": "H",
       "Aut:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
     "tfm": "563",
-    "description": "Romkontroll (inkludert sentralutstyr)",
-    "comments": "Delansvar EL (overordnet):  Tegne inn romkontrollkomponenter på tegning og i BIM .",
+    "description": "Romkontroll - systemansvar og hovedleveranse",
+    "comments": "Brukes for a avklare om romkontroll leveres som del av ventilasjon, automasjon eller annet system, og hvem som eier komplett funksjon.",
     "marks": {
       "EL:P": "D",
       "EL:K": "H",
@@ -4018,12 +3722,12 @@
       "Aut:M": "H",
       "Aut:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -4038,12 +3742,12 @@
       "Aut:M": "H",
       "Aut:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -4058,17 +3762,17 @@
       "Aut:M": "H",
       "Aut:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
     "tfm": "563",
-    "description": "CO2 giver i rom, hvis disse ikke kommer med WISE",
+    "description": "CO2-giver i rom, hvis disse ikke kommer med WISE",
     "comments": "Delansvar: Elektro må sette av plass til KNX utstyr i tavlene",
     "marks": {
       "EL:P": "D",
@@ -4078,12 +3782,12 @@
       "Aut:M": "H",
       "Aut:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -4098,25 +3802,25 @@
       "EL:F": "H",
       "Aut:P": "D",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
-    "tfm": "",
+    "tfm": "563",
     "description": "Trafo for CAV-/VAV-spjeld i rom der disse ikke kommer med WISE",
-    "comments": "",
+    "comments": "Skal avklares sammen med romkontroll, stromforsyning og plass i himling/teknisk sone.",
     "marks": {
       "Vent:P": "H",
       "Vent:L": "H",
       "Vent:M": "H",
       "Vent:K": "H",
       "Vent:F": "H",
-      "Kontroll:I": "0"
+      "SD:I": "0"
     }
   },
   {
@@ -4131,9 +3835,9 @@
       "EL:K": "H",
       "Aut:F": "H",
       "Aut:I": "H",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -4148,9 +3852,9 @@
       "EL:K": "H",
       "Aut:F": "H",
       "Aut:I": "H",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -4164,9 +3868,9 @@
       "Vent:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -4180,12 +3884,12 @@
       "Vent:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -4199,9 +3903,9 @@
       "Vent:F": "H",
       "EL:P": "D",
       "EL:K": "H",
-      "Kontroll:P": "1",
-      "Kontroll:K": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:K": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -4228,12 +3932,12 @@
       "EL:K": "H",
       "EL:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -4247,72 +3951,59 @@
       "EL:K": "H",
       "EL:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
     "tfm": "621",
-    "description": "Heiser",
-    "comments": "Delansvar EL: Kabling frem til heisfordeling/heismaskin.",
+    "description": "Heis - hovedleveranse og bygningsmessige forutsetninger",
+    "comments": "Brukes for overordnet avklaring av sjakt, gruber, topper, stromforsyning, montasjegrenser, ansvar mot byggfag og komplett heisleveranse.",
     "marks": {
-      "Byggfag:P": "H",
-      "Byggfag:L": "H",
-      "Byggfag:M": "H",
-      "Byggfag:K": "H",
-      "Byggfag:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "Byggfag:P": "D",
+      "Byggfag:L": "D",
+      "Byggfag:M": "D",
+      "Byggfag:K": "D",
+      "Byggfag:F": "D",
+      "EL:P": "D",
+      "EL:K": "D"
     }
   },
   {
     "tfm": "621",
-    "description": "Brannsignal - se system 542.",
-    "comments": "",
+    "description": "Heis - brannsignal, prioritert styring og returfunksjon",
+    "comments": "Grensesnitt mellom heis, brannalarm og elkraft skal avklares eksplisitt med signaltype, funksjon og testansvar.",
     "marks": {
+      "Byggfag:P": "D",
       "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
+      "EL:L": "D",
+      "EL:M": "D",
       "EL:K": "H",
-      "EL:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "EL:F": "D",
+      "Aut:P": "D",
+      "SD:I": "D"
     }
   },
   {
     "tfm": "621",
-    "description": "Alarmoverføring for heis (GSM-utstyr)",
-    "comments": "",
+    "description": "Heis - alarmoverforing og nodkommunikasjon",
+    "comments": "Avklar leveranse av kommunikasjon, abonnement, stromforsyning og fysisk tilrettelegging mellom heisleverandor, elektro og byggherre.",
     "marks": {
-      "Byggfag:P": "H",
-      "Byggfag:L": "H",
-      "Byggfag:M": "H",
-      "Byggfag:K": "H",
-      "Byggfag:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "BH:P": "D",
+      "EL:P": "H",
+      "EL:L": "D",
+      "EL:K": "D",
+      "SD:I": "D"
     }
   },
   {
     "tfm": "621",
-    "description": "Kommunikasjon med speedgate",
-    "comments": "Heis må være forberedt for kommunikasjon mot speedgate-system.",
+    "description": "Heis - grensesnitt mot speedgate og adgangskontroll",
+    "comments": "Heis ma vaere forberedt for signalutveksling og logikk mot speedgate/AAK der dette inngar i brukerreisen.",
     "marks": {
       "Lås og beslag:P": "H",
       "Lås og beslag:L": "H",
@@ -4324,15 +4015,21 @@
   },
   {
     "tfm": "731",
-    "description": "Utendørs VA",
-    "comments": "",
+    "description": "Utendors VA - grensesnitt mot elkraft og automasjon",
+    "comments": "Gjelder pumper, kummer, sensorer, varmekabler og eventuelle signaler/alarmoverforing til SD eller andre tekniske systemer.",
     "marks": {
-      "Kontroll:P": "0",
-      "Kontroll:L": "0",
-      "Kontroll:M": "0",
-      "Kontroll:K": "0",
-      "Kontroll:F": "0",
-      "Kontroll:I": "0"
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "Rør:M": "H",
+      "Rør:F": "H",
+      "EL:K": "H",
+      "Aut:I": "H",
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -4348,12 +4045,12 @@
       "EL:K": "H",
       "Aut:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -4367,12 +4064,12 @@
       "Aut:L": "H",
       "Aut:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -4386,12 +4083,12 @@
       "Aut:L": "H",
       "Aut:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -4404,12 +4101,12 @@
       "EL:M": "H",
       "EL:K": "H",
       "EL:F": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "0"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "0"
     }
   },
   {
@@ -4428,12 +4125,12 @@
       "EL:K": "H",
       "EL:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -4447,12 +4144,12 @@
       "BH:F": "H",
       "EL:K": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -4466,12 +4163,12 @@
       "Aut:L": "H",
       "Aut:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
     }
   },
   {
@@ -4485,12 +4182,213 @@
       "Aut:L": "H",
       "Aut:F": "H",
       "Aut:I": "H",
-      "Kontroll:P": "1",
-      "Kontroll:L": "1",
-      "Kontroll:M": "1",
-      "Kontroll:K": "1",
-      "Kontroll:F": "1",
-      "Kontroll:I": "1"
+      "SD:P": "1",
+      "SD:L": "1",
+      "SD:M": "1",
+      "SD:K": "1",
+      "SD:F": "1",
+      "SD:I": "1"
+    }
+  },
+  {
+    "tfm": "200",
+    "description": "Innfesting og oppheng for tekniske installasjoner",
+    "comments": "Tekniske fag angir laster, plassering og behov. Byggfag prosjekterer og etablerer bygningsmessige forutsetninger i baeresystem, dekker og vegger.",
+    "marks": {
+      "Byggfag:P": "H",
+      "Byggfag:L": "H",
+      "Byggfag:M": "H",
+      "Byggfag:K": "H",
+      "Byggfag:F": "H",
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "Aut:P": "D"
+    }
+  },
+  {
+    "tfm": "200",
+    "description": "Plass i sjakter, over himling og i tekniske rom",
+    "comments": "Skal koordineres tverrfaglig tidlig. Alle fag ma melde plassbehov, serviceareal, reserveplass og montasjerekkefolge for bygging.",
+    "marks": {
+      "Byggfag:P": "H",
+      "Byggfag:L": "H",
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "Aut:P": "D"
+    }
+  },
+  {
+    "tfm": "360",
+    "description": "Frostvakt og frysevernfunksjon for ventilasjonsanlegg",
+    "comments": "Skal avklare foler, plassering, kabling, styringslogikk, alarmhandtering og hvem som leverer komplett funksjon ved stopp eller fare for frost.",
+    "marks": {
+      "Vent:P": "D",
+      "Vent:L": "D",
+      "Vent:M": "H",
+      "Aut:P": "H",
+      "Aut:L": "H",
+      "Aut:F": "H",
+      "Aut:I": "H",
+      "SD:I": "D"
+    }
+  },
+  {
+    "tfm": "521",
+    "description": "Teknisk nettverk - switch, VLAN og portapninger for integrerte systemer",
+    "comments": "Skal avklares for SD, automasjon, energimalere, heis, AAK, ITV, porttelefon og annet utstyr som skal inn pa teknisk nettverk.",
+    "marks": {
+      "BH:P": "D",
+      "EL:P": "H",
+      "EL:L": "D",
+      "EL:K": "H",
+      "Aut:P": "D",
+      "SD:P": "D",
+      "SD:I": "D"
+    }
+  },
+  {
+    "tfm": "562",
+    "description": "Kommunikasjon mot toppsystem (BACnet/IP, Modbus eller tilsvarende)",
+    "comments": "Folger vanlig bransjepraksis for SD-integrasjon: protokoll, autonom drift, eventuelle gatewayer og komplett integrasjon mot toppsystem ma vaere eksplisitt avklart.",
+    "marks": {
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "Aut:P": "H",
+      "Aut:L": "H",
+      "Aut:M": "H",
+      "Aut:F": "H",
+      "Aut:I": "H",
+      "SD:I": "D"
+    }
+  },
+  {
+    "tfm": "562",
+    "description": "Datapunktsliste, objektnavn og integrasjonsansvar mot SD",
+    "comments": "Bor beskrive hvilke systemer grensesnittet gjelder for, hvilke signaler og funksjoner som inngar og hvem som eier levering, test og overlevering.",
+    "marks": {
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "Aut:P": "H",
+      "Aut:L": "H",
+      "Aut:M": "H",
+      "Aut:F": "H",
+      "Aut:I": "H",
+      "SD:P": "D",
+      "SD:I": "D"
+    }
+  },
+  {
+    "tfm": "300",
+    "description": "Pumpe - driftssignal, alarm og start/stopp mot SD",
+    "comments": "Skal avklare hvilke signaler som skal utveksles mellom pumpe, elkraft og automasjon, inkludert drift, feil, start/stopp, settpunkter og eventuell hand/auto-logikk.",
+    "marks": {
+      "Rør:P": "D",
+      "EL:P": "D",
+      "Aut:P": "H",
+      "Aut:L": "H",
+      "Aut:F": "H",
+      "Aut:I": "H",
+      "SD:I": "D"
+    }
+  },
+  {
+    "tfm": "310",
+    "description": "Lekkasjedeteksjon - alarm, stengeventil og kvittering",
+    "comments": "Skal tydelig avklare hvem som leverer folere, ventiler, styreenhet, lokal varsling, signal til SD og reset/kvitteringsfunksjon.",
+    "marks": {
+      "Rør:P": "D",
+      "Rør:L": "D",
+      "Rør:M": "H",
+      "EL:K": "D",
+      "Aut:P": "H",
+      "Aut:I": "H",
+      "SD:I": "D"
+    }
+  },
+  {
+    "tfm": "521",
+    "description": "Firewall, portapninger og ekstern tilgang for tekniske systemer",
+    "comments": "Gjelder systemer som trenger fjernsupport, skylosninger, alarmoverforing eller kommunikasjon ut av teknisk nett. Skal avklares tidlig med BH/IT.",
+    "marks": {
+      "BH:P": "D",
+      "EL:P": "H",
+      "EL:L": "D",
+      "Aut:P": "D",
+      "SD:P": "D",
+      "SD:I": "D"
+    }
+  },
+  {
+    "tfm": "562",
+    "description": "Systembilder, alarmer og trendlogger i SD",
+    "comments": "Borer beskrive hvem som leverer bildehierarki, alarmtekster, trendpunkter, betjeningsbilder og ansvaret for at funksjonen faktisk er brukbar for drift.",
+    "marks": {
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "Aut:P": "D",
+      "Aut:I": "D",
+      "SD:P": "H",
+      "SD:L": "H",
+      "SD:F": "H",
+      "SD:I": "H"
+    }
+  },
+  {
+    "tfm": "562",
+    "description": "Integrasjonstest og funksjonstest mot SD",
+    "comments": "Skal angi hvem som tester feltutstyr, busskommunikasjon, toppsystem, alarmkjeder, trendlogger og komplett samspill mellom fagene for overlevering.",
+    "marks": {
+      "Rør:I": "D",
+      "Vent:I": "D",
+      "EL:I": "D",
+      "Aut:P": "H",
+      "Aut:I": "H",
+      "SD:I": "D"
+    }
+  },
+  {
+    "tfm": "543",
+    "description": "AAK - funksjonsmatrise for dorer og soner",
+    "comments": "Bor samle apningslogikk, tidsstyring, sikkerhetsniva, sammenkobling mot doraautomatikk, ABA, AIA og eventuelle brukerkrav per dorkategori.",
+    "marks": {
+      "BH:P": "D",
+      "Byggfag:P": "D",
+      "Lås og beslag:P": "H",
+      "Lås og beslag:L": "D",
+      "EL:K": "D",
+      "SD:I": "D"
+    }
+  },
+  {
+    "tfm": "621",
+    "description": "Heis - teknisk nett, fjernovervaking og abonnement",
+    "comments": "Skal avklare om heis bruker GSM, IP eller annen kommunikasjonsvei, hvem som leverer abonnement og hvem som etablerer komplett forbindelse og dokumentasjon.",
+    "marks": {
+      "BH:P": "D",
+      "EL:P": "H",
+      "EL:L": "D",
+      "Aut:P": "D",
+      "SD:P": "D",
+      "SD:I": "D"
+    }
+  },
+  {
+    "tfm": "621",
+    "description": "Heis - stromforsyning, stikk, belysning og varme i sjakt/maskinrom",
+    "comments": "Bor tydelig avklare hva som ligger i heisleveransen og hva som leveres av elektro og bygg, spesielt i sjakt, grube, maskinrom og tekniske nisjer.",
+    "marks": {
+      "Byggfag:P": "D",
+      "Byggfag:M": "D",
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "EL:F": "H"
     }
   }
 ]

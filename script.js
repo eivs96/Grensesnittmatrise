@@ -37,7 +37,6 @@ const tueAdkHelp = document.getElementById("tue-adk-help");
 const tueRecommendation = document.getElementById("tue-recommendation");
 const applyPackagePresetButton = document.getElementById("apply-package-preset");
 const bhUploadInput = document.getElementById("bh-upload");
-const bhTextInput = document.getElementById("bh-text");
 const analyzeBhButton = document.getElementById("analyze-bh");
 const bhAnalysisStatus = document.getElementById("bh-analysis-status");
 const bhAnalysisInsights = document.getElementById("bh-analysis-insights");
@@ -77,6 +76,8 @@ const showOpenOnlyInput = document.getElementById("show-open-only");
 const addRowButton = document.getElementById("add-row");
 const deleteRowButton = document.getElementById("delete-row");
 const jumpUnresolvedButton = document.getElementById("jump-unresolved");
+const toggleReviewModeButton = document.getElementById("toggle-review-mode");
+const reviewFilterButtons = Array.from(document.querySelectorAll("[data-review-filter]"));
 const matrixVisibleCount = document.getElementById("matrix-visible-count");
 const matrixVisibleDetail = document.getElementById("matrix-visible-detail");
 const matrixConfirmedCount = document.getElementById("matrix-confirmed-count");
@@ -85,6 +86,21 @@ const matrixOpenCount = document.getElementById("matrix-open-count");
 const matrixOpenDetail = document.getElementById("matrix-open-detail");
 const matrixFilterCount = document.getElementById("matrix-filter-count");
 const matrixFilterStatus = document.getElementById("matrix-filter-status");
+const matrixSectionCards = document.getElementById("matrix-section-cards");
+const matrixSectionResetButton = document.getElementById("matrix-section-reset");
+const matrixSectionFocusEyebrow = document.getElementById("matrix-section-focus-eyebrow");
+const matrixSectionFocusTitle = document.getElementById("matrix-section-focus-title");
+const matrixSectionFocusSummary = document.getElementById("matrix-section-focus-summary");
+const matrixSectionFocusKpis = document.getElementById("matrix-section-focus-kpis");
+const matrixSectionFocusThemes = document.getElementById("matrix-section-focus-themes");
+const matrixSectionFocusRisks = document.getElementById("matrix-section-focus-risks");
+const matrixSectionFocusDeliverables = document.getElementById("matrix-section-focus-deliverables");
+const matrixSectionFirstRowButton = document.getElementById("matrix-section-first-row");
+const matrixSectionNextOpenButton = document.getElementById("matrix-section-next-open");
+const currentRowInsightSummary = document.getElementById("current-row-insight-summary");
+const currentRowInsightDisciplines = document.getElementById("current-row-insight-disciplines");
+const currentRowInsightFocus = document.getElementById("current-row-insight-focus");
+const currentRowInsightDeliverables = document.getElementById("current-row-insight-deliverables");
 const matrixEmptyState = document.getElementById("matrix-empty-state");
 const workflowStepStatus = document.getElementById("workflow-step-status");
 const workflowStepButtons = Array.from(document.querySelectorAll("[data-step-target]"));
@@ -98,9 +114,28 @@ const step2State = document.getElementById("step-2-state");
 const step2Hint = document.getElementById("step-2-hint");
 const step3State = document.getElementById("step-3-state");
 const step3Hint = document.getElementById("step-3-hint");
+const step4State = document.getElementById("step-4-state");
+const step4Hint = document.getElementById("step-4-hint");
 const step1Checklist = document.getElementById("step-1-checklist");
 const step2Checklist = document.getElementById("step-2-checklist");
 const step3Checklist = document.getElementById("step-3-checklist");
+const step4Checklist = document.getElementById("step-4-checklist");
+const cockpitProgressValue = document.getElementById("cockpit-progress-value");
+const cockpitProgressText = document.getElementById("cockpit-progress-text");
+const cockpitNextStep = document.getElementById("cockpit-next-step");
+const cockpitNextStepDetail = document.getElementById("cockpit-next-step-detail");
+const cockpitMatrixHealth = document.getElementById("cockpit-matrix-health");
+const cockpitMatrixHealthDetail = document.getElementById("cockpit-matrix-health-detail");
+const cockpitOfferHealth = document.getElementById("cockpit-offer-health");
+const cockpitOfferHealthDetail = document.getElementById("cockpit-offer-health-detail");
+const matrixQueueList = document.getElementById("matrix-queue-list");
+const matrixCommentGapCount = document.getElementById("matrix-comment-gap-count");
+const matrixConflictCount = document.getElementById("matrix-conflict-count");
+const matrixReviewReadyCount = document.getElementById("matrix-review-ready-count");
+const matrixCommandDetail = document.getElementById("matrix-command-detail");
+const jumpConflictRowButton = document.getElementById("jump-conflict-row");
+const jumpUncommentedRowButton = document.getElementById("jump-uncommented-row");
+const focusOfferStepButton = document.getElementById("focus-offer-step");
 
 const defaultRows = [
     {
@@ -413,6 +448,101 @@ const sectionDefinitions = {
     800: "800 BREEAM-NOR v6",
 };
 
+const sectionCatalog = {
+    100: {
+        shortTitle: "Generelt",
+        summary: "Prosjektomfattende premisser, koordinering og grensesnitt som pavirker flere fag samtidig.",
+        themes: ["Koordinering", "Fellestegninger", "Tverrfaglige leveranser", "Prosjektkrav"],
+        risks: ["Ingen tydelig eier av samordning", "Manglende leveransegrenser", "Uavklarte BIM- og tegningsansvar"],
+        deliverables: ["Grensesnittstrategi", "Overordnet ansvarsdeling", "Felles premisser for UE-er"],
+    },
+    200: {
+        shortTitle: "Byggfag",
+        summary: "Bygningsdeler, rom, dorer, sjakter, utsparinger, innfesting og andre fysiske avklaringer mot tekniske fag.",
+        themes: ["Dorer", "Utsparinger", "Sjakter", "Innfesting", "Plassbehov"],
+        risks: ["Tekniske behov kolliderer med byggleveranse", "Manglende spikerslag eller innkassinger", "Dormiljo uten tydelig grensesnittboks"],
+        deliverables: ["Tegninger for innfesting", "Utsparingsunderlag", "Samordnet dør- og romavklaring"],
+    },
+    300: {
+        shortTitle: "VVS",
+        summary: "Sanitar, varme, kjoling og rortekniske installasjoner med tilhorende komponenter, signaler og driftsavklaringer.",
+        themes: ["Pumper", "Ventiler", "Sensorer", "Varmekabler", "SD-signaler"],
+        risks: ["Uklart ansvar for givere og motorer", "Manglende avklaring mellom ROR, EL og AUT", "Driftssignaler ikke beskrevet"],
+        deliverables: ["Systemskjema", "Komponentlister", "Signal- og funksjonsoversikt"],
+    },
+    400: {
+        shortTitle: "Elektro",
+        summary: "Kraft, fordelinger, foringsveier, belysning og elektriske grensesnitt mot bygg og tekniske leveranser.",
+        themes: ["Fordelinger", "Foringsveier", "Belysning", "Kraft til utstyr", "Tavleplass"],
+        risks: ["Utstyr mangler spenningssetting", "For liten tavleplass", "Foringsveier samordnes for sent"],
+        deliverables: ["Kraftbehovsliste", "Tavlereservasjon", "Koordinert foringsveisplan"],
+    },
+    500: {
+        shortTitle: "Automasjon",
+        summary: "Tele, sikkerhet, automasjon og integrasjoner der flere systemer ma snakke sammen.",
+        themes: ["SD/BAS", "ADK", "AIA/ABA", "KNX", "Systemintegrasjon"],
+        risks: ["Systemer snakker ikke sammen", "Uklart ansvar for grensesnittboks", "Signalpunkter beskrives ulikt per fag"],
+        deliverables: ["IO-lister", "Integrasjonsbeskrivelse", "Koordinerte koblingsskjema"],
+    },
+    600: {
+        shortTitle: "Heis og spesial",
+        summary: "Heis og andre spesialinstallasjoner med behov for avklaringer rundt plass, forsyning, signaler og ansvar.",
+        themes: ["Heissjakt", "Heisfordeling", "Kortleser", "Alarmoverforing", "Maskinrom"],
+        risks: ["Kabling til heis blir glemt", "Heisleveranse og elektro har ulike forutsetninger", "Adgang og alarm er ikke koordinert"],
+        deliverables: ["Heisgrensesnitt", "Forsyningsavklaringer", "Signal- og kablingsplan"],
+    },
+    700: {
+        shortTitle: "Utendors",
+        summary: "Utvendige anlegg, forsyninger i grunn, utendors lys, VA og tekniske grensesnitt utenfor bygget.",
+        themes: ["Utendors VA", "Lavspent forsyning", "Lys i grunn", "Automatisering ute", "Pumpekummer"],
+        risks: ["Grensesnitt mot grunnentreprise er uklart", "IP- og SD-integrasjon beskrives ikke", "Kabel og ror i grunn mangler koordinering"],
+        deliverables: ["Utomhus grensesnittplan", "Koordinert grunnunderlag", "Avklart ansvar for utvendig drift"],
+    },
+};
+
+const rowInsightRules = [
+    {
+        keywords: ["pumpe", "pump"],
+        focus: ["Spenningssetting", "Signal til SD/automasjon", "Innregulering og funksjonstest"],
+        deliverables: ["Systemskjema", "Kraftbehov", "IO-/signalliste"],
+    },
+    {
+        keywords: ["ventil", "motorventil", "spjeld"],
+        focus: ["Hvem leverer aktuator", "Kabling og styringssignal", "Funksjonsansvar ved test"],
+        deliverables: ["Komponentliste", "Koblingsskjema", "Funksjonsbeskrivelse"],
+    },
+    {
+        keywords: ["giver", "sensor", "termostat", "trykkgiver", "temperaturgiver", "fuktsensor"],
+        focus: ["Plassering", "Folerlommer eller montasjegrunnlag", "Signalpunkt og integrasjon"],
+        deliverables: ["Tegningsgrunnlag", "Signaloversikt", "Grensesnitt mot automasjon"],
+    },
+    {
+        keywords: ["dor", "kortleser", "adgang", "lås", "beslag", "grensesnittboks"],
+        focus: ["Dormiljo og fysisk plass", "Kabling mellom fag", "Koordinert koblingsskjema"],
+        deliverables: ["Dortyper og prinsipper", "Koblingsskjema", "Avklart ansvar for AAK/AIA/ABA"],
+    },
+    {
+        keywords: ["heis", "heissjakt", "heisstol", "heismaskin"],
+        focus: ["Forsyning og reserver", "Adgang, alarm og kommunikasjon", "Kabling til heisleveranse"],
+        deliverables: ["Heisgrensesnitt", "Kabelplan", "Avklaring mot heisleverandor"],
+    },
+    {
+        keywords: ["utendors", "grunn", "kum", "va", "lavspent", "lys"],
+        focus: ["Grensesnitt mot grunnentreprise", "Koordinering av ror og kabel i grunn", "Drifts- og integrasjonsbehov utendors"],
+        deliverables: ["Utomhusplan", "Koordinert grunnunderlag", "Ansvarsdeling for utvendige installasjoner"],
+    },
+    {
+        keywords: ["fordeling", "tavle", "kraft"],
+        focus: ["Tavleplass", "Reserver og kapasitet", "Hvem som spenningssetter hva"],
+        deliverables: ["Enlinjeskjema", "Kraftbehovsliste", "Plassavsetning i tavle"],
+    },
+    {
+        keywords: ["varmekabel", "snosmelting"],
+        focus: ["Styringsprinsipp", "Foletyper og plassering", "Samspill mellom EL og AUT"],
+        deliverables: ["Styringsbeskrivelse", "Varmekabelplan", "Vær- eller bakkefølerstrategi"],
+    },
+];
+
 function createRowId() {
     rowIdCounter += 1;
     return `row-${rowIdCounter}`;
@@ -437,6 +567,17 @@ function inferSectionCode(tfmValue) {
     }
 
     return Math.floor(numericCode / 100) * 100;
+}
+
+function getSectionDetails(sectionCode) {
+    return sectionCatalog[sectionCode] || {
+        shortTitle: sectionDefinitions[sectionCode] || String(sectionCode),
+        summary: "Samlet kategori for relaterte grensesnitt i matrisen.",
+    };
+}
+
+function getRowSectionCode(row) {
+    return inferSectionCode(row?.tfm);
 }
 
 function normalizeTfmValue(tfmValue) {
@@ -534,6 +675,8 @@ let autosaveTimer = null;
 let isApplyingSavedState = false;
 let isSavingProject = false;
 const LAST_PROJECT_KEY = "grensesnittmatrise:last-project";
+const REVIEW_MODE_KEY = "grensesnittmatrise:review-mode";
+const REVIEW_FILTER_KEY = "grensesnittmatrise:review-filter";
 let activeRowIndex = -1;
 let cachedProjects = [];
 let cachedRevisions = [];
@@ -544,6 +687,11 @@ let matrixDataPromise = null;
 let usingImportedBaseRows = false;
 let hasProjectSpecificRows = false;
 let matrixBuildInProgress = false;
+let activeSectionFilter = "all";
+let reviewModeEnabled = false;
+let activeReviewFilter = "all";
+const uploadedOfferDocuments = [];
+let lastOfferAnalysis = null;
 
 function getSectionKey(row) {
     return `${row.tfm}|${row.description}`;
@@ -809,6 +957,45 @@ function updateMatrixOverview(visibleContentRows = null) {
     if (matrixOpenDetail) {
         matrixOpenDetail.textContent = openRiskCount === 0 ? "Ingen åpne punkter" : "Åpne punkter";
     }
+
+    renderMatrixSectionCards();
+    renderMatrixSectionFocusPanel();
+    updateMatrixCommandCenter();
+}
+
+function updateMatrixCommandCenter() {
+    const commentGaps = getRowsNeedingComment();
+    const conflictRows = rows.filter((row) => !row.section && getOfferConflictRowIds().has(row.uid));
+    const reviewReadyCount = getReviewReadyCount();
+    const queueItems = [
+        conflictRows[0] ? `${conflictRows[0].tfm} ${conflictRows[0].description} - tilbudskonflikt bor vurderes.` : "",
+        commentGaps[0] ? `${commentGaps[0].row.tfm} ${commentGaps[0].row.description} - mangler kommentar pa apen avklaring.` : "",
+        getOpenRiskCount() > 0 ? `${getOpenRiskCount()} rad(er) star fortsatt apne i matrisen.` : "Ingen apne avklaringer igjen i matrisen.",
+    ].filter(Boolean);
+
+    if (matrixCommentGapCount) {
+        matrixCommentGapCount.textContent = String(commentGaps.length);
+    }
+    if (matrixConflictCount) {
+        matrixConflictCount.textContent = String(conflictRows.length);
+    }
+    if (matrixReviewReadyCount) {
+        matrixReviewReadyCount.textContent = String(reviewReadyCount);
+    }
+    if (matrixCommandDetail) {
+        matrixCommandDetail.textContent = conflictRows.length
+            ? "Tilbudskontrollen har funnet rader som bor gjennomgas direkte i matrisen."
+            : "Bruk arbeidskoen til a lukke apne punkter og dokumentere vurderingene dine.";
+    }
+    if (matrixQueueList) {
+        matrixQueueList.innerHTML = queueItems.map((item) => `<p>${escapeHtml(item)}</p>`).join("");
+    }
+    if (jumpConflictRowButton) {
+        jumpConflictRowButton.disabled = !conflictRows.length;
+    }
+    if (jumpUncommentedRowButton) {
+        jumpUncommentedRowButton.disabled = !commentGaps.length;
+    }
 }
 
 function updateMatrixFilterFeedback(visibleCount, query, openOnly) {
@@ -820,6 +1007,14 @@ function updateMatrixFilterFeedback(visibleCount, query, openOnly) {
 
     if (openOnly) {
         filterParts.push("kun apne");
+    }
+
+    if (activeSectionFilter !== "all") {
+        filterParts.push(getSectionDetails(Number(activeSectionFilter)).shortTitle.toLowerCase());
+    }
+
+    if (activeReviewFilter !== "all") {
+        filterParts.push(`review: ${getReviewFilterLabel().toLowerCase()}`);
     }
 
     if (matrixFilterCount) {
@@ -834,7 +1029,310 @@ function updateMatrixFilterFeedback(visibleCount, query, openOnly) {
 
     if (matrixEmptyState) {
         matrixEmptyState.hidden = visibleCount > 0;
+        const emptyStateMessage = matrixEmptyState.querySelector("p");
+
+        if (emptyStateMessage) {
+            if (activeReviewFilter === "conflicts") {
+                emptyStateMessage.textContent = "Ingen konfliktrader er synlige akkurat nå. Kjør tilbudskontroll eller bytt til en annen arbeidsvisning.";
+            } else if (activeReviewFilter === "confirmed") {
+                emptyStateMessage.textContent = "Ingen bekreftede rader matcher filtreringen akkurat nå. Bekreft rader eller bytt arbeidsvisning.";
+            } else if (activeReviewFilter === "open") {
+                emptyStateMessage.textContent = "Ingen åpne rader matcher filtreringen akkurat nå. Det kan bety at utvalget er ferdig gjennomgått.";
+            } else if (activeSectionFilter !== "all") {
+                emptyStateMessage.textContent = "Ingen rader matcher valgt kategori og aktiv filtrering akkurat nå. Prov a vise hele matrisen eller nullstille soket.";
+            } else {
+                emptyStateMessage.textContent = "Ingen rader matcher filtreringen akkurat nå. Tøm søket eller slå av filteret for åpne avklaringer.";
+            }
+        }
     }
+}
+
+function getSectionStats(sectionCode) {
+    let total = 0;
+    let confirmed = 0;
+    let open = 0;
+
+    rows.forEach((row, rowIndex) => {
+        if (row.section || getRowSectionCode(row) !== sectionCode) {
+            return;
+        }
+
+        total += 1;
+
+        if (confirmationState.get(rowIndex)) {
+            confirmed += 1;
+        }
+
+        if (getRiskState(rowIndex).level !== "ok") {
+            open += 1;
+        }
+    });
+
+    return { total, confirmed, open };
+}
+
+function renderTagList(container, items, fallbackText) {
+    if (!container) {
+        return;
+    }
+
+    const values = Array.isArray(items) ? items.filter(Boolean) : [];
+
+    if (!values.length) {
+        container.innerHTML = `<span>${escapeHtml(fallbackText)}</span>`;
+        return;
+    }
+
+    container.innerHTML = values
+        .map((item) => `<span>${escapeHtml(item)}</span>`)
+        .join("");
+}
+
+function renderMatrixSectionFocusPanel() {
+    if (!matrixSectionFocusTitle || !matrixSectionFocusKpis) {
+        return;
+    }
+
+    if (activeSectionFilter === "all") {
+        const totalContentRows = getContentRowCount();
+        const confirmedCount = getConfirmedRowCount();
+        const openCount = getOpenRiskCount();
+        const completionRate = totalContentRows ? Math.round((confirmedCount / totalContentRows) * 100) : 0;
+
+        if (matrixSectionFocusEyebrow) matrixSectionFocusEyebrow.textContent = "Fokusmodus";
+        if (matrixSectionFocusTitle) matrixSectionFocusTitle.textContent = "Hele matrisen";
+        if (matrixSectionFocusSummary) {
+            matrixSectionFocusSummary.textContent = "Du ser alle fagomrader samlet. Velg en kategori over for a jobbe mer konsentrert med ett omrade og raskere lukke apne avklaringer.";
+        }
+
+        matrixSectionFocusKpis.innerHTML = `
+            <div class="overview-card"><span class="overview-label">Totalt</span><strong>${totalContentRows}</strong><span class="overview-detail">Rader i prosjektet</span></div>
+            <div class="overview-card"><span class="overview-label">Bekreftet</span><strong>${confirmedCount}</strong><span class="overview-detail">${completionRate} % ferdig</span></div>
+            <div class="overview-card"><span class="overview-label">Apne</span><strong>${openCount}</strong><span class="overview-detail">Tverrfaglige avklaringer</span></div>
+            <div class="overview-card"><span class="overview-label">Anbefaling</span><strong>Velg kategori</strong><span class="overview-detail">Jobb en del av bygget av gangen</span></div>
+        `;
+
+        renderTagList(matrixSectionFocusThemes, ["Start med storste apne seksjon", "Lukk grasoner fortlopende", "Bruk kommentarer for forbehold"], "Ingen tema valgt");
+        renderTagList(matrixSectionFocusRisks, ["For bred arbeidsflate gir treg gjennomgang", "Apen matrisen kan skjule hvor risikoen ligger"], "Ingen risiko valgt");
+        renderTagList(matrixSectionFocusDeliverables, ["Kategoriavklart matrise", "Eksportgrunnlag med tydelige UE-grenser", "Kort vei til neste apne punkt"], "Ingen leveranser valgt");
+        return;
+    }
+
+    const sectionCode = Number(activeSectionFilter);
+    const details = getSectionDetails(sectionCode);
+    const stats = getSectionStats(sectionCode);
+    const completionRate = stats.total ? Math.round((stats.confirmed / stats.total) * 100) : 0;
+    const shareOfMatrix = getContentRowCount() ? Math.round((stats.total / getContentRowCount()) * 100) : 0;
+
+    if (matrixSectionFocusEyebrow) matrixSectionFocusEyebrow.textContent = `Kategori ${sectionCode}`;
+    if (matrixSectionFocusTitle) matrixSectionFocusTitle.textContent = `${sectionCode} ${details.shortTitle}`;
+    if (matrixSectionFocusSummary) {
+        matrixSectionFocusSummary.textContent = details.summary;
+    }
+
+    matrixSectionFocusKpis.innerHTML = `
+        <div class="overview-card"><span class="overview-label">Rader</span><strong>${stats.total}</strong><span class="overview-detail">${shareOfMatrix} % av matrisen</span></div>
+        <div class="overview-card"><span class="overview-label">Bekreftet</span><strong>${stats.confirmed}</strong><span class="overview-detail">${completionRate} % ferdig</span></div>
+        <div class="overview-card"><span class="overview-label">Apne</span><strong>${stats.open}</strong><span class="overview-detail">${stats.open ? "Bør lukkes før eksport" : "Ingen apne punkt"}</span></div>
+        <div class="overview-card"><span class="overview-label">Arbeidsmodus</span><strong>Fokus</strong><span class="overview-detail">Viser kun valgt kategori</span></div>
+    `;
+
+    renderTagList(matrixSectionFocusThemes, details.themes, "Legg til faglige tema for denne kategorien");
+    renderTagList(matrixSectionFocusRisks, details.risks, "Legg til typiske grasoner for denne kategorien");
+    renderTagList(matrixSectionFocusDeliverables, details.deliverables, "Legg til forventede leveranser for denne kategorien");
+}
+
+function getVisibleContentRowIndexes({ openOnly = false } = {}) {
+    return rows
+        .map((row, rowIndex) => ({ row, rowIndex, element: getRowElement(rowIndex) }))
+        .filter(({ row, rowIndex, element }) => {
+            if (row.section || !element || element.classList.contains("filtered-out")) {
+                return false;
+            }
+
+            if (openOnly && getRiskState(rowIndex).level === "ok") {
+                return false;
+            }
+
+            return true;
+        })
+        .map(({ rowIndex }) => rowIndex);
+}
+
+function focusFirstVisibleContentRow(options = {}) {
+    const indexes = getVisibleContentRowIndexes(options);
+
+    if (!indexes.length) {
+        showToast("Ingen synlige rader a hoppe til i dette utvalget.", "info");
+        return;
+    }
+
+    focusRow(indexes[0]);
+}
+
+function uniqueList(items) {
+    return [...new Set(items.filter(Boolean))];
+}
+
+function getDisciplinesForRow(row) {
+    return uniqueList(
+        Object.keys(row?.marks || {})
+            .map((key) => key.split(":")[0])
+            .filter(Boolean)
+    );
+}
+
+function matchInsightRules(text) {
+    return rowInsightRules.filter((rule) => rule.keywords.some((keyword) => text.includes(keyword)));
+}
+
+function getRowInsightData(row, rowIndex) {
+    const sectionDetails = getSectionDetails(getRowSectionCode(row));
+    const text = `${row.tfm} ${row.description} ${commentState.get(rowIndex) ?? row.comments ?? ""}`.toLowerCase();
+    const matchedRules = matchInsightRules(text);
+    const disciplinesInRow = getDisciplinesForRow(row);
+    const sectionFocus = {
+        100: ["Overordnet ansvar", "Tverrfaglig koordinering", "Felles prosjektpremisser"],
+        200: ["Fysisk plass og innfesting", "Utsparinger og sjakter", "Bygg mot tekniske fag"],
+        300: ["ROR mot EL/AUT", "Signalpunkter", "Funksjon og innregulering"],
+        400: ["Kraft og reserveplass", "Foringsveier", "Spenningssetting av teknisk utstyr"],
+        500: ["Systemintegrasjon", "Koblingsskjema", "Ansvar mellom sikkerhet og automasjon"],
+        600: ["Spesialleveranse", "Forsyning og kommunikasjon", "Koordinering mot ekstern leverandor"],
+        700: ["Grunnentreprise", "Utvendig drift", "Koordinering i grunn"],
+    };
+    const sectionDeliverables = {
+        100: ["Koordineringsnotat", "Ansvarsdeling", "Prosjektpremisser"],
+        200: ["Utsparingsunderlag", "Innfestingsgrunnlag", "Samordnet dortegning"],
+        300: ["Systemskjema", "Komponentliste", "Signaloversikt"],
+        400: ["Kraftbehovsliste", "Tavleunderlag", "Foringsveisplan"],
+        500: ["IO-liste", "Integrasjonsbeskrivelse", "Koblingsskjema"],
+        600: ["Grensesnittnotat", "Kabelplan", "Leverandoravklaring"],
+        700: ["Utomhusplan", "Koordinert grunnplan", "Ansvarsdeling ute"],
+    };
+
+    const focus = uniqueList([
+        ...(sectionFocus[getRowSectionCode(row)] || []),
+        ...matchedRules.flatMap((rule) => rule.focus || []),
+        ...getMissingResponsibilities(rowIndex).slice(0, 3),
+    ]).slice(0, 6);
+
+    const deliverables = uniqueList([
+        ...(sectionDeliverables[getRowSectionCode(row)] || []),
+        ...matchedRules.flatMap((rule) => rule.deliverables || []),
+    ]).slice(0, 6);
+
+    const disciplineLabels = disciplinesInRow.length
+        ? disciplinesInRow
+        : [sectionDetails.shortTitle];
+
+    let summary = `${row.description} ligger i ${sectionDetails.shortTitle.toLowerCase()} og bor avklares med tydelig ansvar mellom involverte fag.`;
+
+    if (matchedRules.length) {
+        summary = `${row.description} handler typisk om ${matchedRules[0].focus[0].toLowerCase()} og krever at leveranse, kobling og funksjon sees samlet.`;
+    }
+
+    return {
+        summary,
+        disciplines: disciplineLabels,
+        focus,
+        deliverables,
+    };
+}
+
+function renderCurrentRowInsight(data) {
+    if (currentRowInsightSummary) {
+        currentRowInsightSummary.textContent = data.summary;
+    }
+
+    renderTagList(currentRowInsightDisciplines, data.disciplines, "Ingen fag valgt");
+    renderTagList(currentRowInsightFocus, data.focus, "Ingen fokuspunkt valgt");
+    renderTagList(currentRowInsightDeliverables, data.deliverables, "Ingen leveranser valgt");
+}
+
+function renderMatrixSectionCards() {
+    if (!matrixSectionCards) {
+        return;
+    }
+
+    matrixSectionCards.innerHTML = "";
+
+    Object.keys(sectionDefinitions)
+        .map((key) => Number(key))
+        .filter((sectionCode) => sectionCode < 800)
+        .forEach((sectionCode) => {
+            const details = getSectionDetails(sectionCode);
+            const stats = getSectionStats(sectionCode);
+            const completionRate = stats.total ? Math.round((stats.confirmed / stats.total) * 100) : 0;
+            const isActive = activeSectionFilter === sectionCode;
+            const button = document.createElement("button");
+            let stateLabel = "Tom kategori";
+            let stateClass = "";
+
+            if (stats.total) {
+                if (stats.open > 0) {
+                    stateLabel = `${stats.open} apne`;
+                    stateClass = "state-warning";
+                } else {
+                    stateLabel = "Klar";
+                    stateClass = "state-ok";
+                }
+            }
+
+            button.type = "button";
+            button.className = `matrix-section-card${isActive ? " is-active" : ""}${stats.total ? "" : " is-empty"}`;
+            button.setAttribute("aria-pressed", isActive ? "true" : "false");
+            button.innerHTML = `
+                <div class="matrix-section-card-top">
+                    <span class="matrix-section-code">${sectionCode}</span>
+                    <span class="matrix-section-state ${stateClass}">${escapeHtml(stateLabel)}</span>
+                </div>
+                <div>
+                    <p class="matrix-section-title">${escapeHtml(details.shortTitle)}</p>
+                    <p class="matrix-section-copy">${escapeHtml(details.summary)}</p>
+                </div>
+                <div class="matrix-section-meta">
+                    <span>${stats.total} rader</span>
+                    <span>${completionRate} % bekreftet</span>
+                </div>
+            `;
+
+            button.addEventListener("click", () => {
+                setActiveSectionFilter(isActive ? "all" : sectionCode);
+            });
+
+            matrixSectionCards.appendChild(button);
+        });
+}
+
+function getSectionFilterFromHash() {
+    const hash = String(window.location.hash || "").replace(/^#/, "").trim().toLowerCase();
+    const match = hash.match(/(?:kategori|section)-(\d{3})/);
+
+    if (!match) {
+        return "all";
+    }
+
+    return Number.parseInt(match[1], 10);
+}
+
+function setActiveSectionFilter(nextFilter, options = {}) {
+    const { updateHash = true } = options;
+    activeSectionFilter = nextFilter === "all" ? "all" : Number(nextFilter);
+
+    if (updateHash) {
+        const nextHash = activeSectionFilter === "all" ? "" : `kategori-${activeSectionFilter}`;
+        const url = new URL(window.location.href);
+        url.hash = nextHash;
+        window.history.replaceState(null, "", url);
+    }
+
+    // Rebuild matrix with only visible rows for this chapter
+    buildMatrixInBatches().then(() => {
+        markHeaderGroups();
+        filterMatrixRows();
+        updateAllRiskCells();
+    });
+    renderMatrixSectionCards();
 }
 
 function focusAdjacentContentRow(direction) {
@@ -899,12 +1397,19 @@ function updateRowMetaPanel() {
         if (quickClearCommentButton) {
             quickClearCommentButton.disabled = true;
         }
+        renderCurrentRowInsight({
+            summary: "Velg en rad for a se hva dette grensesnittet normalt omfatter, hvilke fag som ofte ma med, og hva som bor avklares i leveransen.",
+            disciplines: ["Ingen rad valgt"],
+            focus: ["Velg en rad"],
+            deliverables: ["Velg en rad"],
+        });
         return;
     }
 
     const row = rows[activeRowIndex];
     const risk = getRiskState(activeRowIndex);
     const missingResponsibilities = getMissingResponsibilities(activeRowIndex);
+    const insight = getRowInsightData(row, activeRowIndex);
 
     if (currentRowTfm) {
         currentRowTfm.disabled = false;
@@ -955,11 +1460,63 @@ function updateRowMetaPanel() {
     if (quickClearCommentButton) {
         quickClearCommentButton.disabled = !String(commentState.get(activeRowIndex) || "").trim();
     }
+
+    renderCurrentRowInsight(insight);
+}
+
+function renderRowDescriptionContent(rowIndex) {
+    const wrapper = document.createElement("div");
+    wrapper.className = "row-description-stack";
+
+    const title = document.createElement("span");
+    title.className = "row-description-title";
+    title.textContent = rows[rowIndex].description;
+    wrapper.appendChild(title);
+
+    const flags = getRowStatusFlags(rowIndex);
+    if (flags.length) {
+        const badgeRow = document.createElement("div");
+        badgeRow.className = "row-status-badges";
+        flags.forEach((flag) => {
+            const badge = document.createElement("span");
+            badge.className = `row-status-badge ${flag.className}`;
+            badge.textContent = flag.label;
+            badgeRow.appendChild(badge);
+        });
+        wrapper.appendChild(badgeRow);
+    }
+
+    return wrapper;
+}
+
+function refreshMatrixRowVisuals() {
+    rows.forEach((row, rowIndex) => {
+        if (row.section) {
+            return;
+        }
+
+        const rowElement = getRowElement(rowIndex);
+        if (!rowElement) {
+            return;
+        }
+
+        const descriptionCell = rowElement.querySelector(".description-cell");
+        if (descriptionCell) {
+            descriptionCell.innerHTML = "";
+            descriptionCell.appendChild(renderRowDescriptionContent(rowIndex));
+        }
+
+        const flags = getRowStatusFlags(rowIndex);
+        rowElement.classList.toggle("row-has-conflict", flags.some((flag) => flag.className === "status-conflict"));
+        rowElement.classList.toggle("row-is-confirmed", flags.some((flag) => flag.className === "status-confirmed"));
+        rowElement.classList.toggle("row-is-open", flags.some((flag) => flag.className === "status-open"));
+    });
 }
 
 function updateAllRiskCells() {
     updateRowMetaPanel();
     updateMatrixOverview();
+    refreshMatrixRowVisuals();
 }
 
 function updateRowAfterMatrixEdit(rowIndex) {
@@ -1047,7 +1604,8 @@ function updateRowDisplay(rowIndex) {
                 toggle.setAttribute("aria-label", `${isSectionCollapsed(rowIndex) ? "Utvid" : "Skjul"} seksjon ${rows[rowIndex].description}`);
             }
         } else {
-            descriptionCell.textContent = rows[rowIndex].description;
+            descriptionCell.innerHTML = "";
+            descriptionCell.appendChild(renderRowDescriptionContent(rowIndex));
         }
     }
 }
@@ -1366,6 +1924,142 @@ function getRememberedProject() {
     }
 }
 
+function getSavedReviewMode() {
+    try {
+        return window.localStorage.getItem(REVIEW_MODE_KEY) === "true";
+    } catch (_error) {
+        return false;
+    }
+}
+
+function getSavedReviewFilter() {
+    try {
+        const savedFilter = window.localStorage.getItem(REVIEW_FILTER_KEY) || "all";
+        return ["all", "open", "conflicts", "confirmed"].includes(savedFilter) ? savedFilter : "all";
+    } catch (_error) {
+        return "all";
+    }
+}
+
+function getReviewFilterLabel(filter = activeReviewFilter) {
+    return {
+        all: "Alle rader",
+        open: "Åpne rader",
+        conflicts: "Konflikter",
+        confirmed: "Bekreftede",
+    }[filter] || "Alle rader";
+}
+
+function getOfferConflictRowIds() {
+    return new Set(
+        (lastOfferAnalysis?.findings || [])
+            .map((finding) => finding.rowUid)
+            .filter(Boolean)
+    );
+}
+
+function getRowStatusFlags(rowIndex) {
+    if (rows[rowIndex]?.section) {
+        return [];
+    }
+
+    const flags = [];
+    const risk = getRiskState(rowIndex);
+    const hasComment = Boolean(String(commentState.get(rowIndex) ?? rows[rowIndex]?.comments ?? "").trim());
+    const isConfirmed = Boolean(confirmationState.get(rowIndex));
+    const hasConflict = getOfferConflictRowIds().has(rows[rowIndex].uid);
+
+    if (hasConflict) {
+        flags.push({ label: "Konflikt", className: "status-conflict" });
+    }
+    if (risk.level !== "ok") {
+        flags.push({ label: "Åpen", className: "status-open" });
+    }
+    if (isConfirmed) {
+        flags.push({ label: "Bekreftet", className: "status-confirmed" });
+    }
+    if (hasComment) {
+        flags.push({ label: "Kommentar", className: "status-comment" });
+    }
+
+    return flags;
+}
+
+function getRowsNeedingComment() {
+    return rows
+        .map((row, rowIndex) => ({ row, rowIndex }))
+        .filter(({ row, rowIndex }) => {
+            if (row.section) {
+                return false;
+            }
+            if (getRiskState(rowIndex).level === "ok") {
+                return false;
+            }
+            return !String(commentState.get(rowIndex) ?? row.comments ?? "").trim();
+        });
+}
+
+function getReviewReadyCount() {
+    return rows.filter((row, rowIndex) => !row.section && confirmationState.get(rowIndex) && getRiskState(rowIndex).level === "ok").length;
+}
+
+function rowMatchesReviewFilter(row, rowIndex) {
+    switch (activeReviewFilter) {
+        case "open":
+            return getRiskState(rowIndex).level !== "ok";
+        case "confirmed":
+            return Boolean(confirmationState.get(rowIndex));
+        case "conflicts":
+            return getOfferConflictRowIds().has(row.uid);
+        case "all":
+        default:
+            return true;
+    }
+}
+
+function updateReviewFilterButtons() {
+    reviewFilterButtons.forEach((button) => {
+        const isActive = button.dataset.reviewFilter === activeReviewFilter;
+        button.setAttribute("aria-pressed", isActive ? "true" : "false");
+        button.classList.toggle("is-active", isActive);
+    });
+}
+
+function applyReviewFilter(nextFilter, options = {}) {
+    const normalizedFilter = ["all", "open", "conflicts", "confirmed"].includes(nextFilter) ? nextFilter : "all";
+    activeReviewFilter = normalizedFilter;
+    updateReviewFilterButtons();
+
+    try {
+        window.localStorage.setItem(REVIEW_FILTER_KEY, activeReviewFilter);
+    } catch (_error) {
+        // Ignore storage issues.
+    }
+
+    if (!options.skipRefilter) {
+        filterMatrixRows();
+    }
+}
+
+function applyReviewMode(enabled) {
+    reviewModeEnabled = Boolean(enabled);
+    document.body.classList.toggle("review-mode", reviewModeEnabled);
+
+    if (toggleReviewModeButton) {
+        toggleReviewModeButton.setAttribute("aria-pressed", reviewModeEnabled ? "true" : "false");
+        toggleReviewModeButton.textContent = reviewModeEnabled ? "Vanlig visning" : "Review mode";
+    }
+
+    try {
+        window.localStorage.setItem(REVIEW_MODE_KEY, reviewModeEnabled ? "true" : "false");
+    } catch (_error) {
+        // Ignore storage issues.
+    }
+
+    updateReviewFilterButtons();
+    filterMatrixRows();
+}
+
 function formatRelativeTime(dateValue) {
     if (!dateValue) {
         return "ukjent tidspunkt";
@@ -1399,9 +2093,10 @@ function formatRelativeTime(dateValue) {
 
 function getWorkflowStepMeta(stepNumber) {
     return {
-        1: { title: "Prosjektoppsett", description: "Steg 1 av 3: Prosjektoppsett" },
-        2: { title: "BH-underlag", description: "Steg 2 av 3: BH-underlag" },
-        3: { title: "Matrise og eksport", description: "Steg 3 av 3: Matrise og eksport" },
+        1: { title: "Prosjektoppsett", description: "Steg 1 av 4: Prosjektoppsett" },
+        2: { title: "BH-underlag", description: "Steg 2 av 4: BH-underlag" },
+        3: { title: "Matrise", description: "Steg 3 av 4: Matrise" },
+        4: { title: "Tilbudskontroll", description: "Steg 4 av 4: Tilbudskontroll" },
     }[stepNumber] || { title: "Arbeidsflyt", description: "Steg i arbeidsflyten" };
 }
 
@@ -1424,6 +2119,9 @@ function getWorkflowHealth() {
     const confirmedRows = getConfirmedRowCount();
     const openRows = getOpenRiskCount();
     const hasMatrixProgress = confirmedRows > 0;
+    const hasOfferDocuments = uploadedOfferDocuments.length > 0;
+    const hasOfferAnalysis = Boolean(lastOfferAnalysis);
+    const offerConflicts = lastOfferAnalysis?.conflictCount || 0;
 
     const step1Checks = [
         {
@@ -1485,10 +2183,35 @@ function getWorkflowHealth() {
         },
     ];
 
+    const step4Checks = [
+        {
+            label: "Tilbud lastet opp",
+            detail: hasOfferDocuments
+                ? `${uploadedOfferDocuments.length} dokument(er) lastet opp.`
+                : "Last opp ett eller flere UE-/TUE-tilbud for kontroll.",
+            done: hasOfferDocuments,
+        },
+        {
+            label: "Tilbud analysert",
+            detail: hasOfferAnalysis
+                ? `${lastOfferAnalysis.findings.length} funn registrert i kontrollen.`
+                : "Kjør analyse mot matrisen for å se avvik og forbehold.",
+            done: hasOfferAnalysis,
+        },
+        {
+            label: "Konflikter vurdert",
+            detail: hasOfferAnalysis
+                ? (offerConflicts ? `${offerConflicts} konflikt(er) krever vurdering.` : "Ingen tydelige konflikter funnet i første kontroll.")
+                : "Ingen vurdering gjort ennå.",
+            done: hasOfferAnalysis && offerConflicts === 0,
+        },
+    ];
+
     return {
         step1Checks,
         step2Checks,
         step3Checks,
+        step4Checks,
         completionRate,
     };
 }
@@ -1499,6 +2222,7 @@ function updateWorkflowOverview() {
         { checks: health.step1Checks, stateNode: step1State, hintNode: step1Hint, title: "Prosjekt", fallback: "Fyll inn prosjekt og TUE" },
         { checks: health.step2Checks, stateNode: step2State, hintNode: step2Hint, title: "BH-underlag", fallback: "Importer BH-underlag" },
         { checks: health.step3Checks, stateNode: step3State, hintNode: step3Hint, title: "Matrise", fallback: "Bearbeid matrise og eksporter" },
+        { checks: health.step4Checks, stateNode: step4State, hintNode: step4Hint, title: "Tilbud", fallback: "Kontroller mottatte tilbud" },
     ];
     const completedSteps = steps.filter(({ checks }) => checks.every((item) => item.done)).length;
     const progressPercent = Math.round((completedSteps / steps.length) * 100);
@@ -1545,14 +2269,62 @@ function updateWorkflowOverview() {
     if (step3Checklist) {
         step3Checklist.innerHTML = createChecklistMarkup(health.step3Checks);
     }
+
+    if (step4Checklist) {
+        step4Checklist.innerHTML = createChecklistMarkup(health.step4Checks);
+    }
+
+    updateProductCockpit(health, progressPercent, recommendedMeta);
+}
+
+function updateProductCockpit(health, progressPercent, recommendedMeta) {
+    const openRows = getOpenRiskCount();
+    const commentGaps = getRowsNeedingComment().length;
+    const offerConflicts = lastOfferAnalysis?.conflictCount || 0;
+    const hasOfferAnalysis = Boolean(lastOfferAnalysis);
+
+    if (cockpitProgressValue) {
+        cockpitProgressValue.textContent = `${progressPercent} %`;
+    }
+    if (cockpitProgressText) {
+        cockpitProgressText.textContent = progressPercent === 100
+            ? "Alle hovedsteg er ferdig gjennomfort."
+            : `${health.completionRate || 0} % av matriseradene er bekreftet.`;
+    }
+    if (cockpitNextStep) {
+        cockpitNextStep.textContent = recommendedMeta.title;
+    }
+    if (cockpitNextStepDetail) {
+        cockpitNextStepDetail.textContent = recommendedMeta.description;
+    }
+    if (cockpitMatrixHealth) {
+        cockpitMatrixHealth.textContent = openRows === 0 ? "Kontrollert" : `${openRows} apne`;
+    }
+    if (cockpitMatrixHealthDetail) {
+        cockpitMatrixHealthDetail.textContent = commentGaps
+            ? `${commentGaps} apne rad(er) mangler kommentar eller vurdering.`
+            : "Kommentarer og avklaringer ser ryddige ut i arbeidsflaten.";
+    }
+    if (cockpitOfferHealth) {
+        cockpitOfferHealth.textContent = hasOfferAnalysis
+            ? (offerConflicts ? `${offerConflicts} konflikter` : "Ingen konflikter")
+            : "Ikke startet";
+    }
+    if (cockpitOfferHealthDetail) {
+        cockpitOfferHealthDetail.textContent = hasOfferAnalysis
+            ? `${lastOfferAnalysis.findingCount} funn er registrert i tilbudskontrollen.`
+            : "Tilbudslaget blir synlig her nar UE-/TUE-tilbud er lastet opp.";
+    }
 }
 
 function getRecommendedWorkflowStep() {
     const hasProjectId = Boolean(getCurrentProjectId());
     const hasDocContent = (typeof uploadedDocuments !== "undefined" && uploadedDocuments.length > 0)
-        || Boolean(`${uploadedBhText}\n${bhTextInput?.value || ""}`.trim());
+        || Boolean(`${uploadedBhText}`.trim());
     const hasAnalysis = (typeof lastComplexityResult !== "undefined" && lastComplexityResult !== null) || lastBhAnalysis;
     const hasMatrixWork = getConfirmedRowCount() > 0;
+    const hasOfferDocuments = uploadedOfferDocuments.length > 0;
+    const hasOfferAnalysis = Boolean(lastOfferAnalysis);
 
     if (!hasProjectId) {
         return 1;
@@ -1560,6 +2332,14 @@ function getRecommendedWorkflowStep() {
 
     if (!hasDocContent && !hasAnalysis) {
         return 2;
+    }
+
+    if (hasOfferDocuments && !hasOfferAnalysis) {
+        return 4;
+    }
+
+    if (hasOfferAnalysis) {
+        return 4;
     }
 
     if (hasMatrixWork) {
@@ -1570,7 +2350,7 @@ function getRecommendedWorkflowStep() {
 }
 
 function setWorkflowStep(stepNumber, options = {}) {
-    const nextStep = Math.max(1, Math.min(3, Number(stepNumber) || 1));
+    const nextStep = Math.max(1, Math.min(4, Number(stepNumber) || 1));
     currentWorkflowStep = nextStep;
 
     if (nextStep === 3) {
@@ -1793,7 +2573,8 @@ function collectProjectState() {
         tueConfig: getTueConfig(),
         selectedPackages: getSelectedPackages(),
         uploadedBhText,
-        bhText: bhTextInput.value,
+        offerDocuments: uploadedOfferDocuments,
+        offerAnalysis: lastOfferAnalysis,
         rowDefinitions: collectRowDefinitions(),
         matrixMarks: collectMatrixMarks(),
         comments: collectComments(),
@@ -2100,8 +2881,11 @@ function applyProjectState(data) {
     }
     projectTypeSelect.value = data.projectType || "bolig";
     if (breeamLevelSelect) breeamLevelSelect.value = data.breeamLevel || "none";
-    bhTextInput.value = data.bhText || "";
     uploadedBhText = data.uploadedBhText || "";
+    uploadedOfferDocuments.splice(0, uploadedOfferDocuments.length, ...(Array.isArray(data.offerDocuments) ? data.offerDocuments : []));
+    lastOfferAnalysis = data.offerAnalysis || null;
+    renderOfferDocumentList();
+    renderOfferAnalysis();
     applySavedTueConfig(data.tueConfig, Array.isArray(data.selectedPackages) ? data.selectedPackages : []);
     applySavedMatrix(data.matrixMarks || {});
     applySavedComments(data.comments || {});
@@ -2200,6 +2984,8 @@ function resetProjectState() {
     isApplyingSavedState = true;
     hasProjectSpecificRows = false;
     uploadedBhText = "";
+    uploadedOfferDocuments.length = 0;
+    lastOfferAnalysis = null;
     if (projectTypeSelect) {
         projectTypeSelect.value = "bolig";
     }
@@ -2215,14 +3001,17 @@ function resetProjectState() {
     if (tueAdkModelSelect) {
         tueAdkModelSelect.value = "el";
     }
-    if (bhTextInput) {
-        bhTextInput.value = "";
-    }
     if (bhUploadInput) {
         bhUploadInput.value = "";
     }
+    if (offerUploadInput) {
+        offerUploadInput.value = "";
+    }
     if (bhAnalysisStatus) {
         bhAnalysisStatus.textContent = "Første versjon bruker regelbasert analyse av nøkkelord. AI-tolkning kan bygges på senere.";
+    }
+    if (offerAnalysisStatus) {
+        offerAnalysisStatus.textContent = "Last opp ett eller flere tilbud og sammenlign dem mot gjeldende grensesnittmatrise.";
     }
     packageOptionInputs.forEach((input) => {
         input.checked = false;
@@ -2240,6 +3029,8 @@ function resetProjectState() {
     });
     updateAllRiskCells();
     applyProjectLogic();
+    renderOfferDocumentList();
+    renderOfferAnalysis();
     isApplyingSavedState = false;
 }
 
@@ -2778,9 +3569,32 @@ function focusRow(rowIndex) {
     row.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
 }
 
+function focusRowByUid(rowUid, options = {}) {
+    const rowIndex = rows.findIndex((row) => row.uid === rowUid);
+    if (rowIndex < 0) {
+        return false;
+    }
+
+    if (options.step) {
+        setWorkflowStep(options.step, { scroll: false });
+    }
+
+    const row = rows[rowIndex];
+    if (!row.section) {
+        setActiveSectionFilter(getRowSectionCode(row), { updateHash: false });
+    }
+
+    window.setTimeout(() => {
+        focusRow(rowIndex);
+    }, 120);
+
+    return true;
+}
+
 function filterMatrixRows() {
     const query = (matrixSearchInput?.value || "").trim().toLowerCase();
     const showOpenOnly = Boolean(showOpenOnlyInput?.checked);
+    const conflictRowIds = getOfferConflictRowIds();
     let firstVisibleRow = null;
     let visibleContentRows = 0;
     const rowMatches = rows.map((row, rowIndex) => {
@@ -2797,7 +3611,14 @@ function filterMatrixRows() {
             return;
         }
 
-        const rowMatchesFilter = rowMatches[rowIndex] && (!showOpenOnly || getRiskState(rowIndex).level !== "ok");
+        const sectionMatches = activeSectionFilter === "all" || getRowSectionCode(row) === activeSectionFilter;
+        const reviewMatches = activeReviewFilter === "conflicts"
+            ? conflictRowIds.has(row.uid)
+            : rowMatchesReviewFilter(row, rowIndex);
+        const rowMatchesFilter = rowMatches[rowIndex]
+            && sectionMatches
+            && (!showOpenOnly || getRiskState(rowIndex).level !== "ok")
+            && reviewMatches;
 
         if (currentSectionIndex >= 0 && rowMatchesFilter) {
             sectionHasMatch.set(currentSectionIndex, true);
@@ -2815,11 +3636,22 @@ function filterMatrixRows() {
 
         if (row.section) {
             currentSectionIndex = rowIndex;
-            isVisible = Boolean(sectionHasMatch.get(rowIndex));
+            isVisible = Boolean(sectionHasMatch.get(rowIndex))
+                && (activeSectionFilter === "all" || Number(row.tfm) === activeSectionFilter);
             rowElement.classList.toggle("collapsed-section", isSectionCollapsed(rowIndex));
         } else {
+            if (activeSectionFilter !== "all" && getRowSectionCode(row) !== activeSectionFilter) {
+                isVisible = false;
+            }
+
             if (showOpenOnly && getRiskState(rowIndex).level === "ok") {
                 isVisible = false;
+            }
+
+            if (isVisible) {
+                isVisible = activeReviewFilter === "conflicts"
+                    ? conflictRowIds.has(row.uid)
+                    : rowMatchesReviewFilter(row, rowIndex);
             }
 
             if (currentSectionIndex >= 0 && isSectionCollapsed(currentSectionIndex) && !query && !showOpenOnly) {
@@ -2915,62 +3747,7 @@ function createChoiceCell(rowIndex, discipline, responsibility) {
     button.textContent = "";
     button.title = `${discipline} ${responsibility}`;
 
-    button.addEventListener("click", () => {
-        setResponsibilityValue(rowIndex, discipline, responsibility, nextState(button.dataset.state || ""));
-    });
-
-    button.addEventListener("focus", () => {
-        focusRow(rowIndex);
-    });
-
-    button.addEventListener("keydown", (event) => {
-        if (event.key === "ArrowRight") {
-            event.preventDefault();
-            moveMatrixButtonFocus(button, 0, 1);
-            return;
-        }
-
-        if (event.key === "ArrowLeft") {
-            event.preventDefault();
-            moveMatrixButtonFocus(button, 0, -1);
-            return;
-        }
-
-        if (event.key === "ArrowDown") {
-            event.preventDefault();
-            moveMatrixButtonFocus(button, 1, 0);
-            return;
-        }
-
-        if (event.key === "ArrowUp") {
-            event.preventDefault();
-            moveMatrixButtonFocus(button, -1, 0);
-            return;
-        }
-
-        if (event.key === " " || event.key === "Spacebar") {
-            event.preventDefault();
-            setResponsibilityValue(rowIndex, discipline, responsibility, nextState(button.dataset.state || ""));
-            return;
-        }
-
-        if (event.key.toLowerCase() === "h") {
-            event.preventDefault();
-            setResponsibilityValue(rowIndex, discipline, responsibility, "H");
-            return;
-        }
-
-        if (event.key.toLowerCase() === "d") {
-            event.preventDefault();
-            setResponsibilityValue(rowIndex, discipline, responsibility, "D");
-            return;
-        }
-
-        if (event.key === "Delete" || event.key === "Backspace") {
-            event.preventDefault();
-            setResponsibilityValue(rowIndex, discipline, responsibility, "");
-        }
-    });
+    // Event handling delegated to matrixBody (see bottom of file)
 
     const initialState = rows[rowIndex].marks[`${discipline}:${responsibility}`] || "";
     applyState(button, initialState);
@@ -3025,7 +3802,7 @@ function createMatrixRow(rowData, rowIndex) {
         descriptionCell.appendChild(toggleButton);
         descriptionCell.appendChild(sectionLabel);
     } else {
-        descriptionCell.textContent = rowData.description;
+        descriptionCell.appendChild(renderRowDescriptionContent(rowIndex));
     }
 
     row.appendChild(descriptionCell);
@@ -3045,30 +3822,47 @@ function buildMatrix() {
     });
 }
 
-function buildMatrixInBatches(batchSize = 24) {
+function getVisibleRowIndices() {
+    const indices = [];
+    for (let i = 0; i < rows.length; i++) {
+        var row = rows[i];
+        if (activeSectionFilter !== "all") {
+            var code = getRowSectionCode(row);
+            // Include section headers for the active filter
+            if (row.section && Number(row.tfm) !== activeSectionFilter) continue;
+            if (!row.section && code !== activeSectionFilter) continue;
+        }
+        indices.push(i);
+    }
+    return indices;
+}
+
+function buildMatrixInBatches(batchSize = 40) {
     matrixBody.innerHTML = "";
     matrixBuildInProgress = true;
 
+    var visibleIndices = getVisibleRowIndices();
+
     return new Promise((resolve) => {
-        let nextIndex = 0;
+        let cursor = 0;
 
         const renderBatch = () => {
             const fragment = document.createDocumentFragment();
-            const endIndex = Math.min(nextIndex + batchSize, rows.length);
+            const end = Math.min(cursor + batchSize, visibleIndices.length);
 
-            for (let rowIndex = nextIndex; rowIndex < endIndex; rowIndex += 1) {
-                fragment.appendChild(createMatrixRow(rows[rowIndex], rowIndex));
+            for (let i = cursor; i < end; i++) {
+                fragment.appendChild(createMatrixRow(rows[visibleIndices[i]], visibleIndices[i]));
             }
 
             matrixBody.appendChild(fragment);
-            nextIndex = endIndex;
+            cursor = end;
 
             if (workflowProgressText) {
-                const percent = rows.length ? Math.round((nextIndex / rows.length) * 100) : 100;
+                const percent = visibleIndices.length ? Math.round((cursor / visibleIndices.length) * 100) : 100;
                 workflowProgressText.textContent = `Bygger matrise... ${percent} %`;
             }
 
-            if (nextIndex < rows.length) {
+            if (cursor < visibleIndices.length) {
                 window.requestAnimationFrame(renderBatch);
                 return;
             }
@@ -3243,16 +4037,6 @@ refreshProjectListButton?.addEventListener("click", async () => {
     await loadRevisionList(getCurrentProjectId());
 });
 newProjectButton?.addEventListener("click", async () => {
-    if (window.__gmDemo) {
-        try {
-            const res = await fetch("/api/projects");
-            const data = await res.json();
-            if (data.projects && data.projects.length >= 1) {
-                showToast("Demo-modus: Maks 1 prosjekt. Opprett konto for ubegrenset.", "warning");
-                return;
-            }
-        } catch (e) {}
-    }
     const newProjectId = `prosjekt-${Date.now()}`;
     if (projectIdInput) {
         projectIdInput.value = newProjectId;
@@ -3274,10 +4058,10 @@ projectIdInput?.addEventListener("change", () => {
     scheduleAutosave();
 });
 analyzeBhButton.addEventListener("click", () => {
-    const sourceText = `${uploadedBhText}\n${bhTextInput.value}`.trim();
+    const sourceText = `${uploadedBhText}`.trim();
 
     if (!sourceText) {
-        bhAnalysisStatus.textContent = "Legg inn tekst eller last opp et tekstbasert underlag først.";
+        bhAnalysisStatus.textContent = "Last opp ett eller flere dokumenter fra byggherre først.";
         lastBhAnalysis = null;
         renderBhAnalysisInsights();
         return;
@@ -3285,7 +4069,7 @@ analyzeBhButton.addEventListener("click", () => {
 
     const analysis = applyBhSuggestionsFromText(sourceText);
     applyProjectLogic();
-    bhAnalysisStatus.textContent = `Underlaget er analysert. ${analysis.keywordScore} signaler ble funnet, og forslag til prosjekttype/TUE er oppdatert. Trykk deretter på 'Bruk pakkeoppsett i matrisen' for å fylle inn forslag.`;
+    bhAnalysisStatus.textContent = `Underlaget er analysert. ${analysis.keywordScore} signaler ble funnet, og forslag til prosjekttype/TUE er oppdatert. Trykk deretter på 'Bruk pakkeoppsett i matrisen' for å klargjore utsendelsesgrunnlaget.`;
     setWorkflowStep(2, { scroll: false });
     scheduleAutosave();
 });
@@ -3302,10 +4086,35 @@ bhUploadInput.addEventListener("change", async () => {
     setWorkflowStep(2, { scroll: false });
     scheduleAutosave();
 });
-bhTextInput?.addEventListener("input", scheduleAutosave);
+analyzeOffersButton?.addEventListener("click", analyzeOffersAgainstMatrix);
 renderBhAnalysisInsights();
 renderProjectLibraryStats();
+renderOfferAnalysis();
 updateWorkflowOverview();
+offerFindingsList?.addEventListener("click", (event) => {
+    const target = event.target instanceof HTMLElement ? event.target.closest("[data-row-uid]") : null;
+    const rowUid = target?.getAttribute("data-row-uid");
+    if (!rowUid) {
+        return;
+    }
+
+    focusRowByUid(rowUid, { step: 3 });
+});
+jumpConflictRowButton?.addEventListener("click", () => {
+    const conflictRowUid = lastOfferAnalysis?.findings?.find((finding) => finding.rowUid)?.rowUid;
+    if (conflictRowUid) {
+        focusRowByUid(conflictRowUid, { step: 3 });
+    }
+});
+jumpUncommentedRowButton?.addEventListener("click", () => {
+    const firstCommentGap = getRowsNeedingComment()[0];
+    if (firstCommentGap) {
+        focusRow(firstCommentGap.rowIndex);
+    }
+});
+focusOfferStepButton?.addEventListener("click", () => {
+    setWorkflowStep(4);
+});
 
 document.addEventListener("keydown", (event) => {
     if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
@@ -3354,6 +4163,9 @@ async function initializeApp() {
     initializeRows(defaultRows);
     syncTueBuilderUI();
     applyProjectLogic();
+    applyReviewFilter(getSavedReviewFilter(), { skipRefilter: true });
+    applyReviewMode(getSavedReviewMode());
+    activeSectionFilter = getSectionFilterFromHash();
     setWorkflowStep(1, { scroll: false });
     updateAllRiskCells();
 
@@ -3373,6 +4185,89 @@ async function initializeApp() {
 }
 
 initializeApp();
+
+toggleReviewModeButton?.addEventListener("click", () => {
+    applyReviewMode(!reviewModeEnabled);
+});
+
+// ── Chapter tabs (delegated) ──
+var chapterTabNav = document.querySelector(".chapter-tabs");
+if (chapterTabNav) {
+    chapterTabNav.addEventListener("click", function(e) {
+        var tab = e.target.closest(".chapter-tab");
+        if (!tab) return;
+        chapterTabNav.querySelector(".chapter-tab.active")?.classList.remove("active");
+        tab.classList.add("active");
+        var chapter = tab.getAttribute("data-chapter");
+        setActiveSectionFilter(chapter === "all" ? "all" : Number(chapter));
+    });
+}
+
+// ── Delegated matrix button events (replaces per-cell listeners) ──
+if (matrixBody) {
+    matrixBody.addEventListener("click", function(e) {
+        var btn = e.target.closest("button[data-row]");
+        if (!btn) return;
+        var ri = Number(btn.dataset.row);
+        var disc = btn.dataset.discipline;
+        var resp = btn.dataset.responsibility;
+        setResponsibilityValue(ri, disc, resp, nextState(btn.dataset.state || ""));
+    });
+
+    matrixBody.addEventListener("focusin", function(e) {
+        var btn = e.target.closest("button[data-row]");
+        if (!btn) return;
+        focusRow(Number(btn.dataset.row));
+    });
+
+    matrixBody.addEventListener("keydown", function(e) {
+        var btn = e.target.closest("button[data-row]");
+        if (!btn) return;
+        var ri = Number(btn.dataset.row);
+        var disc = btn.dataset.discipline;
+        var resp = btn.dataset.responsibility;
+        var key = e.key;
+
+        if (key === "ArrowRight") { e.preventDefault(); moveMatrixButtonFocus(btn, 0, 1); }
+        else if (key === "ArrowLeft") { e.preventDefault(); moveMatrixButtonFocus(btn, 0, -1); }
+        else if (key === "ArrowDown") { e.preventDefault(); moveMatrixButtonFocus(btn, 1, 0); }
+        else if (key === "ArrowUp") { e.preventDefault(); moveMatrixButtonFocus(btn, -1, 0); }
+        else if (key === " " || key === "Spacebar") { e.preventDefault(); setResponsibilityValue(ri, disc, resp, nextState(btn.dataset.state || "")); }
+        else if (key.toLowerCase() === "h") { e.preventDefault(); setResponsibilityValue(ri, disc, resp, "H"); }
+        else if (key.toLowerCase() === "d") { e.preventDefault(); setResponsibilityValue(ri, disc, resp, "D"); }
+        else if (key === "Delete" || key === "Backspace") { e.preventDefault(); setResponsibilityValue(ri, disc, resp, ""); }
+    });
+}
+
+reviewFilterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        applyReviewFilter(button.dataset.reviewFilter || "all");
+    });
+});
+
+matrixSectionResetButton?.addEventListener("click", () => {
+    setActiveSectionFilter("all");
+});
+
+matrixSectionFirstRowButton?.addEventListener("click", () => {
+    focusFirstVisibleContentRow();
+});
+
+matrixSectionNextOpenButton?.addEventListener("click", () => {
+    const openRows = getVisibleContentRowIndexes({ openOnly: true });
+
+    if (!openRows.length) {
+        showToast("Ingen apne avklaringer i dette utvalget akkurat na.", "success");
+        return;
+    }
+
+    const nextOpen = openRows.find((rowIndex) => rowIndex > focusedRowIndex) ?? openRows[0];
+    focusRow(nextOpen);
+});
+
+window.addEventListener("hashchange", () => {
+    setActiveSectionFilter(getSectionFilterFromHash(), { updateHash: false });
+});
 
 // ── Toast notification system ──
 const toastContainer = document.getElementById("toast-container");
@@ -3434,7 +4329,7 @@ topbarStepPills.forEach((pill) => {
 const _originalSetWorkflowStep = setWorkflowStep;
 setWorkflowStep = function patchedSetWorkflowStep(stepNumber, options) {
     _originalSetWorkflowStep(stepNumber, options);
-    const nextStep = Math.max(1, Math.min(3, Number(stepNumber) || 1));
+    const nextStep = Math.max(1, Math.min(4, Number(stepNumber) || 1));
     topbarStepPills.forEach((pill) => {
         pill.classList.toggle("active", Number(pill.dataset.stepTarget) === nextStep);
     });
@@ -3538,6 +4433,16 @@ const breeamCardLevel = document.getElementById("breeam-card-level");
 const breeamCardDetail = document.getElementById("breeam-card-detail");
 const breeamRowCount = document.getElementById("breeam-row-count");
 const applyBreeamRowsButton = document.getElementById("apply-breeam-rows");
+const offerUploadInput = document.getElementById("offer-upload");
+const offerDropzone = document.getElementById("offer-dropzone");
+const offerListSection = document.getElementById("offer-list-section");
+const offerList = document.getElementById("offer-list");
+const offerCountLabel = document.getElementById("offer-count-label");
+const clearAllOffersButton = document.getElementById("clear-all-offers");
+const analyzeOffersButton = document.getElementById("analyze-offers");
+const offerAnalysisStatus = document.getElementById("offer-analysis-status");
+const offerAnalysisKpis = document.getElementById("offer-analysis-kpis");
+const offerFindingsList = document.getElementById("offer-findings-list");
 
 function formatFileSize(bytes) {
     if (bytes < 1024) return `${bytes} B`;
@@ -3551,15 +4456,16 @@ function getFileExtIcon(filename) {
     return map[ext] || "FIL";
 }
 
-const DEMO_MAX_DOCS = 3;
-
 function addDocument(name, content, size) {
-    if (window.__gmDemo && uploadedDocuments.length >= DEMO_MAX_DOCS) {
-        showToast("Demo-modus: Maks " + DEMO_MAX_DOCS + " dokumenter. Opprett konto for ubegrenset.", "warning");
-        return;
-    }
     uploadedDocuments.push({ name, content, size, id: Date.now() + Math.random() });
     renderDocumentList();
+}
+
+function addOfferDocument(name, content, size) {
+    uploadedOfferDocuments.push({ name, content, size, id: Date.now() + Math.random() });
+    lastOfferAnalysis = null;
+    renderOfferDocumentList();
+    renderOfferAnalysis();
 }
 
 function removeDocument(id) {
@@ -3602,6 +4508,103 @@ function renderDocumentList() {
         removeBtn.addEventListener("click", function() { removeDocument(doc.id); });
         item.appendChild(removeBtn);
         docList.appendChild(item);
+    });
+}
+
+function removeOfferDocument(id) {
+    const idx = uploadedOfferDocuments.findIndex(function(d) { return d.id === id; });
+    if (idx >= 0) uploadedOfferDocuments.splice(idx, 1);
+    lastOfferAnalysis = null;
+    renderOfferDocumentList();
+    renderOfferAnalysis();
+}
+
+function renderOfferDocumentList() {
+    if (!offerListSection || !offerList) return;
+
+    if (uploadedOfferDocuments.length === 0) {
+        offerListSection.hidden = true;
+        return;
+    }
+
+    offerListSection.hidden = false;
+    if (offerCountLabel) {
+        offerCountLabel.textContent = uploadedOfferDocuments.length === 1
+            ? "1 dokument"
+            : `${uploadedOfferDocuments.length} dokumenter`;
+    }
+
+    offerList.innerHTML = "";
+    uploadedOfferDocuments.forEach(function(doc) {
+        const item = document.createElement("div");
+        item.className = "doc-item";
+        item.innerHTML = `
+            <span class="doc-item-icon">${getFileExtIcon(doc.name)}</span>
+            <div class="doc-item-meta">
+                <div class="doc-item-name" title="${escapeHtml(doc.name)}">${escapeHtml(doc.name)}</div>
+                <div class="doc-item-size">${formatFileSize(doc.size)} · ${doc.content.length} tegn</div>
+            </div>
+        `;
+        const removeBtn = document.createElement("button");
+        removeBtn.type = "button";
+        removeBtn.className = "doc-item-remove";
+        removeBtn.textContent = "×";
+        removeBtn.title = "Fjern tilbud";
+        removeBtn.addEventListener("click", function() { removeOfferDocument(doc.id); });
+        item.appendChild(removeBtn);
+        offerList.appendChild(item);
+    });
+}
+
+function processFiles(fileList, addCallback) {
+    Array.from(fileList).forEach(function(file) {
+        const name = file.name.toLowerCase();
+        if (name.endsWith(".xlsx") || name.endsWith(".xls")) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const workbook = XLSX.read(new Uint8Array(e.target.result), { type: "array" });
+                    let text = "";
+                    workbook.SheetNames.forEach(function(sheetName) {
+                        const sheet = workbook.Sheets[sheetName];
+                        text += "--- " + sheetName + " ---\n";
+                        text += XLSX.utils.sheet_to_csv(sheet) + "\n\n";
+                    });
+                    addCallback(file.name, text.trim(), file.size);
+                    showToast(`"${file.name}" (${workbook.SheetNames.length} ark) lagt til.`, "info");
+                } catch (err) {
+                    showToast(`Kunne ikke lese "${file.name}": ${err.message}`, "error");
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        } else if (file.name.toLowerCase().endsWith(".pdf")) {
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                try {
+                    pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+                    const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(e.target.result) }).promise;
+                    let text = "";
+                    for (let i = 1; i <= pdf.numPages; i++) {
+                        const page = await pdf.getPage(i);
+                        const content = await page.getTextContent();
+                        text += content.items.map(function(item) { return item.str; }).join(" ") + "\n";
+                    }
+                    addCallback(file.name, text.trim(), file.size);
+                    showToast(`"${file.name}" (${pdf.numPages} sider) lagt til.`, "info");
+                } catch (err) {
+                    showToast(`Kunne ikke lese "${file.name}": ${err.message}`, "error");
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        } else {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const content = e.target.result || "";
+                addCallback(file.name, content, file.size);
+                showToast(`"${file.name}" lagt til.`, "info");
+            };
+            reader.readAsText(file);
+        }
     });
 }
 
@@ -3651,55 +4654,7 @@ if (bhUploadInput) {
 }
 
 function handleFiles(fileList) {
-    Array.from(fileList).forEach(function(file) {
-        const name = file.name.toLowerCase();
-        if (name.endsWith(".xlsx") || name.endsWith(".xls")) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const workbook = XLSX.read(new Uint8Array(e.target.result), { type: "array" });
-                    let text = "";
-                    workbook.SheetNames.forEach(function(sheetName) {
-                        const sheet = workbook.Sheets[sheetName];
-                        text += "--- " + sheetName + " ---\n";
-                        text += XLSX.utils.sheet_to_csv(sheet) + "\n\n";
-                    });
-                    addDocument(file.name, text.trim(), file.size);
-                    showToast(`"${file.name}" (${workbook.SheetNames.length} ark) lagt til.`, "info");
-                } catch (err) {
-                    showToast(`Kunne ikke lese "${file.name}": ${err.message}`, "error");
-                }
-            };
-            reader.readAsArrayBuffer(file);
-        } else if (file.name.toLowerCase().endsWith(".pdf")) {
-            const reader = new FileReader();
-            reader.onload = async function(e) {
-                try {
-                    pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-                    const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(e.target.result) }).promise;
-                    let text = "";
-                    for (let i = 1; i <= pdf.numPages; i++) {
-                        const page = await pdf.getPage(i);
-                        const content = await page.getTextContent();
-                        text += content.items.map(function(item) { return item.str; }).join(" ") + "\n";
-                    }
-                    addDocument(file.name, text.trim(), file.size);
-                    showToast(`"${file.name}" (${pdf.numPages} sider) lagt til.`, "info");
-                } catch (err) {
-                    showToast(`Kunne ikke lese "${file.name}": ${err.message}`, "error");
-                }
-            };
-            reader.readAsArrayBuffer(file);
-        } else {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const content = e.target.result || "";
-                addDocument(file.name, content, file.size);
-                showToast(`"${file.name}" lagt til.`, "info");
-            };
-            reader.readAsText(file);
-        }
-    });
+    processFiles(fileList, addDocument);
 }
 
 if (clearAllDocsButton) {
@@ -3708,6 +4663,175 @@ if (clearAllDocsButton) {
         renderDocumentList();
         showToast("Alle dokumenter fjernet.", "info");
     });
+}
+
+if (offerDropzone) {
+    offerDropzone.addEventListener("click", function(e) {
+        if (e.target.closest(".doc-item-remove")) return;
+        if (offerUploadInput) offerUploadInput.click();
+    });
+
+    ["dragenter", "dragover"].forEach(function(evt) {
+        offerDropzone.addEventListener(evt, function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            offerDropzone.classList.add("drag-over");
+        });
+    });
+
+    offerDropzone.addEventListener("dragleave", function(e) {
+        e.preventDefault();
+        if (!offerDropzone.contains(e.relatedTarget)) {
+            offerDropzone.classList.remove("drag-over");
+        }
+    });
+
+    offerDropzone.addEventListener("drop", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        offerDropzone.classList.remove("drag-over");
+        if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) {
+            processFiles(e.dataTransfer.files, addOfferDocument);
+        }
+    });
+}
+
+if (offerUploadInput) {
+    offerUploadInput.addEventListener("change", function() {
+        if (offerUploadInput.files && offerUploadInput.files.length) {
+            processFiles(offerUploadInput.files, addOfferDocument);
+            offerUploadInput.value = "";
+        }
+    });
+}
+
+if (clearAllOffersButton) {
+    clearAllOffersButton.addEventListener("click", function() {
+        uploadedOfferDocuments.length = 0;
+        renderOfferDocumentList();
+        lastOfferAnalysis = null;
+        renderOfferAnalysis();
+        showToast("Alle tilbud fjernet.", "info");
+    });
+}
+
+function renderOfferAnalysis() {
+    if (offerAnalysisKpis) {
+        const summary = lastOfferAnalysis || { documentCount: 0, findingCount: 0, conflictCount: 0, warningCount: 0 };
+        offerAnalysisKpis.innerHTML = `
+            <div class="overview-card"><span class="overview-label">Tilbud</span><strong>${summary.documentCount || 0}</strong><span class="overview-detail">Opplastede dokumenter</span></div>
+            <div class="overview-card"><span class="overview-label">Funn</span><strong>${summary.findingCount || 0}</strong><span class="overview-detail">Registrerte signaler</span></div>
+            <div class="overview-card"><span class="overview-label">Konflikter</span><strong>${summary.conflictCount || 0}</strong><span class="overview-detail">Mulige avvik mot matrisen</span></div>
+            <div class="overview-card"><span class="overview-label">Advarsler</span><strong>${summary.warningCount || 0}</strong><span class="overview-detail">Forbehold og uklart omfang</span></div>
+        `;
+    }
+
+    if (offerFindingsList) {
+        const findings = lastOfferAnalysis?.findings || [];
+        if (!findings.length) {
+            offerFindingsList.innerHTML = "<p>Ingen analyse kjørt ennå.</p>";
+        } else {
+            offerFindingsList.innerHTML = findings.map(function(finding) {
+                if (finding.rowUid) {
+                    return `<button type="button" class="offer-finding-item" data-row-uid="${escapeHtml(finding.rowUid)}"><strong>${escapeHtml(finding.level)}</strong>: ${escapeHtml(finding.message)}</button>`;
+                }
+                return `<p><strong>${escapeHtml(finding.level)}</strong>: ${escapeHtml(finding.message)}</p>`;
+            }).join("");
+        }
+    }
+
+    if (activeReviewFilter === "conflicts") {
+        filterMatrixRows();
+    }
+
+    updateMatrixCommandCenter();
+}
+
+function getOfferKeywordsForRow(row) {
+    return uniqueList(
+        String(row.description || "")
+            .toLowerCase()
+            .split(/[^a-zA-Z0-9æøåÆØÅ]+/)
+            .filter(function(part) { return part.length >= 4; })
+    ).slice(0, 6);
+}
+
+async function analyzeOffersAgainstMatrix() {
+    await ensureMatrixInitialized({ focusFirstRow: false });
+
+    const offerParts = uploadedOfferDocuments.map(function(doc) { return doc.content; });
+    const offerText = offerParts.join("\n\n").toLowerCase();
+    if (!offerText.trim()) {
+        lastOfferAnalysis = null;
+        if (offerAnalysisStatus) {
+            offerAnalysisStatus.textContent = "Last opp ett eller flere tilbud først.";
+        }
+        renderOfferAnalysis();
+        return;
+    }
+
+    const findings = [];
+    const disclaimerSignals = ["ikke inkludert", "ikke medtatt", "medtas ikke", "unntatt", "opsjon", "forbehold", "avklares", "annen entrepren", "byggherre leverer", "bh leverer"];
+
+    if (getOpenRiskCount() > 0) {
+        findings.push({
+            level: "Advarsel",
+            message: `Matrisen har fortsatt ${getOpenRiskCount()} åpne avklaringer. Tilbud bør vurderes mot et så lukket grunnlag som mulig.`,
+        });
+    }
+
+    getContentRows().forEach(function(row) {
+        const keywords = getOfferKeywordsForRow(row);
+        if (!keywords.length) return;
+
+        const keywordHit = keywords.some(function(keyword) { return offerText.includes(keyword); });
+        if (!keywordHit) return;
+
+        const disclaimerHit = disclaimerSignals.find(function(signal) { return offerText.includes(signal); });
+        if (!disclaimerHit) return;
+
+        findings.push({
+            level: "Konflikt",
+            rowUid: row.uid,
+            rowTfm: row.tfm,
+            rowDescription: row.description,
+            message: `${row.tfm} ${row.description}: tilbudet nevner mulig forbehold eller avgrensning ("${disclaimerHit}") og bør kontrolleres mot matrisen.`,
+        });
+    });
+
+    const generalSignals = [
+        { needle: "opsjon", level: "Advarsel", message: "Tilbudet inneholder opsjoner. Sjekk at opsjoner ikke erstatter omfang som er satt som grunnkrav i matrisen." },
+        { needle: "forbehold", level: "Advarsel", message: "Tilbudet inneholder forbehold. Gå gjennom om disse strider mot satt ansvar eller leveranseomfang." },
+        { needle: "ikke inkludert", level: "Advarsel", message: "Tilbudet oppgir at noe ikke er inkludert. Sammenlign dette mot relevante matriserader." },
+    ];
+
+    generalSignals.forEach(function(signal) {
+        if (offerText.includes(signal.needle)) {
+            findings.push({ level: signal.level, message: signal.message });
+        }
+    });
+
+    if (!findings.length) {
+        findings.push({
+            level: "Info",
+            message: "Ingen tydelige motstridssignaler ble funnet i første kontroll. Gjennomgå likevel tilbudene manuelt før kontrahering.",
+        });
+    }
+
+    lastOfferAnalysis = {
+        documentCount: uploadedOfferDocuments.length,
+        findingCount: findings.length,
+        conflictCount: findings.filter(function(item) { return item.level === "Konflikt"; }).length,
+        warningCount: findings.filter(function(item) { return item.level === "Advarsel"; }).length,
+        findings,
+    };
+
+    if (offerAnalysisStatus) {
+        offerAnalysisStatus.textContent = `Tilbudsanalyse ferdig. ${lastOfferAnalysis.findingCount} funn registrert mot gjeldende matrisegrunnlag.`;
+    }
+
+    renderOfferAnalysis();
+    updateWorkflowOverview();
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -4259,7 +5383,6 @@ if (applyBreeamRowsButton) {
 function getAllDocumentText() {
     const parts = [];
     uploadedDocuments.forEach(function(doc) { parts.push(doc.content); });
-    if (bhTextInput && bhTextInput.value.trim()) parts.push(bhTextInput.value);
     if (uploadedBhText) parts.push(uploadedBhText);
     return parts.join("\n\n");
 }
@@ -4332,7 +5455,7 @@ if (analyzeBhButton) {
         if (bhAnalysisStatus) {
             var breeamNote = breeamLevel !== "none" ? (" BREEAM: " + breeamLevelLabels[breeamLevel] + ".") : "";
             bhAnalysisStatus.textContent =
-                `Analysert ${uploadedDocuments.length} dokument(er) + innlimt tekst. ` +
+                `Analysert ${uploadedDocuments.length} dokument(er). ` +
                 `Kompleksitet: ${result.levelLabel} (${result.score}/100). ` +
                 `${result.signals.length} signalkategorier identifisert.` + breeamNote;
         }
@@ -4453,19 +5576,12 @@ const phaseLines = [
     document.getElementById("phase-line-3"),
 ];
 
-// Phase buttons navigate steps (step 4 = export, maps to step 3 panel)
+// Phase buttons navigate steps
 phaseBtns.forEach(function(btn) {
     if (!btn) return;
     btn.addEventListener("click", function() {
         var target = Number(btn.dataset.stepTarget);
-        if (target === 4) {
-            setWorkflowStep(3);
-            // Scroll to export section after switching
-            setTimeout(function() {
-                var exportSection = document.getElementById("summary");
-                if (exportSection) exportSection.scrollIntoView({ behavior: "smooth", block: "start" });
-            }, 200);
-        } else if (target >= 1 && target <= 3) {
+        if (target >= 1 && target <= 4) {
             setWorkflowStep(target);
         }
     });
@@ -4473,7 +5589,7 @@ phaseBtns.forEach(function(btn) {
 
 function syncPhaseSidebar() {
     var health = getWorkflowHealth();
-    var stepChecks = [health.step1Checks, health.step2Checks, health.step3Checks];
+    var stepChecks = [health.step1Checks, health.step2Checks, health.step3Checks, health.step4Checks];
 
     // Determine state per phase
     stepChecks.forEach(function(checks, i) {
@@ -4511,20 +5627,7 @@ function syncPhaseSidebar() {
         }
     });
 
-    // Phase 4 (Export) — active when on step 3 and all checks are done
-    var exportReady = stepChecks[2] && stepChecks[2].every(function(c) { return c.done; });
-    var phase4Btn = phaseBtns[3];
-    var phase4Status = phaseStatuses[3];
-    if (phase4Btn) {
-        phase4Btn.disabled = false;
-        phase4Btn.classList.remove("active", "done");
-        if (exportReady) {
-            phase4Btn.classList.add("done");
-        }
-    }
-    if (phase4Status) {
-        phase4Status.textContent = exportReady ? "Klar" : "Venter";
-    }
+    if (phaseBtns[3]) phaseBtns[3].disabled = false;
 }
 
 // Patch updateWorkflowOverview to also sync sidebar

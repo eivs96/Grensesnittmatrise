@@ -28,6 +28,29 @@ const dbPath = configuredDbPath ? path.resolve(configuredDbPath) : path.join(dat
 const dbDir = path.dirname(dbPath);
 const SESSION_COOKIE_NAME = "gm_session";
 
+function escapeHtml(text) {
+    return String(text ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+}
+
+function buildVerificationEmailHtml(name, verifyUrl) {
+    return `
+        <div style="font-family:sans-serif;max-width:500px;margin:0 auto;padding:32px">
+            <h2 style="color:#0c6e70">Velkommen, ${escapeHtml(name)}!</h2>
+            <p>Takk for at du opprettet en konto på Grensesnittmatrise.no.</p>
+            <p>Klikk knappen under for å bekrefte e-postadressen din:</p>
+            <a href="${verifyUrl}" style="display:inline-block;padding:14px 28px;background:#0c6e70;color:#fff;text-decoration:none;border-radius:8px;font-weight:700;margin:20px 0">Bekreft e-post</a>
+            <p style="color:#666;font-size:0.85rem">Eller kopier denne lenken: ${escapeHtml(verifyUrl)}</p>
+            <hr style="border:none;border-top:1px solid #eee;margin:24px 0">
+            <p style="color:#999;font-size:0.8rem">Hvis du ikke opprettet denne kontoen, kan du ignorere denne e-posten.</p>
+        </div>
+    `;
+}
+
 if (!fs.existsSync(dbDir)) {
     fs.mkdirSync(dbDir, { recursive: true });
 }
@@ -213,7 +236,7 @@ app.get("/auth/verify", async (req, res) => {
             a{display:inline-block;padding:12px 28px;background:#0c6e70;color:#fff;text-decoration:none;border-radius:10px;font-weight:700}</style>
             </head><body><div class="card">
             <h1>E-post bekreftet!</h1>
-            <p>Hei ${user.name}, kontoen din er nå aktivert.</p>
+            <p>Hei ${escapeHtml(user.name)}, kontoen din er nå aktivert.</p>
             <a href="/login">Logg inn</a>
             </div></body></html>
         `);
@@ -266,10 +289,67 @@ function rateLimit(req, res, next) {
 
 app.use("/api", rateLimit);
 
+// Stricter rate limit for auth (10 attempts per minute)
+const authRateLimitMap = new Map();
+const AUTH_RATE_LIMIT_WINDOW = 60_000;
+const AUTH_RATE_LIMIT_MAX = 10;
+
+function authRateLimit(req, res, next) {
+    const ip = req.ip || req.connection.remoteAddress;
+    const now = Date.now();
+    const entry = authRateLimitMap.get(ip);
+
+    if (!entry || now - entry.start > AUTH_RATE_LIMIT_WINDOW) {
+        authRateLimitMap.set(ip, { start: now, count: 1 });
+        return next();
+    }
+
+    entry.count++;
+    if (entry.count > AUTH_RATE_LIMIT_MAX) {
+        res.setHeader("Retry-After", Math.ceil((entry.start + AUTH_RATE_LIMIT_WINDOW - now) / 1000));
+        return res.status(429).json({ error: "For mange forsøk. Vent litt og prøv igjen." });
+    }
+
+    next();
+}
+
+app.use("/auth", authRateLimit);
+
 // ── Health check ──
 app.get("/health", (_req, res) => {
     res.json({ status: "ok", uptime: process.uptime() });
 });
+
+// ── Auth middleware for project routes ──
+async function requireAuth(req, res, next) {
+    try {
+        const cookies = parseCookies(req);
+        const sessionId = cookies[SESSION_COOKIE_NAME];
+
+        if (!sessionId) {
+            return res.status(401).json({ error: "Ikke logget inn." });
+        }
+
+        const session = await getQuery(
+            `SELECT users.id, users.name, users.email, user_sessions.expires_at
+             FROM user_sessions
+             JOIN users ON users.id = user_sessions.user_id
+             WHERE user_sessions.session_id = ?`,
+            [sessionId]
+        );
+
+        if (!session || new Date(session.expires_at).getTime() < Date.now()) {
+            res.setHeader("Set-Cookie", clearSessionCookie());
+            return res.status(401).json({ error: "Økten er utløpt." });
+        }
+
+        req.user = { id: session.id, name: session.name, email: session.email };
+        next();
+    } catch (error) {
+        console.error("Auth middleware error:", error);
+        res.status(500).json({ error: "Autentiseringsfeil." });
+    }
+}
 
 // ── API routes ──
 
@@ -318,17 +398,7 @@ app.post("/auth/register", async (req, res) => {
                 from: "Grensesnittmatrise <noreply@grensesnittmatrise.no>",
                 to: [email],
                 subject: "Bekreft din e-postadresse – Grensesnittmatrise.no",
-                html: `
-                    <div style="font-family:sans-serif;max-width:500px;margin:0 auto;padding:32px">
-                        <h2 style="color:#0c6e70">Velkommen, ${name}!</h2>
-                        <p>Takk for at du opprettet en konto på Grensesnittmatrise.no.</p>
-                        <p>Klikk knappen under for å bekrefte e-postadressen din:</p>
-                        <a href="${verifyUrl}" style="display:inline-block;padding:14px 28px;background:#0c6e70;color:#fff;text-decoration:none;border-radius:8px;font-weight:700;margin:20px 0">Bekreft e-post</a>
-                        <p style="color:#666;font-size:0.85rem">Eller kopier denne lenken: ${verifyUrl}</p>
-                        <hr style="border:none;border-top:1px solid #eee;margin:24px 0">
-                        <p style="color:#999;font-size:0.8rem">Hvis du ikke opprettet denne kontoen, kan du ignorere denne e-posten.</p>
-                    </div>
-                `,
+                html: buildVerificationEmailHtml(name, verifyUrl),
             });
         }
 
@@ -379,14 +449,7 @@ app.post("/auth/resend-verification", async (req, res) => {
                 from: "Grensesnittmatrise <noreply@grensesnittmatrise.no>",
                 to: [email],
                 subject: "Bekreft din e-postadresse – Grensesnittmatrise.no",
-                html: `
-                    <div style="font-family:sans-serif;max-width:500px;margin:0 auto;padding:32px">
-                        <h2 style="color:#0c6e70">Hei, ${user.name}!</h2>
-                        <p>Klikk knappen under for å bekrefte e-postadressen din:</p>
-                        <a href="${verifyUrl}" style="display:inline-block;padding:14px 28px;background:#0c6e70;color:#fff;text-decoration:none;border-radius:8px;font-weight:700;margin:20px 0">Bekreft e-post</a>
-                        <p style="color:#666;font-size:0.85rem">Eller kopier denne lenken: ${verifyUrl}</p>
-                    </div>
-                `,
+                html: buildVerificationEmailHtml(user.name, verifyUrl),
             });
         }
 
@@ -510,7 +573,7 @@ app.post("/auth/logout", async (req, res) => {
     }
 });
 
-app.get("/api/projects", (_req, res) => {
+app.get("/api/projects", requireAuth, (_req, res) => {
     db.all(
         "SELECT id, updated_at FROM projects ORDER BY datetime(updated_at) DESC",
         [],
@@ -530,7 +593,7 @@ app.get("/api/projects", (_req, res) => {
     );
 });
 
-app.get("/api/projects/:id", (req, res) => {
+app.get("/api/projects/:id", requireAuth, (req, res) => {
     db.get(
         "SELECT id, data, updated_at FROM projects WHERE id = ?",
         [req.params.id],
@@ -554,7 +617,7 @@ app.get("/api/projects/:id", (req, res) => {
     );
 });
 
-app.get("/api/projects/:id/revisions", (req, res) => {
+app.get("/api/projects/:id/revisions", requireAuth, (req, res) => {
     db.all(
         `
         SELECT revision_id, created_at
@@ -580,7 +643,7 @@ app.get("/api/projects/:id/revisions", (req, res) => {
     );
 });
 
-app.get("/api/projects/:id/revisions/:revisionId", (req, res) => {
+app.get("/api/projects/:id/revisions/:revisionId", requireAuth, (req, res) => {
     db.get(
         `
         SELECT revision_id, data, created_at
@@ -608,7 +671,7 @@ app.get("/api/projects/:id/revisions/:revisionId", (req, res) => {
     );
 });
 
-app.put("/api/projects/:id", (req, res) => {
+app.put("/api/projects/:id", requireAuth, (req, res) => {
     const payload = req.body;
 
     if (!payload || typeof payload !== "object") {
@@ -661,7 +724,7 @@ app.put("/api/projects/:id", (req, res) => {
     });
 });
 
-app.delete("/api/projects/:id", (req, res) => {
+app.delete("/api/projects/:id", requireAuth, (req, res) => {
     db.serialize(() => {
         db.run(
             "DELETE FROM project_revisions WHERE project_id = ?",
@@ -701,7 +764,7 @@ app.delete("/api/projects/:id", (req, res) => {
 
 app.post("/api/create-checkout-session", async (req, res) => {
     if (!stripe) {
-        return res.status(503).json({ error: "Betaling er ikke konfigurert ennÃ¥." });
+        return res.status(503).json({ error: "Betaling er ikke konfigurert ennå." });
     }
 
     try {
@@ -735,7 +798,7 @@ app.post("/api/create-checkout-session", async (req, res) => {
 
 app.get("/api/subscription-status", async (req, res) => {
     if (!stripe) {
-        return res.status(503).json({ error: "Betaling er ikke konfigurert ennÃ¥." });
+        return res.status(503).json({ error: "Betaling er ikke konfigurert ennå." });
     }
 
     try {
@@ -756,6 +819,24 @@ app.get("/api/subscription-status", async (req, res) => {
         res.status(500).json({ error: "Kunne ikke hente abonnementsstatus." });
     }
 });
+
+// ── Periodic cleanup ──
+setInterval(() => {
+    const now = Date.now();
+    for (const [ip, entry] of rateLimitMap) {
+        if (now - entry.start > RATE_LIMIT_WINDOW) rateLimitMap.delete(ip);
+    }
+    for (const [ip, entry] of authRateLimitMap) {
+        if (now - entry.start > AUTH_RATE_LIMIT_WINDOW) authRateLimitMap.delete(ip);
+    }
+}, 5 * 60_000);
+
+// Clean expired sessions every hour
+setInterval(() => {
+    db.run("DELETE FROM user_sessions WHERE datetime(expires_at) < datetime('now')", (error) => {
+        if (error) console.error("Session cleanup error:", error);
+    });
+}, 60 * 60_000);
 
 // ── Graceful shutdown ──
 function shutdown() {

@@ -1,15 +1,55 @@
 [
   {
-    "tfm": "1",
-    "description": "Prosjektering, dokumentasjon, mv.",
+    "tfm": "100",
+    "description": "Generelt",
     "comments": "",
     "marks": {},
     "section": true
   },
   {
     "tfm": "Generelt",
-    "description": "Energiberegning (inkl. reelle beregninger)",
-    "comments": "Delansvar: Alle aktører leverer nødvendig underlag til energiberegninger. Iht. TEK17. \nBygningsfysiker RIByFy/RIEn har hovedansvaret for innsamling og beregning ut ifra lokasjon til bygget og faktiske belastninger.",
+    "description": "Alarmorganisering (dokument)",
+    "comments": "RIBr er ansvarlig for konsept, RIE for detaljprosjektering brannalarm. Alle fag bidrar med underlag for sine respektive alarmpunkter.",
+    "marks": {
+      "BH:P": "D",
+      "Byggfag:P": "H",
+      "Lås og beslag:P": "D",
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "Aut:P": "D"
+    }
+  },
+  {
+    "tfm": "Generelt",
+    "description": "Energi- og effektbudsjett (elektrisk)",
+    "comments": "Alle aktører må oppgi effekter som har betydning for byggets totale effektbudsjett. RIE har hovedansvar for sammenstilling.",
+    "marks": {
+      "BH:P": "D",
+      "Byggfag:P": "D",
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "H",
+      "Aut:P": "D"
+    }
+  },
+  {
+    "tfm": "Generelt",
+    "description": "Energi- og effektbudsjett (termisk)",
+    "comments": "Alle effekter skal fremkomme i systemskjema. Skal leveres rapport over forventet energibruk over ett års drift. RIV/RIRør har hovedansvar.",
+    "marks": {
+      "BH:P": "D",
+      "Byggfag:P": "D",
+      "Rør:P": "H",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "Aut:P": "D"
+    }
+  },
+  {
+    "tfm": "Generelt",
+    "description": "Energiberegning (NS 3031 / TEK17)",
+    "comments": "Bygningsfysiker RIByFy/RIEn har hovedansvar for innsamling og beregning. Alle aktører leverer nødvendig underlag.",
     "marks": {
       "BH:P": "D",
       "Byggfag:P": "H",
@@ -17,12 +57,76 @@
       "Vent:P": "D",
       "EL:P": "D",
       "Aut:P": "D"
+    }
+  },
+  {
+    "tfm": "Generelt",
+    "description": "Evakueringsplan (TEK17)",
+    "comments": "BH har hovedansvar for evakueringsplan. Consto leverer rømningsplaner som underlag.",
+    "marks": {
+      "BH:P": "H",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "Generelt",
+    "description": "Rømningsplaner",
+    "comments": "Skal være tydelig oppslått i bygget med 'du er her'-merking. Consto lager rømningsplaner, BH prosjekterer evakueringsplan.",
+    "marks": {
+      "BH:P": "D",
+      "Byggfag:P": "H",
+      "Byggfag:L": "H",
+      "Byggfag:M": "H"
+    }
+  },
+  {
+    "tfm": "Generelt",
+    "description": "Fortløpende rydding etter egne arbeider",
+    "comments": "Alle fag rydder fortløpende etter egne arbeider, inkl. emballasje og avfall. Gjelder også BH og Byggfag.",
+    "marks": {
+      "BH:L": "H",
+      "Byggfag:L": "H",
+      "Lås og beslag:L": "H",
+      "Dørleverandør:L": "H",
+      "Rør:L": "H",
+      "Vent:L": "H",
+      "EL:L": "H",
+      "Aut:L": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "Generelt",
+    "description": "Hulltaking < 50 mm i murte/støpte konstruksjoner",
+    "comments": "Ikke kjerneboring. Kjerneboring utføres av Byggfag. Hvert fag tar hull for egne installasjoner.",
+    "marks": {
+      "Rør:P": "H",
+      "Rør:M": "H",
+      "Vent:P": "H",
+      "Vent:M": "H",
+      "EL:P": "H",
+      "EL:M": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "Generelt",
+    "description": "Hulltaking > 50 mm (kjerneboring)",
+    "comments": "Consto gjennomfører én felles runde med kjerneboring. Alle utsparinger skal være merket ut. Utover dette bekoster UE selv.",
+    "marks": {
+      "Byggfag:P": "H",
+      "Byggfag:L": "H",
+      "Byggfag:M": "H",
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "BH:P": "D"
     }
   },
   {
     "tfm": "Generelt",
     "description": "Inneklimasimulering",
-    "comments": "Delansvar: Alle aktører leverer nødvendig underlag til inneklimasimulering. Inneklimasimulering inkluderer termisk inneklima av soner som krever dette. Hovedansvaret for kjøleberegninger og varmeberegninger ligger hos ventilasjon da det er de som leverer kjøle-/varmemaskiner og luftutstyr.",
+    "comments": "Alle aktører leverer nødvendig underlag. Inkluderer termisk inneklima for soner som krever dette. Ventilasjon har hovedansvar for kjøle-/varmeberegninger.",
     "marks": {
       "BH:P": "D",
       "Byggfag:P": "D",
@@ -34,77 +138,234 @@
   },
   {
     "tfm": "Generelt",
-    "description": "Energi- og effektbudsjett (elektrisk anlegg)",
-    "comments": "Delansvar: Alle aktører må oppgi effekter som har betydning for byggets totale effektbudsjett.",
+    "description": "Låsplan og beslagsliste",
+    "comments": "Låsplan og lås-/beslagsliste prosjekteres i samråd med BH/bruker. Lås og beslag har koordineringsansvar.",
     "marks": {
       "BH:P": "D",
-      "Byggfag:P": "D",
-      "Rør:P": "D",
-      "Vent:P": "D",
-      "EL:P": "H",
-      "Aut:P": "D"
+      "Lås og beslag:P": "H",
+      "Dørleverandør:P": "D"
     }
   },
   {
     "tfm": "Generelt",
-    "description": "Energi- og effektbudsjett (termisk energi)",
-    "comments": "Alle effekter skal fremkomme i systemskjema. Skal også leveres en rapport over forventet energibruk over ett års drift. RIByFy, RIEn, RIRør, RIVent",
-    "marks": {
-      "BH:P": "D",
-      "Byggfag:P": "D",
-      "Rør:P": "H",
-      "Vent:P": "D",
-      "EL:P": "D",
-      "Aut:P": "D"
-    }
-  },
-  {
-    "tfm": "Generelt",
-    "description": "Alarmorganisering (dokument)",
-    "comments": "RIBr er ansv. for konsept, RIE for detaljprosjektering brannalarm.",
-    "marks": {
-      "BH:P": "D",
-      "Byggfag:P": "H",
-      "Lås og beslag:P": "D",
-      "Rør:P": "D",
-      "Vent:P": "D",
-      "EL:P": "D",
-      "Aut:P": "D"
-    }
-  },
-  {
-    "tfm": "Generelt",
-    "description": "Evakueringsplan (iht. TEK17)",
-    "comments": "Evakueringsplan kan være elektronisk",
-    "marks": {
-      "BH:P": "H"
-    }
-  },
-  {
-    "tfm": "Generelt",
-    "description": "Rømningsplaner (del av evakueringsplan)",
-    "comments": "Skal være tydelig oppslått i bygget, med \"du er her\" - merking. Consto lager rømningsplaner og BH prosjekter evakueringsplan med basis i rømningsplaner.",
-    "marks": {
-      "BH:P": "D",
-      "Byggfag:P": "H"
-    }
-  },
-  {
-    "tfm": "Generelt",
-    "description": "Orienteringsplan (for brannalarmanlegg)",
-    "comments": "Branntablå kobles opp mot eget elektronisk presentasjonstablå med O‐planer ved angrepspunkt. Presentasjonssystemet kan gjerne være felles sammen med nødlysanlegget. Videre skal anlegget være tilrettelagt for web‐applikasjon for mobiltelefon/nettbrett med informasjon/mulighet til å finne alarmsteder.",
+    "description": "Orienteringsplan brannalarm",
+    "comments": "Branntablå kobles opp mot elektronisk presentasjonstablå med O-planer ved angrepspunkt. Tilrettelagt for webapp for mobiltelefon/nettbrett.",
     "marks": {
       "EL:P": "H",
       "EL:L": "H",
       "EL:M": "H",
       "EL:K": "H",
-      "EL:F": "H"
+      "EL:F": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "Generelt",
+    "description": "Romskjema",
+    "comments": "ARK prosjekterer romskjema med input fra alle fag. Alle tekniske fag melder inn krav til rom og utstyr.",
+    "marks": {
+      "BH:P": "D",
+      "Byggfag:P": "H",
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "Aut:P": "D"
+    }
+  },
+  {
+    "tfm": "Generelt",
+    "description": "Spikring/installasjonsvegger",
+    "comments": "Alle fag utarbeider underlag og merker ut plassering. Byggfag leverer og monterer spikerslag/forsterkning.",
+    "marks": {
+      "Byggfag:L": "H",
+      "Byggfag:M": "H",
+      "Lås og beslag:P": "D",
+      "Dørleverandør:P": "D",
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "Aut:P": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "Generelt",
+    "description": "Funksjonstesting felles",
+    "comments": "Koordinert funksjonstest av alle tekniske anlegg i samspill. Aut/SD koordinerer testprotokoll.",
+    "marks": {
+      "BH:F": "D",
+      "Rør:F": "D",
+      "Vent:F": "D",
+      "EL:F": "D",
+      "Aut:F": "H",
+      "SD:F": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "Generelt",
+    "description": "Igangkjøring koordinert",
+    "comments": "Koordinert igangkjøring av tekniske anlegg. Hvert fag kjører igang egne anlegg, Aut koordinerer rekkefølge.",
+    "marks": {
+      "Rør:F": "H",
+      "Vent:F": "H",
+      "EL:F": "H",
+      "Aut:F": "H",
+      "SD:F": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "Generelt",
+    "description": "Dokumentasjon FDV felles",
+    "comments": "Alle fag leverer FDV-dokumentasjon for sine anlegg iht. NS 3456. Byggfag sammenstiller til felles FDV.",
+    "marks": {
+      "BH:P": "D",
+      "Byggfag:P": "H",
+      "Lås og beslag:P": "D",
+      "Dørleverandør:P": "D",
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "Aut:P": "D",
+      "SD:P": "D"
+    }
+  },
+  {
+    "tfm": "Generelt",
+    "description": "Branntetting gjennomføringer",
+    "comments": "RIBr prosjekterer krav. Byggfag utfører branntetting. Tekniske fag melder brutt brannskille.",
+    "marks": {
+      "Byggfag:P": "H",
+      "Byggfag:L": "H",
+      "Byggfag:M": "H",
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "Aut:P": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "Generelt",
+    "description": "Lydtetting gjennomføringer",
+    "comments": "Alle gjennomføringer i lydklassifiserte vegger/dekker skal lydtettes. Byggfag utfører, tekniske fag melder behov.",
+    "marks": {
+      "Byggfag:P": "H",
+      "Byggfag:L": "H",
+      "Byggfag:M": "H",
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "Generelt",
+    "description": "Merking av installasjoner",
+    "comments": "Hvert fag merker egne installasjoner iht. Arbeidsplassforskriften og prosjektspesifikke krav.",
+    "marks": {
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "Rør:M": "H",
+      "Vent:P": "H",
+      "Vent:L": "H",
+      "Vent:M": "H",
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "Aut:P": "H",
+      "Aut:L": "H",
+      "Aut:M": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "Generelt",
+    "description": "Adkomst for vedlikehold tekniske rom",
+    "comments": "Byggfag sikrer tilstrekkelig adkomst til tekniske rom. Tekniske fag spesifiserer plasskrav for service og vedlikehold.",
+    "marks": {
+      "Byggfag:P": "H",
+      "Byggfag:L": "H",
+      "Byggfag:M": "H",
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "Generelt",
+    "description": "Koordineringstegninger",
+    "comments": "Tverrfaglige koordineringstegninger utarbeides for kritiske soner. Alle fag leverer modell/tegningsunderlag.",
+    "marks": {
+      "BH:P": "D",
+      "Byggfag:P": "H",
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "Aut:P": "D"
+    }
+  },
+  {
+    "tfm": "Generelt",
+    "description": "Fellestegninger tverrfaglig",
+    "comments": "BIM-koordinering og sammenstilling av modeller. Alle fag leverer oppdaterte fagmodeller.",
+    "marks": {
+      "BH:P": "D",
+      "Byggfag:P": "H",
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "Aut:P": "D",
+      "SD:P": "D"
+    }
+  },
+  {
+    "tfm": "Generelt",
+    "description": "Utsparingstegninger",
+    "comments": "Hvert fag prosjekterer og bestiller utsparinger. Byggfag sammenstiller og kontrollerer mot bærekonstruksjoner (RIB).",
+    "marks": {
+      "Byggfag:P": "H",
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "Generelt",
+    "description": "Brannstrategi (grensesnitt)",
+    "comments": "RIBr utarbeider brannstrategi. Alle tekniske fag bidrar med underlag for sine respektive brannkrav og tiltak.",
+    "marks": {
+      "BH:P": "D",
+      "Byggfag:P": "H",
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "Aut:P": "D",
+      "SD:P": "D"
+    }
+  },
+  {
+    "tfm": "Generelt",
+    "description": "Innreguleringsrapport samlet",
+    "comments": "Samlet innreguleringsrapport for alle tekniske anlegg. Hvert fag leverer sine innreguleringsdata.",
+    "marks": {
+      "Rør:P": "H",
+      "Rør:F": "H",
+      "Vent:P": "H",
+      "Vent:F": "H",
+      "EL:F": "D",
+      "Aut:F": "D",
+      "SD:F": "D",
+      "BH:P": "D"
     }
   },
   {
     "tfm": "Generelt",
     "description": "Tverrfaglig funksjonsbeskrivelse dørmiljø",
-    "comments": "Beslagsleverandør lager funksjonsbeskrivelse på alle dører med elektriske komponenter. Adgangskontrolleverandør fyller inn sitt og til sammen så blir dette en tverrfaglig funksjonsbeskrivelse. Det skal gjøres en risikovurdering av alle dørmiljø. Dører må følge maskindirektivet.",
+    "comments": "Beslagsleverandør lager funksjonsbeskrivelse for alle dører med elektriske komponenter. Risikovurdering av alle dørmiljø. Dører skal følge maskindirektivet.",
     "marks": {
       "BH:P": "D",
       "Byggfag:P": "D",
@@ -115,88 +376,70 @@
   },
   {
     "tfm": "Generelt",
-    "description": "Låsplan og lås- og beslagsliste",
-    "comments": "Liste og plan for låsing skal prosjekteres i samråd med BH/bruker",
+    "description": "Provisorisk strøm og belysning byggeperiode",
+    "comments": "EL har kontrollrutiner for prostrøm. Byggfag bestiller og koordinerer.",
     "marks": {
-      "BH:P": "D",
-      "Lås og beslag:P": "H"
+      "Byggfag:P": "H",
+      "Byggfag:L": "H",
+      "Byggfag:M": "H",
+      "EL:K": "D",
+      "BH:P": "D"
     }
   },
   {
-    "tfm": "12",
-    "description": "Diverse bygningsmessig",
+    "tfm": "100",
+    "description": "NS3420 / beskrivelsesgrunnlag for tekniske grensesnitt",
+    "comments": "BH fastsetter kontrakts- og beskrivelsesgrunnlag. Byggfag samordner mot tekniske fag slik at grensesnitt blir beskrevet likt i konkurransegrunnlag og kontrakt.",
+    "marks": {
+      "BH:P": "H",
+      "Byggfag:P": "D",
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "Aut:P": "D",
+      "SD:P": "D"
+    }
+  },
+  {
+    "tfm": "100",
+    "description": "Brannmatrise tverrfaglig",
+    "comments": "Brannmatrisen skal samordne ABA, heis, dørmiljø, ventilasjon, røykventilasjon og SD. BH og Byggfag følger opp at alle grensesnitt er dekket i underlaget.",
+    "marks": {
+      "BH:P": "D",
+      "Byggfag:P": "H",
+      "Lås og beslag:P": "D",
+      "Dørleverandør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "Aut:P": "D",
+      "SD:P": "D"
+    }
+  },
+  {
+    "tfm": "100",
+    "description": "Tverrfaglig dørmatrise",
+    "comments": "Dørmatrise skal samordne dørblad, karm, beslag, elkomponenter, dørautomatikk, adgangskontroll og brannfunksjoner.",
+    "marks": {
+      "BH:P": "D",
+      "Byggfag:P": "D",
+      "Lås og beslag:P": "H",
+      "Dørleverandør:P": "D",
+      "EL:P": "D",
+      "Aut:P": "D",
+      "SD:P": "D"
+    }
+  },
+  {
+    "tfm": "200",
+    "description": "Bygningsdeler",
     "comments": "",
     "marks": {},
     "section": true
   },
   {
-    "tfm": "2000",
+    "tfm": "200",
     "description": "Utsparinger i betong",
-    "comments": "Delansvar: Prosjektere og fysisk merke ut plassering og dimensjon på utsparinger for egne installasjoner. Alle utsparinger i bærende konstruksjoner skal kontrolleres mot RIB. Consto gjennomfører kun én felles runde med kjerneboring hvor alle utsparinger skal være merket ut, utover dette vil UE måtte bekoste hulltagning selv.",
-    "marks": {
-      "Byggfag:P": "H",
-      "Byggfag:L": "H",
-      "Byggfag:M": "H",
-      "Rør:P": "D",
-      "Vent:P": "D",
-      "EL:P": "D"
-    }
-  },
-  {
-    "tfm": "200",
-    "description": "Kjerneboring i betong",
-    "comments": "Delansvar: Prosjektere og fysisk merke ut plassering og dimensjon på utsparinger for egne installasjoner. Alle utsparinger i bærende konstruksjoner skal kontrolleres mot RIB. Consto gjennomfører kun én felles runde med kjerneboring hvor alle utsparinger skal være merket ut, utover dette vil UE måtte bekoste hulltagning selv.",
-    "marks": {
-      "Byggfag:P": "H",
-      "Byggfag:L": "H",
-      "Byggfag:M": "H",
-      "Rør:P": "D",
-      "Vent:P": "D",
-      "EL:P": "D"
-    }
-  },
-  {
-    "tfm": "200",
-    "description": "Hulltaking i lette konstruksjoner",
-    "comments": "Alle aktører må prosjektere, merke og ta hull for egne installasjoner. Opp til Ø220 for Solland.",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Vent:P": "H",
-      "Vent:L": "H",
-      "Vent:M": "H",
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "Aut:P": "H",
-      "Aut:L": "H",
-      "Aut:M": "H"
-    }
-  },
-  {
-    "tfm": "200",
-    "description": "Hulltaking i systemhimling for egne installasjoner",
-    "comments": "Alle aktører må prosjektere, merke og ta hull for egne installasjoner.  Opp til Ø220 for Solland.",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Vent:P": "H",
-      "Vent:L": "H",
-      "Vent:M": "H",
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "Aut:P": "H",
-      "Aut:L": "H",
-      "Aut:M": "H"
-    }
-  },
-  {
-    "tfm": "200",
-    "description": "Branntetting",
-    "comments": "Hovedansvar: RIBr har prosjekteringsansvar.Delansvar: Ansvarlig for å tilbakemelde brutt brannskille til Consto, klart for branntetting.",
+    "comments": "Alle utsparinger i bærende konstruksjoner kontrolleres mot RIB. Consto gjennomfører én felles runde med kjerneboring.",
     "marks": {
       "Byggfag:P": "H",
       "Byggfag:L": "H",
@@ -204,2446 +447,892 @@
       "Rør:P": "D",
       "Vent:P": "D",
       "EL:P": "D",
-      "Aut:P": "D"
+      "BH:P": "D"
     }
   },
   {
     "tfm": "200",
-    "description": "Mansjett branntetting",
-    "comments": "For sine egne arbeider",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Rør:K": "H",
-      "Rør:F": "H"
-    }
-  },
-  {
-    "tfm": "200",
-    "description": "Reserverør med branntetting (knipern)",
-    "comments": "",
+    "description": "Utsparinger i stål",
+    "comments": "Utsparinger i stålkonstruksjoner skal kontrolleres av RIB. Tekniske fag prosjekterer krav, Byggfag utfører.",
     "marks": {
       "Byggfag:P": "H",
       "Byggfag:L": "H",
       "Byggfag:M": "H",
-      "Byggfag:K": "H",
-      "Byggfag:F": "H"
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "BH:P": "D"
     }
   },
   {
     "tfm": "200",
-    "description": "Tetting generelt",
-    "comments": "Den som punkterer en vegg er også ansvarlig for at det tettes.",
+    "description": "Utsparinger i lettvegg",
+    "comments": "Hvert fag prosjekterer, merker og tar hull for egne installasjoner i lette konstruksjoner.",
     "marks": {
+      "Rør:P": "H",
+      "Rør:M": "H",
+      "Vent:P": "H",
+      "Vent:M": "H",
+      "EL:P": "H",
+      "EL:M": "H",
+      "Aut:P": "H",
+      "Aut:M": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "200",
+    "description": "Branntetting rør",
+    "comments": "Rørfaget er ansvarlig for branntetting av egne rørgjennomføringer, inkl. mansjetter. Tilbakemelding til Byggfag om brutt brannskille.",
+    "marks": {
+      "Byggfag:P": "D",
       "Rør:P": "H",
       "Rør:L": "H",
       "Rør:M": "H",
-      "Rør:K": "H",
-      "Rør:F": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "200",
+    "description": "Branntetting ventilasjon",
+    "comments": "Ventilasjon er ansvarlig for branntetting av egne kanalgjennomføringer, inkl. brandspjeld.",
+    "marks": {
+      "Byggfag:P": "D",
       "Vent:P": "H",
       "Vent:L": "H",
       "Vent:M": "H",
-      "Vent:K": "H",
-      "Vent:F": "H",
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "Aut:P": "H",
-      "Aut:L": "H",
-      "Aut:M": "H",
-      "Aut:K": "H",
-      "Aut:F": "H"
+      "BH:P": "D"
     }
   },
   {
     "tfm": "200",
-    "description": "Provisorisk strøm og belysning byggeperiode",
-    "comments": "EL er ansvarlig for å ha kontrollrutiner for prostrøm.",
+    "description": "Branntetting EL",
+    "comments": "EL er ansvarlig for branntetting av egne kabelgjennomføringer. Bruk av godkjente branntettingssystemer.",
+    "marks": {
+      "Byggfag:P": "D",
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "200",
+    "description": "Branntetting tele/data",
+    "comments": "Automasjon/tele er ansvarlig for branntetting av egne kabel-/rørgjennomføringer.",
+    "marks": {
+      "Byggfag:P": "D",
+      "Aut:P": "H",
+      "Aut:L": "H",
+      "Aut:M": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "200",
+    "description": "Innstøpningsgods rør",
+    "comments": "Rør prosjekterer og bestiller innstøpningsgods for egne installasjoner. Byggfag støper inn.",
+    "marks": {
+      "Byggfag:M": "H",
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "200",
+    "description": "Innstøpningsgods EL",
+    "comments": "EL prosjekterer og bestiller innstøpningsgods for egne installasjoner. Byggfag støper inn.",
+    "marks": {
+      "Byggfag:M": "H",
+      "EL:P": "H",
+      "EL:L": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "200",
+    "description": "Innstøpningsgods ventilasjon",
+    "comments": "Vent prosjekterer og bestiller innstøpningsgods for egne installasjoner. Byggfag støper inn.",
+    "marks": {
+      "Byggfag:M": "H",
+      "Vent:P": "H",
+      "Vent:L": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "200",
+    "description": "Konsoll/oppheng rør",
+    "comments": "Rør prosjekterer og leverer konsoller/oppheng for egne rørsystemer. Rør monterer.",
+    "marks": {
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "Rør:M": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "200",
+    "description": "Konsoll/oppheng ventilasjon",
+    "comments": "Vent prosjekterer og leverer konsoller/oppheng for egne kanalsystemer. Vent monterer.",
+    "marks": {
+      "Vent:P": "H",
+      "Vent:L": "H",
+      "Vent:M": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "200",
+    "description": "Konsoll/oppheng EL",
+    "comments": "EL prosjekterer og leverer konsoller/oppheng for kabelbroer og installasjoner. EL monterer.",
+    "marks": {
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "200",
+    "description": "Lettvegger med installasjoner",
+    "comments": "Byggfag monterer lettvegger. Tekniske fag legger inn installasjoner før lukking. Koordinering av rekkefølge er kritisk.",
     "marks": {
       "Byggfag:P": "H",
       "Byggfag:L": "H",
       "Byggfag:M": "H",
-      "Byggfag:K": "H",
-      "Byggfag:F": "H"
+      "Rør:P": "D",
+      "Rør:M": "D",
+      "EL:P": "D",
+      "EL:M": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "200",
+    "description": "Himling med installasjoner",
+    "comments": "Byggfag monterer himlinger. Alle tekniske installasjoner over himling skal være ferdigstilt og innregulert før lukking.",
+    "marks": {
+      "Byggfag:P": "H",
+      "Byggfag:L": "H",
+      "Byggfag:M": "H",
+      "Rør:P": "D",
+      "Rør:M": "D",
+      "Vent:P": "D",
+      "Vent:M": "D",
+      "EL:P": "D",
+      "EL:M": "D",
+      "Aut:P": "D",
+      "Aut:M": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "200",
+    "description": "Sjakter tekniske",
+    "comments": "Byggfag bygger sjakter. Tekniske fag prosjekterer plasskrav og installerer egne føringer.",
+    "marks": {
+      "Byggfag:P": "H",
+      "Byggfag:L": "H",
+      "Byggfag:M": "H",
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "200",
+    "description": "Tekniske rom adkomst",
+    "comments": "Tilstrekkelig plass for inn-/uttransport av teknisk utstyr. Dører/luker dimensjoneres for største komponent.",
+    "marks": {
+      "Byggfag:P": "H",
+      "Byggfag:L": "H",
+      "Byggfag:M": "H",
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "200",
+    "description": "Gulvsluk plassering",
+    "comments": "Rør prosjekterer plassering av gulvsluk. Byggfag tilpasser fall i gulv. Koordineres mot membranarbeider.",
+    "marks": {
+      "Byggfag:P": "D",
+      "Byggfag:M": "D",
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "Rør:M": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "200",
+    "description": "Fallforhold våtrom",
+    "comments": "Byggfag utfører fallforhold iht. våtromsnorm. Rør angir slukplassering. Membranarbeider koordineres.",
+    "marks": {
+      "Byggfag:P": "H",
+      "Byggfag:L": "H",
+      "Byggfag:M": "H",
+      "Rør:P": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "200",
+    "description": "Takgjennomføringer",
+    "comments": "Byggfag utfører gjennomføringer i tak/tekking. Tekniske fag prosjekterer plassering og dimensjon.",
+    "marks": {
+      "Byggfag:P": "H",
+      "Byggfag:L": "H",
+      "Byggfag:M": "H",
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "200",
+    "description": "Påstøp/avrettingsmasse",
+    "comments": "Byggfag utfører påstøp/avretting. Rør og EL legger inn installasjoner i påstøp før støping.",
+    "marks": {
+      "Byggfag:P": "H",
+      "Byggfag:L": "H",
+      "Byggfag:M": "H",
+      "Rør:P": "D",
+      "Rør:M": "D",
+      "EL:P": "D",
+      "EL:M": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "200",
+    "description": "Sparedekke/membran",
+    "comments": "Byggfag utfører membran/sparedekke. Rør koordinerer slukplassering. Alle gjennomføringer skal være ferdig før membranlegging.",
+    "marks": {
+      "Byggfag:P": "H",
+      "Byggfag:L": "H",
+      "Byggfag:M": "H",
+      "Rør:P": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "200",
+    "description": "Veggkasser EL",
+    "comments": "EL prosjekterer og leverer veggkasser/innfelte bokser. Byggfag tilrettelegger i vegg.",
+    "marks": {
+      "Byggfag:M": "D",
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "200",
+    "description": "Veggkasser rør",
+    "comments": "Rør prosjekterer og leverer veggkasser for rørinstallasjoner. Byggfag tilrettelegger i vegg.",
+    "marks": {
+      "Byggfag:M": "D",
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "Rør:M": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "200",
+    "description": "Fundamenter teknisk utstyr",
+    "comments": "Byggfag støper/bygger fundamenter for teknisk utstyr. Tekniske fag prosjekterer lastkrav og plassering.",
+    "marks": {
+      "Byggfag:P": "H",
+      "Byggfag:L": "H",
+      "Byggfag:M": "H",
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "200",
+    "description": "Stålkonstruksjoner for teknisk utstyr",
+    "comments": "Byggfag prosjekterer og leverer bærekonstruksjoner i stål for tunge tekniske enheter på tak/i tekniske rom.",
+    "marks": {
+      "Byggfag:P": "H",
+      "Byggfag:L": "H",
+      "Byggfag:M": "H",
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "BH:P": "D"
     }
   },
   {
     "tfm": "200",
     "description": "Inspeksjonsluker",
-    "comments": "Alle aktører må prosjektere plassering og dimensjon på luker der dette kreves for tilgang til egne installasjoner. Elektriker leverer og monterer ikke disse lukene.",
+    "comments": "Hvert fag prosjekterer plassering og dimensjon for luker til egne installasjoner. Byggfag leverer og monterer luker.",
     "marks": {
       "Byggfag:L": "H",
       "Byggfag:M": "H",
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Rør:K": "H",
-      "Rør:F": "H",
-      "Vent:P": "H",
-      "Vent:L": "H",
-      "Vent:M": "H",
-      "Vent:K": "H",
-      "Vent:F": "H",
-      "EL:P": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "Aut:P": "H",
-      "Aut:L": "H",
-      "Aut:M": "H",
-      "Aut:K": "H",
-      "Aut:F": "H"
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "Aut:P": "D",
+      "BH:P": "D",
+      "Byggfag:P": "D"
     }
   },
   {
     "tfm": "200",
-    "description": "Skilting av installasjoner",
-    "comments": "Pålagt skilting av egne installasjoner (sprinkler, slokkeutstyr, o.l.) iht. Arbeidsplassforskriften",
+    "description": "Dørfelt, karm og beslagforsterkning",
+    "comments": "Byggfag tilrettelegger vegg og forsterkninger. Dørleverandør og lås/beslag angir krav til karm, forsterkning og toleranser.",
     "marks": {
+      "BH:P": "D",
       "Byggfag:P": "H",
       "Byggfag:L": "H",
       "Byggfag:M": "H",
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Vent:P": "H",
-      "Vent:L": "H",
-      "Vent:M": "H",
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H"
+      "Lås og beslag:P": "D",
+      "Dørleverandør:P": "D",
+      "Dørleverandør:M": "D"
     }
   },
   {
-    "tfm": "Generelt utførende",
-    "description": "Fortløpende rydding etter egne arbeider.",
-    "comments": "Alle fag, gjelder også Consto og BH.",
+    "tfm": "200",
+    "description": "Kabeloverføring i dør og karm",
+    "comments": "Dørleverandør og lås/beslag angir behov for kabeloverføring. EL leverer kabling, og Byggfag koordinerer innbygging i vegg og karm.",
     "marks": {
-      "BH:L": "H",
-      "Byggfag:L": "H",
-      "Lås og beslag:L": "H",
-      "Dørleverandør:L": "H",
-      "Rør:L": "H",
-      "Vent:L": "H",
-      "EL:L": "H",
-      "Aut:L": "H"
-    }
-  },
-  {
-    "tfm": "Generelt utførende",
-    "description": "Hulltaking i murte/støpte konstruksjoner < 50 mm for egne arbeider",
-    "comments": "Ikke kjerneboring. Kjerneboring utføres av Consto.",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Vent:P": "H",
-      "Vent:L": "H",
-      "EL:P": "H",
-      "EL:L": "H"
-    }
-  },
-  {
-    "tfm": "Generelt utførende",
-    "description": "Spikerslag for tekniske installasjoner for VVS og elektro",
-    "comments": "Alle fag utarbeider underlag og merker ut plassering, TE ordner spikerslag",
-    "marks": {
-      "Byggfag:L": "H",
-      "Byggfag:M": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D",
+      "Byggfag:M": "D",
       "Lås og beslag:P": "H",
-      "Dørleverandør:P": "H",
-      "Rør:P": "H",
-      "Vent:P": "H",
-      "EL:P": "H",
-      "Aut:P": "H"
+      "Dørleverandør:P": "D",
+      "Dørleverandør:M": "D",
+      "EL:P": "D",
+      "EL:K": "H"
     }
   },
   {
-    "tfm": "21",
-    "description": "Systemer",
+    "tfm": "300",
+    "description": "VVS / Sanitær",
     "comments": "",
     "marks": {},
     "section": true
   },
   {
-    "tfm": "234 \n244",
-    "description": "Dørmiljø",
-    "comments": "Prinsippskjema for de ulike dørkategoriene, som viser føringsveier, betjeningsbrytere, grensesnittbokser, o.l., i dørmiljø, leveres av Lås og Beslag.",
+    "tfm": "300",
+    "description": "Sanitæranlegg komplett",
+    "comments": "Rør har totalansvar for sanitæranlegg inkl. prosjektering, levering og montasje. Koordineres med Byggfag for innstøpning og gjennomføringer.",
     "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:F": "H"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Dormiljo - grensesnitt mot brannalarm (ABA)",
-    "comments": "Omfatter signaler, koblingspunkt og funksjon ved alarm, frikobling og eventuell romningsfunksjon.",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "EL:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Dormiljo - grensesnitt mot adgangskontroll og innbruddsalarm",
-    "comments": "Omfatter koordinering av las, beslag, dornode, kortleser, alarmkontakt og grensesnittboks.",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "Lås og beslag:F": "H",
-      "Lås og beslag:I": "H"
-    }
-  },
-  {
-    "tfm": "2340\n2440",
-    "description": "Dører",
-    "comments": "ARK prosjekterer.\nMontasje koordineres slik at alt blir montert i riktig rekkefølge. Aluminiumsdører monteres av aluminiumsleverandør.",
-    "marks": {
-      "Byggfag:P": "H",
-      "Byggfag:M": "H",
-      "Dørleverandør:L": "H",
-      "Dørleverandør:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "0",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Bakkantsikring",
-    "comments": "",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Dørleverandør:L": "H",
-      "Dørleverandør:M": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "0",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Sparkeplate",
-    "comments": "ARK prosjekterer.",
-    "marks": {
-      "Byggfag:P": "H",
-      "Byggfag:F": "H",
-      "Dørleverandør:L": "H",
-      "Dørleverandør:M": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "0",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Fuging",
-    "comments": "ARK prosjekterer.",
-    "marks": {
-      "Byggfag:P": "H",
-      "Byggfag:L": "H",
-      "Byggfag:M": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "0",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Listing",
-    "comments": "ARK prosjekterer.",
-    "marks": {
-      "Byggfag:P": "H",
-      "Byggfag:L": "H",
-      "Byggfag:M": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "0",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Forsterkning i vegg",
-    "comments": "ARK prosjekterer. \nFor dørautomatikk, holdemagnet, magnetlås, dørstopper etc.",
-    "marks": {
-      "Byggfag:P": "H",
-      "Byggfag:L": "H",
-      "Byggfag:M": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "0",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Forsterkning av dør, hengsler",
-    "comments": "Dør forberedes for byggeplassmontert beslag iht. beslagliste",
-    "marks": {
-      "Dørleverandør:P": "H",
-      "Dørleverandør:L": "H",
-      "Dørleverandør:M": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "0",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Låskasse, mekanisk",
-    "comments": "",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Dørleverandør:L": "H",
-      "Dørleverandør:M": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "0",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Sluttstykke, mekanisk",
-    "comments": "",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Dørleverandør:L": "H",
-      "Dørleverandør:M": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "0",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Hengsler",
-    "comments": "",
-    "marks": {
-      "Dørleverandør:P": "H",
-      "Dørleverandør:L": "H",
-      "Dørleverandør:M": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "0",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Innfelte panikkbeslag og skåter/automatskåter",
-    "comments": "",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Dørleverandør:L": "H",
-      "Dørleverandør:M": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "0",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Utenpåliggende panikkbeslag og skåter",
-    "comments": "",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "0",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Nøkler (låssystem)",
-    "comments": "Leveres iht. låsplan.",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "0",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Låssylinder (låssystem)",
-    "comments": "Leveres iht. låsplan. Låssylindere og utstyr inkluderer for alle dørtykkelser.",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "0",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Håndtak, vrider, og skilt",
-    "comments": "",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "0",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Dørlukker, mekanisk",
-    "comments": "",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "0",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Dørkoordinator",
-    "comments": "",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "0",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Karmoverføring",
-    "comments": "",
-    "marks": {
-      "Dørleverandør:P": "H",
-      "Dørleverandør:L": "H",
-      "Dørleverandør:M": "H",
-      "Dørleverandør:K": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Trekkerør i dør og karm",
-    "comments": "I dører der karmoverføring er beskrevet.",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Magnetkontakt",
-    "comments": "",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Låskasse med microbryter",
-    "comments": "",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Sluttstykke med microbryter",
-    "comments": "",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Elektrisk sluttstykke",
-    "comments": "",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Magnetlås",
-    "comments": "",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Motorlås med styreenhet",
-    "comments": "",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Dørholdemagnet / elektromagnetisk dørhold",
-    "comments": "Der hvor det er dørautomatikk brukes integrert dørholdfunksjon. Ved veggmontert monterer beslagleverandør på ferdig forberedt vegg.\nDelansvar EL: Ved veggmontert - tegne inn komponent på tegning og i BIM .",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "EL:P": "D",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Utløserknapp for dørholdemagnet / elektromagnetisk dørhold",
-    "comments": "Delansvar EL:  Ved veggmontert - tegne inn komponent på tegning og i BIM .",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "EL:P": "D",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Trafo til dørmiljø",
-    "comments": "Lås og beslag medtar trafo for nødvendige installasjoner til dørmiljø.",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "Lås og beslag:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Slagdørsautomatikk",
-    "comments": "Delansvar EL: Kabling/tilkobling 230V i stikk/ dørautomatikk på UPS.",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "Lås og beslag:F": "H",
-      "EL:K": "D",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Skyvedørsautomatikk, inkl. evt. styreskap, betjeningsknapper, og sensorer.",
-    "comments": "Leveres med \"låstapp\" i motoren til automatikken på ytre skallsikring. Dørleverandør monterer på ferdig forberedt dør/vegg og leverer med spiralkabel med stekkavlaster for motorlås. EL kabler frem og tilkobler 230V. Kabel til motorlås som skal være i skyvedørsbladet, sendes av lås og beslagsleverandøren til aluminiums leverandøren.\nDelansvar EL: Tegne inn komponent på tegning og i BIM , og kabling/tilkobling 230V i stikk/ dørautomatikk/ styreskap. For skyvedører, tegner ikke elektriker selve skyvedøren og automatikken -  dette kommer med dørleverandør.",
-    "marks": {
-      "Lås og beslag:I": "H",
-      "Dørleverandør:P": "H",
-      "Dørleverandør:L": "H",
-      "Dørleverandør:M": "H",
-      "Dørleverandør:K": "H",
-      "Dørleverandør:F": "H",
-      "EL:P": "D",
-      "EL:K": "D",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Impulsgiver dørautomatikk; albuebryter, snortrekk, e.l.",
-    "comments": "Delansvar EL: Tegne inn komponent på tegning og i BIM .",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "EL:P": "D",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Åpningssensor slagdørautomatikk (IR e.l.)",
-    "comments": "",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Åpningssensor skyvedørautomatikk (IR e.l.)",
-    "comments": "",
-    "marks": {
-      "Lås og beslag:I": "H",
-      "Dørleverandør:P": "H",
-      "Dørleverandør:L": "H",
-      "Dørleverandør:M": "H",
-      "Dørleverandør:K": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "0",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Sikkerhetssensor på dører (iht. NS-EN 16005)",
-    "comments": "Ved bruk av dørautomatikk, iht. Maskindirektivet.",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "Lås og beslag:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Mekanisk klemsikring",
-    "comments": "Ved bruk av dørautomatikk, iht. Maskindirektivet.",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "Lås og beslag:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Nøkkelbryter",
-    "comments": "Delansvar EL: Tegne inn komponent på tegning og i BIM .",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "EL:P": "D",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Kortlås på dørblad (hotellås o.l.)",
-    "comments": "Standard låskasse fra dørleverandør byttes ut med en-falle låskasse m/sperrefalle.",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "Lås og beslag:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Nødåpner (KAC)",
-    "comments": "Delansvar EL: Tegne inn komponent på tegning og i BIM .",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "Lås og beslag:F": "H",
-      "EL:P": "D",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Nødterminal med forsinkelse/lyd",
-    "comments": "Delansvar EL: Tegne inn komponent på tegning og i BIM .",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "Lås og beslag:F": "H",
-      "EL:P": "D",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "234 \n244",
-    "description": "Generelt",
-    "comments": "Prosjektering inkluderer også koblingsskjema for grensesnittboks. Beslagsleverandør kabler og tilkobler alle kabler fra dørmiljø inn i grensesnittboks.\nDelansvar EL: Tegne inn komponent på tegning og i BIM, samt kabling/tilkobling 24V/AAK/AIA/ABA/porttelefon inn i grensesnittboks.",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "Lås og beslag:F": "H",
-      "EL:P": "D",
-      "EL:K": "D",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "237",
-    "description": "Solavskjermingsautomatikk (releboks, sentral, vindføler, solføler, m.m.)",
-    "comments": "Prosjektering inkluderer tegning som viser alle motorplasseringer. Delansvar EL: Tegne inn komponent på tegning og i BIM .\nEventuelle driftssignaler\nTesting utføres av leverandør for stand-alone, og automasjon ellers.",
-    "marks": {
-      "Byggfag:P": "H",
-      "Byggfag:L": "H",
-      "EL:P": "D",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "237",
-    "description": "Betjeningsbryter for solavskjerming (tradlos styring og batteripakke)",
-    "comments": "Brukes der solavskjerming leveres som stand-alone losning uten fast lavspent til bryterpunkt.",
-    "marks": {
-      "Byggfag:P": "H",
-      "Byggfag:L": "H",
-      "Byggfag:F": "H",
-      "EL:P": "D",
-      "EL:M": "H",
-      "EL:K": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "237",
-    "description": "Betjeningsbryter for solavskjerming (tradlos styring og batteripakke)",
-    "comments": "Brukes der solavskjerming leveres som stand-alone losning uten fast lavspent til bryterpunkt.",
-    "marks": {
-      "Byggfag:P": "H",
-      "Byggfag:L": "H",
-      "Byggfag:M": "H",
-      "Byggfag:F": "H"
-    }
-  },
-  {
-    "tfm": "237",
-    "description": "Solavskjerming med motor",
-    "comments": "Delansvar EL: Tegne inn el-komponent (motor) på tegning og i BIM. Egenkontroll utføres av den som monterer solavskjerming",
-    "marks": {
-      "Byggfag:P": "H",
-      "Byggfag:L": "H",
-      "Byggfag:M": "H",
-      "Byggfag:F": "H",
-      "EL:P": "D",
-      "EL:K": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "237",
-    "description": "Hirschmann plugg (hann og hunn) eller tilsv. på motorkabel",
-    "comments": "Motorkabel fra utvendig solavskjerming avsluttes på innside av vegg. EL sørger for røranlegg gjennom yttervegg (se system 411).",
-    "marks": {
-      "Byggfag:P": "H",
-      "Byggfag:L": "H",
-      "Byggfag:M": "H",
-      "EL:K": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "0",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "249",
-    "description": "Branngardin, inkl. motor",
-    "comments": "",
-    "marks": {
-      "Byggfag:P": "H",
-      "Byggfag:L": "H",
-      "Byggfag:M": "H",
-      "Byggfag:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "249",
-    "description": "Styresentral/styreskap inkl. batteribackup",
-    "comments": "Delansvar EL:  Tegne inn komponent på tegning og i BIM , og kabling/tilkobling frem til styresentral/styreskap (tilførsel).",
-    "marks": {
-      "Byggfag:P": "H",
-      "Byggfag:L": "H",
-      "Byggfag:M": "H",
-      "Byggfag:F": "H",
-      "EL:P": "D",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "249",
-    "description": "Betjeningsbryter/-tablå for branngardin",
-    "comments": "Delansvar EL: Tegne inn komponent på tegning og i BIM .",
-    "marks": {
-      "Byggfag:P": "H",
-      "Byggfag:L": "H",
-      "Byggfag:M": "H",
-      "Byggfag:F": "H",
-      "EL:P": "D",
-      "EL:K": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "263",
-    "description": "Røykluke, inkl åpningssystem og motor",
-    "comments": "",
-    "marks": {
-      "Byggfag:P": "H",
-      "Byggfag:L": "H",
-      "Byggfag:M": "H",
-      "Byggfag:F": "H",
-      "EL:K": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "263",
-    "description": "Røyklukesentral inkl. nødstrømforsyning (batteri)",
-    "comments": "Delansvar EL: Tegne inn komponent på tegning og i BIM, samt fysisk merking av komponent [L04].",
-    "marks": {
-      "Byggfag:P": "H",
-      "Byggfag:L": "H",
-      "Byggfag:F": "H",
-      "EL:P": "D",
-      "EL:L": "D",
-      "EL:M": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "263",
-    "description": "Betjeningsbryter/-tablå for røykluke",
-    "comments": "Delansvar EL: Tegne inn komponent på plantegning og i BIM, samt fysisk merking av komponent [L04].",
-    "marks": {
-      "Byggfag:P": "H",
-      "Byggfag:L": "H",
-      "Byggfag:M": "H",
-      "Byggfag:F": "H",
-      "EL:P": "D",
-      "EL:L": "D",
-      "EL:K": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "263",
-    "description": "Koblingsboks for motor",
-    "comments": "Må ha IP-grad tilsvarende miljøet den er plassert i",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "Rør:M": "H",
+      "BH:P": "D"
     }
   },
   {
     "tfm": "300",
-    "description": "Pumpe uten frekvensomformer",
-    "comments": "Brukes der pumpe leveres uten integrert frekvensomformer. Grensesnitt mot elkraft, start/stopp, drift/alarm og eventuelle sperresignaler ma avklares.",
+    "description": "Sanitærutstyr (servant, toalett, dusj)",
+    "comments": "Rør leverer og monterer alt sanitærutstyr. BH/ARK velger type og plassering.",
+    "marks": {
+      "BH:P": "D",
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "Rør:M": "H"
+    }
+  },
+  {
+    "tfm": "300",
+    "description": "Varme/kjølesystem",
+    "comments": "Rør har hovedansvar for vannbårent varme-/kjølesystem. Vent koordinerer for batterikobling. EL leverer strøm til pumper.",
+    "marks": {
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "Rør:M": "H",
+      "Vent:P": "D",
+      "EL:K": "D",
+      "Aut:P": "D",
+      "Aut:I": "D",
+      "SD:I": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "300",
+    "description": "Varmeveksler",
+    "comments": "Rør prosjekterer, leverer og monterer varmeveksler. EL leverer strøm. Aut/SD for regulering.",
+    "marks": {
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "Rør:M": "H",
+      "EL:K": "H",
+      "Aut:P": "D",
+      "Aut:K": "D",
+      "SD:I": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "300",
+    "description": "Kjølemaskin grensesnitt",
+    "comments": "Rør/Vent prosjekterer og leverer kjølemaskin. EL leverer elkraft. Aut/SD for styring og overvåking.",
+    "marks": {
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "Rør:M": "H",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "EL:K": "H",
+      "Aut:P": "D",
+      "Aut:K": "D",
+      "SD:I": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "300",
+    "description": "Ekspansjonskar",
+    "comments": "Rør prosjekterer, leverer og monterer ekspansjonskar for varme-/kjølesystem.",
+    "marks": {
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "Rør:M": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "300",
+    "description": "Sirkulasjonspumpe varme",
+    "comments": "Rør prosjekterer og leverer pumper. EL kobler strøm. Aut/SD for frekvensregulering og overvåking.",
+    "marks": {
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "Rør:M": "H",
+      "EL:K": "H",
+      "Aut:P": "D",
+      "Aut:K": "D",
+      "SD:I": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "300",
+    "description": "Shuntventil",
+    "comments": "Rør prosjekterer, leverer og monterer shuntventiler. Aut leverer aktuator og styrer via SD.",
+    "marks": {
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "Rør:M": "H",
+      "Aut:P": "D",
+      "Aut:L": "D",
+      "Aut:M": "D",
+      "Aut:K": "H",
+      "SD:I": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "300",
+    "description": "Trykkreduksjonsventil",
+    "comments": "Rør prosjekterer, leverer og monterer trykkreduksjonsventiler.",
+    "marks": {
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "Rør:M": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "300",
+    "description": "Overløpsventil",
+    "comments": "Rør prosjekterer, leverer og monterer overløpsventiler for varmesystem.",
+    "marks": {
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "Rør:M": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "300",
+    "description": "Sprinkleranlegg (grensesnitt RØR/EL/AUT)",
+    "comments": "Rør prosjekterer og installerer sprinkleranlegg komplett. EL leverer strøm til sprinklerpumpe. Aut/SD for alarmoverføring.",
     "marks": {
       "Rør:P": "H",
       "Rør:L": "H",
       "Rør:M": "H",
       "Rør:F": "H",
+      "EL:P": "D",
       "EL:K": "H",
+      "Aut:P": "D",
+      "Aut:K": "D",
       "Aut:I": "D",
-      "SD:I": "D"
+      "SD:I": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D"
     }
   },
   {
     "tfm": "300",
-    "description": "Pumper med integrert frekvensomformer",
-    "comments": "Delansvar RØR: Innregulering (hvis direkte på pumpe).",
+    "description": "Røykventilasjon (grensesnitt VENT/EL/AUT)",
+    "comments": "Vent prosjekterer og installerer røykventilasjon. EL leverer strøm. Aut/SD for automatisk utløsning ved brannalarm.",
+    "marks": {
+      "Vent:P": "H",
+      "Vent:L": "H",
+      "Vent:M": "H",
+      "Vent:F": "H",
+      "EL:P": "D",
+      "EL:K": "H",
+      "Aut:P": "D",
+      "Aut:K": "D",
+      "Aut:I": "D",
+      "SD:I": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "300",
+    "description": "Avløp spillvann",
+    "comments": "Rør har totalansvar for spillvannssystem fra sanitærutstyr til kommunal påkobling.",
     "marks": {
       "Rør:P": "H",
       "Rør:L": "H",
       "Rør:M": "H",
-      "Rør:F": "H",
-      "EL:K": "D",
-      "Aut:I": "D",
-      "SD:I": "D"
+      "BH:P": "D"
     }
   },
   {
     "tfm": "300",
-    "description": "Frekvensomformer for pumpe (separat leveranse)",
-    "comments": "Skal avklare leveranse av frekvensomformer, effektdata, EMC-forutsetninger, servicebryter, signaler og komplett funksjon mot pumpe og SD.",
+    "description": "Overvannshåndtering",
+    "comments": "Rør prosjekterer overvannssystem inkl. taknedløp, sandfang og utvendig påkobling. Byggfag koordinerer takavvanning.",
+    "marks": {
+      "Byggfag:P": "D",
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "Rør:M": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "300",
+    "description": "Fettavskiller",
+    "comments": "Rør prosjekterer, leverer og monterer fettavskiller. Byggfag tilrettelegger fundament/kum.",
+    "marks": {
+      "Byggfag:P": "D",
+      "Byggfag:M": "D",
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "Rør:M": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "300",
+    "description": "Oljeutskiller",
+    "comments": "Rør prosjekterer, leverer og monterer oljeutskiller. Byggfag tilrettelegger fundament/kum. Aut/SD for nivåovervåking.",
+    "marks": {
+      "Byggfag:P": "D",
+      "Byggfag:M": "D",
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "Rør:M": "H",
+      "Aut:P": "D",
+      "Aut:K": "D",
+      "SD:I": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "300",
+    "description": "Gulvvarme vannbåren",
+    "comments": "Rør prosjekterer og installerer vannbåren gulvvarme. Byggfag koordinerer påstøp. Aut/SD for romregulering.",
+    "marks": {
+      "Byggfag:P": "D",
+      "Byggfag:M": "D",
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "Rør:M": "H",
+      "Aut:P": "D",
+      "Aut:K": "D",
+      "SD:I": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "300",
+    "description": "Varmtvannsberedning",
+    "comments": "Rør prosjekterer og leverer VVB/varmtvannssystem. EL kobler strøm ved elektrisk bereder. Aut/SD for temperaturovervåking.",
+    "marks": {
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "Rør:M": "H",
+      "EL:K": "D",
+      "Aut:P": "D",
+      "Aut:K": "D",
+      "SD:I": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "300",
+    "description": "Ventilasjonsaggregat komplett",
+    "comments": "Vent prosjekterer, leverer og monterer aggregat. Byggfag tilrettelegger fundament. EL kobler strøm. Aut/SD for styring.",
+    "marks": {
+      "Byggfag:P": "D",
+      "Byggfag:M": "D",
+      "Vent:P": "H",
+      "Vent:L": "H",
+      "Vent:M": "H",
+      "EL:K": "H",
+      "Aut:P": "D",
+      "Aut:K": "H",
+      "SD:I": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "300",
+    "description": "Kanalsystem tilluft/avtrekk",
+    "comments": "Vent prosjekterer, leverer og monterer kanaler. Byggfag tilrettelegger gjennomføringer og oppheng.",
+    "marks": {
+      "Byggfag:P": "D",
+      "Vent:P": "H",
+      "Vent:L": "H",
+      "Vent:M": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "300",
+    "description": "Tilluftsventiler/avtrekksventiler",
+    "comments": "Vent prosjekterer, leverer og monterer ventiler. Koordineres med himling/lettvegger.",
+    "marks": {
+      "Vent:P": "H",
+      "Vent:L": "H",
+      "Vent:M": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "300",
+    "description": "Brannspjeld",
+    "comments": "Vent prosjekterer, leverer og monterer brannspjeld. Aut kobler signalkabel. SD for overvåking og styring ved alarm.",
+    "marks": {
+      "Vent:P": "H",
+      "Vent:L": "H",
+      "Vent:M": "H",
+      "Aut:K": "H",
+      "Aut:I": "D",
+      "SD:I": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "300",
+    "description": "Lyddemper ventilasjon",
+    "comments": "Vent prosjekterer, leverer og monterer lyddempere i kanalsystem.",
+    "marks": {
+      "Vent:P": "H",
+      "Vent:L": "H",
+      "Vent:M": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "300",
+    "description": "Isolering av kanaler/rør",
+    "comments": "Hvert fag isolerer egne installasjoner iht. prosjekterte krav (kondens, brann, energi).",
+    "marks": {
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "Rør:M": "H",
+      "Vent:P": "H",
+      "Vent:L": "H",
+      "Vent:M": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "300",
+    "description": "Varmebatteri i aggregat",
+    "comments": "Vent leverer aggregat med varmebatteri. Rør kobler vannside. Aut/SD for regulering.",
     "marks": {
       "Rør:P": "D",
       "Rør:L": "D",
-      "EL:P": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "Aut:I": "D",
-      "SD:I": "D"
-    }
-  },
-  {
-    "tfm": "300",
-    "description": "Akkumulatortanker",
-    "comments": "",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
       "Rør:M": "H",
-      "Rør:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "300",
-    "description": "Trykkgiver pa roranlegg",
-    "comments": "Ror fag angir plassering og prosesskrav. Automasjon leverer signalintegrasjon, skalering og alarmer. Eventuell folerlomme og montasjedetaljer ma avklares.",
-    "marks": {
-      "Rør:P": "D",
-      "Rør:M": "D",
-      "Aut:P": "H",
-      "Aut:L": "H",
-      "Aut:F": "H",
-      "Aut:I": "H",
-      "SD:I": "D"
-    }
-  },
-  {
-    "tfm": "300",
-    "description": "Temperaturgiver pa roranlegg",
-    "comments": "Ror fag angir plassering og prosesskrav. Avklar folerlomme, montasje, signalkvalitet og hvem som prover funksjonen mot SD/BMS.",
-    "marks": {
-      "Rør:P": "D",
-      "Rør:M": "D",
-      "Aut:P": "H",
-      "Aut:L": "H",
-      "Aut:F": "H",
-      "Aut:I": "H",
-      "SD:I": "D"
-    }
-  },
-  {
-    "tfm": "300",
-    "description": "Termisk energimåler",
-    "comments": "Delansvar RØR: Tegne inn komp. på systemskjema.\n(adressering følger og gjøres av automatikk i sin integrasjon - dvs IP-adresse, bus adresse, baudrate, paritet, stopbit m.m.)\nLeverandør må levere dokumentasjon på måler rettidig\nRørlegger leverer følerlommer.",
-    "marks": {
-      "Rør:P": "D",
-      "Rør:M": "H",
-      "EL:K": "H",
-      "Aut:P": "H",
-      "Aut:L": "H",
-      "Aut:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "300",
-    "description": "To- og treveisventil inkl motor",
-    "comments": "",
-    "marks": {
-      "Rør:P": "D",
-      "Rør:M": "H",
-      "Aut:P": "H",
-      "Aut:L": "H",
-      "Aut:F": "H",
-      "Aut:I": "D"
-    }
-  },
-  {
-    "tfm": "300",
-    "description": "Ventiler (automatisk styrt)",
-    "comments": "Magnetventiler etc.",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Rør:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "300",
-    "description": "Ventiler (for manuell betjening)",
-    "comments": "Generelt for ventiler i rørnett (sanitær, varme og kjøling).",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Rør:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "0",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "300",
-    "description": "Servicebryter for pumpe/frekvensomformer",
-    "comments": "Krav iht. NEK400",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "310",
-    "description": "Sanitaranlegg - systemansvar og systemskjema",
-    "comments": "Brukes for overordnet avklaring av systemskjema, plassering av komponenter, malepunkter og grensesnitt mot elkraft og automasjon.",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Rør:K": "H",
-      "Rør:F": "H",
+      "Vent:P": "H",
+      "Vent:L": "H",
       "Aut:P": "D",
-      "SD:I": "D"
+      "Aut:K": "D",
+      "SD:I": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D"
     }
   },
   {
-    "tfm": "310",
-    "description": "Vannmåler (inntak)",
-    "comments": "Leveres med bus for kommunikasjon mot SD.",
+    "tfm": "300",
+    "description": "Kjølebatteri i aggregat",
+    "comments": "Vent leverer aggregat med kjølebatteri. Rør kobler vannside. Aut/SD for regulering.",
     "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
+      "Rør:P": "D",
+      "Rør:L": "D",
       "Rør:M": "H",
-      "Rør:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "310",
-    "description": "Vannmaler og undermalere for tappevann",
-    "comments": "Gjelder malere utover hovedinntak, inkludert kommunikasjon, adressering, data til SD og ansvaret for komplett leveranse av malepunkter.",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Rør:F": "H",
+      "Vent:P": "H",
+      "Vent:L": "H",
       "Aut:P": "D",
-      "Aut:I": "D",
-      "SD:I": "D"
+      "Aut:K": "D",
+      "SD:I": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D"
     }
   },
   {
-    "tfm": "310",
-    "description": "Tappevannssentral",
-    "comments": "",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Rør:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "310",
-    "description": "Vannbehandling legionella",
-    "comments": "Mulig det blir hettvannspyling via FV-veksler.",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Rør:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "310",
-    "description": "Sirkulasjonspumpe VV (VVC)",
-    "comments": "",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Rør:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "310",
-    "description": "Sluk/drenering luftinntak",
-    "comments": "",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Rør:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "0",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "310",
-    "description": "Blandebatteri kjøkkenbenk (ikke storkjøkken)",
-    "comments": "",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Rør:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "0",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "310",
-    "description": "Sanitærutstyr og blandebatterier i plassbygde bad og WC",
-    "comments": "",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Rør:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "0",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "310",
-    "description": "Utslagsvask inkl. b.batteri (tekniske rom, BK, etc.)",
-    "comments": "",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Rør:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "0",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "310",
-    "description": "Taksluk",
-    "comments": "Rørlegger prosjekter og leverer sluk. Taktekker monterer og rørlegger tilkopler. Arkitekt lager fallplan.",
-    "marks": {
-      "Byggfag:M": "H",
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "D",
-      "Rør:K": "H",
-      "Rør:F": "H",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "310",
-    "description": "Spillvannspumpekum, komplett system",
-    "comments": "Grunnentreprenør leverer. Plasseres i bakken utenfor bygget. Rørlegger tilkopler spillvannspumpekum. Elektro trekker kabler og kopler til pumper. Integrasjon til SD via IP.",
-    "marks": {
-      "Byggfag:P": "D",
-      "Byggfag:L": "H",
-      "Byggfag:M": "H",
-      "Byggfag:F": "D",
-      "Rør:P": "H",
-      "Rør:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "310",
-    "description": "Fettutskiller",
-    "comments": "Elektro trekker kabler og kopler til pumper. Integrasjon til SD via IP. Avtrekksanlegg for fettutskiller leveres av ventilasjon.",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Rør:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "310",
-    "description": "Lekkasjesikring og -deteksjon, komplett system",
-    "comments": "Iht. TEK. For rom uten sluk, som; sjakter, hulrom, kjøkken, etc.Det skal leveres et komplett\nsystem for alle lekkasjevakter og automatiske stengeventiler med styringsenhet som gjør det mulig å adressere lekkasje til aktuell lokasjon i bygget, og som kan overføre denne informasjonen til BAS-anlegget, fortrinnsvis via IP-kommunikasjon (ModBus eller Bacnet).",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Rør:F": "H",
-      "EL:K": "D",
-      "Aut:P": "D",
-      "Aut:I": "H",
-      "SD:I": "D"
-    }
-  },
-  {
-    "tfm": "310",
-    "description": "Frostsikring overvann",
-    "comments": "Delansvar El. Koordinering og enighet med automatikk om styringsprinsipp. Se TFM 453",
-    "marks": {
-      "EL:P": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "D",
-      "Aut:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "0",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "310",
-    "description": "Værstasjon for frostsikring",
-    "comments": "Bakkeføler",
-    "marks": {
-      "EL:K": "H",
-      "Aut:P": "H",
-      "Aut:L": "H",
-      "Aut:M": "H",
-      "Aut:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "310",
-    "description": "Sensorer for frostsikring",
-    "comments": "Bakkeføler",
-    "marks": {
-      "EL:K": "H",
-      "Aut:P": "H",
-      "Aut:L": "H",
-      "Aut:M": "H",
-      "Aut:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "320",
-    "description": "Vannbehandling varmeanlegg",
-    "comments": "",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Rør:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "320",
-    "description": "Viftekonvektor / aerotemper / luftport (vannbårent)",
-    "comments": "",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Rør:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "320",
-    "description": "Viftekonvektor / aerotemper / luftport (elektrisk)",
-    "comments": "",
-    "marks": {
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1",
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:F": "H"
-    }
-  },
-  {
-    "tfm": "320",
-    "description": "Konvektor / strålevarme / radiator",
-    "comments": "",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Rør:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "320",
-    "description": "Manuelle reguleringsventiler",
-    "comments": "",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Rør:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "0",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "320",
-    "description": "Trykkuavhengigventiler, TA Compact-P (der disse ikke kommer ferdgi med bafler)",
-    "comments": "",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Rør:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "320",
-    "description": "Trykkuavhengigventiler, TA Compact-P (med baffler)",
-    "comments": "",
+    "tfm": "300",
+    "description": "Varmegjenvinning (roterende/plate)",
+    "comments": "Vent prosjekterer og leverer aggregat med varmegjenvinner. Aut/SD for styring av rotasjon/bypass.",
     "marks": {
       "Vent:P": "H",
       "Vent:L": "H",
       "Vent:M": "H",
-      "Vent:K": "H",
-      "Vent:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "320",
-    "description": "Motor til reguleringsventiler",
-    "comments": "",
-    "marks": {
-      "EL:K": "H",
-      "Aut:P": "H",
-      "Aut:L": "H",
-      "Aut:M": "H",
-      "Aut:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "320",
-    "description": "Kombibaffel (vannbårent)",
-    "comments": "Bafler med ferdig automatikk leveres av vent og rør og elektro tilkopler disse.",
-    "marks": {
-      "Vent:P": "H",
-      "Vent:L": "H",
-      "Vent:M": "H",
-      "Vent:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "320",
-    "description": "Gulvvarme (vannbårent)",
-    "comments": "",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Rør:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "332",
-    "description": "Slukkeanlegg kjøkkenhette",
-    "comments": "",
-    "marks": {
-      "Vent:P": "H",
-      "Vent:L": "H",
-      "Vent:M": "H",
-      "Vent:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "332",
-    "description": "Sprinkleranlegg",
-    "comments": "",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Rør:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "334",
-    "description": "Håndslukkeapparater (pulver, CO2, e.l.)",
-    "comments": "Delansvar Consto: RIBr tegner inn plassering på branntegning (RIV anviser plassering).",
-    "marks": {
-      "Byggfag:P": "D",
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Rør:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "0",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "339",
-    "description": "Trykkøkningspumpe",
-    "comments": "",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Rør:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "351",
-    "description": "Kjølerom",
-    "comments": "Delansvar EL: Kabling/tilkobling frem til styresentral/styreskap (tilførsel) og varmekabler under kjøl/fryserom. Ventilasjon delansvarlig for ventilasjonsløsning",
-    "marks": {
-      "Byggfag:P": "H",
-      "Byggfag:L": "H",
-      "Byggfag:M": "H",
-      "Byggfag:F": "H",
-      "Vent:P": "D",
-      "EL:M": "D",
-      "EL:K": "H",
       "Aut:P": "D",
-      "Aut:L": "D",
+      "Aut:K": "D",
+      "SD:I": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "300",
+    "description": "Innregulering VVS",
+    "comments": "Rør og Vent innregulerer egne anlegg. Innreguleringsprotokoll leveres til FDV.",
+    "marks": {
+      "Rør:P": "H",
+      "Rør:F": "H",
+      "Vent:P": "H",
+      "Vent:F": "H",
       "Aut:F": "D",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
+      "SD:F": "D",
+      "BH:P": "D"
     }
   },
   {
-    "tfm": "351",
-    "description": "Temperaturovervåkning kjølerom, inkl. varsling.",
-    "comments": "",
+    "tfm": "300",
+    "description": "Fuktsikring tekniske rom",
+    "comments": "Byggfag utfører fuktsikring. Rør prosjekterer avløp/sluk i tekniske rom.",
     "marks": {
-      "EL:K": "H",
-      "Aut:P": "H",
+      "Byggfag:P": "H",
+      "Byggfag:L": "H",
+      "Byggfag:M": "H",
+      "Rør:P": "D",
+      "Rør:L": "D",
+      "Rør:M": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "300",
+    "description": "Vannlekkasjedeteksjon",
+    "comments": "Rør prosjekterer plassering av detektorer. Aut leverer og kobler detektorer. SD for alarm.",
+    "marks": {
+      "Rør:P": "H",
+      "Aut:P": "D",
       "Aut:L": "H",
       "Aut:M": "H",
-      "Aut:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
+      "Aut:K": "H",
+      "SD:I": "H",
+      "BH:P": "D"
     }
   },
   {
-    "tfm": "352",
-    "description": "Fryserom",
-    "comments": "Delansvar EL: Kabling/tilkobling frem til styresentral/styreskap (tilførsel) og varmekabler under kjøl/fryserom",
+    "tfm": "300",
+    "description": "Ventilasjonsrist/angrepsventil utvendig",
+    "comments": "Vent prosjekterer plassering. Byggfag tilrettelegger vegg-/takgjennomføring. Vent leverer og monterer rist.",
     "marks": {
-      "Byggfag:P": "H",
-      "Byggfag:L": "H",
-      "Byggfag:M": "H",
-      "Byggfag:F": "H",
-      "EL:M": "D",
-      "EL:K": "H",
-      "Aut:P": "D",
-      "Aut:L": "D",
-      "Aut:F": "D",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "352",
-    "description": "Temperaturovervåkning fryserom, inkl. varsling.",
-    "comments": "",
-    "marks": {
-      "EL:M": "H",
-      "EL:K": "H",
-      "Aut:P": "H",
-      "Aut:L": "H",
-      "Aut:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "352",
-    "description": "Innestengningsalarm fryserom, inkl. varsling.",
-    "comments": "",
-    "marks": {
-      "Byggfag:P": "H",
-      "Byggfag:L": "H",
-      "Byggfag:F": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "353",
-    "description": "Kjølemaskin DX-system",
-    "comments": "",
-    "marks": {
-      "Vent:P": "H",
-      "Vent:L": "H",
-      "Vent:M": "H",
-      "Vent:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "353",
-    "description": "Dataromskjøler",
-    "comments": "",
-    "marks": {
-      "Vent:P": "H",
-      "Vent:L": "H",
-      "Vent:M": "H",
-      "Vent:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "353",
-    "description": "Fancoil",
-    "comments": "",
-    "marks": {
-      "Vent:P": "H",
-      "Vent:L": "H",
-      "Vent:M": "H",
-      "Vent:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "353",
-    "description": "Drensledning til kondensavløp, evt. lekkasje",
-    "comments": "",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Rør:F": "H"
-    }
-  },
-  {
-    "tfm": "360",
-    "description": "Ventilasjonsaggregat med intern automatikk",
-    "comments": "Skal avklare hvilke funksjoner som ligger i aggregatleveranse, hvilke signaler som utveksles mot SD og hvem som eier komplett reguleringsstrategi.",
-    "marks": {
-      "Vent:P": "H",
-      "Vent:L": "H",
-      "Vent:M": "H",
-      "Vent:F": "H",
-      "EL:K": "D",
-      "Aut:P": "D",
-      "Aut:I": "D",
-      "SD:I": "D"
-    }
-  },
-  {
-    "tfm": "360",
-    "description": "Nødventilasjon for gassutstyr",
-    "comments": "Medtar komplett tilkopling og utstyr for maskiner som benytter gass og som har behov for nødventilering. \"Det skal også medtas ventilasjonsløsning for nødventilering av maskiner / lukket kabinett som sikring mot ev. kuldemedielekkasje.\"",
-    "marks": {
-      "Vent:P": "H",
-      "Vent:L": "H",
-      "Vent:M": "H",
-      "Vent:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "360",
-    "description": "Blåserør til kjølemaskiner",
-    "comments": "Rørentreprenøren skal ivareta blåserør fra sikkerhetsventiler til friluft.",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Rør:K": "H",
-      "Rør:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "360",
-    "description": "Bypass-vifte",
-    "comments": "",
-    "marks": {
-      "Vent:P": "H",
-      "Vent:L": "H",
-      "Vent:M": "H",
-      "Vent:K": "H",
-      "Vent:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "360",
-    "description": "Røykdetektor i tilluftskanal",
-    "comments": "Med integrert IO",
-    "marks": {
-      "Vent:P": "D",
-      "Vent:M": "H",
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "EL:I": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "2"
-    }
-  },
-  {
-    "tfm": "360",
-    "description": "Shuntventil for varme-/kjølebatteri",
-    "comments": "Delansvar RØR: Tegne inn komp. på systemskjema. Elektro spenningssetter motorventil og pumper.",
-    "marks": {
-      "Rør:P": "D",
-      "Rør:M": "H",
-      "Vent:P": "H",
-      "Vent:L": "H",
-      "Vent:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "360",
-    "description": "Sirkulasjonspumpe for varme-/kjølebatteri",
-    "comments": "Delansvar RØR: Tegne inn komp. på systemskjema. Aggregatet spenningssetter ventil og pumper.",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Vent:P": "D",
-      "Vent:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "360",
-    "description": "Servicebryter aggregat / vifte / frekvensomformer",
-    "comments": "Krav iht. NEK400",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "360",
-    "description": "Ytterveggsrister, med varmekabel",
-    "comments": "Varmekabel leveres av ventilasjon på ristene, styring leveres av automasjon. El tilkopler dette.",
-    "marks": {
-      "Vent:P": "H",
-      "Vent:L": "H",
-      "Vent:M": "H",
-      "Vent:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "360",
-    "description": "Takhatter",
-    "comments": "",
-    "marks": {
-      "Vent:P": "H",
-      "Vent:L": "H",
-      "Vent:M": "H",
-      "Vent:F": "H",
-      "EL:K": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "360",
-    "description": "Sluk i inntakskammer",
-    "comments": "",
-    "marks": {
-      "Rør:P": "H",
-      "Rør:L": "H",
-      "Rør:M": "H",
-      "Rør:F": "H",
-      "Vent:P": "D",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "0",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "360",
-    "description": "System for trykksetting av trapperom inkl. trykkgivere",
-    "comments": "",
-    "marks": {
-      "Vent:P": "H",
-      "Vent:L": "H",
-      "Vent:M": "H",
-      "Vent:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "369",
-    "description": "Brannspjeldsentral",
-    "comments": "",
-    "marks": {
-      "Vent:P": "H",
-      "Vent:L": "H",
-      "Vent:M": "H",
-      "Vent:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "369",
-    "description": "Brannspjeld, komplette m/ buss-moduler",
-    "comments": "",
-    "marks": {
-      "Vent:P": "H",
-      "Vent:L": "H",
-      "Vent:M": "H",
-      "Vent:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "411",
-    "description": "Skjult røranlegg i tak, vegg, og gulv",
-    "comments": "Gjelder røranlegg for alle systemer i prosjektet, inkl. dørmiljø, solavskjerming, branngardin, AV-system, osv.",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "411",
-    "description": "Åpne føringsveier som minikanaler e.l. \n(hvis skjult ikke mulig/ønsket)",
-    "comments": "Gjelder føringsveier for underordnede rom og tekniske rom.\nTegner inn plassering av kanaler som samkoordineres med ARK og tegner inn betjeningsbrytere i.h.t. universell utforming i TEK 17 (Elektro, brann og dørmiljø komponenter kan eventuelt samles) Aluminiums leverandør leverer eventuelt U profil som fungerer som kanal og festes med klips (samme RAL farge som leveransen ellers) på aluminiums dører og fasader. Koordineres også sammen med lås og beslagsleverandøren.",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "411",
-    "description": "Innvendige og utvendige hoved- og sekundærføringsveier (kabelstiger, kabelrenner, kanaler, rør, osv.)",
-    "comments": "",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "411",
-    "description": "Utendørs føringsveier i grunn",
-    "comments": "BH er delaktige i føringsveier utendørs",
-    "marks": {
-      "Byggfag:L": "H",
-      "Byggfag:M": "H",
-      "EL:P": "H",
-      "EL:L": "D",
-      "EL:M": "D",
-      "EL:K": "H",
-      "EL:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "412",
-    "description": "Jordingsanlegg",
-    "comments": "",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "413",
-    "description": "Lynvernanlegg",
-    "comments": "Risikovurdering inkl. i tilbude. Konklusjon fra rapport med eventuelle kostnader overleveres Byggherre.",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "413",
-    "description": "Fundament (inkl. mast) for lynoppfanger på tak.",
-    "comments": "Consto skal tilrettelegge for innfesting mot tak/fasade",
-    "marks": {
-      "BH:M": "D",
+      "Byggfag:P": "D",
       "Byggfag:M": "D",
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
+      "Vent:P": "H",
+      "Vent:L": "H",
+      "Vent:M": "H",
+      "BH:P": "D"
     }
   },
   {
-    "tfm": "413",
-    "description": "Støtteben og innfesting for lyn-nedleder",
-    "comments": "Consto skal tilrettelegge for innfesting mot tak/fasade",
+    "tfm": "400",
+    "description": "Elektro",
+    "comments": "",
+    "marks": {},
+    "section": true
+  },
+  {
+    "tfm": "400",
+    "description": "Hovedfordeling",
+    "comments": "EL prosjekterer, leverer og monterer hovedfordeling. Dimensjoneres for prosjektets totale effektbehov.",
     "marks": {
-      "BH:M": "D",
-      "Byggfag:M": "D",
       "EL:P": "H",
       "EL:L": "H",
       "EL:M": "H",
       "EL:K": "H",
-      "EL:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
+      "BH:P": "D",
+      "Byggfag:P": "D"
     }
   },
   {
-    "tfm": "414",
-    "description": "Gulvbokser",
-    "comments": "Consto skal tilrettelegge for hulltaking og samordning prosjetering imot RIB.",
+    "tfm": "400",
+    "description": "Underfordeling",
+    "comments": "EL prosjekterer, leverer og monterer underfordelinger. Plassering koordineres med Byggfag for nødvendig veggplass.",
+    "marks": {
+      "Byggfag:P": "D",
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "400",
+    "description": "Stigeledning",
+    "comments": "EL prosjekterer og installerer stigeledninger mellom fordelinger.",
+    "marks": {
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "400",
+    "description": "Jordingssystem",
+    "comments": "EL prosjekterer og installerer komplett jordingssystem iht. NEK 400.",
+    "marks": {
+      "Byggfag:P": "D",
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "400",
+    "description": "Lynvern",
+    "comments": "EL prosjekterer, leverer og monterer lynvernanlegg. Byggfag tilrettelegger takmontasje.",
     "marks": {
       "Byggfag:P": "D",
       "Byggfag:M": "D",
@@ -2651,1736 +1340,1058 @@
       "EL:L": "H",
       "EL:M": "H",
       "EL:K": "H",
-      "EL:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
+      "BH:P": "D"
     }
   },
   {
-    "tfm": "422",
-    "description": "Nettstasjon",
-    "comments": "Delansvar EL: Dialog og koordinering med nettleverandør.",
+    "tfm": "400",
+    "description": "UPS/nødstrøm",
+    "comments": "EL prosjekterer og leverer UPS for kritiske systemer. Aut/SD for overvåking av UPS-status.",
     "marks": {
-      "SD:P": "0",
-      "SD:L": "0",
-      "SD:M": "0",
-      "SD:K": "0",
-      "SD:F": "0",
-      "SD:I": "0"
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "Aut:P": "D",
+      "Aut:K": "D",
+      "SD:I": "H",
+      "BH:P": "D"
     }
   },
   {
-    "tfm": "422",
-    "description": "Traforom",
-    "comments": "Elektro koordinerer med Elvia og leverer nødvendig lys og stikk i rommet.",
+    "tfm": "400",
+    "description": "Dieselaggregat",
+    "comments": "EL prosjekterer og leverer nødstrømsaggregat. Byggfag tilrettelegger fundament og ventilasjon. Rør for drivstofftilkobling.",
+    "marks": {
+      "Byggfag:P": "D",
+      "Byggfag:M": "D",
+      "Rør:P": "D",
+      "Rør:L": "D",
+      "Rør:M": "D",
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "Aut:P": "D",
+      "SD:I": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "400",
+    "description": "Lysanlegg generelt",
+    "comments": "EL prosjekterer, leverer og monterer lysanlegg iht. lysberegning og romskjema.",
     "marks": {
       "BH:P": "D",
-      "BH:L": "D",
-      "BH:M": "D",
-      "BH:K": "D",
-      "BH:F": "D",
-      "Byggfag:P": "H",
-      "Byggfag:L": "H",
-      "Byggfag:M": "H",
-      "Byggfag:K": "H",
-      "Byggfag:F": "H",
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "400",
+    "description": "Nødlysanlegg",
+    "comments": "EL prosjekterer, leverer og monterer nødlysanlegg iht. TEK17 og brannstrategi. Aut/SD for feilovervåking.",
+    "marks": {
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "EL:F": "H",
+      "Aut:P": "D",
+      "Aut:K": "D",
+      "SD:I": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "400",
+    "description": "Varmekabel tak/renner",
+    "comments": "EL prosjekterer, leverer og monterer varmekabel på tak og i takrenner. Byggfag tilrettelegger for montasje.",
+    "marks": {
+      "Byggfag:P": "D",
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "Aut:P": "D",
+      "Aut:K": "D",
+      "SD:I": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "400",
+    "description": "Varmekabel gulv (elektrisk)",
+    "comments": "EL prosjekterer, leverer og monterer elektrisk gulvvarme. Byggfag koordinerer påstøp. Aut/SD for romregulering.",
+    "marks": {
+      "Byggfag:P": "D",
+      "Byggfag:M": "D",
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "Aut:P": "D",
+      "Aut:K": "D",
+      "SD:I": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "400",
+    "description": "Motorvern/servicebryter",
+    "comments": "EL prosjekterer og leverer motorvern/servicebytere for alle motordrevne komponenter (pumper, vifter, etc.).",
+    "marks": {
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "400",
+    "description": "Kursopplegg tekniske rom",
+    "comments": "EL prosjekterer og installerer kurser for teknisk utstyr i tekniske rom. Rør/Vent oppgir effektbehov.",
+    "marks": {
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "400",
+    "description": "Kabelbroer/stiger",
+    "comments": "EL prosjekterer, leverer og monterer kabelbroer og kabelstiger. Koordineres tverrfaglig for plassering.",
+    "marks": {
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "400",
+    "description": "Føringsveier felles",
+    "comments": "EL prosjekterer og monterer felles føringsveier. Alle fag som benytter felles føringsveier koordinerer plasskrav.",
+    "marks": {
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "Aut:P": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "400",
+    "description": "Svakstrøm føringsveier",
+    "comments": "EL/Aut prosjekterer separate føringsveier for svakstrøm. Avstand til sterkstrøm iht. NEK 400.",
+    "marks": {
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "Aut:P": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "400",
+    "description": "Elektro for heiser",
+    "comments": "EL leverer strømtilførsel til heissjakt. Heisleverandør kobler internt. Aut/SD for overvåking.",
+    "marks": {
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:K": "H",
+      "Aut:P": "D",
+      "SD:I": "D",
+      "BH:P": "D",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "400",
+    "description": "Elektro for porter/dører",
+    "comments": "EL leverer strøm og kabling til motoriserte porter/dører. Lås og beslag koordinerer funksjon.",
+    "marks": {
+      "Lås og beslag:P": "D",
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:K": "H",
+      "Aut:P": "D",
+      "Aut:K": "D",
+      "SD:I": "D",
+      "BH:P": "D",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "400",
+    "description": "Stikkontakter tekniske rom",
+    "comments": "EL prosjekterer og installerer stikkontakter i tekniske rom for service og vedlikehold.",
+    "marks": {
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "400",
+    "description": "Belysning tekniske rom",
+    "comments": "EL prosjekterer og installerer belysning i tekniske rom iht. Arbeidsplassforskriften.",
+    "marks": {
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "400",
+    "description": "Reservekraft kobling",
+    "comments": "EL prosjekterer omkobling mellom nett og reservekraft. Automatisk omkobling ved nettbortfall.",
+    "marks": {
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "EL:F": "H",
+      "Aut:P": "D",
+      "SD:I": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "400",
+    "description": "Overspenningsvern",
+    "comments": "EL prosjekterer og installerer overspenningsvern i fordelinger iht. NEK 400.",
+    "marks": {
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "400",
+    "description": "Elkraft for VVS-utstyr",
+    "comments": "EL leverer strømtilførsel og servicebryter for alle VVS-komponenter med elkraftbehov (pumper, ventiler, etc.).",
+    "marks": {
+      "Rør:P": "D",
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:K": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "400",
+    "description": "Elkraft for ventilasjonsaggregat",
+    "comments": "EL leverer strømtilførsel og motorvern for ventilasjonsaggregat. Vent oppgir effektdata.",
+    "marks": {
+      "Vent:P": "D",
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:K": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "400",
+    "description": "Elkraft for kjølemaskin",
+    "comments": "EL leverer strømtilførsel for kjølemaskin. Rør oppgir effektdata og tilkoblingskrav.",
+    "marks": {
+      "Rør:P": "D",
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:K": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "500",
+    "description": "Tele og Automasjon",
+    "comments": "",
+    "marks": {},
+    "section": true
+  },
+  {
+    "tfm": "500",
+    "description": "SD-anlegg toppsystem",
+    "comments": "SD prosjekterer og leverer toppsystem (BAS) for sentral drift og overvåking. Alle fag leverer IO-grunnlag.",
+    "marks": {
+      "SD:P": "H",
+      "SD:L": "H",
+      "SD:M": "H",
+      "SD:K": "H",
+      "SD:F": "H",
+      "SD:I": "H",
+      "Aut:P": "D",
+      "Aut:F": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "500",
+    "description": "SD undersentraler",
+    "comments": "SD/Aut prosjekterer og leverer undersentraler (DDC) for styring av tekniske anlegg per sone/etasje.",
+    "marks": {
+      "Aut:P": "H",
+      "Aut:L": "H",
+      "Aut:M": "H",
+      "Aut:K": "H",
+      "SD:P": "D",
+      "SD:I": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "500",
+    "description": "IO-liste koordinert",
+    "comments": "Aut utarbeider samlet IO-liste basert på input fra alle tekniske fag. Alle fag bidrar med signalpunkter.",
+    "marks": {
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "Aut:P": "H",
+      "SD:P": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "500",
+    "description": "Integrasjonsbeskrivelse",
+    "comments": "SD utarbeider integrasjonsbeskrivelse mot alle underliggende systemer. Definerer protokoller og datapunkter.",
+    "marks": {
+      "SD:P": "H",
+      "Aut:P": "D",
+      "EL:P": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "500",
+    "description": "BACnet/Modbus grensesnitt",
+    "comments": "SD definerer kommunikasjonsprotokoll (BACnet IP/MSTP eller Modbus). Alle leverandører tilpasser sine systemer.",
+    "marks": {
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "Aut:P": "D",
+      "SD:P": "H",
+      "SD:I": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "500",
+    "description": "Romregulator (temperatur)",
+    "comments": "Aut leverer og monterer romregulatorer for temperatur. SD integrerer for sentral overvåking/overstyring.",
+    "marks": {
+      "Aut:P": "H",
+      "Aut:L": "H",
+      "Aut:M": "H",
+      "Aut:K": "H",
+      "Aut:F": "H",
+      "SD:I": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "500",
+    "description": "Romregulator (CO2/fukt)",
+    "comments": "Aut leverer og monterer CO2-/fuktfølere for behovsstyrt ventilasjon. SD integrerer.",
+    "marks": {
+      "Vent:P": "D",
+      "Aut:P": "H",
+      "Aut:L": "H",
+      "Aut:M": "H",
+      "Aut:K": "H",
+      "Aut:F": "H",
+      "SD:I": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "500",
+    "description": "VAV-spjeld styring",
+    "comments": "Vent leverer VAV-spjeld. Aut leverer aktuator og styrer via SD. Koordinering for luftmengder.",
+    "marks": {
+      "Vent:P": "H",
+      "Vent:L": "H",
+      "Vent:M": "H",
+      "Aut:P": "D",
+      "Aut:L": "D",
+      "Aut:M": "D",
+      "Aut:K": "H",
+      "Aut:F": "H",
+      "SD:I": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "500",
+    "description": "DCV-system (behovsstyrt ventilasjon)",
+    "comments": "Vent prosjekterer luftmengder. Aut programmerer behovsstyring basert på CO2/tilstedeværelse. SD for sentral styring.",
+    "marks": {
+      "Vent:P": "H",
+      "Aut:P": "H",
+      "Aut:F": "H",
+      "Aut:K": "H",
+      "SD:P": "D",
+      "SD:I": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "500",
+    "description": "Brannalarm (AIA)",
+    "comments": "EL prosjekterer, leverer og monterer brannalarmanlegg komplett. Aut/SD for integrasjon mot SD og brannmatrise. Brannmatrise mot dører, heis og øvrige systemer skal koordineres tverrfaglig.",
+    "marks": {
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "EL:F": "H",
+      "Aut:P": "D",
+      "Aut:I": "D",
+      "SD:I": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "500",
+    "description": "Adgangskontroll (ADK)",
+    "comments": "Lås og beslag prosjekterer ADK-system. EL kabler. Aut/SD for integrasjon mot brannalarm og SD.",
+    "marks": {
+      "Lås og beslag:P": "H",
+      "Lås og beslag:L": "H",
+      "Lås og beslag:M": "H",
+      "Lås og beslag:F": "H",
+      "EL:K": "H",
+      "Aut:P": "D",
+      "Aut:I": "D",
+      "SD:I": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D",
+      "Dørleverandør:P": "D",
+      "Dørleverandør:M": "D",
+      "EL:P": "D",
+      "SD:P": "D"
+    }
+  },
+  {
+    "tfm": "500",
+    "description": "Innbruddsalarm (ABA)",
+    "comments": "EL/Aut prosjekterer, leverer og monterer innbruddsalarm. SD for integrasjon og alarmoverføring.",
+    "marks": {
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "EL:F": "H",
+      "Aut:P": "D",
+      "SD:I": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D",
+      "Aut:F": "D"
+    }
+  },
+  {
+    "tfm": "500",
+    "description": "Kameraovervåking (CCTV)",
+    "comments": "EL/Aut prosjekterer og installerer kameraovervåking. EL kabler. SD for integrasjon av bilder/alarmer.",
+    "marks": {
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "Aut:P": "D",
+      "Aut:F": "D",
+      "SD:I": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "500",
+    "description": "Intercom/porttelefon",
+    "comments": "EL/Aut leverer og monterer porttelefon/intercom. EL kabler. Lås og beslag koordinerer mot ADK.",
+    "marks": {
+      "Lås og beslag:P": "D",
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "Aut:P": "D",
+      "SD:I": "D",
+      "BH:P": "D",
+      "Byggfag:P": "D",
+      "Dørleverandør:P": "D",
+      "Aut:F": "D"
+    }
+  },
+  {
+    "tfm": "500",
+    "description": "Nødanrop våtrom",
+    "comments": "EL leverer og monterer nødanropssystem i våtrom/HC-toaletter. Aut/SD for alarmoverføring.",
+    "marks": {
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "Aut:P": "D",
+      "SD:I": "D",
+      "BH:P": "D",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "500",
+    "description": "Ledelys/taleanlegg",
+    "comments": "EL prosjekterer, leverer og monterer ledelys og taleanlegg for evakuering. Koordineres med brannalarm.",
+    "marks": {
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "EL:F": "H",
+      "Aut:P": "D",
+      "Aut:I": "D",
+      "SD:I": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "500",
+    "description": "Energimåling sentral",
+    "comments": "EL leverer sentral energimåler. Aut/SD for avlesning og logging av energidata.",
+    "marks": {
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "Aut:P": "D",
+      "Aut:K": "D",
+      "SD:I": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "500",
+    "description": "Energimåling per etasje",
+    "comments": "EL leverer undermålere per etasje/sone. Aut/SD for logging og rapportering av forbruksdata.",
+    "marks": {
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "Aut:P": "D",
+      "Aut:K": "D",
+      "SD:I": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "500",
+    "description": "KNX lystyring",
+    "comments": "EL prosjekterer og installerer KNX-system for lysstyring. Aut programmerer scenarier. SD for sentral styring.",
+    "marks": {
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "Aut:P": "D",
+      "Aut:F": "H",
+      "SD:I": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "500",
+    "description": "DALI lystyring",
+    "comments": "EL prosjekterer og installerer DALI-system. EL kabler DALI-bus. Aut/SD for sentral styring og scenarier.",
+    "marks": {
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "Aut:P": "D",
+      "Aut:F": "H",
+      "SD:I": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "500",
+    "description": "Solskjermingsautomatikk",
+    "comments": "Aut prosjekterer og programmerer automatisk solskjerming. EL kabler motorer. SD integrerer med værdata.",
+    "marks": {
+      "Byggfag:P": "D",
+      "EL:P": "D",
+      "EL:K": "H",
+      "Aut:P": "H",
+      "Aut:L": "H",
+      "Aut:M": "H",
+      "Aut:K": "H",
+      "Aut:F": "H",
+      "SD:I": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "500",
+    "description": "Værstasjonsdata",
+    "comments": "Aut/SD leverer og monterer værstasjon for vinddata, temperatur, sol. SD bruker data til styring av solskjerming, varme, etc.",
+    "marks": {
+      "Aut:P": "H",
+      "Aut:L": "H",
+      "Aut:M": "H",
+      "Aut:K": "H",
+      "SD:P": "D",
+      "SD:I": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "500",
+    "description": "Frekvensstyring ventilasjon",
+    "comments": "Vent spesifiserer krav. Aut/EL leverer frekvensomformer. EL kobler strøm. Aut programmerer styring via SD.",
+    "marks": {
+      "Vent:P": "D",
       "EL:P": "D",
       "EL:L": "D",
-      "EL:M": "D",
-      "EL:K": "D",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "422",
-    "description": "Skinnepakke fra trafo til hovedtavle, inkl. fleksibler.",
-    "comments": "Delansvar BH: Anvise tilkoblingspunkt. Tilkoble fleksibler til trafo.",
-    "marks": {
-      "BH:P": "D",
-      "BH:K": "D",
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "430",
-    "description": "Fordelinger (ikke 434-fordeling)",
-    "comments": "",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "430",
-    "description": "Nettanalysator",
-    "comments": "",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "430",
-    "description": "Jordfeilovervåkning",
-    "comments": "Det leveres jordfeilovervåkning per effektbryter med felles feilvarsel til SD-anlegget",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "430",
-    "description": "Seriemålere, Veni-meetering målere, E-verksmålere",
-    "comments": "Alle målere skal kobles opp til SD-anlegg/EOS. Målere leveres av BH(VENI/Elvia)",
-    "marks": {
-      "BH:P": "D",
-      "BH:L": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "0",
-      "SD:L": "1",
-      "SD:M": "0",
-      "SD:K": "1",
-      "SD:F": "0",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "430",
-    "description": "Lokal lysstyring (230V bryter/dim/bevegelse)",
-    "comments": "",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "430",
-    "description": "Stikk i heissjakter",
-    "comments": "",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H"
-    }
-  },
-  {
-    "tfm": "434",
-    "description": "Fordelinger for VVS-installasjoner (kraft og automatikk)",
-    "comments": "",
-    "marks": {
       "EL:K": "H",
       "Aut:P": "H",
       "Aut:L": "H",
       "Aut:M": "H",
+      "Aut:K": "H",
       "Aut:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
+      "SD:I": "H",
+      "BH:P": "D"
     }
   },
   {
-    "tfm": "434",
-    "description": "Elektriske energimåler (434-fordelinger)",
-    "comments": "",
+    "tfm": "500",
+    "description": "Frekvensstyring pumper",
+    "comments": "Rør spesifiserer krav. Aut/EL leverer frekvensomformer. EL kobler strøm. Aut programmerer styring via SD.",
     "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
+      "Rør:P": "D",
+      "EL:P": "D",
+      "EL:L": "D",
       "EL:K": "H",
-      "EL:F": "H",
-      "EL:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
+      "Aut:P": "H",
+      "Aut:L": "H",
+      "Aut:M": "H",
+      "Aut:K": "H",
+      "Aut:F": "H",
+      "SD:I": "H",
+      "BH:P": "D"
     }
   },
   {
-    "tfm": "442",
-    "description": "Fastmontert belysning",
-    "comments": "",
+    "tfm": "500",
+    "description": "Signalpunktliste per fag",
+    "comments": "Hvert teknisk fag utarbeider signalpunktliste for sine installasjoner. Aut sammenstiller til samlet IO-liste.",
+    "marks": {
+      "Rør:P": "H",
+      "Vent:P": "H",
+      "EL:P": "H",
+      "Aut:P": "H",
+      "SD:P": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "500",
+    "description": "Dørmiljø - elsluttstykke og motorlås",
+    "comments": "Lås og beslag eier funksjonen. Dørleverandør må avklare kompatibilitet i dørblad/karm, EL leverer kabling og Aut/SD avklarer eventuelle integrasjoner.",
     "marks": {
       "BH:P": "D",
-      "BH:L": "D",
-      "BH:M": "D",
-      "BH:K": "D",
-      "BH:F": "D",
       "Byggfag:P": "D",
-      "Byggfag:L": "D",
-      "Byggfag:M": "D",
-      "Byggfag:K": "D",
-      "Byggfag:F": "D",
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
+      "Lås og beslag:P": "H",
+      "Lås og beslag:L": "H",
+      "Lås og beslag:M": "H",
+      "Lås og beslag:F": "H",
+      "Dørleverandør:P": "D",
+      "Dørleverandør:M": "D",
+      "EL:P": "D",
       "EL:K": "H",
-      "EL:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
+      "Aut:I": "D",
+      "SD:I": "D"
     }
   },
   {
-    "tfm": "442",
-    "description": "Belysning i heissjakter",
-    "comments": "Lys forsynes fra heisfordeling/heismaskin.",
+    "tfm": "500",
+    "description": "Dørautomatikk og sikkerhetssensorer",
+    "comments": "Dørleverandør leverer dørmiljøet, lås og beslag koordinerer funksjon, EL kabler og Aut/SD avklarer styrings- og alarmgrensesnitt.",
     "marks": {
-      "Byggfag:P": "H",
-      "Byggfag:L": "H",
-      "Byggfag:M": "H",
-      "Byggfag:F": "H",
-      "EL:K": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "443",
-    "description": "Nødlysanlegg, komplett system",
-    "comments": "",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "443",
-    "description": "Ledesystem",
-    "comments": "",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "453",
-    "description": "Varmekabler i taknedløp, takrenner, o.l. (frostsikring)",
-    "comments": "Styring av varmekabler ligger hos automasjon. Bygg er delansvarlig i varmekabelløsningen på/i glasstak. Automatikk leverer bakkeføler. For plan 6 vil bakkefølerstyring alene bli for enkel styring siden vann kommer fra glasstaket over. Det kan gi situasjoner med smeltevann på dagtid og frost om natten uten at bakkeføler aktiverer anlegget. Elektro må ta ansvar for en kombinert styring hvor bakkeføler suppleres med lufttemperatur, luftfuktighet (værstasjon / prognosestyring) eventuelt med ettergangstid, slik at anlegget håndterer både snøfall og smeltevannssituasjoner. Elektro koordinerer dette mot automatikk og samkjører løsning.",
-    "marks": {
+      "BH:P": "D",
       "Byggfag:P": "D",
-      "Vent:P": "D",
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
+      "Lås og beslag:P": "H",
+      "Lås og beslag:F": "H",
+      "Dørleverandør:P": "D",
+      "Dørleverandør:L": "D",
+      "Dørleverandør:M": "D",
+      "EL:P": "D",
       "EL:K": "H",
-      "EL:F": "H",
-      "EL:I": "D",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
+      "Aut:P": "D",
+      "Aut:I": "D",
+      "SD:I": "D"
     }
   },
   {
-    "tfm": "453",
-    "description": "Varmekabler i inntakskammer ventilasjon (frostsikring)",
-    "comments": "",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "453",
-    "description": "Varmekabler under fryserom (frostsikring)",
-    "comments": "",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "453",
-    "description": "Varmekabler i gulv (komfort)",
-    "comments": "Hvis det blir aktuelt.",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "462",
-    "description": "Sentral UPS (også dørautomatikk)",
-    "comments": "Delansvar: Alle fag må melde inn sitt UPS behov, ink. BH.",
+    "tfm": "500",
+    "description": "Brannmatrise mellom ABA, ADK, heis og SD",
+    "comments": "Systemene må samordnes slik at brannalarm, dørfrigivelse, heisretur og overvåking fungerer i samme logikk ved alarm.",
     "marks": {
       "BH:P": "D",
       "Byggfag:P": "D",
       "Lås og beslag:P": "D",
       "Dørleverandør:P": "D",
-      "Rør:P": "D",
-      "Vent:P": "D",
       "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
+      "EL:F": "D",
       "Aut:P": "D",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
+      "Aut:F": "D",
+      "SD:P": "H",
+      "SD:I": "H"
     }
   },
   {
-    "tfm": "462",
-    "description": "Lokal UPS for dørautomatikk(dersom aktuelt)",
+    "tfm": "500",
+    "description": "Teknisk nettverk for sikkerhetssystemer",
+    "comments": "EL og SD må avklare nettverk, VLAN, IP-plan og fysisk terminering for ADK, CCTV, porttelefon og andre sikkerhetssystemer.",
+    "marks": {
+      "BH:P": "D",
+      "Byggfag:P": "D",
+      "EL:P": "H",
+      "EL:K": "H",
+      "Aut:P": "D",
+      "SD:P": "H",
+      "SD:I": "H",
+      "Lås og beslag:P": "D"
+    }
+  },
+  {
+    "tfm": "600",
+    "description": "Andre installasjoner",
     "comments": "",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "Lås og beslag:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
+    "marks": {},
+    "section": true
   },
   {
-    "tfm": "462",
-    "description": "Lokal UPS for servere, nettverk, o.l. (dersom aktuelt)",
-    "comments": "",
+    "tfm": "600",
+    "description": "Heis elektrisk",
+    "comments": "Heisleverandør leverer og monterer heis komplett. EL leverer strøm til sjakt. Byggfag bygger sjakt. Aut/SD for overvåking. Brannsignal, prioritert kjøring og nødalarm må avklares mot brannmatrise og driftssystem.",
     "marks": {
-      "BH:P": "H",
-      "BH:L": "H",
-      "BH:M": "H",
-      "BH:K": "H",
-      "BH:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "471",
-    "description": "Solcelleanlegg",
-    "comments": "Delansvar: Skinnesystem for solcellepanel monteres av byggfag. Elektriker tilkopler vekselsretter fra tavle.",
-    "marks": {
+      "BH:P": "D",
       "Byggfag:P": "H",
       "Byggfag:L": "H",
       "Byggfag:M": "H",
-      "Byggfag:K": "D",
-      "Byggfag:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "514",
-    "description": "Inntakskabler for teleanlegg",
-    "comments": "Rør fra tomtegrense inkl trekkekum.",
-    "marks": {
-      "BH:P": "H",
-      "BH:L": "H",
-      "BH:M": "H",
-      "BH:K": "H",
-      "BH:F": "H",
       "EL:P": "D",
-      "EL:L": "D",
-      "EL:M": "D",
-      "EL:K": "D",
+      "EL:K": "H",
+      "Aut:P": "D",
+      "SD:I": "H",
       "EL:F": "D",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
+      "Aut:I": "D"
     }
   },
   {
-    "tfm": "520",
-    "description": "Passivt spredenett for tekniske og brukerrelaterte systemer",
-    "comments": "Avsluttes slik BH ønsker dette",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H"
-    }
-  },
-  {
-    "tfm": "520",
-    "description": "Rack til IKT-rom, inkl stømlist (også for BH utstyr)",
-    "comments": "Delansvar: Alle aktører må melde inn behov for uttak og anvise plassering.\nDelansvar BH: Oppgi plassbehov og varmeavgivelse for utstyr i rack",
+    "tfm": "600",
+    "description": "Heis hydraulisk",
+    "comments": "Heisleverandør leverer og monterer heis komplett. EL leverer strøm. Rør koordinerer hydraulikk. Byggfag bygger sjakt. Brannsignal, prioritert kjøring og nødalarm må avklares mot brannmatrise og driftssystem.",
     "marks": {
       "BH:P": "D",
-      "Lås og beslag:P": "D",
-      "Rør:P": "D",
-      "Vent:P": "D",
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "520",
-    "description": "IKT-uttak for WLAN",
-    "comments": "Delansvar BH: Dekningsanalyse, og anvise plassering",
-    "marks": {
-      "BH:P": "D",
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "520",
-    "description": "Patchesnor for teknisk utstyr i anlegget (f.eks ventilasjonsaggregat og andre komponenter som skal inn på teknisk nett)",
-    "comments": "",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "EL:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "520",
-    "description": "Switcher med PoE for nettverk",
-    "comments": "",
-    "marks": {
-      "BH:P": "H",
-      "BH:L": "H",
-      "BH:M": "H",
-      "BH:K": "H",
-      "BH:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "521",
-    "description": "Switcher for driftsteknisk nett og SD",
-    "comments": "Skal avklare hvem som leverer switch, konfigurasjon, VLAN, porter, PoE-behov og dokumentasjon for tekniske systemer.",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "SD:P": "D",
-      "SD:I": "D"
-    }
-  },
-  {
-    "tfm": "520",
-    "description": "Basestasjoner for WLAN",
-    "comments": "",
-    "marks": {
-      "BH:P": "H",
-      "BH:L": "H",
-      "BH:M": "H",
-      "BH:K": "H",
-      "BH:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "520",
-    "description": "Teknisk nett - IP-adresser, VLAN og nettverkskoordinering",
-    "comments": "Gjelder tekniske systemer som skal pa byggets tekniske nett, inkludert SD, energimalere, heis, AAK, ITV og andre integrerte systemer.",
-    "marks": {
-      "BH:P": "D",
-      "EL:P": "H",
-      "EL:L": "D",
-      "Aut:P": "D",
-      "SD:P": "D",
-      "SD:I": "D"
-    }
-  },
-  {
-    "tfm": "534",
-    "description": "Porttelefon",
-    "comments": "",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "542",
-    "description": "Brannalarm (ABA) - systemansvar og hovedleveranse",
-    "comments": "Brukes for overordnet avklaring av sentraler, sl?yfer, nettverk, str?mforsyning og grensesnitt mot tilknyttede systemer.",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "542",
-    "description": "Brannalarm - styresignal og grensesnitt mot andre systemer",
-    "comments": "Skal angi hvilke systemer som pavirkes, hvilke signaler som utveksles og hvem som har ansvar for komplett funksjonstest.",
-    "marks": {
-      "Byggfag:P": "D",
-      "Lås og beslag:P": "D",
-      "Rør:P": "D",
-      "Vent:P": "D",
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "Aut:P": "D",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "542",
-    "description": "Alarmsender for brannalarm",
-    "comments": "Delansvar: BH beskriver hvor varsling skal gå og tegne abonnement.",
-    "marks": {
-      "BH:P": "D",
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "542",
-    "description": "Nøkkelboks for brannvesen",
-    "comments": "",
-    "marks": {
-      "Byggfag:M": "H",
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "543",
-    "description": "Adgangskontroll (AAK) - systemansvar og hovedleveranse",
-    "comments": "Brukes for overordnet avklaring av sentraler, stromforsyning, dornoder, kortlesere, d?rlogikk og integrasjoner mot andre systemer.",
-    "marks": {
-      "BH:P": "D",
-      "Byggfag:P": "D",
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:F": "H",
-      "EL:K": "D",
-      "SD:I": "D"
-    }
-  },
-  {
-    "tfm": "543",
-    "description": "Besøksregistering",
-    "comments": "",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H"
-    }
-  },
-  {
-    "tfm": "543",
-    "description": "Speedgate",
-    "comments": "",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H"
-    }
-  },
-  {
-    "tfm": "543",
-    "description": "Undersentral/dørkontrollenhet/node for AAK",
-    "comments": "Prosjektering inkluderer omforente koblingsskjemaer for de ulike dørkategoriene med AAK, koordinert mot grensesnittboks for dørmiljø. Tilkobling i grensesnittboks for dørmiljø.",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "Lås og beslag:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "543",
-    "description": "Dørnoder for dører som har elektriske kablede sluttstykker mm.",
-    "comments": "Alle kortlesere leveres fra byggherre. Dørnoder for dører i yttersskall eller dører montert i rømningsvei leveres av AAK leverandør..",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "Lås og beslag:F": "H",
-      "Lås og beslag:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "543",
-    "description": "Åpneknapp",
-    "comments": "",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "Lås og beslag:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "543",
-    "description": "Kortleser",
-    "comments": "",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "Lås og beslag:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "543",
-    "description": "Kortleser i heisstol",
-    "comments": "Delansvar Consto: Kabling fra heismaskinskap til heisstol, og sørge for plass til montering av kortleser.",
-    "marks": {
-      "Byggfag:K": "D",
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "Lås og beslag:F": "H",
-      "EL:K": "D",
-      "SD:I": "D"
-    }
-  },
-  {
-    "tfm": "543",
-    "description": "Forrigling for åpning av dør - AAK til dørautomatikk",
-    "comments": "Tilkobling i koblingsboks for dørmiljø.",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "Lås og beslag:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "543",
-    "description": "AIA - Innbruddsalarm",
-    "comments": "",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "Lås og beslag:F": "H",
-      "Aut:I": "H"
-    }
-  },
-  {
-    "tfm": "552",
-    "description": "Fellesantenne",
-    "comments": "Elektriker utfører en dekningsmåling med rapport som legges frem.",
-    "marks": {
       "Byggfag:P": "H",
       "Byggfag:L": "H",
       "Byggfag:M": "H",
-      "Byggfag:K": "H",
-      "Byggfag:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "553",
-    "description": "TV-overvåkning (ITV)",
-    "comments": "",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:K": "H",
-      "Lås og beslag:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "553",
-    "description": "Kamera innendørs og på fasade.",
-    "comments": "",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:F": "H",
+      "Rør:P": "D",
+      "EL:P": "D",
       "EL:K": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
+      "Aut:P": "D",
+      "SD:I": "H",
+      "EL:F": "D",
+      "Aut:I": "D"
     }
   },
   {
-    "tfm": "553",
-    "description": "Innfesting/braketter for kamera",
-    "comments": "",
+    "tfm": "600",
+    "description": "Rulletrapp",
+    "comments": "Leverandør leverer og monterer rulletrapp. Byggfag tilrettelegger konstruksjon. EL leverer strøm.",
     "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "0",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "553",
-    "description": "Server/VMS for ITV",
-    "comments": "Avklar leveranse av server, lagring, lisens, nettverk, rackplass, UPS-behov og ansvar for oppsett mot kameraer og klienter.",
-    "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:F": "H",
-      "EL:K": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "555",
-    "description": "Bilde og AV-utstyr",
-    "comments": "EL: Strømuttak, IKT-uttak, og kabling frem til utstyr (ikke kabling innad i rom).",
-    "marks": {
+      "BH:P": "D",
       "Byggfag:P": "H",
       "Byggfag:L": "H",
       "Byggfag:M": "H",
-      "Byggfag:F": "H",
-      "EL:P": "D",
-      "EL:L": "D",
-      "EL:M": "D",
-      "EL:K": "H",
-      "EL:F": "D",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "555",
-    "description": "Signalkabling for lyd- og bildeanlegg innad i rom.",
-    "comments": "Gjelder kantine, ref. 555 i RIE-spekken. Stereoforsterkere, rack, tablå og annet utstyr er medtatt av EL.",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "555",
-    "description": "Møbelbokser for arbeidspult, møtebord, o.l.",
-    "comments": "",
-    "marks": {
-      "BH:P": "H",
-      "BH:L": "H",
-      "BH:M": "H",
-      "BH:K": "H",
-      "BH:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "562",
-    "description": "Sentral driftskontroll og automatisering - sentralutstyr",
-    "comments": "Omfatter server/gateway/sentralutstyr, lisens, database, backup og ansvaret for komplett oppkobling mot underliggende anlegg.",
-    "marks": {
-      "EL:M": "H",
-      "EL:K": "H",
-      "Aut:P": "H",
-      "Aut:L": "H",
-      "Aut:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "562",
-    "description": "Alarmsender for SD og automatisering",
-    "comments": "",
-    "marks": {
-      "EL:M": "H",
-      "EL:K": "H",
-      "Aut:P": "H",
-      "Aut:L": "H",
-      "Aut:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "563",
-    "description": "Romkontroll - systemansvar og hovedleveranse",
-    "comments": "Brukes for a avklare om romkontroll leveres som del av ventilasjon, automasjon eller annet system, og hvem som eier komplett funksjon.",
-    "marks": {
       "EL:P": "D",
       "EL:K": "H",
-      "Aut:P": "H",
-      "Aut:L": "H",
-      "Aut:M": "H",
-      "Aut:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "563",
-    "description": "Romregulator-/kontroller i rom, hvis disse ikke kommer med WISE",
-    "comments": "Delansvar: Elektro må sette av plass til KNX utstyr i tavlene",
-    "marks": {
-      "EL:P": "D",
-      "EL:K": "H",
-      "Aut:P": "H",
-      "Aut:L": "H",
-      "Aut:M": "H",
-      "Aut:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "563",
-    "description": "Temperaturgiver i rom, hvis disse ikke kommer med WISE",
-    "comments": "Delansvar: Elektro må sette av plass til KNX utstyr i tavlene",
-    "marks": {
-      "EL:P": "D",
-      "EL:K": "H",
-      "Aut:P": "H",
-      "Aut:L": "H",
-      "Aut:M": "H",
-      "Aut:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "563",
-    "description": "CO2-giver i rom, hvis disse ikke kommer med WISE",
-    "comments": "Delansvar: Elektro må sette av plass til KNX utstyr i tavlene",
-    "marks": {
-      "EL:P": "D",
-      "EL:K": "H",
-      "Aut:P": "H",
-      "Aut:L": "H",
-      "Aut:M": "H",
-      "Aut:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "563",
-    "description": "Bevegelse-/tilstedeværelsesgiver i rom, hvis disse ikke kommer med WISE, typisk KNX",
-    "comments": "Delansvar: Elektro må sette av plass til KNX utstyr i tavlene",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "Aut:P": "D",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "563",
-    "description": "Trafo for CAV-/VAV-spjeld i rom der disse ikke kommer med WISE",
-    "comments": "Skal avklares sammen med romkontroll, stromforsyning og plass i himling/teknisk sone.",
-    "marks": {
-      "Vent:P": "H",
-      "Vent:L": "H",
-      "Vent:M": "H",
-      "Vent:K": "H",
-      "Vent:F": "H",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "563",
-    "description": "Aktuator for radiator/konvektor/strålevarme/kjøling",
-    "comments": "WISE system, samme som annen romkontroll plan 2-7",
-    "marks": {
-      "Vent:P": "H",
-      "Vent:L": "H",
-      "Vent:M": "H",
-      "EL:P": "D",
-      "EL:K": "H",
-      "Aut:F": "H",
-      "Aut:I": "H",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "563",
-    "description": "Aktuator gulvvarme (per kurs)",
-    "comments": "WISE system, samme som annen romkontroll plan 2-7",
-    "marks": {
-      "Vent:P": "H",
-      "Vent:L": "H",
-      "Vent:M": "H",
-      "EL:P": "D",
-      "EL:K": "H",
-      "Aut:F": "H",
-      "Aut:I": "H",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "563",
-    "description": "Swegon WISE-utstyr",
-    "comments": "",
-    "marks": {
-      "Vent:P": "H",
-      "Vent:L": "H",
-      "Vent:M": "H",
-      "Vent:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "563",
-    "description": "CAV/VAV-spjeld, inkl. motor",
-    "comments": "",
-    "marks": {
-      "Vent:P": "H",
-      "Vent:L": "H",
-      "Vent:M": "H",
-      "Vent:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "563",
-    "description": "Trafo for CAV-/VAV-spjeld",
-    "comments": "Trafo kommer med prefabrikkerte kombibafler",
-    "marks": {
-      "Vent:P": "H",
-      "Vent:L": "H",
-      "Vent:M": "H",
-      "Vent:F": "H",
-      "EL:P": "D",
-      "EL:K": "H",
-      "SD:P": "1",
-      "SD:K": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "563",
-    "description": "Termiske energimålere",
-    "comments": "",
-    "marks": {
-      "EL:K": "H",
-      "Aut:P": "H",
-      "Aut:L": "H",
-      "Aut:M": "H",
-      "Aut:F": "H",
-      "Aut:I": "H"
-    }
-  },
-  {
-    "tfm": "564",
-    "description": "Lysstyring (DALI/KNX-bus)",
-    "comments": "",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "564",
-    "description": "Sentralutstyr (gateway, master, reléer, dimmere, strømforsyning, o.l.)",
-    "comments": "",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "621",
-    "description": "Heis - hovedleveranse og bygningsmessige forutsetninger",
-    "comments": "Brukes for overordnet avklaring av sjakt, gruber, topper, stromforsyning, montasjegrenser, ansvar mot byggfag og komplett heisleveranse.",
-    "marks": {
-      "Byggfag:P": "D",
-      "Byggfag:L": "D",
-      "Byggfag:M": "D",
-      "Byggfag:K": "D",
-      "Byggfag:F": "D",
-      "EL:P": "D",
-      "EL:K": "D"
-    }
-  },
-  {
-    "tfm": "621",
-    "description": "Heis - brannsignal, prioritert styring og returfunksjon",
-    "comments": "Grensesnitt mellom heis, brannalarm og elkraft skal avklares eksplisitt med signaltype, funksjon og testansvar.",
-    "marks": {
-      "Byggfag:P": "D",
-      "EL:P": "H",
-      "EL:L": "D",
-      "EL:M": "D",
-      "EL:K": "H",
-      "EL:F": "D",
       "Aut:P": "D",
       "SD:I": "D"
     }
   },
   {
-    "tfm": "621",
-    "description": "Heis - alarmoverforing og nodkommunikasjon",
-    "comments": "Avklar leveranse av kommunikasjon, abonnement, stromforsyning og fysisk tilrettelegging mellom heisleverandor, elektro og byggherre.",
+    "tfm": "600",
+    "description": "Vareheis",
+    "comments": "Heisleverandør leverer og monterer vareheis. Byggfag bygger sjakt. EL leverer strøm.",
     "marks": {
       "BH:P": "D",
-      "EL:P": "H",
-      "EL:L": "D",
-      "EL:K": "D",
+      "Byggfag:P": "H",
+      "Byggfag:L": "H",
+      "Byggfag:M": "H",
+      "EL:P": "D",
+      "EL:K": "H",
+      "Aut:P": "D",
       "SD:I": "D"
     }
   },
   {
-    "tfm": "621",
-    "description": "Heis - grensesnitt mot speedgate og adgangskontroll",
-    "comments": "Heis ma vaere forberedt for signalutveksling og logikk mot speedgate/AAK der dette inngar i brukerreisen.",
+    "tfm": "600",
+    "description": "Kjøkkenventilasjon",
+    "comments": "Vent prosjekterer og installerer kjøkkenventilasjon inkl. avtrekkshette. Rør for fettavløp. EL for strøm.",
     "marks": {
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "H",
-      "Lås og beslag:M": "H",
-      "Lås og beslag:F": "H",
+      "Rør:P": "D",
+      "Rør:L": "D",
+      "Rør:M": "D",
+      "Vent:P": "H",
+      "Vent:L": "H",
+      "Vent:M": "H",
       "EL:K": "H",
-      "Aut:I": "H"
+      "Aut:P": "D",
+      "Aut:K": "D",
+      "SD:I": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D"
     }
   },
   {
-    "tfm": "731",
-    "description": "Utendors VA - grensesnitt mot elkraft og automasjon",
-    "comments": "Gjelder pumper, kummer, sensorer, varmekabler og eventuelle signaler/alarmoverforing til SD eller andre tekniske systemer.",
+    "tfm": "600",
+    "description": "Storkjøkken avløp",
+    "comments": "Rør prosjekterer og installerer avløp for storkjøkken inkl. fettavskiller. Koordineres med kjøkkenleverandør.",
+    "marks": {
+      "BH:P": "D",
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "Rør:M": "H",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "600",
+    "description": "Trykkluftanlegg",
+    "comments": "Rør prosjekterer, leverer og monterer trykkluftanlegg. EL leverer strøm til kompressor. Aut/SD for overvåking.",
+    "marks": {
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "Rør:M": "H",
+      "EL:K": "H",
+      "Aut:P": "D",
+      "Aut:K": "D",
+      "SD:I": "D",
+      "BH:P": "D",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "600",
+    "description": "Gassanlegg medisinsk",
+    "comments": "Rør prosjekterer og installerer medisinsk gassanlegg. EL leverer strøm til alarmpanel. Aut/SD for overvåking.",
     "marks": {
       "Rør:P": "H",
       "Rør:L": "H",
       "Rør:M": "H",
       "Rør:F": "H",
       "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
+      "Aut:P": "D",
+      "Aut:K": "D",
+      "SD:I": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D"
     }
   },
   {
-    "tfm": "732",
-    "description": "Snøsmelteanlegg (gatevarme)",
-    "comments": "Delansvar EL (overordnet): Tegne inn el-komponenter utenfor teknisk rom på tegning og i BIM .",
+    "tfm": "600",
+    "description": "Suganlegg",
+    "comments": "Rør prosjekterer og installerer suganlegg (sentralstøvsuger e.l.). EL leverer strøm.",
     "marks": {
       "Rør:P": "H",
       "Rør:L": "H",
       "Rør:M": "H",
-      "EL:P": "D",
-      "EL:M": "D",
       "EL:K": "H",
-      "Aut:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "732",
-    "description": "Værstasjon for snøsmelteanlegg",
-    "comments": "",
-    "marks": {
-      "EL:M": "H",
-      "EL:K": "H",
-      "Aut:P": "H",
-      "Aut:L": "H",
-      "Aut:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "732",
-    "description": "Sensorer for snøsmelteanlegg",
-    "comments": "",
-    "marks": {
-      "EL:M": "H",
-      "EL:K": "H",
-      "Aut:P": "H",
-      "Aut:L": "H",
-      "Aut:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "743",
-    "description": "Utendørs lavspent forsyning",
-    "comments": "",
-    "marks": {
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "0"
-    }
-  },
-  {
-    "tfm": "744",
-    "description": "Utendørs lys",
-    "comments": "",
-    "marks": {
       "BH:P": "D",
-      "BH:L": "D",
-      "BH:M": "D",
-      "BH:K": "D",
-      "BH:F": "D",
-      "EL:P": "H",
-      "EL:L": "H",
-      "EL:M": "H",
-      "EL:K": "H",
-      "EL:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
+      "Byggfag:P": "D"
     }
   },
   {
-    "tfm": "744",
-    "description": "Lysskilt på fasade, pylonskilt, o.l. (reklame)",
-    "comments": "Delansvar EL: Fremføring av tilførsel til tilkoblingspunkt.",
-    "marks": {
-      "BH:P": "H",
-      "BH:L": "H",
-      "BH:M": "H",
-      "BH:F": "H",
-      "EL:K": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "756",
-    "description": "Utendørs automatisering",
-    "comments": "",
-    "marks": {
-      "EL:M": "H",
-      "EL:K": "H",
-      "Aut:P": "H",
-      "Aut:L": "H",
-      "Aut:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "756",
-    "description": "Værstasjon (lufttrykk, fuktighet, vind, regn, snø, etc.)",
-    "comments": "",
-    "marks": {
-      "EL:M": "H",
-      "EL:K": "H",
-      "Aut:P": "H",
-      "Aut:L": "H",
-      "Aut:F": "H",
-      "Aut:I": "H",
-      "SD:P": "1",
-      "SD:L": "1",
-      "SD:M": "1",
-      "SD:K": "1",
-      "SD:F": "1",
-      "SD:I": "1"
-    }
-  },
-  {
-    "tfm": "200",
-    "description": "Innfesting og oppheng for tekniske installasjoner",
-    "comments": "Tekniske fag angir laster, plassering og behov. Byggfag prosjekterer og etablerer bygningsmessige forutsetninger i baeresystem, dekker og vegger.",
+    "tfm": "600",
+    "description": "Persienner/solavskjerming",
+    "comments": "Byggfag/ARK prosjekterer og leverer solavskjerming. EL kabler motorer. Aut/SD for automatisk styring.",
     "marks": {
       "Byggfag:P": "H",
       "Byggfag:L": "H",
       "Byggfag:M": "H",
-      "Byggfag:K": "H",
-      "Byggfag:F": "H",
-      "Rør:P": "D",
-      "Vent:P": "D",
-      "EL:P": "D",
-      "Aut:P": "D"
+      "EL:K": "H",
+      "Aut:P": "D",
+      "Aut:K": "D",
+      "Aut:F": "D",
+      "SD:I": "H",
+      "BH:P": "D"
     }
   },
   {
-    "tfm": "200",
-    "description": "Plass i sjakter, over himling og i tekniske rom",
-    "comments": "Skal koordineres tverrfaglig tidlig. Alle fag ma melde plassbehov, serviceareal, reserveplass og montasjerekkefolge for bygging.",
+    "tfm": "600",
+    "description": "Porter og garasjeporter",
+    "comments": "Byggfag/leverandør leverer og monterer porter. EL kabler strøm og styring. Lås og beslag for ADK-integrasjon.",
     "marks": {
       "Byggfag:P": "H",
       "Byggfag:L": "H",
-      "Rør:P": "D",
-      "Vent:P": "D",
-      "EL:P": "D",
-      "Aut:P": "D"
-    }
-  },
-  {
-    "tfm": "360",
-    "description": "Frostvakt og frysevernfunksjon for ventilasjonsanlegg",
-    "comments": "Skal avklare foler, plassering, kabling, styringslogikk, alarmhandtering og hvem som leverer komplett funksjon ved stopp eller fare for frost.",
-    "marks": {
-      "Vent:P": "D",
-      "Vent:L": "D",
-      "Vent:M": "H",
-      "Aut:P": "H",
-      "Aut:L": "H",
-      "Aut:F": "H",
-      "Aut:I": "H",
-      "SD:I": "D"
-    }
-  },
-  {
-    "tfm": "521",
-    "description": "Teknisk nettverk - switch, VLAN og portapninger for integrerte systemer",
-    "comments": "Skal avklares for SD, automasjon, energimalere, heis, AAK, ITV, porttelefon og annet utstyr som skal inn pa teknisk nettverk.",
-    "marks": {
-      "BH:P": "D",
-      "EL:P": "H",
-      "EL:L": "D",
+      "Byggfag:M": "H",
+      "Lås og beslag:P": "D",
+      "Lås og beslag:F": "D",
       "EL:K": "H",
       "Aut:P": "D",
-      "SD:P": "D",
-      "SD:I": "D"
+      "Aut:K": "D",
+      "SD:I": "D",
+      "BH:P": "D",
+      "Dørleverandør:P": "D",
+      "Dørleverandør:M": "D",
+      "EL:P": "D"
     }
   },
   {
-    "tfm": "562",
-    "description": "Kommunikasjon mot toppsystem (BACnet/IP, Modbus eller tilsvarende)",
-    "comments": "Folger vanlig bransjepraksis for SD-integrasjon: protokoll, autonom drift, eventuelle gatewayer og komplett integrasjon mot toppsystem ma vaere eksplisitt avklart.",
+    "tfm": "600",
+    "description": "Ladestasjoner EL-bil",
+    "comments": "EL prosjekterer, leverer og monterer ladestasjoner. Byggfag tilrettelegger parkeringsareal. Aut/SD for laststyring.",
     "marks": {
-      "Rør:P": "D",
-      "Vent:P": "D",
-      "EL:P": "D",
-      "Aut:P": "H",
-      "Aut:L": "H",
-      "Aut:M": "H",
-      "Aut:F": "H",
-      "Aut:I": "H",
-      "SD:I": "D"
+      "Byggfag:P": "D",
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "Aut:P": "D",
+      "Aut:K": "D",
+      "SD:I": "D",
+      "BH:P": "D"
     }
   },
   {
-    "tfm": "562",
-    "description": "Datapunktsliste, objektnavn og integrasjonsansvar mot SD",
-    "comments": "Bor beskrive hvilke systemer grensesnittet gjelder for, hvilke signaler og funksjoner som inngar og hvem som eier levering, test og overlevering.",
+    "tfm": "600",
+    "description": "Avfallssug",
+    "comments": "Rør prosjekterer og installerer avfallssugsystem. Byggfag tilrettelegger sjakter og rom. EL leverer strøm.",
     "marks": {
-      "Rør:P": "D",
-      "Vent:P": "D",
-      "EL:P": "D",
-      "Aut:P": "H",
-      "Aut:L": "H",
-      "Aut:M": "H",
-      "Aut:F": "H",
-      "Aut:I": "H",
-      "SD:P": "D",
-      "SD:I": "D"
-    }
-  },
-  {
-    "tfm": "300",
-    "description": "Pumpe - driftssignal, alarm og start/stopp mot SD",
-    "comments": "Skal avklare hvilke signaler som skal utveksles mellom pumpe, elkraft og automasjon, inkludert drift, feil, start/stopp, settpunkter og eventuell hand/auto-logikk.",
-    "marks": {
-      "Rør:P": "D",
-      "EL:P": "D",
-      "Aut:P": "H",
-      "Aut:L": "H",
-      "Aut:F": "H",
-      "Aut:I": "H",
-      "SD:I": "D"
-    }
-  },
-  {
-    "tfm": "310",
-    "description": "Lekkasjedeteksjon - alarm, stengeventil og kvittering",
-    "comments": "Skal tydelig avklare hvem som leverer folere, ventiler, styreenhet, lokal varsling, signal til SD og reset/kvitteringsfunksjon.",
-    "marks": {
-      "Rør:P": "D",
-      "Rør:L": "D",
+      "Byggfag:P": "D",
+      "Byggfag:M": "D",
+      "Rør:P": "H",
+      "Rør:L": "H",
       "Rør:M": "H",
-      "EL:K": "D",
-      "Aut:P": "H",
-      "Aut:I": "H",
-      "SD:I": "D"
+      "EL:K": "H",
+      "Aut:P": "D",
+      "SD:I": "D",
+      "BH:P": "D"
     }
   },
   {
-    "tfm": "521",
-    "description": "Firewall, portapninger og ekstern tilgang for tekniske systemer",
-    "comments": "Gjelder systemer som trenger fjernsupport, skylosninger, alarmoverforing eller kommunikasjon ut av teknisk nett. Skal avklares tidlig med BH/IT.",
+    "tfm": "600",
+    "description": "Heis - brannsignal og prioritert kjøring",
+    "comments": "Heisleverandørens funksjon må samordnes med ABA, brannmatrise, dørmiljø og driftssystem. EL leverer signal/kabling, SD mottar status.",
     "marks": {
       "BH:P": "D",
+      "Byggfag:P": "D",
       "EL:P": "H",
-      "EL:L": "D",
-      "Aut:P": "D",
-      "SD:P": "D",
-      "SD:I": "D"
-    }
-  },
-  {
-    "tfm": "562",
-    "description": "Systembilder, alarmer og trendlogger i SD",
-    "comments": "Borer beskrive hvem som leverer bildehierarki, alarmtekster, trendpunkter, betjeningsbilder og ansvaret for at funksjonen faktisk er brukbar for drift.",
-    "marks": {
-      "Rør:P": "D",
-      "Vent:P": "D",
-      "EL:P": "D",
+      "EL:K": "H",
+      "EL:F": "D",
       "Aut:P": "D",
       "Aut:I": "D",
-      "SD:P": "H",
-      "SD:L": "H",
-      "SD:F": "H",
+      "SD:P": "D",
       "SD:I": "H"
     }
   },
   {
-    "tfm": "562",
-    "description": "Integrasjonstest og funksjonstest mot SD",
-    "comments": "Skal angi hvem som tester feltutstyr, busskommunikasjon, toppsystem, alarmkjeder, trendlogger og komplett samspill mellom fagene for overlevering.",
-    "marks": {
-      "Rør:I": "D",
-      "Vent:I": "D",
-      "EL:I": "D",
-      "Aut:P": "H",
-      "Aut:I": "H",
-      "SD:I": "D"
-    }
-  },
-  {
-    "tfm": "543",
-    "description": "AAK - funksjonsmatrise for dorer og soner",
-    "comments": "Bor samle apningslogikk, tidsstyring, sikkerhetsniva, sammenkobling mot doraautomatikk, ABA, AIA og eventuelle brukerkrav per dorkategori.",
+    "tfm": "600",
+    "description": "Heis - nødalarm og taleforbindelse",
+    "comments": "Heisleverandør må avklare nødkommunikasjon, alarmoverføring og grensesnitt mot eventuelt sentral drift eller vaktselskap.",
     "marks": {
       "BH:P": "D",
       "Byggfag:P": "D",
-      "Lås og beslag:P": "H",
-      "Lås og beslag:L": "D",
-      "EL:K": "D",
-      "SD:I": "D"
-    }
-  },
-  {
-    "tfm": "621",
-    "description": "Heis - teknisk nett, fjernovervaking og abonnement",
-    "comments": "Skal avklare om heis bruker GSM, IP eller annen kommunikasjonsvei, hvem som leverer abonnement og hvem som etablerer komplett forbindelse og dokumentasjon.",
-    "marks": {
-      "BH:P": "D",
       "EL:P": "H",
-      "EL:L": "D",
+      "EL:K": "H",
       "Aut:P": "D",
-      "SD:P": "D",
       "SD:I": "D"
     }
   },
   {
-    "tfm": "621",
-    "description": "Heis - stromforsyning, stikk, belysning og varme i sjakt/maskinrom",
-    "comments": "Bor tydelig avklare hva som ligger i heisleveransen og hva som leveres av elektro og bygg, spesielt i sjakt, grube, maskinrom og tekniske nisjer.",
+    "tfm": "700",
+    "description": "Utendørs",
+    "comments": "",
+    "marks": {},
+    "section": true
+  },
+  {
+    "tfm": "700",
+    "description": "Utendørs VA spillvann",
+    "comments": "Rør prosjekterer og installerer utvendig spillvannsledning til kommunal påkobling. Byggfag graver grøft.",
+    "marks": {
+      "Byggfag:P": "D",
+      "Byggfag:L": "D",
+      "Byggfag:M": "H",
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "Rør:M": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "700",
+    "description": "Utendørs VA overvann",
+    "comments": "Rør prosjekterer og installerer utvendig overvannssystem inkl. sandfang og fordrøyning. Byggfag graver.",
+    "marks": {
+      "Byggfag:P": "D",
+      "Byggfag:L": "D",
+      "Byggfag:M": "H",
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "Rør:M": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "700",
+    "description": "Utendørs elkraft",
+    "comments": "EL prosjekterer og installerer utvendig elkraftanlegg. Byggfag graver kabelgrøfter.",
+    "marks": {
+      "Byggfag:P": "D",
+      "Byggfag:M": "H",
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "700",
+    "description": "Utendørs belysning",
+    "comments": "EL prosjekterer, leverer og monterer utvendig belysning. Byggfag tilrettelegger fundamenter. Aut/SD for tidsstyring.",
     "marks": {
       "Byggfag:P": "D",
       "Byggfag:M": "D",
@@ -4388,7 +2399,128 @@
       "EL:L": "H",
       "EL:M": "H",
       "EL:K": "H",
-      "EL:F": "H"
+      "Aut:P": "D",
+      "SD:I": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "700",
+    "description": "Utendørs kabelkanaler",
+    "comments": "EL prosjekterer kabelkanaler/trekkerør. Byggfag graver og legger ned rør i grøft.",
+    "marks": {
+      "Byggfag:P": "D",
+      "Byggfag:L": "D",
+      "Byggfag:M": "H",
+      "EL:P": "H",
+      "EL:L": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "700",
+    "description": "Utomhus grøntanlegg varme",
+    "comments": "Rør prosjekterer varmeløsning for grøntanlegg (f.eks. snøsmeltingsanlegg). EL leverer strøm. Byggfag utfører grunnarbeid.",
+    "marks": {
+      "Byggfag:P": "D",
+      "Byggfag:M": "H",
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "Rør:M": "H",
+      "EL:K": "D",
+      "Aut:P": "D",
+      "SD:I": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "700",
+    "description": "Utendørs snøsmelting",
+    "comments": "EL/Rør prosjekterer snøsmeltingsanlegg (elektrisk eller vannbåren). Byggfag utfører dekkearbeid. Aut/SD for styring.",
+    "marks": {
+      "Byggfag:P": "D",
+      "Byggfag:M": "H",
+      "Rør:P": "D",
+      "EL:P": "H",
+      "EL:L": "H",
+      "EL:M": "H",
+      "EL:K": "H",
+      "Aut:P": "D",
+      "Aut:K": "D",
+      "SD:I": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "700",
+    "description": "Brannkum/hydrant",
+    "comments": "Rør prosjekterer og installerer brannkum/hydrant. Byggfag utfører gravearbeid.",
+    "marks": {
+      "Byggfag:P": "D",
+      "Byggfag:M": "H",
+      "Rør:P": "H",
+      "Rør:L": "H",
+      "Rør:M": "H",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "700",
+    "description": "Gatekjøkken/utekjøkken",
+    "comments": "Rør leverer vann og avløp. EL leverer strøm. Byggfag tilrettelegger konstruksjon og fundament.",
+    "marks": {
+      "BH:P": "D",
+      "Byggfag:P": "H",
+      "Byggfag:L": "H",
+      "Byggfag:M": "H",
+      "Rør:P": "D",
+      "Rør:L": "D",
+      "Rør:M": "D",
+      "EL:K": "H"
+    }
+  },
+  {
+    "tfm": "700",
+    "description": "Utendørs SD-kommunikasjon",
+    "comments": "Aut/SD prosjekterer kommunikasjon mellom utendørs undersentraler og toppsystem. EL leverer kabling.",
+    "marks": {
+      "EL:P": "D",
+      "EL:K": "H",
+      "Aut:P": "H",
+      "Aut:L": "H",
+      "Aut:M": "H",
+      "Aut:K": "H",
+      "SD:P": "D",
+      "SD:I": "H",
+      "BH:P": "D",
+      "Byggfag:P": "D"
+    }
+  },
+  {
+    "tfm": "700",
+    "description": "Grunnarbeid tekniske føringer",
+    "comments": "Byggfag utfører grunnarbeid for alle tekniske føringer utendørs (grøfter, fundament, trekkerør).",
+    "marks": {
+      "Byggfag:P": "H",
+      "Byggfag:L": "H",
+      "Byggfag:M": "H",
+      "Rør:P": "D",
+      "EL:P": "D",
+      "BH:P": "D"
+    }
+  },
+  {
+    "tfm": "700",
+    "description": "Fundamenter utendørs utstyr",
+    "comments": "Byggfag prosjekterer og utfører fundamenter for utendørs teknisk utstyr (aggregater, transformatorer, etc.).",
+    "marks": {
+      "Byggfag:P": "H",
+      "Byggfag:L": "H",
+      "Byggfag:M": "H",
+      "Rør:P": "D",
+      "Vent:P": "D",
+      "EL:P": "D",
+      "BH:P": "D"
     }
   }
 ]

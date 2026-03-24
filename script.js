@@ -18,6 +18,13 @@ const disciplines = [
 ].filter((discipline) => discipline !== "ADK");
 
 const responsibilities = ["P", "L", "M", "K", "F", "I"];
+const rowStatusOptions = [
+    { value: "open", label: "Uavklart" },
+    { value: "in_progress", label: "Under avklaring" },
+    { value: "blocked", label: "Blokkert" },
+    { value: "ready", label: "Klar for review" },
+    { value: "clarified", label: "Avklart" },
+];
 const uploadedDocuments = [];
 let lastComplexityResult = null;
 const packageControlledDisciplines = ["EL", "Aut", "SD", "Lås og beslag"];
@@ -61,8 +68,11 @@ const newProjectButton = document.getElementById("new-project");
 const deleteProjectButton = document.getElementById("delete-project");
 const currentRowTfm = document.getElementById("current-row-tfm");
 const currentRowDescription = document.getElementById("current-row-description");
+const currentRowStatus = document.getElementById("current-row-status");
 const currentRowRisk = document.getElementById("current-row-risk");
 const currentRowMissing = document.getElementById("current-row-missing");
+const currentRowOwner = document.getElementById("current-row-owner");
+const currentRowReviewReadiness = document.getElementById("current-row-review-readiness");
 const currentRowConfirm = document.getElementById("current-row-confirm");
 const currentRowConfirmText = document.getElementById("current-row-confirm-text");
 const currentRowComment = document.getElementById("current-row-comment");
@@ -73,6 +83,8 @@ const moveRowUpButton = document.getElementById("move-row-up");
 const moveRowDownButton = document.getElementById("move-row-down");
 const matrixSearchInput = document.getElementById("matrix-search");
 const showOpenOnlyInput = document.getElementById("show-open-only");
+const cardViewToggleButton = document.getElementById("card-view-toggle");
+const matrixViewToggleButton = document.getElementById("matrix-view-toggle");
 const addRowButton = document.getElementById("add-row");
 const deleteRowButton = document.getElementById("delete-row");
 const jumpUnresolvedButton = document.getElementById("jump-unresolved");
@@ -102,6 +114,12 @@ const currentRowInsightDisciplines = document.getElementById("current-row-insigh
 const currentRowInsightFocus = document.getElementById("current-row-insight-focus");
 const currentRowInsightDeliverables = document.getElementById("current-row-insight-deliverables");
 const matrixEmptyState = document.getElementById("matrix-empty-state");
+const interfaceCardWorkspace = document.getElementById("interface-card-workspace");
+const matrixExpertWorkspace = document.getElementById("matrix-expert-workspace");
+const matrixDetailWorkspace = document.getElementById("matrix-detail-workspace");
+const resetMatrixSearchButton = document.getElementById("reset-matrix-search");
+const resetMatrixFiltersButton = document.getElementById("reset-matrix-filters");
+const showAllChaptersButton = document.getElementById("show-all-chapters");
 const workflowStepStatus = document.getElementById("workflow-step-status");
 const workflowStepButtons = Array.from(document.querySelectorAll("[data-step-target]"));
 const workflowTabs = Array.from(document.querySelectorAll(".workflow-step"));
@@ -131,6 +149,7 @@ const cockpitOfferHealthDetail = document.getElementById("cockpit-offer-health-d
 const matrixQueueList = document.getElementById("matrix-queue-list");
 const matrixCommentGapCount = document.getElementById("matrix-comment-gap-count");
 const matrixConflictCount = document.getElementById("matrix-conflict-count");
+const matrixOwnerGapCount = document.getElementById("matrix-owner-gap-count");
 const matrixReviewReadyCount = document.getElementById("matrix-review-ready-count");
 const matrixCommandDetail = document.getElementById("matrix-command-detail");
 const jumpConflictRowButton = document.getElementById("jump-conflict-row");
@@ -139,298 +158,266 @@ const focusOfferStepButton = document.getElementById("focus-offer-step");
 
 const defaultRows = [
     {
-        tfm: "300",
-        description: "Generelt - Rørtekniske installasjoner",
-        comments: "Delansvar EL (overordnet): Tegne inn el-komponenter utenfor teknisk rom på tegning og i BIM.",
-        marks: {},
-        section: true,
-    },
-    {
-        tfm: "300",
-        description: "Pumper",
-        comments: "Hovedpumpe(r) til hovedstokken må bestilles med kalender-ur funksjon.",
+        tfm: "100",
+        description: "Koordineringstegninger",
+        comments: "Byggfag samordner tegningsgrunnlag. Alle tekniske fag leverer oppdatert underlag for grensesnitt, utsparinger og kollisjonskontroll.",
         marks: {
-            "Rør:P": "H",
-            "Rør:L": "H",
-            "Rør:M": "H",
-            "Rør:I": "H",
-            "EL:I": "H",
-            "Aut:I": "H",
-        },
-    },
-    {
-        tfm: "300",
-        description: "Pumper med integrert frekvensomformer",
-        comments: "Delansvar RØR: Innregulering (hvis direkte på pumpe).",
-        marks: {
-            "Rør:P": "H",
-            "Rør:L": "H",
-            "Rør:M": "H",
-            "Rør:I": "H",
-            "Aut:I": "H",
-        },
-    },
-    {
-        tfm: "300",
-        description: "Ekstern frekvensomformer for pumper",
-        comments: "",
-        marks: {
-            "Rør:P": "H",
-            "Rør:L": "H",
-            "Rør:M": "H",
-            "Rør:I": "H",
-            "Rør:F": "H",
-            "Aut:I": "H",
-        },
-    },
-    {
-        tfm: "300",
-        description: "Akkumulatortanker",
-        comments: "",
-        marks: {
-            "Rør:P": "H",
-            "Rør:L": "H",
-            "Rør:M": "H",
-            "Rør:I": "H",
-            "Aut:I": "H",
-        },
-    },
-    {
-        tfm: "300",
-        description: "Trykkgiver (rør)",
-        comments: "Delansvar RØR: Tegne inn komp. på systemskjema. Rørlegger leverer følerlommer.",
-        marks: {
+            "BH:P": "D",
+            "Byggfag:P": "H",
             "Rør:P": "D",
-            "Rør:I": "H",
-            "EL:F": "H",
-            "EL:I": "H",
-            "Aut:F": "H",
-            "Aut:I": "H",
+            "Vent:P": "D",
+            "EL:P": "D",
+            "Aut:P": "D",
+            "SD:P": "D",
         },
     },
     {
-        tfm: "300",
-        description: "Temperaturgiver (rør)",
-        comments: "Delansvar RØR: Tegne inn komp. på systemskjema. Rørlegger leverer følerlommer.",
+        tfm: "100",
+        description: "Branntetting gjennomføringer",
+        comments: "Byggfag utfører branntetting. Tekniske fag melder behov og type gjennomføring i riktig tid.",
         marks: {
-            "Rør:P": "D",
-            "Rør:L": "H",
-            "Rør:I": "H",
-            "EL:F": "H",
-            "EL:I": "H",
-            "Aut:F": "H",
-            "Aut:I": "H",
-        },
-    },
-    {
-        tfm: "300",
-        description: "Termisk energimåler",
-        comments:
-            "Delansvar RØR: Tegne inn komp. på systemskjema. Leverandør må levere dokumentasjon på måler rettidig. Rørlegger leverer følerlommer.",
-        marks: {
-            "Rør:P": "D",
-            "Rør:L": "H",
-            "Rør:I": "H",
-            "EL:F": "H",
-            "EL:I": "H",
-            "Aut:F": "H",
-            "Aut:I": "H",
-        },
-    },
-    {
-        tfm: "300",
-        description: "To- og treveisventil inkl motor",
-        comments: "",
-        marks: {
-            "Rør:P": "D",
-            "Rør:I": "H",
-            "EL:F": "H",
-            "EL:I": "H",
-            "Aut:F": "H",
-            "Aut:I": "H",
-        },
-    },
-    {
-        tfm: "300",
-        description: "Ventiler (automatisk styrt)",
-        comments: "Magnetventiler etc.",
-        marks: {
-            "Rør:P": "H",
-            "Rør:L": "H",
-            "Rør:M": "H",
-            "Rør:I": "H",
-            "Aut:I": "H",
-        },
-    },
-    {
-        tfm: "300",
-        description: "Ventiler (for manuell betjening)",
-        comments: "Generelt for ventiler i rørnett (sanitær, varme og kjøling).",
-        marks: {
-            "Rør:P": "H",
-            "Rør:L": "H",
-            "Rør:M": "H",
-            "Rør:I": "H",
-        },
-    },
-    {
-        tfm: "300",
-        description: "Servicebryter for pumpe/frekvensomformer",
-        comments: "Krav iht. NEK400",
-        marks: {
-            "Rør:P": "H",
-            "Rør:L": "H",
-            "Rør:M": "H",
-            "Rør:K": "H",
-            "Rør:F": "H",
-            "Aut:I": "H",
-        },
-    },
-    {
-        tfm: "310",
-        description: "Sanitæranlegg",
-        comments: "",
-        marks: {
-            "Rør:P": "H",
-            "Rør:L": "H",
-            "Rør:M": "H",
-            "Rør:K": "H",
-            "Rør:F": "H",
-            "Rør:I": "H",
-            "Aut:I": "H",
-        },
-    },
-    {
-        tfm: "310",
-        description: "Vannmåler (inntak)",
-        comments: "Leveres med bus for kommunikasjon mot SD.",
-        marks: {
-            "Rør:P": "H",
-            "Rør:L": "H",
-            "Rør:M": "H",
-            "Rør:I": "H",
-            "Aut:I": "H",
-        },
-    },
-    {
-        tfm: "310",
-        description: "Vannmåler (generelt)",
-        comments:
-            "Delansvar RØR: Tegne inn komp. på systemskjema. Alle KV og VV målere leveres av Rør. Alle målere skal kommunisere med BAS-anlegget med IP-kommunikasjon (ModBus eller Bacnet).",
-        marks: {
-            "Rør:P": "H",
-            "Rør:L": "H",
-            "Rør:M": "H",
-            "Rør:I": "H",
-            "Aut:I": "H",
-        },
-    },
-    {
-        tfm: "310",
-        description: "Tappevannssentral",
-        comments: "",
-        marks: {
-            "Rør:P": "H",
-            "Rør:L": "H",
-            "Rør:M": "H",
-            "Rør:I": "H",
-            "Aut:I": "H",
-        },
-    },
-    {
-        tfm: "310",
-        description: "Vannbehandling legionella",
-        comments: "Mulig det blir hettvannspyling via FV-veksler.",
-        marks: {
-            "Rør:P": "H",
-            "Rør:L": "H",
-            "Rør:M": "H",
-            "Rør:I": "H",
-            "Aut:I": "H",
-        },
-    },
-    {
-        tfm: "310",
-        description: "Sirkulasjonspumpe VV (VVC)",
-        comments: "",
-        marks: {
-            "Rør:P": "H",
-            "Rør:L": "H",
-            "Rør:M": "H",
-            "Rør:I": "H",
-            "Aut:I": "H",
-        },
-    },
-    {
-        tfm: "310",
-        description: "Sluk/drenering luftinntak",
-        comments: "",
-        marks: {
-            "Rør:P": "H",
-            "Rør:L": "H",
-            "Rør:M": "H",
-            "Rør:I": "H",
-        },
-    },
-    {
-        tfm: "310",
-        description: "Blandebatteri kjøkkenbenk (ikke storkjøkken)",
-        comments: "",
-        marks: {
-            "Rør:P": "H",
-            "Rør:L": "H",
-            "Rør:M": "H",
-            "Rør:I": "H",
-        },
-    },
-    {
-        tfm: "310",
-        description: "Sanitærutstyr og blandebatterier i plassbygde bad og WC",
-        comments: "",
-        marks: {
-            "Rør:P": "H",
-            "Rør:L": "H",
-            "Rør:M": "H",
-            "Rør:I": "H",
-        },
-    },
-    {
-        tfm: "310",
-        description: "Utslagsvask inkl. batteri (tekniske rom, BK, etc.)",
-        comments: "",
-        marks: {
-            "Rør:P": "H",
-            "Rør:L": "H",
-            "Rør:M": "H",
-            "Rør:I": "H",
-        },
-    },
-    {
-        tfm: "310",
-        description: "Taksluk",
-        comments: "Rørlegger prosjekterer og leverer sluk. Taktekker monterer og rørlegger tilkobler. Arkitekt lager fallplan.",
-        marks: {
-            "Byggfag:F": "H",
-            "Rør:P": "H",
-            "Rør:L": "H",
-            "Rør:M": "D",
-            "Rør:K": "H",
-            "Rør:I": "H",
-        },
-    },
-    {
-        tfm: "310",
-        description: "Spillvannspumpekum, komplett system",
-        comments:
-            "H Grunneentreprenør leverer. Plasseres i bakken utenfor bygget. Rørlegger tilkobler spillvannspumpekum. Elektro trekker kabler og kobler til pumper. Integrasjon til SD.",
-        marks: {
-            "Byggfag:P": "D",
+            "Byggfag:P": "H",
             "Byggfag:L": "H",
             "Byggfag:M": "H",
-            "Byggfag:F": "D",
+            "Rør:P": "D",
+            "Vent:P": "D",
+            "EL:P": "D",
+            "Aut:P": "D",
+        },
+    },
+    {
+        tfm: "100",
+        description: "Funksjonstesting felles",
+        comments: "Koordinert test av tekniske anlegg i samspill. Aut og SD styrer testopplegg, mens hvert fag verifiserer egne funksjoner.",
+        marks: {
+            "BH:F": "D",
+            "Rør:F": "D",
+            "Vent:F": "D",
+            "EL:F": "D",
+            "Aut:F": "H",
+            "SD:F": "H",
+        },
+    },
+    {
+        tfm: "200",
+        description: "Utsparinger i betong",
+        comments: "Byggfag utfører utsparinger etter samordnet bestilling. Tekniske fag prosjekterer plassering og størrelse for egne føringer.",
+        marks: {
+            "Byggfag:P": "H",
+            "Byggfag:L": "H",
+            "Byggfag:M": "H",
+            "Rør:P": "D",
+            "Vent:P": "D",
+            "EL:P": "D",
+            "Aut:P": "D",
+        },
+    },
+    {
+        tfm: "200",
+        description: "Himling med installasjoner",
+        comments: "Byggfag lukker himling. Tekniske fag må ferdigstille installasjoner, testing og merking før lukking.",
+        marks: {
+            "Byggfag:P": "H",
+            "Byggfag:L": "H",
+            "Byggfag:M": "H",
+            "Rør:M": "D",
+            "Vent:M": "D",
+            "EL:M": "D",
+            "Aut:M": "D",
+        },
+    },
+    {
+        tfm: "200",
+        description: "Tekniske rom adkomst",
+        comments: "Byggfag sørger for adkomst, dørbredder og serviceareal. Tekniske fag oppgir krav for transport, drift og vedlikehold.",
+        marks: {
+            "Byggfag:P": "H",
+            "Byggfag:L": "H",
+            "Byggfag:M": "H",
+            "Rør:P": "D",
+            "Vent:P": "D",
+            "EL:P": "D",
+        },
+    },
+    {
+        tfm: "300",
+        description: "Sanitæranlegg komplett",
+        comments: "Rør prosjekterer, leverer og monterer sanitæranlegg. Byggfag koordinerer gjennomføringer, og BH avklarer rom- og brukerkrav.",
+        marks: {
+            "BH:P": "D",
+            "Rør:P": "H",
             "Rør:L": "H",
-            "Rør:I": "H",
-            "Aut:I": "H",
+            "Rør:M": "H",
+        },
+    },
+    {
+        tfm: "300",
+        description: "Varme/kjølesystem",
+        comments: "Rør har hovedansvar for vannbårne systemer. Vent, EL, Aut og SD må avklare batterikoblinger, kraft og regulering.",
+        marks: {
+            "Rør:P": "H",
+            "Rør:L": "H",
+            "Rør:M": "H",
+            "Vent:P": "D",
+            "EL:K": "D",
+            "Aut:P": "D",
+            "SD:I": "H",
+        },
+    },
+    {
+        tfm: "300",
+        description: "Ventilasjonsaggregat komplett",
+        comments: "Vent leverer aggregat, EL leverer elkraft og servicebryter, Aut leverer styring, og SD integrerer driftsdata.",
+        marks: {
+            "Vent:P": "H",
+            "Vent:L": "H",
+            "Vent:M": "H",
+            "EL:K": "H",
+            "Aut:K": "H",
+            "SD:I": "H",
+        },
+    },
+    {
+        tfm: "300",
+        description: "Vannlekkasjedeteksjon",
+        comments: "Rør beskriver hvor lekkasjefare finnes. Aut leverer detektorer og signal, mens SD mottar alarmer og historikk.",
+        marks: {
+            "Rør:P": "H",
+            "Aut:P": "D",
+            "Aut:L": "H",
+            "Aut:M": "H",
+            "Aut:K": "H",
+            "SD:I": "H",
+        },
+    },
+    {
+        tfm: "400",
+        description: "Hovedfordeling",
+        comments: "EL har hovedansvar for fordeling, reservekapasitet og selektivitet. Andre fag må gi effektbehov og oppstartslaster.",
+        marks: {
+            "EL:P": "H",
+            "EL:L": "H",
+            "EL:M": "H",
+            "EL:K": "H",
+        },
+    },
+    {
+        tfm: "400",
+        description: "Føringsveier felles",
+        comments: "EL eier føringsveikonseptet, men alle fag må melde plassbehov tidlig for å unngå kollisjoner i sjakt og over himling.",
+        marks: {
+            "Rør:P": "D",
+            "Vent:P": "D",
+            "EL:P": "H",
+            "EL:L": "H",
+            "EL:M": "H",
+            "Aut:P": "D",
+        },
+    },
+    {
+        tfm: "400",
+        description: "Elkraft for VVS-utstyr",
+        comments: "EL leverer kabling og servicebryter. Rør og Vent oppgir effektbehov, startmåte og tilkoblingspunkt for eget utstyr.",
+        marks: {
+            "Rør:P": "D",
+            "Vent:P": "D",
+            "EL:P": "H",
+            "EL:L": "H",
+            "EL:K": "H",
+        },
+    },
+    {
+        tfm: "500",
+        description: "SD-anlegg toppsystem",
+        comments: "SD leverer toppsystem og overordnet integrasjon. Alle tekniske fag må levere signallister, protokoller og testforutsetninger.",
+        marks: {
+            "SD:P": "H",
+            "SD:L": "H",
+            "SD:F": "H",
+            "SD:I": "H",
+            "Aut:P": "D",
+            "Aut:F": "D",
+        },
+    },
+    {
+        tfm: "500",
+        description: "IO-liste koordinert",
+        comments: "Aut samler signalpunkter, men Rør, Vent, EL og SD må levere komplette punktlister med navn, type og funksjon.",
+        marks: {
+            "Rør:P": "D",
+            "Vent:P": "D",
+            "EL:P": "D",
+            "Aut:P": "H",
+            "SD:P": "D",
+        },
+    },
+    {
+        tfm: "500",
+        description: "Adgangskontroll (ADK)",
+        comments: "Lås og beslag eier funksjon og dørmiljø. EL leverer kabling, og SD/Aut avklarer eventuell integrasjon og alarmhåndtering.",
+        marks: {
+            "Lås og beslag:P": "H",
+            "Lås og beslag:L": "H",
+            "Lås og beslag:M": "H",
+            "Lås og beslag:F": "H",
+            "EL:K": "H",
+            "Aut:I": "D",
+            "SD:I": "D",
+        },
+    },
+    {
+        tfm: "600",
+        description: "Heis elektrisk",
+        comments: "Byggfag bygger sjakt og tilrettelegging. EL leverer forsyning, mens SD/Aut avklarer overvåking og signaler.",
+        marks: {
+            "BH:P": "D",
+            "Byggfag:P": "H",
+            "Byggfag:L": "H",
+            "Byggfag:M": "H",
+            "EL:K": "H",
+            "Aut:P": "D",
+            "SD:I": "H",
+        },
+    },
+    {
+        tfm: "600",
+        description: "Porter og garasjeporter",
+        comments: "Byggfag leverer portmiljøet. EL leverer kraft, og lås/aut må avklare styring, sikkerhet og eventuelt adgangskontroll.",
+        marks: {
+            "Byggfag:P": "H",
+            "Byggfag:L": "H",
+            "Byggfag:M": "H",
+            "Lås og beslag:P": "D",
+            "EL:K": "H",
+            "Aut:K": "D",
+            "SD:I": "D",
+        },
+    },
+    {
+        tfm: "700",
+        description: "Utendørs VA overvann",
+        comments: "Rør prosjekterer overvannsløsningen. Byggfag utfører grøfter og terrengmessig tilrettelegging.",
+        marks: {
+            "Byggfag:P": "D",
+            "Byggfag:M": "H",
+            "Rør:P": "H",
+            "Rør:L": "H",
+            "Rør:M": "H",
+        },
+    },
+    {
+        tfm: "700",
+        description: "Utendørs belysning",
+        comments: "EL leverer utendørs lys. Byggfag tilrettelegger fundament og grøfter, og Aut/SD kan brukes for styring og tidsprogram.",
+        marks: {
+            "Byggfag:P": "D",
+            "Byggfag:M": "D",
+            "EL:P": "H",
+            "EL:L": "H",
+            "EL:M": "H",
+            "EL:K": "H",
+            "Aut:P": "D",
+            "SD:I": "D",
         },
     },
 ];
@@ -451,49 +438,49 @@ const sectionDefinitions = {
 const sectionCatalog = {
     100: {
         shortTitle: "Generelt",
-        summary: "Prosjektomfattende premisser, koordinering og grensesnitt som pavirker flere fag samtidig.",
+        summary: "Felles premisser, koordinering og overordnede grensesnitt.",
         themes: ["Koordinering", "Fellestegninger", "Tverrfaglige leveranser", "Prosjektkrav"],
         risks: ["Ingen tydelig eier av samordning", "Manglende leveransegrenser", "Uavklarte BIM- og tegningsansvar"],
         deliverables: ["Grensesnittstrategi", "Overordnet ansvarsdeling", "Felles premisser for UE-er"],
     },
     200: {
         shortTitle: "Byggfag",
-        summary: "Bygningsdeler, rom, dorer, sjakter, utsparinger, innfesting og andre fysiske avklaringer mot tekniske fag.",
+        summary: "Bygningsdeler, utsparinger, dører og fysiske avklaringer mot tekniske fag.",
         themes: ["Dorer", "Utsparinger", "Sjakter", "Innfesting", "Plassbehov"],
         risks: ["Tekniske behov kolliderer med byggleveranse", "Manglende spikerslag eller innkassinger", "Dormiljo uten tydelig grensesnittboks"],
         deliverables: ["Tegninger for innfesting", "Utsparingsunderlag", "Samordnet dør- og romavklaring"],
     },
     300: {
         shortTitle: "VVS",
-        summary: "Sanitar, varme, kjoling og rortekniske installasjoner med tilhorende komponenter, signaler og driftsavklaringer.",
+        summary: "Sanitær, varme, kjøling og rørtekniske grensesnitt.",
         themes: ["Pumper", "Ventiler", "Sensorer", "Varmekabler", "SD-signaler"],
         risks: ["Uklart ansvar for givere og motorer", "Manglende avklaring mellom ROR, EL og AUT", "Driftssignaler ikke beskrevet"],
         deliverables: ["Systemskjema", "Komponentlister", "Signal- og funksjonsoversikt"],
     },
     400: {
         shortTitle: "Elektro",
-        summary: "Kraft, fordelinger, foringsveier, belysning og elektriske grensesnitt mot bygg og tekniske leveranser.",
+        summary: "Kraft, fordelinger, føringsveier og elektriske grensesnitt.",
         themes: ["Fordelinger", "Foringsveier", "Belysning", "Kraft til utstyr", "Tavleplass"],
         risks: ["Utstyr mangler spenningssetting", "For liten tavleplass", "Foringsveier samordnes for sent"],
         deliverables: ["Kraftbehovsliste", "Tavlereservasjon", "Koordinert foringsveisplan"],
     },
     500: {
         shortTitle: "Automasjon",
-        summary: "Tele, sikkerhet, automasjon og integrasjoner der flere systemer ma snakke sammen.",
+        summary: "Automasjon, sikkerhet og integrasjoner mellom systemer.",
         themes: ["SD/BAS", "ADK", "AIA/ABA", "KNX", "Systemintegrasjon"],
         risks: ["Systemer snakker ikke sammen", "Uklart ansvar for grensesnittboks", "Signalpunkter beskrives ulikt per fag"],
         deliverables: ["IO-lister", "Integrasjonsbeskrivelse", "Koordinerte koblingsskjema"],
     },
     600: {
         shortTitle: "Heis og spesial",
-        summary: "Heis og andre spesialinstallasjoner med behov for avklaringer rundt plass, forsyning, signaler og ansvar.",
+        summary: "Heis og spesialinstallasjoner med egne leveransegrenser.",
         themes: ["Heissjakt", "Heisfordeling", "Kortleser", "Alarmoverforing", "Maskinrom"],
         risks: ["Kabling til heis blir glemt", "Heisleveranse og elektro har ulike forutsetninger", "Adgang og alarm er ikke koordinert"],
         deliverables: ["Heisgrensesnitt", "Forsyningsavklaringer", "Signal- og kablingsplan"],
     },
     700: {
         shortTitle: "Utendors",
-        summary: "Utvendige anlegg, forsyninger i grunn, utendors lys, VA og tekniske grensesnitt utenfor bygget.",
+        summary: "Utvendige anlegg, VA, grunn og tekniske grensesnitt utenfor bygget.",
         themes: ["Utendors VA", "Lavspent forsyning", "Lys i grunn", "Automatisering ute", "Pumpekummer"],
         risks: ["Grensesnitt mot grunnentreprise er uklart", "IP- og SD-integrasjon beskrives ikke", "Kabel og ror i grunn mangler koordinering"],
         deliverables: ["Utomhus grensesnittplan", "Koordinert grunnunderlag", "Avklart ansvar for utvendig drift"],
@@ -667,6 +654,9 @@ let rows = normalizeRowsByTfm(defaultRows);
 const stateOrder = ["", "H", "D"];
 const confirmationState = new Map();
 const commentState = new Map();
+const rowOwnerState = new Map();
+const rowStatusState = new Map();
+const offerDecisionState = new Map();
 let baseMarksByRow = rows.map((row) => ({ ...row.marks }));
 const collapsedSections = new Map();
 let uploadedBhText = "";
@@ -677,6 +667,7 @@ let isSavingProject = false;
 const LAST_PROJECT_KEY = "grensesnittmatrise:last-project";
 const REVIEW_MODE_KEY = "grensesnittmatrise:review-mode";
 const REVIEW_FILTER_KEY = "grensesnittmatrise:review-filter";
+const INTERFACE_VIEW_KEY = "grensesnittmatrise:interface-view";
 let activeRowIndex = -1;
 let cachedProjects = [];
 let cachedRevisions = [];
@@ -690,8 +681,34 @@ let matrixBuildInProgress = false;
 let activeSectionFilter = "all";
 let reviewModeEnabled = false;
 let activeReviewFilter = "all";
+let activeInterfaceView = "cards";
+let showAllInterfaceCards = false;
+let _interfaceCardRenderTimer = null;
 const uploadedOfferDocuments = [];
 let lastOfferAnalysis = null;
+
+function populateRowStatusOptions() {
+    if (!currentRowStatus) {
+        return;
+    }
+
+    currentRowStatus.innerHTML = rowStatusOptions
+        .map((option) => `<option value="${option.value}">${option.label}</option>`)
+        .join("");
+}
+
+function populateRowOwnerOptions(rowIndex = -1) {
+    if (!currentRowOwner) {
+        return;
+    }
+
+    const baseOptions = ['<option value="">Velg koordinator</option>'];
+    const row = rows[rowIndex];
+    const rowDisciplines = row && !row.section ? getAssignableDisciplines(row) : disciplines;
+    currentRowOwner.innerHTML = baseOptions.concat(
+        rowDisciplines.map((discipline) => `<option value="${escapeHtml(discipline)}">${escapeHtml(discipline)}</option>`)
+    ).join("");
+}
 
 function getSectionKey(row) {
     return `${row.tfm}|${row.description}`;
@@ -701,6 +718,7 @@ const packageLabels = {
     sd: "SD separat",
     el: "EL separat",
     aut: "AUT separat",
+    adk: "ADK separat",
     las: "Lås og beslag separat",
     el_aut: "EL + AUT",
     el_aut_sd: "EL + AUT + SD",
@@ -711,7 +729,7 @@ function getTueConfig() {
     return {
         coreModel: tueCoreModelSelect?.value || "separate",
         locksModel: tueLocksModelSelect?.value || "separate",
-        adkModel: tueAdkModelSelect?.value || "el",
+        adkModel: tueAdkModelSelect?.value || "separate",
         standaloneDisciplines: packageOptionInputs
             .filter((input) => input.checked)
             .map((input) => input.value),
@@ -737,9 +755,11 @@ function describeTueConfig(config = getTueConfig()) {
             : "Lås og beslag integrert i dør-/byggleveranse"
     );
     parts.push(
-        config.adkModel === "el"
-            ? "ADK i elektrikerleveransen"
-            : "ADK i lås og beslagsleveransen"
+        config.adkModel === "separate"
+            ? "ADK som egen UE"
+            : config.adkModel === "el"
+                ? "ADK i elektrikerleveransen"
+                : "ADK i lås og beslagsleveransen"
     );
 
     return parts.join(" • ");
@@ -766,9 +786,11 @@ function getTueGuidance(config = getTueConfig()) {
                 ? "Brukes når lås og beslag kontraheres og følges opp som eget fag."
                 : "Brukes når dørleveranse og beslag håndteres samlet i bygg- eller dørentreprisen.",
         adkHelp:
-            config.adkModel === "el"
-                ? "Velg dette når adgangskontroll prosjekteres og leveres sammen med elektro."
-                : "Velg dette når adgangskontroll følger dørmiljø, beslag og låsleveranse.",
+            config.adkModel === "separate"
+                ? "Bruk dette når adgangskontroll prises og følges opp som eget fag."
+                : config.adkModel === "el"
+                    ? "Bruk dette når adgangskontroll følger elektroleveransen."
+                    : "Bruk dette når adgangskontroll følger dørmiljø, beslag og låsleveransen.",
         recommendation: recommendationText[config.coreModel] || recommendationText.separate,
     };
 }
@@ -776,6 +798,7 @@ function getTueGuidance(config = getTueConfig()) {
 function syncTueBuilderUI() {
     const config = getTueConfig();
     const guidance = getTueGuidance(config);
+    const adkOptionInput = packageOptionInputs.find((input) => input.value === "adk");
 
     if (tueStandaloneBuilder) {
         tueStandaloneBuilder.hidden = config.coreModel !== "separate";
@@ -787,6 +810,11 @@ function syncTueBuilderUI() {
             input.checked = false;
         }
     });
+
+    if (adkOptionInput) {
+        adkOptionInput.checked = config.adkModel === "separate" && config.coreModel === "separate";
+        adkOptionInput.disabled = config.coreModel !== "separate";
+    }
 
     if (tueCompositionSummary) {
         tueCompositionSummary.textContent = describeTueConfig(getTueConfig());
@@ -819,11 +847,16 @@ function getSelectedPackages() {
         packages.push("las");
     }
 
+    if (config.adkModel === "separate" && !packages.includes("adk")) {
+        packages.push("adk");
+    }
+
     return packages;
 }
 
 function applyState(button, state) {
     button.dataset.state = state;
+    invalidateMatrixStats();
     button.classList.remove("active", "state-d");
 
     if (state === "H") {
@@ -869,16 +902,76 @@ function getRiskState(rowIndex) {
     return { level: "ok", icon: "🟢", title: "OK" };
 }
 
+// ── Cached single-pass matrix stats ──
+let _cachedMatrixStats = null;
+let _matrixStatsDirty = true;
+
+function invalidateMatrixStats() {
+    _matrixStatsDirty = true;
+    _cachedMatrixStats = null;
+}
+
+function computeMatrixStats() {
+    if (!_matrixStatsDirty && _cachedMatrixStats) {
+        return _cachedMatrixStats;
+    }
+
+    let contentRowCount = 0;
+    let confirmedRowCount = 0;
+    let openRiskCount = 0;
+    let commentedCount = 0;
+    let ownerGapCount = 0;
+    let reviewReadyCount = 0;
+    const sectionStats = {};
+
+    for (let i = 0; i < rows.length; i++) {
+        const row = rows[i];
+        if (row.section) continue;
+
+        contentRowCount++;
+        const isConfirmed = Boolean(confirmationState.get(i));
+        const riskOk = getRiskState(i).level === "ok";
+        const hasComment = Boolean(String(commentState.get(i) ?? row.comments ?? "").trim());
+        const hasOwner = Boolean(getRowOwner(i));
+
+        if (isConfirmed) confirmedRowCount++;
+        if (!riskOk) openRiskCount++;
+        if (hasComment) commentedCount++;
+        if (!hasOwner) ownerGapCount++;
+        if (isRowReviewReady(i)) reviewReadyCount++;
+
+        const sectionCode = getRowSectionCode(row);
+        if (!sectionStats[sectionCode]) {
+            sectionStats[sectionCode] = { total: 0, confirmed: 0, open: 0 };
+        }
+        sectionStats[sectionCode].total++;
+        if (isConfirmed) sectionStats[sectionCode].confirmed++;
+        if (!riskOk) sectionStats[sectionCode].open++;
+    }
+
+    _cachedMatrixStats = {
+        contentRowCount,
+        confirmedRowCount,
+        openRiskCount,
+        commentedCount,
+        ownerGapCount,
+        reviewReadyCount,
+        sectionStats,
+    };
+    _matrixStatsDirty = false;
+    return _cachedMatrixStats;
+}
+
 function getContentRowCount() {
-    return rows.filter((row) => !row.section).length;
+    return computeMatrixStats().contentRowCount;
 }
 
 function getConfirmedRowCount() {
-    return rows.filter((row, rowIndex) => !row.section && confirmationState.get(rowIndex)).length;
+    return computeMatrixStats().confirmedRowCount;
 }
 
 function getOpenRiskCount() {
-    return rows.filter((row, rowIndex) => !row.section && getRiskState(rowIndex).level !== "ok").length;
+    return computeMatrixStats().openRiskCount;
 }
 
 function getExportRiskLabel(rowIndex) {
@@ -890,20 +983,88 @@ function getMissingResponsibilities(rowIndex) {
     return responsibilities.filter((responsibility) => getResponsibilityState(rowIndex, responsibility) === "");
 }
 
+function getRowOwner(rowIndex) {
+    return rowOwnerState.get(rowIndex) || "";
+}
+
+function setRowOwner(rowIndex, owner) {
+    rowOwnerState.set(rowIndex, owner || "");
+    invalidateMatrixStats();
+    if (rowIndex === activeRowIndex) {
+        updateRowMetaPanel();
+    }
+}
+
+function getRowStatusLabel(statusValue) {
+    return rowStatusOptions.find((option) => option.value === statusValue)?.label || "Uavklart";
+}
+
+function getRowStatus(rowIndex) {
+    const explicitStatus = rowStatusState.get(rowIndex);
+    if (explicitStatus) {
+        return explicitStatus;
+    }
+
+    if (getRiskState(rowIndex).level === "ok" && confirmationState.get(rowIndex)) {
+        return "clarified";
+    }
+
+    return "open";
+}
+
+function setRowStatus(rowIndex, statusValue) {
+    const normalizedStatus = rowStatusOptions.some((option) => option.value === statusValue) ? statusValue : "open";
+    rowStatusState.set(rowIndex, normalizedStatus);
+    invalidateMatrixStats();
+    if (rowIndex === activeRowIndex) {
+        updateRowMetaPanel();
+    }
+}
+
+function isRowReviewReady(rowIndex) {
+    if (rows[rowIndex]?.section) {
+        return false;
+    }
+
+    const hasOwner = Boolean(getRowOwner(rowIndex));
+    const hasComment = Boolean(String(commentState.get(rowIndex) ?? rows[rowIndex]?.comments ?? "").trim());
+    const riskOk = getRiskState(rowIndex).level === "ok";
+    const status = getRowStatus(rowIndex);
+
+    return hasOwner && hasComment && riskOk && ["ready", "clarified"].includes(status);
+}
+
+function getRowReviewReadinessText(rowIndex) {
+    if (rows[rowIndex]?.section) {
+        return "Velg en rad";
+    }
+
+    const missing = [];
+    if (!getRowOwner(rowIndex)) {
+        missing.push("mangler koordinator");
+    }
+    if (!String(commentState.get(rowIndex) ?? rows[rowIndex]?.comments ?? "").trim()) {
+        missing.push("mangler kommentar");
+    }
+    if (getRiskState(rowIndex).level !== "ok") {
+        missing.push("mangler ansvarsavklaring");
+    }
+    if (!["ready", "clarified"].includes(getRowStatus(rowIndex))) {
+        missing.push("status er ikke satt til review-klar");
+    }
+
+    return missing.length ? `Ikke klar: ${missing.join(", ")}.` : "Klar for review og kontraktskontroll.";
+}
+
 function buildExportHighlights() {
-    const totalRows = getContentRowCount();
-    const confirmedCount = getConfirmedRowCount();
-    const openRiskCount = getOpenRiskCount();
-    const commentedCount = rows.filter(
-        (row, rowIndex) => !row.section && Boolean((commentState.get(rowIndex) ?? row.comments ?? "").trim())
-    ).length;
-    const completionRate = totalRows ? Math.round((confirmedCount / totalRows) * 100) : 0;
+    const stats = computeMatrixStats();
+    const completionRate = stats.contentRowCount ? Math.round((stats.confirmedRowCount / stats.contentRowCount) * 100) : 0;
 
     return {
-        totalRows,
-        confirmedCount,
-        openRiskCount,
-        commentedCount,
+        totalRows: stats.contentRowCount,
+        confirmedCount: stats.confirmedRowCount,
+        openRiskCount: stats.openRiskCount,
+        commentedCount: stats.commentedCount,
         completionRate,
     };
 }
@@ -925,6 +1086,24 @@ function buildExportActionItems() {
     });
 
     return items;
+}
+
+function buildSectionExportSummary() {
+    return Object.keys(sectionDefinitions)
+        .map((key) => Number(key))
+        .filter((sectionCode) => sectionCode < 800)
+        .map((sectionCode) => ({ sectionCode, details: getSectionDetails(sectionCode), stats: getSectionStats(sectionCode) }))
+        .filter(({ stats }) => stats.total > 0)
+        .map(({ sectionCode, details, stats }) => {
+            const completionRate = stats.total ? Math.round((stats.confirmed / stats.total) * 100) : 0;
+            return {
+                sectionCode,
+                title: details.shortTitle,
+                total: stats.total,
+                open: stats.open,
+                completionRate,
+            };
+        });
 }
 
 function updateMatrixOverview(visibleContentRows = null) {
@@ -966,11 +1145,16 @@ function updateMatrixOverview(visibleContentRows = null) {
 function updateMatrixCommandCenter() {
     const commentGaps = getRowsNeedingComment();
     const conflictRows = rows.filter((row) => !row.section && getOfferConflictRowIds().has(row.uid));
-    const reviewReadyCount = getReviewReadyCount();
+    const stats = computeMatrixStats();
+    const reviewReadyCount = stats.reviewReadyCount;
+    const ownerGaps = rows
+        .map((row, rowIndex) => ({ row, rowIndex }))
+        .filter(({ row, rowIndex }) => !row.section && !getRowOwner(rowIndex));
     const queueItems = [
-        conflictRows[0] ? `${conflictRows[0].tfm} ${conflictRows[0].description} - tilbudskonflikt bor vurderes.` : "",
-        commentGaps[0] ? `${commentGaps[0].row.tfm} ${commentGaps[0].row.description} - mangler kommentar pa apen avklaring.` : "",
-        getOpenRiskCount() > 0 ? `${getOpenRiskCount()} rad(er) star fortsatt apne i matrisen.` : "Ingen apne avklaringer igjen i matrisen.",
+        conflictRows[0] ? `${conflictRows[0].tfm} ${conflictRows[0].description} - tilbudsavvik bør vurderes.` : "",
+        commentGaps[0] ? `${commentGaps[0].row.tfm} ${commentGaps[0].row.description} - mangler vurderingskommentar på uavklart rad.` : "",
+        ownerGaps[0] ? `${ownerGaps[0].row.tfm} ${ownerGaps[0].row.description} - mangler ansvarlig koordinator for videre avklaring.` : "",
+        getOpenRiskCount() > 0 ? `${getOpenRiskCount()} rad(er) står fortsatt uavklart i matrisen.` : "Ingen uavklarte rader gjenstår i matrisen.",
     ].filter(Boolean);
 
     if (matrixCommentGapCount) {
@@ -979,13 +1163,18 @@ function updateMatrixCommandCenter() {
     if (matrixConflictCount) {
         matrixConflictCount.textContent = String(conflictRows.length);
     }
+    if (matrixOwnerGapCount) {
+        matrixOwnerGapCount.textContent = String(stats.ownerGapCount);
+    }
     if (matrixReviewReadyCount) {
         matrixReviewReadyCount.textContent = String(reviewReadyCount);
     }
     if (matrixCommandDetail) {
         matrixCommandDetail.textContent = conflictRows.length
-            ? "Tilbudskontrollen har funnet rader som bor gjennomgas direkte i matrisen."
-            : "Bruk arbeidskoen til a lukke apne punkter og dokumentere vurderingene dine.";
+            ? "Tilbudskontrollen har funnet rader som bør gjennomgås direkte i matrisen."
+            : reviewReadyCount
+                ? `${reviewReadyCount} rad(er) kan tas videre til review eller tilbudskontroll.`
+                : "Bruk arbeidskøen til å lukke uavklarte punkter, sette koordinator og dokumentere vurderingene dine.";
     }
     if (matrixQueueList) {
         matrixQueueList.innerHTML = queueItems.map((item) => `<p>${escapeHtml(item)}</p>`).join("");
@@ -1002,11 +1191,11 @@ function updateMatrixFilterFeedback(visibleCount, query, openOnly) {
     const filterParts = [];
 
     if (query) {
-        filterParts.push(`sok: "${query}"`);
+        filterParts.push(`søk: "${query}"`);
     }
 
     if (openOnly) {
-        filterParts.push("kun apne");
+        filterParts.push("kun uavklarte");
     }
 
     if (activeSectionFilter !== "all") {
@@ -1024,51 +1213,41 @@ function updateMatrixFilterFeedback(visibleCount, query, openOnly) {
     if (matrixFilterStatus) {
         matrixFilterStatus.textContent = filterParts.length
             ? `${visibleCount} treff med ${filterParts.join(" + ")}`
-            : "Ingen filter aktivt";
+            : "Ingen aktiv filtrering";
     }
 
     if (matrixEmptyState) {
         matrixEmptyState.hidden = visibleCount > 0;
-        const emptyStateMessage = matrixEmptyState.querySelector("p");
+        const emptyStateTitle = matrixEmptyState.querySelector(".matrix-empty-state-title");
+        const emptyStateDetail = matrixEmptyState.querySelector(".matrix-empty-state-detail");
 
-        if (emptyStateMessage) {
+        if (emptyStateTitle && emptyStateDetail) {
             if (activeReviewFilter === "conflicts") {
-                emptyStateMessage.textContent = "Ingen konfliktrader er synlige akkurat nå. Kjør tilbudskontroll eller bytt til en annen arbeidsvisning.";
+                emptyStateTitle.textContent = "Ingen tilbudsavvik i dette utvalget";
+                emptyStateDetail.textContent = "Kjør tilbudskontroll eller bytt arbeidsvisning for å se andre rader.";
+            } else if (activeReviewFilter === "ready") {
+                emptyStateTitle.textContent = "Ingen review-klare rader i dette utvalget";
+                emptyStateDetail.textContent = "Sett koordinator, fyll ut vurderingskommentar og marker status som klar for review.";
             } else if (activeReviewFilter === "confirmed") {
-                emptyStateMessage.textContent = "Ingen bekreftede rader matcher filtreringen akkurat nå. Bekreft rader eller bytt arbeidsvisning.";
+                emptyStateTitle.textContent = "Ingen bekreftede rader i dette utvalget";
+                emptyStateDetail.textContent = "Bekreft flere rader eller bytt arbeidsvisning for å se andre avklaringer.";
             } else if (activeReviewFilter === "open") {
-                emptyStateMessage.textContent = "Ingen åpne rader matcher filtreringen akkurat nå. Det kan bety at utvalget er ferdig gjennomgått.";
+                emptyStateTitle.textContent = "Ingen uavklarte rader i dette utvalget";
+                emptyStateDetail.textContent = "Det kan bety at dette utvalget er ferdig gjennomgått, eller at filtreringen er for snever.";
             } else if (activeSectionFilter !== "all") {
-                emptyStateMessage.textContent = "Ingen rader matcher valgt kategori og aktiv filtrering akkurat nå. Prov a vise hele matrisen eller nullstille soket.";
+                emptyStateTitle.textContent = "Ingen rader matcher valgt kapittel";
+                emptyStateDetail.textContent = "Vis hele matrisen eller nullstill filtreringen for å fortsette gjennomgangen.";
             } else {
-                emptyStateMessage.textContent = "Ingen rader matcher filtreringen akkurat nå. Tøm søket eller slå av filteret for åpne avklaringer.";
+                emptyStateTitle.textContent = "Ingen rader matcher filtreringen";
+                emptyStateDetail.textContent = "Tøm søket eller slå av filteret for uavklarte rader.";
             }
         }
     }
 }
 
 function getSectionStats(sectionCode) {
-    let total = 0;
-    let confirmed = 0;
-    let open = 0;
-
-    rows.forEach((row, rowIndex) => {
-        if (row.section || getRowSectionCode(row) !== sectionCode) {
-            return;
-        }
-
-        total += 1;
-
-        if (confirmationState.get(rowIndex)) {
-            confirmed += 1;
-        }
-
-        if (getRiskState(rowIndex).level !== "ok") {
-            open += 1;
-        }
-    });
-
-    return { total, confirmed, open };
+    const stats = computeMatrixStats().sectionStats[sectionCode];
+    return stats || { total: 0, confirmed: 0, open: 0 };
 }
 
 function renderTagList(container, items, fallbackText) {
@@ -1088,6 +1267,417 @@ function renderTagList(container, items, fallbackText) {
         .join("");
 }
 
+function syncChapterTabs() {
+    const chapterTabs = Array.from(document.querySelectorAll(".chapter-tab"));
+
+    chapterTabs.forEach((tab) => {
+        const tabValue = tab.dataset.chapter === "all" ? "all" : Number(tab.dataset.chapter);
+        const isActive = tabValue === activeSectionFilter;
+        tab.classList.toggle("active", isActive);
+        tab.setAttribute("aria-pressed", isActive ? "true" : "false");
+    });
+}
+
+function updateMatrixSectionWorkspace() {
+    if (matrixSectionResetButton) {
+        const hasSectionFocus = activeSectionFilter !== "all";
+        matrixSectionResetButton.hidden = !hasSectionFocus;
+        matrixSectionResetButton.disabled = !hasSectionFocus;
+        matrixSectionResetButton.textContent = hasSectionFocus
+            ? "Tilbake til hele matrisen"
+            : "Vis hele matrisen";
+    }
+
+    if (matrixSectionFirstRowButton) {
+        matrixSectionFirstRowButton.textContent = activeSectionFilter === "all"
+            ? "Gå til første synlige rad"
+            : "Gå til første rad i kapittelet";
+    }
+
+    if (matrixSectionNextOpenButton) {
+        matrixSectionNextOpenButton.textContent = activeSectionFilter === "all"
+            ? "Gå til neste uavklarte"
+            : "Gå til neste uavklarte i kapittelet";
+    }
+}
+
+function getSavedInterfaceView() {
+    try {
+        const savedView = window.localStorage.getItem(INTERFACE_VIEW_KEY);
+        return savedView === "matrix" ? "matrix" : "cards";
+    } catch (_error) {
+        return "cards";
+    }
+}
+
+function setActiveInterfaceView(nextView) {
+    activeInterfaceView = nextView === "matrix" ? "matrix" : "cards";
+
+    if (interfaceCardWorkspace) {
+        interfaceCardWorkspace.hidden = activeInterfaceView !== "cards";
+    }
+    if (matrixExpertWorkspace) {
+        matrixExpertWorkspace.hidden = activeInterfaceView !== "matrix";
+    }
+    if (matrixDetailWorkspace) {
+        matrixDetailWorkspace.hidden = activeInterfaceView !== "matrix";
+    }
+
+    cardViewToggleButton?.classList.toggle("is-active", activeInterfaceView === "cards");
+    matrixViewToggleButton?.classList.toggle("is-active", activeInterfaceView === "matrix");
+    cardViewToggleButton?.setAttribute("aria-pressed", activeInterfaceView === "cards" ? "true" : "false");
+    matrixViewToggleButton?.setAttribute("aria-pressed", activeInterfaceView === "matrix" ? "true" : "false");
+
+    try {
+        window.localStorage.setItem(INTERFACE_VIEW_KEY, activeInterfaceView);
+    } catch (_error) {
+        // Ignore localStorage issues here.
+    }
+
+    renderInterfaceCards();
+}
+
+function getSelectedDisciplineForResponsibility(rowIndex, responsibility) {
+    const selectedButton = findSelectedButton(rowIndex, responsibility);
+    if (selectedButton?.dataset.discipline) {
+        return selectedButton.dataset.discipline;
+    }
+
+    const rowMarks = rows[rowIndex]?.marks || {};
+    const match = Object.entries(rowMarks).find(([key, value]) => {
+        const [discipline, currentResponsibility] = key.split(":");
+        return currentResponsibility === responsibility && value && discipline;
+    });
+
+    return match ? match[0].split(":")[0] : "";
+}
+
+function getSelectedDisciplineAndState(rowIndex, responsibility) {
+    const selectedButton = findSelectedButton(rowIndex, responsibility);
+    if (selectedButton?.dataset.discipline) {
+        return { discipline: selectedButton.dataset.discipline, state: selectedButton.dataset.state || "H" };
+    }
+
+    const rowMarks = rows[rowIndex]?.marks || {};
+    const match = Object.entries(rowMarks).find(([key, value]) => {
+        const [, currentResponsibility] = key.split(":");
+        return currentResponsibility === responsibility && value;
+    });
+
+    if (match) {
+        return { discipline: match[0].split(":")[0], state: match[1] };
+    }
+
+    return { discipline: "", state: "" };
+}
+
+function getAssignableDisciplines(row) {
+    const disciplinesInRow = getDisciplinesForRow(row);
+    return uniqueList([
+        ...disciplinesInRow,
+        ...disciplines.filter((discipline) => discipline !== "BH"),
+    ]);
+}
+
+function getVisibleInterfaceRows() {
+    const query = (matrixSearchInput?.value || "").trim().toLowerCase();
+    const showOpenOnly = Boolean(showOpenOnlyInput?.checked);
+    const conflictRowIds = getOfferConflictRowIds();
+
+    return rows
+        .map((row, rowIndex) => ({ row, rowIndex }))
+        .filter(({ row, rowIndex }) => {
+            if (row.section) {
+                return false;
+            }
+
+            const searchableText = `${row.tfm} ${row.description} ${commentState.get(rowIndex) ?? row.comments ?? ""}`.toLowerCase();
+            const rowMatchesQuery = !query || searchableText.includes(query);
+            const sectionMatches = activeSectionFilter === "all" || getRowSectionCode(row) === activeSectionFilter;
+            const reviewMatches = activeReviewFilter === "conflicts"
+                ? conflictRowIds.has(row.uid)
+                : rowMatchesReviewFilter(row, rowIndex);
+
+            if (!rowMatchesQuery || !sectionMatches || !reviewMatches) {
+                return false;
+            }
+
+            if (showOpenOnly && getRiskState(rowIndex).level === "ok") {
+                return false;
+            }
+
+            return true;
+        });
+}
+
+function getCriticalInterfaceRowIndexes(inputRows) {
+    const rowsBySection = new Map();
+    const criticalIndexes = [];
+
+    inputRows.forEach(({ row, rowIndex }) => {
+        const sectionCode = getRowSectionCode(row);
+        if (!rowsBySection.has(sectionCode)) {
+            rowsBySection.set(sectionCode, []);
+        }
+
+        rowsBySection.get(sectionCode).push({ row, rowIndex });
+    });
+
+    Object.entries(criticalCardSectionTargets).forEach(([sectionKey, targetCount]) => {
+        const sectionCode = Number(sectionKey);
+        const sectionRows = rowsBySection.get(sectionCode) || [];
+        const preferredDescriptions = starterRowDescriptionsBySection[sectionCode] || [];
+        const selectedIndexes = new Set();
+
+        preferredDescriptions.forEach((description) => {
+            const match = sectionRows.find(({ row, rowIndex }) => row.description === description && !selectedIndexes.has(rowIndex));
+            if (match && selectedIndexes.size < targetCount) {
+                selectedIndexes.add(match.rowIndex);
+            }
+        });
+
+        sectionRows.forEach(({ rowIndex }) => {
+            if (selectedIndexes.size >= targetCount) {
+                return;
+            }
+
+            selectedIndexes.add(rowIndex);
+        });
+
+        criticalIndexes.push(...selectedIndexes);
+    });
+
+    return criticalIndexes;
+}
+
+function getInterfacePriorityScore(row, rowIndex) {
+    const sectionCode = getRowSectionCode(row);
+    const text = `${row.tfm} ${row.description} ${commentState.get(rowIndex) ?? row.comments ?? ""}`.toLowerCase();
+    const profile = getProjectTypeScopeProfile(projectTypeSelect?.value || "bolig");
+    const matchedRules = matchInsightRules(text);
+    const baseScore = (profile.sectionWeights?.[sectionCode] || 0.75) * 10;
+    const keywordScore = (profile.keywords || []).reduce((score, keyword) => {
+        return score + (text.includes(String(keyword || "").toLowerCase()) ? 2 : 0);
+    }, 0);
+    const reviewScore = getRiskState(rowIndex).level !== "ok" ? 5 : 0;
+    const conflictScore = getOfferConflictRowIds().has(row.uid) ? 6 : 0;
+    const ruleScore = matchedRules.length * 2;
+
+    return baseScore + keywordScore + reviewScore + conflictScore + ruleScore;
+}
+
+function setResponsibilityOwner(rowIndex, responsibility, disciplineValue) {
+    if (!disciplineValue) {
+        clearResponsibility(rowIndex, responsibility);
+        updateRowAfterMatrixEdit(rowIndex);
+        return;
+    }
+
+    const parts = disciplineValue.split(":");
+    const discipline = parts[0];
+    const state = parts[1] || "H";
+
+    setResponsibilityValue(rowIndex, discipline, responsibility, state);
+}
+
+function scheduleInterfaceCardRender() {
+    window.clearTimeout(_interfaceCardRenderTimer);
+    _interfaceCardRenderTimer = window.setTimeout(renderInterfaceCards, 80);
+}
+
+function renderInterfaceCards() {
+    window.clearTimeout(_interfaceCardRenderTimer);
+    if (!interfaceCardWorkspace) {
+        return;
+    }
+
+    if (activeInterfaceView !== "cards") {
+        interfaceCardWorkspace.innerHTML = "";
+        return;
+    }
+
+    // Skip full re-render if user is actively editing a textarea or select in the card workspace
+    const activeEl = document.activeElement;
+    if (activeEl && interfaceCardWorkspace.contains(activeEl) &&
+        (activeEl.tagName === "TEXTAREA" || activeEl.tagName === "SELECT")) {
+        return;
+    }
+
+    const allVisibleRows = getVisibleInterfaceRows();
+    const hasQuery = Boolean((matrixSearchInput?.value || "").trim());
+    const shouldUseCriticalSubset = !showAllInterfaceCards && !hasQuery && activeReviewFilter === "all";
+    const criticalIndexes = shouldUseCriticalSubset ? new Set(getCriticalInterfaceRowIndexes(allVisibleRows)) : null;
+    const visibleRows = criticalIndexes
+        ? allVisibleRows.filter(({ rowIndex }) => criticalIndexes.has(rowIndex))
+        : allVisibleRows;
+    const prioritizedRows = [...visibleRows].sort((left, right) => {
+        const scoreDifference = getInterfacePriorityScore(right.row, right.rowIndex) - getInterfacePriorityScore(left.row, left.rowIndex);
+        if (scoreDifference !== 0) {
+            return scoreDifference;
+        }
+
+        return getPrimaryTfmCode(left.row.tfm) - getPrimaryTfmCode(right.row.tfm);
+    });
+    const hiddenCount = Math.max(0, allVisibleRows.length - visibleRows.length);
+
+    if (!prioritizedRows.length) {
+        interfaceCardWorkspace.innerHTML = "";
+        return;
+    }
+
+    const responsibilityLabels = {
+        P: "Prosjektering",
+        L: "Levering",
+        M: "Montering",
+        K: "Kabling",
+        F: "Funksjon",
+        I: "Integrasjon",
+    };
+
+    const cardsMarkup = prioritizedRows.map(({ row, rowIndex }) => {
+        const rowInsight = getRowInsightData(row, rowIndex);
+        const flags = getRowStatusFlags(rowIndex);
+        const missingResponsibilities = getMissingResponsibilities(rowIndex);
+        const nextResponsibility = missingResponsibilities[0];
+        const assignableDisciplines = getAssignableDisciplines(row);
+        const commentValue = escapeHtml(commentState.get(rowIndex) ?? row.comments ?? "");
+        const isConfirmed = Boolean(confirmationState.get(rowIndex));
+        const rowOwner = getRowOwner(rowIndex);
+        const rowStatus = getRowStatus(rowIndex);
+        const reviewReadyText = getRowReviewReadinessText(rowIndex);
+
+        const assignmentFields = responsibilities.map((responsibility) => {
+            const selected = getSelectedDisciplineAndState(rowIndex, responsibility);
+            const selectedValue = selected.discipline ? `${selected.discipline}:${selected.state}` : "";
+            const options = [
+                `<option value="">Velg fag</option>`,
+                ...assignableDisciplines.flatMap((discipline) => [
+                    `<option value="${escapeHtml(discipline)}:H"${selectedValue === `${discipline}:H` ? " selected" : ""}>
+                        ${escapeHtml(discipline)} — Hovedansvar
+                    </option>`,
+                    `<option value="${escapeHtml(discipline)}:D"${selectedValue === `${discipline}:D` ? " selected" : ""}>
+                        ${escapeHtml(discipline)} — Delansvar
+                    </option>`,
+                ]),
+            ].join("");
+
+            return `
+                <label class="interface-card-assignment${nextResponsibility === responsibility ? " is-next" : ""}">
+                    <span>${escapeHtml(responsibilityLabels[responsibility] || responsibility)}</span>
+                    <select data-card-row="${rowIndex}" data-card-responsibility="${responsibility}">
+                        ${options}
+                    </select>
+                </label>
+            `;
+        }).join("");
+
+        const ownerOptions = [
+            '<option value="">Velg koordinator</option>',
+            ...assignableDisciplines.map((discipline) => `
+                <option value="${escapeHtml(discipline)}"${rowOwner === discipline ? " selected" : ""}>
+                    ${escapeHtml(discipline)}
+                </option>
+            `),
+        ].join("");
+
+        const statusOptionsMarkup = rowStatusOptions
+            .map((option) => `<option value="${option.value}"${rowStatus === option.value ? " selected" : ""}>${escapeHtml(option.label)}</option>`)
+            .join("");
+
+        return `
+            <article class="interface-card${nextResponsibility ? " needs-attention" : " is-complete"}${activeRowIndex === rowIndex ? " is-active" : ""}" data-card-row="${rowIndex}">
+                <div class="interface-card-header">
+                    <div>
+                        <p class="interface-card-kicker">${escapeHtml(row.tfm)} · ${escapeHtml(getSectionDetails(getRowSectionCode(row)).shortTitle)}</p>
+                        <h4>${escapeHtml(row.description)}</h4>
+                        <p class="interface-card-summary">${escapeHtml(rowInsight.summary)}</p>
+                    </div>
+                    <div class="row-status-badges">
+                        ${flags.map((flag) => `<span class="row-status-badge ${flag.className}">${escapeHtml(flag.label)}</span>`).join("")}
+                    </div>
+                </div>
+                <div class="interface-card-chips">
+                    ${rowInsight.disciplines.map((discipline) => `<span>${escapeHtml(discipline)}</span>`).join("")}
+                </div>
+                <div class="interface-card-guidance">
+                    <strong>${nextResponsibility ? `Neste valg: ${escapeHtml(responsibilityLabels[nextResponsibility])}` : "Avklart kort"}</strong>
+                    <span>${nextResponsibility ? "Velg ansvarlig fag i feltet under." : "Alle hovedansvar er satt. Legg inn notat eller bekreft raden."}</span>
+                </div>
+                <div class="interface-card-admin">
+                    <label class="interface-card-assignment">
+                        <span>Koordinator</span>
+                        <select data-card-owner="${rowIndex}">
+                            ${ownerOptions}
+                        </select>
+                    </label>
+                    <label class="interface-card-assignment">
+                        <span>Radstatus</span>
+                        <select data-card-status="${rowIndex}">
+                            ${statusOptionsMarkup}
+                        </select>
+                    </label>
+                </div>
+                <div class="interface-card-context">
+                    <div class="interface-card-context-block">
+                        <span>Hvorfor viktig</span>
+                        <p>${escapeHtml(rowInsight.whyImportant)}</p>
+                    </div>
+                    <div class="interface-card-context-block">
+                        <span>Hvis uklart</span>
+                        <p>${escapeHtml(rowInsight.ifUnclear)}</p>
+                    </div>
+                    <div class="interface-card-context-block project-note">
+                        <span>Prosjektprioritet</span>
+                        <p>${escapeHtml(rowInsight.projectNote)}</p>
+                    </div>
+                </div>
+                <div class="interface-card-review-state${isRowReviewReady(rowIndex) ? " is-ready" : ""}">
+                    <strong>Review-klarhet</strong>
+                    <span>${escapeHtml(reviewReadyText)}</span>
+                </div>
+                <div class="interface-card-assignments">
+                    ${assignmentFields}
+                </div>
+                <div class="interface-card-footer">
+                    <label class="interface-card-confirm">
+                        <input type="checkbox" data-card-confirm="${rowIndex}"${isConfirmed ? " checked" : ""}>
+                        <span>UE bekreftet</span>
+                    </label>
+                    <button type="button" class="secondary-button" data-card-open-matrix="${escapeHtml(row.uid)}">Åpne i ekspertmatrisen</button>
+                </div>
+                <label class="interface-card-note">
+                    <span>Notat</span>
+                    <textarea data-card-comment="${rowIndex}" rows="3" placeholder="Hva må avklares, eller hva er forutsatt?">${commentValue}</textarea>
+                </label>
+            </article>
+        `;
+    }).join("");
+
+    const cardWorkspaceIntro = shouldUseCriticalSubset
+        ? `Viser ${prioritizedRows.length} kritiske grensesnitt prioritert for ${getProjectTypeLabel().toLowerCase()}.`
+        : `Viser ${prioritizedRows.length} grensesnitt i valgt utvalg.`;
+
+    const toggleLabel = shouldUseCriticalSubset
+        ? `Vis alle grensesnitt${hiddenCount ? ` (${hiddenCount} flere)` : ""}`
+        : "Vis kun kritiske grensesnitt";
+
+    interfaceCardWorkspace.innerHTML = `
+        <div class="interface-card-workspace-header">
+            <div>
+                <p class="status-label">Arbeidsutvalg</p>
+                <h3>${shouldUseCriticalSubset ? "Kritisk startutvalg" : "Alle grensesnitt i utvalget"}</h3>
+                <p class="helper-text">${escapeHtml(cardWorkspaceIntro)}</p>
+            </div>
+            <div class="interface-card-workspace-actions">
+                <button type="button" class="secondary-button" data-toggle-card-scope>${escapeHtml(toggleLabel)}</button>
+            </div>
+        </div>
+        <div class="interface-card-grid">
+            ${cardsMarkup}
+        </div>
+    `;
+}
+
 function renderMatrixSectionFocusPanel() {
     if (!matrixSectionFocusTitle || !matrixSectionFocusKpis) {
         return;
@@ -1102,19 +1692,19 @@ function renderMatrixSectionFocusPanel() {
         if (matrixSectionFocusEyebrow) matrixSectionFocusEyebrow.textContent = "Fokusmodus";
         if (matrixSectionFocusTitle) matrixSectionFocusTitle.textContent = "Hele matrisen";
         if (matrixSectionFocusSummary) {
-            matrixSectionFocusSummary.textContent = "Du ser alle fagomrader samlet. Velg en kategori over for a jobbe mer konsentrert med ett omrade og raskere lukke apne avklaringer.";
+            matrixSectionFocusSummary.textContent = "Du ser hele matrisen samlet. Velg et kapittel for en mer fokusert gjennomgang.";
         }
 
         matrixSectionFocusKpis.innerHTML = `
             <div class="overview-card"><span class="overview-label">Totalt</span><strong>${totalContentRows}</strong><span class="overview-detail">Rader i prosjektet</span></div>
             <div class="overview-card"><span class="overview-label">Bekreftet</span><strong>${confirmedCount}</strong><span class="overview-detail">${completionRate} % ferdig</span></div>
-            <div class="overview-card"><span class="overview-label">Apne</span><strong>${openCount}</strong><span class="overview-detail">Tverrfaglige avklaringer</span></div>
+            <div class="overview-card"><span class="overview-label">Åpne</span><strong>${openCount}</strong><span class="overview-detail">Tverrfaglige avklaringer</span></div>
             <div class="overview-card"><span class="overview-label">Anbefaling</span><strong>Velg kategori</strong><span class="overview-detail">Jobb en del av bygget av gangen</span></div>
         `;
 
-        renderTagList(matrixSectionFocusThemes, ["Start med storste apne seksjon", "Lukk grasoner fortlopende", "Bruk kommentarer for forbehold"], "Ingen tema valgt");
-        renderTagList(matrixSectionFocusRisks, ["For bred arbeidsflate gir treg gjennomgang", "Apen matrisen kan skjule hvor risikoen ligger"], "Ingen risiko valgt");
-        renderTagList(matrixSectionFocusDeliverables, ["Kategoriavklart matrise", "Eksportgrunnlag med tydelige UE-grenser", "Kort vei til neste apne punkt"], "Ingen leveranser valgt");
+        renderTagList(matrixSectionFocusThemes, ["Start med største åpne seksjon", "Lukk gråsoner fortløpende", "Bruk kommentarer for forbehold"], "Ingen tema valgt");
+        renderTagList(matrixSectionFocusRisks, ["For bred arbeidsflate gir treg gjennomgang", "Åpen matrise kan skjule hvor risikoen ligger"], "Ingen risiko valgt");
+        renderTagList(matrixSectionFocusDeliverables, ["Kategoriavklart matrise", "Eksportgrunnlag med tydelige UE-grenser", "Kort vei til neste åpne punkt"], "Ingen leveranser valgt");
         return;
     }
 
@@ -1133,12 +1723,12 @@ function renderMatrixSectionFocusPanel() {
     matrixSectionFocusKpis.innerHTML = `
         <div class="overview-card"><span class="overview-label">Rader</span><strong>${stats.total}</strong><span class="overview-detail">${shareOfMatrix} % av matrisen</span></div>
         <div class="overview-card"><span class="overview-label">Bekreftet</span><strong>${stats.confirmed}</strong><span class="overview-detail">${completionRate} % ferdig</span></div>
-        <div class="overview-card"><span class="overview-label">Apne</span><strong>${stats.open}</strong><span class="overview-detail">${stats.open ? "Bør lukkes før eksport" : "Ingen apne punkt"}</span></div>
+        <div class="overview-card"><span class="overview-label">Åpne</span><strong>${stats.open}</strong><span class="overview-detail">${stats.open ? "Bør lukkes før eksport" : "Ingen åpne punkt"}</span></div>
         <div class="overview-card"><span class="overview-label">Arbeidsmodus</span><strong>Fokus</strong><span class="overview-detail">Viser kun valgt kategori</span></div>
     `;
 
     renderTagList(matrixSectionFocusThemes, details.themes, "Legg til faglige tema for denne kategorien");
-    renderTagList(matrixSectionFocusRisks, details.risks, "Legg til typiske grasoner for denne kategorien");
+    renderTagList(matrixSectionFocusRisks, details.risks, "Legg til typiske gråsoner for denne kategorien");
     renderTagList(matrixSectionFocusDeliverables, details.deliverables, "Legg til forventede leveranser for denne kategorien");
 }
 
@@ -1163,7 +1753,7 @@ function focusFirstVisibleContentRow(options = {}) {
     const indexes = getVisibleContentRowIndexes(options);
 
     if (!indexes.length) {
-        showToast("Ingen synlige rader a hoppe til i dette utvalget.", "info");
+        showToast("Ingen synlige rader å hoppe til i dette utvalget.", "info");
         return;
     }
 
@@ -1191,6 +1781,9 @@ function getRowInsightData(row, rowIndex) {
     const text = `${row.tfm} ${row.description} ${commentState.get(rowIndex) ?? row.comments ?? ""}`.toLowerCase();
     const matchedRules = matchInsightRules(text);
     const disciplinesInRow = getDisciplinesForRow(row);
+    const projectTypeKey = projectTypeSelect?.value || "bolig";
+    const projectTypeLabel = getProjectTypeLabel(projectTypeKey);
+    const projectProfile = getProjectTypeScopeProfile(projectTypeKey);
     const sectionFocus = {
         100: ["Overordnet ansvar", "Tverrfaglig koordinering", "Felles prosjektpremisser"],
         200: ["Fysisk plass og innfesting", "Utsparinger og sjakter", "Bygg mot tekniske fag"],
@@ -1225,14 +1818,31 @@ function getRowInsightData(row, rowIndex) {
         ? disciplinesInRow
         : [sectionDetails.shortTitle];
 
-    let summary = `${row.description} ligger i ${sectionDetails.shortTitle.toLowerCase()} og bor avklares med tydelig ansvar mellom involverte fag.`;
+    let summary = `${row.description} ligger i ${sectionDetails.shortTitle.toLowerCase()} og bør avklares med tydelig ansvar mellom involverte fag.`;
 
     if (matchedRules.length) {
         summary = `${row.description} handler typisk om ${matchedRules[0].focus[0].toLowerCase()} og krever at leveranse, kobling og funksjon sees samlet.`;
     }
 
+    const whyImportant = matchedRules[0]?.deliverables?.[0]
+        ? `Denne raden styrer ofte ${matchedRules[0].deliverables[0].toLowerCase()} og må være tydelig før utsendelse.`
+        : `Denne raden påvirker leveransegrensen i ${sectionDetails.shortTitle.toLowerCase()} og bør være tydelig før tilbud innhentes.`;
+
+    const ifUnclear = matchedRules[0]?.focus?.[1]
+        ? `Hvis dette er uklart, oppstår det ofte tvil om ${matchedRules[0].focus[1].toLowerCase()}.`
+        : `Hvis dette er uklart, blir ansvar lett skjøvet mellom fag eller fanget opp for sent i tilbudsfasen.`;
+
+    const profileKeywords = projectProfile.keywords || [];
+    const keywordHits = profileKeywords.filter((keyword) => text.includes(keyword.toLowerCase()));
+    const projectNote = keywordHits.length
+        ? `Ekstra relevant for ${projectTypeLabel.toLowerCase()} fordi underlaget typisk berører ${keywordHits.slice(0, 2).join(" og ")}.`
+        : `Relevant i ${projectTypeLabel.toLowerCase()} fordi dette ofte blir kontrollpunkt i utsendelse og tilbudsavklaring.`;
+
     return {
         summary,
+        whyImportant,
+        ifUnclear,
+        projectNote,
         disciplines: disciplineLabels,
         focus,
         deliverables,
@@ -1270,7 +1880,7 @@ function renderMatrixSectionCards() {
 
             if (stats.total) {
                 if (stats.open > 0) {
-                    stateLabel = `${stats.open} apne`;
+                    stateLabel = `${stats.open} åpne`;
                     stateClass = "state-warning";
                 } else {
                     stateLabel = "Klar";
@@ -1332,7 +1942,10 @@ function setActiveSectionFilter(nextFilter, options = {}) {
         filterMatrixRows();
         updateAllRiskCells();
     });
+    syncChapterTabs();
+    updateMatrixSectionWorkspace();
     renderMatrixSectionCards();
+    renderMatrixSectionFocusPanel();
 }
 
 function focusAdjacentContentRow(direction) {
@@ -1362,11 +1975,23 @@ function updateRowMetaPanel() {
             currentRowDescription.value = "";
             currentRowDescription.disabled = true;
         }
+        if (currentRowStatus) {
+            currentRowStatus.value = "open";
+            currentRowStatus.disabled = true;
+        }
         if (currentRowRisk) {
             currentRowRisk.textContent = "Ingen rad valgt";
         }
         if (currentRowMissing) {
             currentRowMissing.innerHTML = '<p class="helper-text">Velg en rad for å se hva som mangler.</p>';
+        }
+        populateRowOwnerOptions();
+        if (currentRowOwner) {
+            currentRowOwner.value = "";
+            currentRowOwner.disabled = true;
+        }
+        if (currentRowReviewReadiness) {
+            currentRowReviewReadiness.textContent = "Velg en rad";
         }
         if (currentRowConfirm) {
             currentRowConfirm.checked = false;
@@ -1398,7 +2023,7 @@ function updateRowMetaPanel() {
             quickClearCommentButton.disabled = true;
         }
         renderCurrentRowInsight({
-            summary: "Velg en rad for a se hva dette grensesnittet normalt omfatter, hvilke fag som ofte ma med, og hva som bor avklares i leveransen.",
+            summary: "Velg en rad for å se hva dette grensesnittet normalt omfatter, hvilke fag som ofte må med, og hva som bør avklares i leveransen.",
             disciplines: ["Ingen rad valgt"],
             focus: ["Velg en rad"],
             deliverables: ["Velg en rad"],
@@ -1419,6 +2044,11 @@ function updateRowMetaPanel() {
         currentRowDescription.disabled = false;
         currentRowDescription.value = row.description;
     }
+    populateRowOwnerOptions(activeRowIndex);
+    if (currentRowStatus) {
+        currentRowStatus.disabled = false;
+        currentRowStatus.value = getRowStatus(activeRowIndex);
+    }
     if (currentRowRisk) {
         currentRowRisk.textContent = `${risk.icon} ${risk.title}`;
     }
@@ -1426,6 +2056,13 @@ function updateRowMetaPanel() {
         currentRowMissing.innerHTML = missingResponsibilities.length
             ? missingResponsibilities.map((item) => `<span class="missing-pill">${escapeHtml(item)}</span>`).join("")
             : '<p class="helper-text">Alle ansvarskolonner har fått en eier.</p>';
+    }
+    if (currentRowOwner) {
+        currentRowOwner.disabled = false;
+        currentRowOwner.value = getRowOwner(activeRowIndex);
+    }
+    if (currentRowReviewReadiness) {
+        currentRowReviewReadiness.textContent = getRowReviewReadinessText(activeRowIndex);
     }
     if (currentRowConfirm) {
         currentRowConfirm.disabled = false;
@@ -1514,9 +2151,12 @@ function refreshMatrixRowVisuals() {
 }
 
 function updateAllRiskCells() {
+    invalidateMatrixStats();
     updateRowMetaPanel();
     updateMatrixOverview();
     refreshMatrixRowVisuals();
+    scheduleInterfaceCardRender();
+    updateWorkflowOverview();
 }
 
 function updateRowAfterMatrixEdit(rowIndex) {
@@ -1637,6 +2277,12 @@ function clearResponsibility(rowIndex, responsibility) {
 
 function setConfirmation(rowIndex, isConfirmed) {
     confirmationState.set(rowIndex, Boolean(isConfirmed));
+    if (isConfirmed && getRiskState(rowIndex).level === "ok") {
+        rowStatusState.set(rowIndex, "clarified");
+    } else if (!isConfirmed && getRowStatus(rowIndex) === "clarified") {
+        rowStatusState.set(rowIndex, "ready");
+    }
+    invalidateMatrixStats();
     if (rowIndex === activeRowIndex) {
         updateRowMetaPanel();
     }
@@ -1790,7 +2436,7 @@ function applyBhSuggestionsFromText(inputText) {
     }
 
     if (text.includes("lås") || text.includes("beslag")) {
-        findings.push("Lås og beslag er nevnt og bør vurderes som egen avklaring.");
+        findings.push("Lås og beslag er nevnt og bør vurderes som eget fag eller tydelig leveransegrense.");
     }
 
     if (text.includes("sykehus")) {
@@ -1834,7 +2480,11 @@ function applyBhSuggestionsFromText(inputText) {
     }
 
     if (text.includes("adgangskontroll") || text.includes("adk")) {
-        findings.push("Adgangskontroll er nevnt og krever tydelig ansvar mellom EL og lås.");
+        if (tueAdkModelSelect) {
+            tueAdkModelSelect.value = "separate";
+        }
+        markStandalone("adk");
+        findings.push("Adgangskontroll er nevnt og bør vurderes som eget fag eller med helt tydelig grense mot EL/lås.");
     }
 
     if (text.includes("frekvensomformer")) {
@@ -1916,6 +2566,257 @@ function initializeRows(rowSource) {
     baseMarksByRow = rows.map((row) => ({ ...row.marks }));
 }
 
+const starterRowDescriptionsBySection = {
+    100: ["Koordineringstegninger", "Branntetting gjennomføringer", "Funksjonstesting felles", "Dokumentasjon FDV felles"],
+    200: ["Utsparinger i betong", "Himling med installasjoner", "Sjakter tekniske", "Tekniske rom adkomst", "Fundamenter teknisk utstyr"],
+    300: ["Sanitæranlegg komplett", "Varme/kjølesystem", "Ventilasjonsaggregat komplett", "Brannspjeld", "Vannlekkasjedeteksjon"],
+    400: ["Hovedfordeling", "Føringsveier felles", "Lysanlegg generelt", "Motorvern/servicebryter", "Elkraft for VVS-utstyr"],
+    500: ["SD-anlegg toppsystem", "IO-liste koordinert", "BACnet/Modbus grensesnitt", "Adgangskontroll (ADK)", "Brannalarm (AIA)"],
+    600: ["Heis elektrisk", "Porter og garasjeporter"],
+    700: ["Utendørs VA overvann", "Utendørs belysning", "Utendørs SD-kommunikasjon"],
+};
+
+const baseScopeSectionTargets = {
+    starter: { 100: 4, 200: 4, 300: 5, 400: 4, 500: 4, 600: 2, 700: 2 },
+    minimal: { 100: 3, 200: 3, 300: 4, 400: 3, 500: 2, 600: 1, 700: 1 },
+    standard: { 100: 7, 200: 7, 300: 8, 400: 7, 500: 6, 600: 3, 700: 3 },
+    full: { 100: 999, 200: 999, 300: 999, 400: 999, 500: 999, 600: 999, 700: 999, 800: 999 },
+};
+
+const criticalCardSectionTargets = {
+    100: 2,
+    200: 2,
+    300: 3,
+    400: 2,
+    500: 3,
+    600: 1,
+    700: 2,
+};
+
+const projectTypeScopeProfiles = {
+    default: {
+        sectionWeights: { 100: 1, 200: 1.05, 300: 1.1, 400: 1, 500: 0.95, 600: 0.75, 700: 0.7, 800: 0.65 },
+        keywords: ["tekniske rom", "koordinering", "grensesnitt"],
+    },
+    bolig: {
+        sectionWeights: { 200: 1.2, 300: 1.25, 400: 1.05, 500: 0.85, 600: 0.65, 700: 0.8 },
+        keywords: ["sanitær", "varme", "gulvvarme", "dør", "våtrom"],
+    },
+    leilighet: {
+        sectionWeights: { 200: 1.2, 300: 1.3, 400: 1.05, 500: 0.9, 600: 0.7, 700: 0.8 },
+        keywords: ["sanitær", "varmtvann", "dør", "adgang", "brannalarm"],
+    },
+    kontor: {
+        sectionWeights: { 300: 1.1, 400: 1.15, 500: 1.2, 600: 0.8, 700: 0.7 },
+        keywords: ["ventilasjon", "sd", "belysning", "dali", "adgangskontroll"],
+    },
+    skole: {
+        sectionWeights: { 200: 1.1, 300: 1.15, 400: 1.1, 500: 1.15, 600: 0.75, 700: 0.85 },
+        keywords: ["ventilasjon", "brannalarm", "adgangskontroll", "nødanrop", "utendørs belysning"],
+    },
+    barnehage: {
+        sectionWeights: { 200: 1.15, 300: 1.15, 400: 1.05, 500: 0.95, 700: 0.85 },
+        keywords: ["våtrom", "ventilasjon", "brannalarm", "porttelefon"],
+    },
+    sykehus: {
+        sectionWeights: { 100: 1.15, 200: 1.1, 300: 1.25, 400: 1.15, 500: 1.25, 600: 1.2, 700: 0.8, 800: 1.05 },
+        keywords: ["medisinsk", "gass", "nødstrøm", "sd", "heis", "brannalarm"],
+    },
+    helsehus: {
+        sectionWeights: { 300: 1.2, 400: 1.1, 500: 1.15, 600: 1, 800: 0.9 },
+        keywords: ["nødanrop", "adgangskontroll", "heis", "ventilasjon"],
+    },
+    sykehjem: {
+        sectionWeights: { 300: 1.2, 400: 1.05, 500: 1.15, 600: 0.95 },
+        keywords: ["nødanrop", "våtrom", "dør", "ventilasjon"],
+    },
+    hotell: {
+        sectionWeights: { 200: 1.15, 300: 1.15, 400: 1.05, 500: 1.1, 600: 0.85 },
+        keywords: ["adgangskontroll", "porttelefon", "ventilasjon", "sanitær"],
+    },
+    logistikk: {
+        sectionWeights: { 200: 1.15, 300: 0.9, 400: 1.2, 500: 1.05, 600: 1.1, 700: 1.1 },
+        keywords: ["port", "ladestasjon", "utendørs", "belysning", "reservekraft"],
+    },
+    industri: {
+        sectionWeights: { 200: 1.05, 300: 1.15, 400: 1.2, 500: 1.15, 600: 1.15, 700: 1 },
+        keywords: ["trykkluft", "gass", "kjølemaskin", "reservekraft", "automasjon"],
+    },
+    datahall: {
+        sectionWeights: { 100: 1.1, 300: 1.1, 400: 1.3, 500: 1.3, 600: 0.95, 700: 0.8, 800: 0.9 },
+        keywords: ["ups", "reservekraft", "kjøling", "sd", "integrasjon", "overvåking"],
+    },
+    rehab: {
+        sectionWeights: { 100: 1.1, 200: 1.25, 300: 1.1, 400: 1.1, 500: 1, 700: 0.7 },
+        keywords: ["ombygging", "eksisterende", "utsparing", "branntetting", "koordinering"],
+    },
+};
+
+const signalCategoryBoostKeywords = {
+    sdBas: ["sd", "toppsystem", "bacnet", "modbus", "integrasjon", "eos"],
+    automation: ["automasjon", "io-liste", "regulator", "vav", "dali", "knx", "styring"],
+    accessControl: ["adgang", "kortleser", "porttelefon", "intercom", "adk"],
+    locks: ["lås", "beslag", "dør", "port"],
+    cooling: ["kjøl", "kjølemaskin", "kjølebatteri", "komfortkjøling"],
+    ventilation: ["ventilasjon", "aggregat", "spjeld", "vav", "røykventilasjon"],
+    electrical: ["fordeling", "elkraft", "belysning", "nødlys", "ups", "reservekraft"],
+    sanitary: ["sanitær", "rør", "varme", "vann", "sluk", "sprinkler", "lekkasje"],
+    scale: ["storkjøkken", "laboratorium", "heis", "rulletrapp", "medisinsk", "trykkluft"],
+    breeam: ["energimåling", "co2", "dagslys", "eos", "breeam"],
+};
+
+function getProjectTypeScopeProfile(projectType = projectTypeSelect?.value || "bolig") {
+    const baseProfile = projectTypeScopeProfiles.default;
+    const specificProfile = projectTypeScopeProfiles[projectType] || {};
+    return {
+        sectionWeights: {
+            ...(baseProfile.sectionWeights || {}),
+            ...(specificProfile.sectionWeights || {}),
+        },
+        keywords: [...(baseProfile.keywords || []), ...(specificProfile.keywords || [])],
+    };
+}
+
+function getScopedSectionTargets(scopeLevel, projectType = projectTypeSelect?.value || "bolig") {
+    const baseTargets = { ...(baseScopeSectionTargets[scopeLevel] || baseScopeSectionTargets.standard) };
+    const profile = getProjectTypeScopeProfile(projectType);
+
+    if (projectType === "sykehus" || projectType === "datahall") {
+        baseTargets[500] = (baseTargets[500] || 0) + 2;
+        baseTargets[400] = (baseTargets[400] || 0) + 1;
+        baseTargets[600] = (baseTargets[600] || 0) + 1;
+    }
+
+    if (projectType === "bolig" || projectType === "leilighet") {
+        baseTargets[300] = (baseTargets[300] || 0) + 1;
+        baseTargets[200] = (baseTargets[200] || 0) + 1;
+    }
+
+    if (profile.sectionWeights[700] > 0.9) {
+        baseTargets[700] = (baseTargets[700] || 0) + 1;
+    }
+
+    return baseTargets;
+}
+
+function getCatalogRowsWithSections(inputRows) {
+    let currentSectionCode = 100;
+
+    return (Array.isArray(inputRows) ? inputRows : []).map((row) => {
+        if (row.section) {
+            currentSectionCode = Number.parseInt(row.tfm, 10) || inferSectionCode(row.tfm);
+            return { ...row, __sectionCode: currentSectionCode };
+        }
+
+        return {
+            ...row,
+            __sectionCode: currentSectionCode || inferSectionCode(row.tfm),
+        };
+    });
+}
+
+function getScopedCatalogRows(inputRows, options = {}) {
+    const projectType = options.projectType || projectTypeSelect?.value || "bolig";
+    const scopeLevel = options.scopeLevel || "standard";
+    const activeSignalCategories = new Set((options.signals || []).map((signal) => signal.category));
+    const sectionTargets = options.sectionTargets || getScopedSectionTargets(scopeLevel, projectType);
+    const profile = getProjectTypeScopeProfile(projectType);
+    const excludeKeywords = (options.excludeKeywords || []).map((keyword) => String(keyword || "").toLowerCase());
+    const preferredDescriptions = starterRowDescriptionsBySection;
+    const scopedRows = getCatalogRowsWithSections(inputRows).filter((row) => !row.section);
+    const rowsBySection = new Map();
+
+    scopedRows.forEach((row) => {
+        const sectionCode = row.__sectionCode || inferSectionCode(row.tfm);
+        const rowText = `${row.description || ""} ${row.comments || ""}`.toLowerCase();
+        const preferredDescriptionsForSection = preferredDescriptions[sectionCode] || [];
+        const preferredMatch = preferredDescriptionsForSection.includes(row.description) ? 1 : 0;
+        const excluded = excludeKeywords.some((keyword) => keyword && rowText.includes(keyword));
+
+        if (excluded) {
+            return;
+        }
+
+        let score = (profile.sectionWeights[sectionCode] || 0.75) * 10;
+        score += preferredMatch ? (scopeLevel === "starter" ? 12 : 4) : 0;
+
+        profile.keywords.forEach((keyword) => {
+            if (keyword && rowText.includes(keyword)) {
+                score += 2.5;
+            }
+        });
+
+        activeSignalCategories.forEach((category) => {
+            const keywords = signalCategoryBoostKeywords[category] || [];
+            keywords.forEach((keyword) => {
+                if (rowText.includes(keyword)) {
+                    score += 2;
+                }
+            });
+        });
+
+        if (!rowsBySection.has(sectionCode)) {
+            rowsBySection.set(sectionCode, []);
+        }
+
+        rowsBySection.get(sectionCode).push({
+            row,
+            score,
+            preferredMatch,
+        });
+    });
+
+    const selectedRows = [];
+    Array.from(rowsBySection.keys()).sort((left, right) => left - right).forEach((sectionCode) => {
+        const candidates = rowsBySection.get(sectionCode) || [];
+        const targetCount = sectionTargets[sectionCode] || 0;
+
+        if (!targetCount) {
+            return;
+        }
+
+        candidates.sort((left, right) => {
+            if (right.score !== left.score) {
+                return right.score - left.score;
+            }
+
+            return String(left.row.description || "").localeCompare(String(right.row.description || ""), "no");
+        });
+
+        candidates.slice(0, targetCount).forEach(({ row }) => {
+            selectedRows.push({
+                tfm: row.tfm,
+                description: row.description,
+                comments: row.comments || "",
+                marks: { ...(row.marks || {}) },
+            });
+        });
+    });
+
+    return selectedRows.length ? selectedRows : defaultRows;
+}
+
+async function hydrateStarterRowsFromCatalog(options = {}) {
+    if (hasProjectSpecificRows && !options.force) {
+        return;
+    }
+
+    const loadedRows = await loadExcelRowsData();
+    const starterRows = getScopedCatalogRows(loadedRows, {
+        projectType: projectTypeSelect?.value || "bolig",
+        scopeLevel: "starter",
+        sectionTargets: getScopedSectionTargets("starter", projectTypeSelect?.value || "bolig"),
+    });
+
+    initializeRows(starterRows);
+    usingImportedBaseRows = true;
+
+    if (matrixInitialized) {
+        matrixInitialized = false;
+        await ensureMatrixInitialized({ focusFirstRow: false });
+    }
+}
+
 function getRememberedProject() {
     try {
         return window.localStorage.getItem(LAST_PROJECT_KEY) || "";
@@ -1935,7 +2836,7 @@ function getSavedReviewMode() {
 function getSavedReviewFilter() {
     try {
         const savedFilter = window.localStorage.getItem(REVIEW_FILTER_KEY) || "all";
-        return ["all", "open", "conflicts", "confirmed"].includes(savedFilter) ? savedFilter : "all";
+        return ["all", "open", "ready", "conflicts", "confirmed"].includes(savedFilter) ? savedFilter : "all";
     } catch (_error) {
         return "all";
     }
@@ -1945,17 +2846,61 @@ function getReviewFilterLabel(filter = activeReviewFilter) {
     return {
         all: "Alle rader",
         open: "Åpne rader",
+        ready: "Review-klare",
         conflicts: "Konflikter",
         confirmed: "Bekreftede",
     }[filter] || "Alle rader";
 }
 
+let _cachedOfferConflictRowIds = null;
+let _cachedOfferAnalysisRef = null;
+
 function getOfferConflictRowIds() {
-    return new Set(
+    if (_cachedOfferAnalysisRef === lastOfferAnalysis && _cachedOfferConflictRowIds) {
+        return _cachedOfferConflictRowIds;
+    }
+    _cachedOfferAnalysisRef = lastOfferAnalysis;
+    _cachedOfferConflictRowIds = new Set(
         (lastOfferAnalysis?.findings || [])
             .map((finding) => finding.rowUid)
             .filter(Boolean)
     );
+    return _cachedOfferConflictRowIds;
+}
+
+function getOfferFindingKey(finding, index = 0) {
+    if (!finding) {
+        return `finding-${index}`;
+    }
+    return finding.id || `${finding.rowUid || "global"}::${finding.level || "Info"}::${finding.message || index}`;
+}
+
+function getOfferDecisionLabel(decision) {
+    return {
+        pending: "Ubehandlet",
+        review: "Må avklares",
+        accepted: "Akseptert",
+        rejected: "Avvist",
+    }[decision] || "Ubehandlet";
+}
+
+function getOfferFindingDecision(finding, index = 0) {
+    return offerDecisionState.get(getOfferFindingKey(finding, index)) || "pending";
+}
+
+function setOfferFindingDecision(findingKey, decision) {
+    const normalizedDecision = ["pending", "review", "accepted", "rejected"].includes(decision) ? decision : "pending";
+    offerDecisionState.set(findingKey, normalizedDecision);
+}
+
+function getOfferDecisionStats() {
+    const findings = lastOfferAnalysis?.findings || [];
+    const stats = { pending: 0, review: 0, accepted: 0, rejected: 0 };
+    findings.forEach((finding, index) => {
+        const decision = getOfferFindingDecision(finding, index);
+        stats[decision] = (stats[decision] || 0) + 1;
+    });
+    return stats;
 }
 
 function getRowStatusFlags(rowIndex) {
@@ -1975,9 +2920,16 @@ function getRowStatusFlags(rowIndex) {
     if (risk.level !== "ok") {
         flags.push({ label: "Åpen", className: "status-open" });
     }
+    if (getRowOwner(rowIndex)) {
+        flags.push({ label: `Koordinator: ${getRowOwner(rowIndex)}`, className: "status-owner" });
+    }
+    if (isRowReviewReady(rowIndex)) {
+        flags.push({ label: "Review-klar", className: "status-ready" });
+    }
     if (isConfirmed) {
         flags.push({ label: "Bekreftet", className: "status-confirmed" });
     }
+    flags.push({ label: getRowStatusLabel(getRowStatus(rowIndex)), className: `status-${getRowStatus(rowIndex)}` });
     if (hasComment) {
         flags.push({ label: "Kommentar", className: "status-comment" });
     }
@@ -2000,13 +2952,15 @@ function getRowsNeedingComment() {
 }
 
 function getReviewReadyCount() {
-    return rows.filter((row, rowIndex) => !row.section && confirmationState.get(rowIndex) && getRiskState(rowIndex).level === "ok").length;
+    return computeMatrixStats().reviewReadyCount;
 }
 
 function rowMatchesReviewFilter(row, rowIndex) {
     switch (activeReviewFilter) {
         case "open":
             return getRiskState(rowIndex).level !== "ok";
+        case "ready":
+            return isRowReviewReady(rowIndex);
         case "confirmed":
             return Boolean(confirmationState.get(rowIndex));
         case "conflicts":
@@ -2026,7 +2980,7 @@ function updateReviewFilterButtons() {
 }
 
 function applyReviewFilter(nextFilter, options = {}) {
-    const normalizedFilter = ["all", "open", "conflicts", "confirmed"].includes(nextFilter) ? nextFilter : "all";
+    const normalizedFilter = ["all", "open", "ready", "conflicts", "confirmed"].includes(nextFilter) ? nextFilter : "all";
     activeReviewFilter = normalizedFilter;
     updateReviewFilterButtons();
 
@@ -2107,6 +3061,16 @@ function createChecklistMarkup(items) {
             <span><strong>${escapeHtml(item.label)}</strong><br>${escapeHtml(item.detail)}</span>
         </div>
     `).join("");
+}
+
+function renderStepChecklist(node, items) {
+    if (!node) {
+        return;
+    }
+
+    const markup = createChecklistMarkup(items).trim();
+    node.innerHTML = markup;
+    node.hidden = !markup;
 }
 
 function getWorkflowHealth() {
@@ -2201,9 +3165,15 @@ function getWorkflowHealth() {
         {
             label: "Konflikter vurdert",
             detail: hasOfferAnalysis
-                ? (offerConflicts ? `${offerConflicts} konflikt(er) krever vurdering.` : "Ingen tydelige konflikter funnet i første kontroll.")
+                ? (() => {
+                    const decisionStats = getOfferDecisionStats();
+                    const unresolved = decisionStats.pending + decisionStats.review;
+                    return unresolved
+                        ? `${unresolved} funn står fortsatt til vurdering.`
+                        : "Alle registrerte funn har fått en beslutning.";
+                })()
                 : "Ingen vurdering gjort ennå.",
-            done: hasOfferAnalysis && offerConflicts === 0,
+            done: hasOfferAnalysis && (getOfferDecisionStats().pending + getOfferDecisionStats().review) === 0,
         },
     ];
 
@@ -2258,21 +3228,10 @@ function updateWorkflowOverview() {
         }
     });
 
-    if (step1Checklist) {
-        step1Checklist.innerHTML = createChecklistMarkup(health.step1Checks);
-    }
-
-    if (step2Checklist) {
-        step2Checklist.innerHTML = createChecklistMarkup(health.step2Checks);
-    }
-
-    if (step3Checklist) {
-        step3Checklist.innerHTML = createChecklistMarkup(health.step3Checks);
-    }
-
-    if (step4Checklist) {
-        step4Checklist.innerHTML = createChecklistMarkup(health.step4Checks);
-    }
+    renderStepChecklist(step1Checklist, health.step1Checks);
+    renderStepChecklist(step2Checklist, health.step2Checks);
+    renderStepChecklist(step3Checklist, health.step3Checks);
+    renderStepChecklist(step4Checklist, health.step4Checks);
 
     updateProductCockpit(health, progressPercent, recommendedMeta);
 }
@@ -2282,6 +3241,8 @@ function updateProductCockpit(health, progressPercent, recommendedMeta) {
     const commentGaps = getRowsNeedingComment().length;
     const offerConflicts = lastOfferAnalysis?.conflictCount || 0;
     const hasOfferAnalysis = Boolean(lastOfferAnalysis);
+    const offerDecisionStats = getOfferDecisionStats();
+    const unresolvedOfferFindings = offerDecisionStats.pending + offerDecisionStats.review;
 
     if (cockpitProgressValue) {
         cockpitProgressValue.textContent = `${progressPercent} %`;
@@ -2298,21 +3259,21 @@ function updateProductCockpit(health, progressPercent, recommendedMeta) {
         cockpitNextStepDetail.textContent = recommendedMeta.description;
     }
     if (cockpitMatrixHealth) {
-        cockpitMatrixHealth.textContent = openRows === 0 ? "Kontrollert" : `${openRows} apne`;
+        cockpitMatrixHealth.textContent = openRows === 0 ? "Kontrollert" : `${openRows} åpne`;
     }
     if (cockpitMatrixHealthDetail) {
         cockpitMatrixHealthDetail.textContent = commentGaps
-            ? `${commentGaps} apne rad(er) mangler kommentar eller vurdering.`
+            ? `${commentGaps} åpne rad(er) mangler kommentar eller vurdering.`
             : "Kommentarer og avklaringer ser ryddige ut i arbeidsflaten.";
     }
     if (cockpitOfferHealth) {
         cockpitOfferHealth.textContent = hasOfferAnalysis
-            ? (offerConflicts ? `${offerConflicts} konflikter` : "Ingen konflikter")
+            ? (unresolvedOfferFindings ? `${unresolvedOfferFindings} til vurdering` : offerConflicts ? `${offerConflicts} konflikter` : "Avklart")
             : "Ikke startet";
     }
     if (cockpitOfferHealthDetail) {
         cockpitOfferHealthDetail.textContent = hasOfferAnalysis
-            ? `${lastOfferAnalysis.findingCount} funn er registrert i tilbudskontrollen.`
+            ? `${lastOfferAnalysis.findingCount} funn er registrert. ${offerDecisionStats.accepted} akseptert og ${offerDecisionStats.rejected} avvist.`
             : "Tilbudslaget blir synlig her nar UE-/TUE-tilbud er lastet opp.";
     }
 }
@@ -2530,18 +3491,12 @@ async function readResponsePayload(response) {
 function collectMatrixMarks() {
     const matrixMarks = {};
 
-    rows.forEach((_, rowIndex) => {
-        disciplines.forEach((discipline) => {
-            responsibilities.forEach((responsibility) => {
-                const button = matrixBody.querySelector(
-                    `button[data-row="${rowIndex}"][data-discipline="${discipline}"][data-responsibility="${responsibility}"]`
-                );
-
-                if (button?.dataset.state) {
-                    matrixMarks[`${rowIndex}:${discipline}:${responsibility}`] = button.dataset.state;
-                }
-            });
-        });
+    // Collect all states in one DOM query instead of ~10,800 individual queries
+    const allButtons = matrixBody.querySelectorAll("button[data-row][data-state]");
+    allButtons.forEach((button) => {
+        if (button.dataset.state) {
+            matrixMarks[`${button.dataset.row}:${button.dataset.discipline}:${button.dataset.responsibility}`] = button.dataset.state;
+        }
     });
 
     return matrixMarks;
@@ -2549,6 +3504,18 @@ function collectMatrixMarks() {
 
 function collectComments() {
     return Object.fromEntries(commentState.entries());
+}
+
+function collectRowOwners() {
+    return Object.fromEntries(rowOwnerState.entries());
+}
+
+function collectRowStatuses() {
+    return Object.fromEntries(rowStatusState.entries());
+}
+
+function collectOfferDecisions() {
+    return Object.fromEntries(offerDecisionState.entries());
 }
 
 function collectRowDefinitions() {
@@ -2578,6 +3545,9 @@ function collectProjectState() {
         rowDefinitions: collectRowDefinitions(),
         matrixMarks: collectMatrixMarks(),
         comments: collectComments(),
+        rowOwners: collectRowOwners(),
+        rowStatuses: collectRowStatuses(),
+        offerDecisions: collectOfferDecisions(),
         confirmations: Object.fromEntries(confirmationState.entries()),
         savedAt: new Date().toISOString(),
     };
@@ -2593,8 +3563,8 @@ function applySavedTueConfig(tueConfig, selectedPackages = []) {
                     ? "el_aut"
                     : "separate",
         locksModel: selectedPackages.includes("las") ? "separate" : "integrated",
-        adkModel: "el",
-        standaloneDisciplines: selectedPackages.filter((key) => ["el", "aut", "sd"].includes(key)),
+        adkModel: selectedPackages.includes("adk") ? "separate" : "el",
+        standaloneDisciplines: selectedPackages.filter((key) => ["el", "aut", "sd", "adk"].includes(key)),
     };
     const nextConfig = tueConfig || fallbackConfig;
 
@@ -2606,7 +3576,7 @@ function applySavedTueConfig(tueConfig, selectedPackages = []) {
         tueLocksModelSelect.value = nextConfig.locksModel || "separate";
     }
     if (tueAdkModelSelect) {
-        tueAdkModelSelect.value = nextConfig.adkModel || "el";
+        tueAdkModelSelect.value = nextConfig.adkModel || "separate";
     }
 
     packageOptionInputs.forEach((input) => {
@@ -2642,13 +3612,47 @@ function applySavedComments(comments = {}) {
     updateRowMetaPanel();
 }
 
+function applySavedRowOwners(rowOwners = {}) {
+    rows.forEach((row, rowIndex) => {
+        if (row.section) {
+            return;
+        }
+        rowOwnerState.set(rowIndex, rowOwners[rowIndex] || "");
+    });
+}
+
+function applySavedRowStatuses(rowStatuses = {}) {
+    rows.forEach((row, rowIndex) => {
+        if (row.section) {
+            return;
+        }
+        const nextStatus = rowStatuses[rowIndex];
+        rowStatusState.set(
+            rowIndex,
+            rowStatusOptions.some((option) => option.value === nextStatus)
+                ? nextStatus
+                : (confirmationState.get(rowIndex) ? "clarified" : "open")
+        );
+    });
+}
+
+function applySavedOfferDecisions(offerDecisions = {}) {
+    offerDecisionState.clear();
+    Object.entries(offerDecisions || {}).forEach(([key, value]) => {
+        setOfferFindingDecision(key, value);
+    });
+}
+
 function replaceRows(nextRows) {
     const normalizedRows = normalizeRowsByTfm(nextRows);
     rows.splice(0, rows.length, ...normalizedRows);
     baseMarksByRow.splice(0, baseMarksByRow.length, ...normalizedRows.map((row) => ({ ...(row.marks || {}) })));
     commentState.clear();
     confirmationState.clear();
+    rowOwnerState.clear();
+    rowStatusState.clear();
     hasProjectSpecificRows = true;
+    invalidateMatrixStats();
 }
 
 function getContentRows() {
@@ -2864,7 +3868,7 @@ function scheduleAutosave() {
     window.clearTimeout(autosaveTimer);
     autosaveTimer = window.setTimeout(() => {
         saveProject();
-    }, 900);
+    }, 3000);
 }
 
 function applyProjectState(data) {
@@ -2889,7 +3893,10 @@ function applyProjectState(data) {
     applySavedTueConfig(data.tueConfig, Array.isArray(data.selectedPackages) ? data.selectedPackages : []);
     applySavedMatrix(data.matrixMarks || {});
     applySavedComments(data.comments || {});
+    applySavedRowOwners(data.rowOwners || {});
     applySavedConfirmations(data.confirmations || {});
+    applySavedRowStatuses(data.rowStatuses || {});
+    applySavedOfferDecisions(data.offerDecisions || {});
     updateAllRiskCells();
     lastBhAnalysis = null;
     renderBhAnalysisInsights();
@@ -2986,6 +3993,7 @@ function resetProjectState() {
     uploadedBhText = "";
     uploadedOfferDocuments.length = 0;
     lastOfferAnalysis = null;
+    offerDecisionState.clear();
     if (projectTypeSelect) {
         projectTypeSelect.value = "bolig";
     }
@@ -2999,7 +4007,7 @@ function resetProjectState() {
         tueLocksModelSelect.value = "separate";
     }
     if (tueAdkModelSelect) {
-        tueAdkModelSelect.value = "el";
+        tueAdkModelSelect.value = "separate";
     }
     if (bhUploadInput) {
         bhUploadInput.value = "";
@@ -3008,7 +4016,7 @@ function resetProjectState() {
         offerUploadInput.value = "";
     }
     if (bhAnalysisStatus) {
-        bhAnalysisStatus.textContent = "Første versjon bruker regelbasert analyse av nøkkelord. AI-tolkning kan bygges på senere.";
+        bhAnalysisStatus.textContent = "Analysen bruker dokumentinnhold og regelbaserte faglige signaler for å foreslå prosjektoppsett og matriseomfang.";
     }
     if (offerAnalysisStatus) {
         offerAnalysisStatus.textContent = "Last opp ett eller flere tilbud og sammenlign dem mot gjeldende grensesnittmatrise.";
@@ -3025,6 +4033,8 @@ function resetProjectState() {
             });
         });
         commentState.set(rowIndex, rows[rowIndex].comments || "");
+        rowOwnerState.set(rowIndex, "");
+        rowStatusState.set(rowIndex, "open");
         setConfirmation(rowIndex, false);
     });
     updateAllRiskCells();
@@ -3032,6 +4042,7 @@ function resetProjectState() {
     renderOfferDocumentList();
     renderOfferAnalysis();
     isApplyingSavedState = false;
+    void hydrateStarterRowsFromCatalog({ force: true });
 }
 
 async function deleteCurrentProject() {
@@ -3114,6 +4125,16 @@ function swapRowState(firstIndex, secondIndex) {
     const secondConfirmation = Boolean(confirmationState.get(secondIndex));
     confirmationState.set(firstIndex, secondConfirmation);
     confirmationState.set(secondIndex, firstConfirmation);
+
+    const firstOwner = rowOwnerState.get(firstIndex) || "";
+    const secondOwner = rowOwnerState.get(secondIndex) || "";
+    rowOwnerState.set(firstIndex, secondOwner);
+    rowOwnerState.set(secondIndex, firstOwner);
+
+    const firstStatus = rowStatusState.get(firstIndex) || "open";
+    const secondStatus = rowStatusState.get(secondIndex) || "open";
+    rowStatusState.set(firstIndex, secondStatus);
+    rowStatusState.set(secondIndex, firstStatus);
 }
 
 function moveActiveRow(direction) {
@@ -3175,19 +4196,27 @@ function deleteActiveRow() {
 
 function buildContractSummary() {
     const projectType = projectTypeSelect.value;
+    const stats = computeMatrixStats();
     const confirmedCount = getConfirmedRowCount();
     const openRiskCount = getOpenRiskCount();
     const projectText = getProjectTypeLabel(projectType);
     const contentRows = getContentRowCount();
     const completionRate = contentRows ? Math.round((confirmedCount / contentRows) * 100) : 0;
+    const ownerGapCount = stats.ownerGapCount;
+    const reviewReadyCount = stats.reviewReadyCount;
+    const commentGapCount = getRowsNeedingComment().length;
     const readinessLabel = openRiskCount === 0 && completionRate === 100
-        ? "Klar for eksport"
+        ? ownerGapCount === 0 && commentGapCount === 0
+            ? "Klar for eksport"
+            : "Nær klar"
         : completionRate >= 70
             ? "Nær klar"
             : "Under arbeid";
     const nextActionText = openRiskCount
         ? "Fokuser på åpne avklaringer, bekreft UE-ansvar og gå deretter gjennom kommentarene før eksport."
-        : "Alle rader er avklart. Prosjektet er klart for eksport og en siste kvalitetssjekk.";
+        : ownerGapCount || commentGapCount
+            ? "Ansvar er satt, men noen rader mangler fortsatt koordinator eller vurderingsnotat før trygg eksport."
+            : "Alle rader er avklart. Prosjektet er klart for eksport og en siste kvalitetssjekk.";
     const blockers = rows
         .map((row, rowIndex) => ({ row, rowIndex }))
         .filter(({ row, rowIndex }) => !row.section && getRiskState(rowIndex).level !== "ok")
@@ -3196,10 +4225,13 @@ function buildContractSummary() {
     const bhSuggestion = lastBhAnalysis?.findings?.length
         ? lastBhAnalysis.findings[0]
         : "Ingen nye BH-signaler registrert ennå.";
-    const exportReady = contentRows > 0 && openRiskCount === 0 && completionRate === 100;
+    const offerDecisionStats = getOfferDecisionStats();
+    const unresolvedOfferFindings = offerDecisionStats.pending + offerDecisionStats.review;
+    const exportReady = contentRows > 0 && openRiskCount === 0 && completionRate === 100 && ownerGapCount === 0 && commentGapCount === 0;
 
     contractSummary.innerHTML = `
         <article class="summary-panel">
+            <p class="summary-eyebrow">Prosjektgrunnlag</p>
             <h3>Vedlegg X - Grensesnittmatrise</h3>
             <p>Prosjekttype: <strong>${projectText}</strong></p>
             <p>Valgt TUE-struktur: <strong>${describeTueConfig()}</strong></p>
@@ -3207,28 +4239,41 @@ function buildContractSummary() {
             <p>Fremdrift: <strong>${completionRate} %</strong></p>
         </article>
         <article class="summary-panel">
+            <p class="summary-eyebrow">Klarhetsnivå</p>
             <h3>Beslutningsstatus</h3>
             <p>Status: <strong>${readinessLabel}</strong></p>
             <p>Åpne avklaringer: <strong>${openRiskCount}</strong></p>
+            <p>Review-klare rader: <strong>${reviewReadyCount} av ${contentRows}</strong></p>
             <p>Neste steg: <strong>${nextActionText}</strong></p>
         </article>
         <article class="summary-panel">
+            <p class="summary-eyebrow">Underlagslesning</p>
             <h3>BH-signaler</h3>
             <p>Foreslått prosjektspor: <strong>${getProjectTypeLabel(lastBhAnalysis?.projectType || projectType)}</strong></p>
             <p>Viktigste signal: <strong>${escapeHtml(bhSuggestion)}</strong></p>
             <p>Analysepoeng: <strong>${lastBhAnalysis?.keywordScore || 0}</strong></p>
         </article>
         <article class="summary-panel">
+            <p class="summary-eyebrow">Tilbudskontroll</p>
+            <h3>Beslutningsbilde</h3>
+            <p>Konflikter registrert: <strong>${lastOfferAnalysis?.conflictCount || 0}</strong></p>
+            <p>Funn til vurdering: <strong>${unresolvedOfferFindings}</strong></p>
+            <p>Akseptert / avvist: <strong>${offerDecisionStats.accepted} / ${offerDecisionStats.rejected}</strong></p>
+        </article>
+        <article class="summary-panel">
+            <p class="summary-eyebrow">Arbeidsliste</p>
             <h3>Prioriterte avklaringer</h3>
             <ul>
                 ${
                     blockers.length
                         ? blockers.map((item) => `<li>${escapeHtml(item)}</li>`).join("")
-                        : "<li>Ingen åpne avklaringer gjenstår i matrisen.</li>"
+                        : "<li>Ingen uavklarte avklaringer gjenstår i matrisen.</li>"
                 }
             </ul>
         </article>
     `;
+
+    contractSummary.hidden = false;
 
     if (workspaceReadinessLabel) {
         workspaceReadinessLabel.textContent = readinessLabel;
@@ -3241,20 +4286,19 @@ function buildContractSummary() {
     if (workspaceBlockers) {
         workspaceBlockers.innerHTML = blockers.length
             ? blockers.map((item) => `<p>${escapeHtml(item)}</p>`).join("")
-            : "<p>Ingen åpne avklaringer. Prosjektet er klart for siste eksportkontroll.</p>";
+            : "<p>Ingen uavklarte rader. Prosjektet er klart for siste eksportkontroll.</p>";
     }
 
     if (exportExcelButton) {
         exportExcelButton.disabled = !exportReady;
-        exportExcelButton.title = exportReady ? "Eksporter prosjektet til CSV/Excel" : "Avklar alle åpne rader og bekreft UE før eksport.";
+        exportExcelButton.title = exportReady ? "Eksporter prosjektet til CSV/Excel" : "Lukk åpne rader, sett koordinator og legg inn vurderingsnotat før eksport.";
     }
 
     if (exportPdfButton) {
         exportPdfButton.disabled = !exportReady;
-        exportPdfButton.title = exportReady ? "Eksporter prosjektet til utskrift/PDF" : "Avklar alle åpne rader og bekreft UE før eksport.";
+        exportPdfButton.title = exportReady ? "Eksporter prosjektet til utskrift/PDF" : "Lukk åpne rader, sett koordinator og legg inn vurderingsnotat før eksport.";
     }
 
-    updateMatrixOverview();
     updateWorkflowOverview();
 }
 
@@ -3337,6 +4381,9 @@ function buildExportTableHtml() {
             const risk = escapeHtml(getExportRiskLabel(rowIndex));
             const confirmed = confirmationState.get(rowIndex) ? "Ja" : "Nei";
             const riskClass = getRiskState(rowIndex).level === "ok" ? "risk-ok-export" : "risk-warning-export";
+            const owner = escapeHtml(getRowOwner(rowIndex) || "Ikke satt");
+            const rowStatus = escapeHtml(getRowStatusLabel(getRowStatus(rowIndex)));
+            const reviewReady = isRowReviewReady(rowIndex) ? "Ja" : "Nei";
 
             return `
                 <tr>
@@ -3344,7 +4391,7 @@ function buildExportTableHtml() {
                     <td>
                         <div class="desc">${escapeHtml(row.description)}</div>
                         ${comment ? `<div class="comment">Kommentar: ${comment}</div>` : ""}
-                        <div class="meta"><span class="${riskClass}">${risk}</span> · UE bekreftet: ${confirmed}.</div>
+                        <div class="meta"><span class="${riskClass}">${risk}</span> · UE bekreftet: ${confirmed} · Koordinator: ${owner} · Status: ${rowStatus} · Review-klar: ${reviewReady}.</div>
                     </td>
                     ${cellMarkup}
                 </tr>
@@ -3375,6 +4422,9 @@ function buildExcelExportRows() {
         "Beskrivelse",
         "Kommentar",
         "Avklaring",
+        "Koordinator",
+        "Radstatus",
+        "Review-klar",
         "UE bekreftet",
         ...disciplines.flatMap((discipline) => responsibilities.map((responsibility) => `${discipline} ${responsibility}`)),
     ];
@@ -3390,7 +4440,7 @@ function buildExcelExportRows() {
 
     rows.forEach((row, rowIndex) => {
         if (row.section) {
-            exportRows.push([row.tfm, getSectionLabel(rowIndex), "", "Seksjon", "", ...new Array(disciplines.length * responsibilities.length).fill("")]);
+            exportRows.push([row.tfm, getSectionLabel(rowIndex), "", "Seksjon", "", "", "", "", ...new Array(disciplines.length * responsibilities.length).fill("")]);
             return;
         }
 
@@ -3399,6 +4449,9 @@ function buildExcelExportRows() {
             row.description,
             commentState.get(rowIndex) ?? row.comments ?? "",
             getExportRiskLabel(rowIndex),
+            getRowOwner(rowIndex),
+            getRowStatusLabel(getRowStatus(rowIndex)),
+            isRowReviewReady(rowIndex) ? "Ja" : "Nei",
             confirmationState.get(rowIndex) ? "Ja" : "Nei",
             ...disciplines.flatMap((discipline) =>
                 responsibilities.map((responsibility) => getRowExportState(rowIndex, discipline, responsibility))
@@ -3441,6 +4494,8 @@ function exportProjectToPrintView() {
     const savedTimestamp = new Date().toLocaleString("no-NO");
     const exportHighlights = buildExportHighlights();
     const actionItems = buildExportActionItems();
+    const sectionSummary = buildSectionExportSummary();
+    const offerDecisionStats = getOfferDecisionStats();
     const summaryTable = buildExportTableHtml();
     const exportHtml = `
         <!DOCTYPE html>
@@ -3473,7 +4528,13 @@ function exportProjectToPrintView() {
                 .stat { background: white; }
                 .stat strong { display: block; font-size: 1.35rem; margin-bottom: 4px; color: var(--accent); }
                 .section-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 18px; margin-bottom: 22px; }
+                .section-summary-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-bottom: 22px; }
                 .action-list { margin: 0; padding-left: 18px; line-height: 1.6; }
+                .section-summary-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+                .section-summary-list li { display: flex; justify-content: space-between; gap: 10px; padding: 10px 12px; border-radius: 12px; background: white; border: 1px solid var(--line); }
+                .signoff-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-bottom: 22px; }
+                .signoff-card { min-height: 110px; background: white; }
+                .signoff-line { margin-top: 34px; border-top: 1px solid var(--line); padding-top: 8px; color: var(--muted); font-size: 0.9rem; }
                 .legend-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
                 .pill { display: inline-block; padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; }
                 .pill-ok { background: var(--ok-soft); color: var(--ok); }
@@ -3530,6 +4591,7 @@ function exportProjectToPrintView() {
                 <div class="card">
                     <h3>Oppsummering</h3>
                     <p class="meta">Kommenterte rader: ${exportHighlights.commentedCount}</p>
+                    <p class="meta">Review-klare rader: ${computeMatrixStats().reviewReadyCount}</p>
                     <p class="meta">Dette dokumentet samler TFM, ansvar, kommentarer og bekreftelser for videre koordinering.</p>
                 </div>
                 <div class="card" style="background: var(--panel-soft);">
@@ -3537,6 +4599,39 @@ function exportProjectToPrintView() {
                     <ul class="action-list">
                         ${actionItems.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
                     </ul>
+                </div>
+            </div>
+            <div class="section-summary-grid">
+                <div class="card">
+                    <h3>Seksjonsstatus</h3>
+                    <ul class="section-summary-list">
+                        ${sectionSummary.map((item) => `<li><span>${escapeHtml(item.sectionCode + " " + item.title)}</span><span>${item.completionRate} % · ${item.open} åpne</span></li>`).join("")}
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Tilbudskontroll</h3>
+                    <p class="meta">Konflikter: ${lastOfferAnalysis?.conflictCount || 0}</p>
+                    <p class="meta">Til vurdering: ${(offerDecisionStats.pending || 0) + (offerDecisionStats.review || 0)}</p>
+                    <p class="meta">Akseptert: ${offerDecisionStats.accepted || 0}</p>
+                    <p class="meta">Avvist: ${offerDecisionStats.rejected || 0}</p>
+                </div>
+                <div class="card">
+                    <h3>Kontraktsnotat</h3>
+                    <p class="meta">Dokumentet kan brukes som vedlegg til utsendelse, kontrollgrunnlag ved tilbudsgjennomgang og referanse i avklaringsmøter.</p>
+                </div>
+            </div>
+            <div class="signoff-grid">
+                <div class="card signoff-card">
+                    <h3>Utarbeidet av</h3>
+                    <div class="signoff-line">Navn / rolle / dato</div>
+                </div>
+                <div class="card signoff-card">
+                    <h3>Gjennomgått av</h3>
+                    <div class="signoff-line">Fagansvarlig / dato</div>
+                </div>
+                <div class="card signoff-card">
+                    <h3>Kontraktskontroll</h3>
+                    <div class="signoff-line">Tilbudsansvarlig / dato</div>
                 </div>
             </div>
             <h2 class="table-title">Detaljert matrise</h2>
@@ -3553,19 +4648,41 @@ function exportProjectToPrintView() {
 
 function clearFocusedRow() {
     matrixBody.querySelectorAll(".row-focus").forEach((row) => row.classList.remove("row-focus"));
+    interfaceCardWorkspace?.querySelectorAll(".interface-card.is-active").forEach((card) => card.classList.remove("is-active"));
+}
+
+function getInterfaceCardElement(rowIndex) {
+    return interfaceCardWorkspace?.querySelector(`[data-card-row="${rowIndex}"]`) || null;
 }
 
 function focusRow(rowIndex) {
     const row = getRowElement(rowIndex);
-    if (!row || row.classList.contains("filtered-out")) {
+    const card = getInterfaceCardElement(rowIndex);
+
+    if (activeInterfaceView === "matrix" && (!row || row.classList.contains("filtered-out"))) {
+        return;
+    }
+
+    if (activeInterfaceView === "cards" && !card) {
         return;
     }
 
     clearFocusedRow();
-    row.classList.add("row-focus");
+    if (row) {
+        row.classList.add("row-focus");
+    }
+    if (card) {
+        card.classList.add("is-active");
+    }
     focusedRowIndex = rowIndex;
     activeRowIndex = rowIndex;
     updateRowMetaPanel();
+
+    if (activeInterfaceView === "cards" && card) {
+        card.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" });
+        return;
+    }
+
     row.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
 }
 
@@ -3686,6 +4803,7 @@ function filterMatrixRows() {
 
     updateMatrixOverview(visibleContentRows);
     updateMatrixFilterFeedback(visibleContentRows, query, showOpenOnly);
+    scheduleInterfaceCardRender();
 }
 
 function jumpToNextUnresolvedRow() {
@@ -3760,6 +4878,8 @@ function createMatrixRow(rowData, rowIndex) {
     row.dataset.rowIndex = String(rowIndex);
     confirmationState.set(rowIndex, Boolean(confirmationState.get(rowIndex)));
     commentState.set(rowIndex, commentState.get(rowIndex) ?? rowData.comments ?? "");
+    rowOwnerState.set(rowIndex, rowOwnerState.get(rowIndex) ?? "");
+    rowStatusState.set(rowIndex, rowStatusState.get(rowIndex) ?? (confirmationState.get(rowIndex) ? "clarified" : "open"));
 
     if (rowData.section) {
         row.classList.add("section-row");
@@ -3825,10 +4945,9 @@ function buildMatrix() {
 function getVisibleRowIndices() {
     const indices = [];
     for (let i = 0; i < rows.length; i++) {
-        var row = rows[i];
+        const row = rows[i];
         if (activeSectionFilter !== "all") {
-            var code = getRowSectionCode(row);
-            // Include section headers for the active filter
+            const code = getRowSectionCode(row);
             if (row.section && Number(row.tfm) !== activeSectionFilter) continue;
             if (!row.section && code !== activeSectionFilter) continue;
         }
@@ -3841,7 +4960,7 @@ function buildMatrixInBatches(batchSize = 40) {
     matrixBody.innerHTML = "";
     matrixBuildInProgress = true;
 
-    var visibleIndices = getVisibleRowIndices();
+    const visibleIndices = getVisibleRowIndices();
 
     return new Promise((resolve) => {
         let cursor = 0;
@@ -3910,6 +5029,9 @@ workflowStepButtons.forEach((button) => button.addEventListener("click", () => {
 
 projectTypeSelect.addEventListener("change", () => {
     applyProjectLogic();
+    if (!hasProjectSpecificRows && uploadedDocuments.length === 0) {
+        void hydrateStarterRowsFromCatalog({ force: true });
+    }
     scheduleAutosave();
 });
 projectSearchInput?.addEventListener("input", () => {
@@ -3926,11 +5048,18 @@ tueLocksModelSelect?.addEventListener("change", () => {
     scheduleAutosave();
 });
 tueAdkModelSelect?.addEventListener("change", () => {
+    const adkOptionInput = packageOptionInputs.find((input) => input.value === "adk");
+    if (adkOptionInput && tueAdkModelSelect?.value === "separate" && (tueCoreModelSelect?.value || "separate") === "separate") {
+        adkOptionInput.checked = true;
+    }
     syncTueBuilderUI();
     applyProjectLogic();
     scheduleAutosave();
 });
 packageOptionInputs.forEach((input) => input.addEventListener("change", () => {
+    if (input.value === "adk" && tueAdkModelSelect && (tueCoreModelSelect?.value || "separate") === "separate") {
+        tueAdkModelSelect.value = input.checked ? "separate" : "el";
+    }
     syncTueBuilderUI();
     applyProjectLogic();
     scheduleAutosave();
@@ -3946,6 +5075,80 @@ applyPackagePresetButton.addEventListener("click", () => {
 });
 matrixSearchInput?.addEventListener("input", filterMatrixRows);
 showOpenOnlyInput?.addEventListener("change", filterMatrixRows);
+cardViewToggleButton?.addEventListener("click", () => {
+    setActiveInterfaceView("cards");
+});
+matrixViewToggleButton?.addEventListener("click", () => {
+    setActiveInterfaceView("matrix");
+});
+interfaceCardWorkspace?.addEventListener("change", async (event) => {
+    const target = event.target;
+
+    if (!(target instanceof HTMLElement)) {
+        return;
+    }
+
+    if (target instanceof HTMLSelectElement && target.dataset.cardRow && target.dataset.cardResponsibility) {
+        await ensureMatrixInitialized();
+        setResponsibilityOwner(Number(target.dataset.cardRow), target.dataset.cardResponsibility, target.value);
+        return;
+    }
+
+    if (target instanceof HTMLSelectElement && target.dataset.cardOwner) {
+        const rowIndex = Number(target.dataset.cardOwner);
+        setRowOwner(rowIndex, target.value);
+        updateRowAfterMatrixEdit(rowIndex);
+        return;
+    }
+
+    if (target instanceof HTMLSelectElement && target.dataset.cardStatus) {
+        const rowIndex = Number(target.dataset.cardStatus);
+        setRowStatus(rowIndex, target.value);
+        updateRowAfterMatrixEdit(rowIndex);
+        return;
+    }
+
+    if (target instanceof HTMLInputElement && target.dataset.cardConfirm) {
+        const rowIndex = Number(target.dataset.cardConfirm);
+        setConfirmation(rowIndex, target.checked);
+        updateRowAfterMatrixEdit(rowIndex);
+        return;
+    }
+
+    if (target instanceof HTMLTextAreaElement && target.dataset.cardComment) {
+        const rowIndex = Number(target.dataset.cardComment);
+        commentState.set(rowIndex, target.value);
+        updateRowAfterMatrixEdit(rowIndex);
+    }
+});
+interfaceCardWorkspace?.addEventListener("click", async (event) => {
+    const target = event.target;
+
+    if (!(target instanceof HTMLElement)) {
+        return;
+    }
+
+    const toggleScopeButton = target.closest("[data-toggle-card-scope]");
+    if (toggleScopeButton) {
+        showAllInterfaceCards = !showAllInterfaceCards;
+        renderInterfaceCards();
+        return;
+    }
+
+    const openMatrixButton = target.closest("[data-card-open-matrix]");
+    if (!openMatrixButton) {
+        return;
+    }
+
+    const rowUid = openMatrixButton.getAttribute("data-card-open-matrix");
+    if (!rowUid) {
+        return;
+    }
+
+    await ensureMatrixInitialized();
+    setActiveInterfaceView("matrix");
+    focusRowByUid(rowUid, { step: 3 });
+});
 addRowButton?.addEventListener("click", () => {
     ensureMatrixInitialized();
     addNewRow();
@@ -3988,8 +5191,7 @@ quickClearCommentButton?.addEventListener("click", () => {
     if (currentRowComment) {
         currentRowComment.value = "";
     }
-    updateRowMetaPanel();
-    scheduleAutosave();
+    updateRowAfterMatrixEdit(activeRowIndex);
 });
 currentRowConfirm?.addEventListener("change", () => {
     if (activeRowIndex < 0 || rows[activeRowIndex]?.section) {
@@ -4021,6 +5223,24 @@ currentRowDescription?.addEventListener("input", () => {
     updateRowDisplay(activeRowIndex);
     scheduleAutosave();
 });
+currentRowStatus?.addEventListener("change", () => {
+    if (activeRowIndex < 0 || rows[activeRowIndex]?.section) {
+        currentRowStatus.value = "open";
+        return;
+    }
+
+    setRowStatus(activeRowIndex, currentRowStatus.value);
+    updateRowAfterMatrixEdit(activeRowIndex);
+});
+currentRowOwner?.addEventListener("change", () => {
+    if (activeRowIndex < 0 || rows[activeRowIndex]?.section) {
+        currentRowOwner.value = "";
+        return;
+    }
+
+    setRowOwner(activeRowIndex, currentRowOwner.value);
+    updateRowAfterMatrixEdit(activeRowIndex);
+});
 currentRowComment?.addEventListener("input", () => {
     if (activeRowIndex < 0 || rows[activeRowIndex]?.section) {
         currentRowComment.value = "";
@@ -4028,7 +5248,7 @@ currentRowComment?.addEventListener("input", () => {
     }
 
     commentState.set(activeRowIndex, currentRowComment.value);
-    scheduleAutosave();
+    updateRowAfterMatrixEdit(activeRowIndex);
 });
 saveProjectButton?.addEventListener("click", saveProject);
 loadProjectButton?.addEventListener("click", loadProject);
@@ -4092,13 +5312,25 @@ renderProjectLibraryStats();
 renderOfferAnalysis();
 updateWorkflowOverview();
 offerFindingsList?.addEventListener("click", (event) => {
-    const target = event.target instanceof HTMLElement ? event.target.closest("[data-row-uid]") : null;
-    const rowUid = target?.getAttribute("data-row-uid");
-    if (!rowUid) {
+    const eventTarget = event.target instanceof HTMLElement ? event.target : null;
+    const decisionButton = eventTarget?.closest("[data-offer-decision]");
+    if (decisionButton) {
+        const findingKey = decisionButton.getAttribute("data-offer-decision");
+        const nextDecision = decisionButton.getAttribute("data-offer-decision-value");
+        if (findingKey && nextDecision) {
+            setOfferFindingDecision(findingKey, nextDecision);
+            renderOfferAnalysis();
+            updateWorkflowOverview();
+            scheduleAutosave();
+        }
         return;
     }
 
-    focusRowByUid(rowUid, { step: 3 });
+    const target = eventTarget?.closest("[data-row-uid]");
+    const rowUid = target?.getAttribute("data-row-uid");
+    if (rowUid) {
+        focusRowByUid(rowUid, { step: 3 });
+    }
 });
 jumpConflictRowButton?.addEventListener("click", () => {
     const conflictRowUid = lastOfferAnalysis?.findings?.find((finding) => finding.rowUid)?.rowUid;
@@ -4161,11 +5393,16 @@ document.addEventListener("keydown", (event) => {
 
 async function initializeApp() {
     initializeRows(defaultRows);
+    void hydrateStarterRowsFromCatalog();
     syncTueBuilderUI();
     applyProjectLogic();
     applyReviewFilter(getSavedReviewFilter(), { skipRefilter: true });
     applyReviewMode(getSavedReviewMode());
+    activeInterfaceView = getSavedInterfaceView();
     activeSectionFilter = getSectionFilterFromHash();
+    syncChapterTabs();
+    updateMatrixSectionWorkspace();
+    setActiveInterfaceView(activeInterfaceView);
     setWorkflowStep(1, { scroll: false });
     updateAllRiskCells();
 
@@ -4191,42 +5428,70 @@ toggleReviewModeButton?.addEventListener("click", () => {
 });
 
 // ── Chapter tabs (delegated) ──
-var chapterTabNav = document.querySelector(".chapter-tabs");
+const chapterTabNav = document.querySelector(".chapter-tabs");
 if (chapterTabNav) {
     chapterTabNav.addEventListener("click", function(e) {
-        var tab = e.target.closest(".chapter-tab");
+        const tab = e.target.closest(".chapter-tab");
         if (!tab) return;
         chapterTabNav.querySelector(".chapter-tab.active")?.classList.remove("active");
         tab.classList.add("active");
-        var chapter = tab.getAttribute("data-chapter");
+        const chapter = tab.getAttribute("data-chapter");
         setActiveSectionFilter(chapter === "all" ? "all" : Number(chapter));
     });
 }
 
+resetMatrixSearchButton?.addEventListener("click", () => {
+    if (!matrixSearchInput) {
+        return;
+    }
+
+    matrixSearchInput.value = "";
+    filterMatrixRows();
+    matrixSearchInput.focus();
+});
+
+resetMatrixFiltersButton?.addEventListener("click", () => {
+    if (matrixSearchInput) {
+        matrixSearchInput.value = "";
+    }
+
+    if (showOpenOnlyInput) {
+        showOpenOnlyInput.checked = false;
+    }
+
+    applyReviewFilter("all");
+    setActiveSectionFilter("all");
+    filterMatrixRows();
+});
+
+showAllChaptersButton?.addEventListener("click", () => {
+    setActiveSectionFilter("all");
+});
+
 // ── Delegated matrix button events (replaces per-cell listeners) ──
 if (matrixBody) {
     matrixBody.addEventListener("click", function(e) {
-        var btn = e.target.closest("button[data-row]");
+        const btn = e.target.closest("button[data-row]");
         if (!btn) return;
-        var ri = Number(btn.dataset.row);
-        var disc = btn.dataset.discipline;
-        var resp = btn.dataset.responsibility;
+        const ri = Number(btn.dataset.row);
+        const disc = btn.dataset.discipline;
+        const resp = btn.dataset.responsibility;
         setResponsibilityValue(ri, disc, resp, nextState(btn.dataset.state || ""));
     });
 
     matrixBody.addEventListener("focusin", function(e) {
-        var btn = e.target.closest("button[data-row]");
+        const btn = e.target.closest("button[data-row]");
         if (!btn) return;
         focusRow(Number(btn.dataset.row));
     });
 
     matrixBody.addEventListener("keydown", function(e) {
-        var btn = e.target.closest("button[data-row]");
+        const btn = e.target.closest("button[data-row]");
         if (!btn) return;
-        var ri = Number(btn.dataset.row);
-        var disc = btn.dataset.discipline;
-        var resp = btn.dataset.responsibility;
-        var key = e.key;
+        const ri = Number(btn.dataset.row);
+        const disc = btn.dataset.discipline;
+        const resp = btn.dataset.responsibility;
+        const key = e.key;
 
         if (key === "ArrowRight") { e.preventDefault(); moveMatrixButtonFocus(btn, 0, 1); }
         else if (key === "ArrowLeft") { e.preventDefault(); moveMatrixButtonFocus(btn, 0, -1); }
@@ -4257,7 +5522,7 @@ matrixSectionNextOpenButton?.addEventListener("click", () => {
     const openRows = getVisibleContentRowIndexes({ openOnly: true });
 
     if (!openRows.length) {
-        showToast("Ingen apne avklaringer i dette utvalget akkurat na.", "success");
+        showToast("Ingen åpne avklaringer i dette utvalget akkurat nå.", "success");
         return;
     }
 
@@ -4325,26 +5590,22 @@ topbarStepPills.forEach((pill) => {
     });
 });
 
-// Patch setWorkflowStep to sync topbar pills
-const _originalSetWorkflowStep = setWorkflowStep;
-setWorkflowStep = function patchedSetWorkflowStep(stepNumber, options) {
-    _originalSetWorkflowStep(stepNumber, options);
+// Sync topbar pills whenever workflow step changes (called from consolidated patch below)
+function syncTopbarStep(stepNumber) {
     const nextStep = Math.max(1, Math.min(4, Number(stepNumber) || 1));
     topbarStepPills.forEach((pill) => {
         pill.classList.toggle("active", Number(pill.dataset.stepTarget) === nextStep);
     });
-};
+}
 
-// Patch updateWorkflowOverview to sync topbar progress
-const _originalUpdateWorkflowOverview = updateWorkflowOverview;
-updateWorkflowOverview = function patchedUpdateWorkflowOverview() {
-    _originalUpdateWorkflowOverview();
+// Sync topbar progress bar (called from consolidated patch below)
+function syncTopbarProgress() {
     const progressText = workflowProgressValue?.textContent || "0 %";
     if (topbarProgressLabel) topbarProgressLabel.textContent = progressText;
     const match = progressText.match(/\d+/);
     const percent = match ? Number(match[0]) : 0;
     if (topbarProgressFill) topbarProgressFill.style.width = `${percent}%`;
-};
+}
 
 // ── Loading button helper ──
 function withLoading(button, asyncFn) {
@@ -4443,6 +5704,7 @@ const analyzeOffersButton = document.getElementById("analyze-offers");
 const offerAnalysisStatus = document.getElementById("offer-analysis-status");
 const offerAnalysisKpis = document.getElementById("offer-analysis-kpis");
 const offerFindingsList = document.getElementById("offer-findings-list");
+const offerDecisionSummary = document.getElementById("offer-decision-summary");
 
 function formatFileSize(bytes) {
     if (bytes < 1024) return `${bytes} B`;
@@ -4464,6 +5726,7 @@ function addDocument(name, content, size) {
 function addOfferDocument(name, content, size) {
     uploadedOfferDocuments.push({ name, content, size, id: Date.now() + Math.random() });
     lastOfferAnalysis = null;
+    offerDecisionState.clear();
     renderOfferDocumentList();
     renderOfferAnalysis();
 }
@@ -4718,11 +5981,12 @@ if (clearAllOffersButton) {
 function renderOfferAnalysis() {
     if (offerAnalysisKpis) {
         const summary = lastOfferAnalysis || { documentCount: 0, findingCount: 0, conflictCount: 0, warningCount: 0 };
+        const decisionStats = getOfferDecisionStats();
         offerAnalysisKpis.innerHTML = `
             <div class="overview-card"><span class="overview-label">Tilbud</span><strong>${summary.documentCount || 0}</strong><span class="overview-detail">Opplastede dokumenter</span></div>
             <div class="overview-card"><span class="overview-label">Funn</span><strong>${summary.findingCount || 0}</strong><span class="overview-detail">Registrerte signaler</span></div>
             <div class="overview-card"><span class="overview-label">Konflikter</span><strong>${summary.conflictCount || 0}</strong><span class="overview-detail">Mulige avvik mot matrisen</span></div>
-            <div class="overview-card"><span class="overview-label">Advarsler</span><strong>${summary.warningCount || 0}</strong><span class="overview-detail">Forbehold og uklart omfang</span></div>
+            <div class="overview-card"><span class="overview-label">Til vurdering</span><strong>${decisionStats.review + decisionStats.pending}</strong><span class="overview-detail">Funn som ikke er lukket</span></div>
         `;
     }
 
@@ -4731,12 +5995,53 @@ function renderOfferAnalysis() {
         if (!findings.length) {
             offerFindingsList.innerHTML = "<p>Ingen analyse kjørt ennå.</p>";
         } else {
-            offerFindingsList.innerHTML = findings.map(function(finding) {
+            offerFindingsList.innerHTML = findings.map(function(finding, index) {
+                const findingKey = getOfferFindingKey(finding, index);
+                const decision = getOfferFindingDecision(finding, index);
                 if (finding.rowUid) {
-                    return `<button type="button" class="offer-finding-item" data-row-uid="${escapeHtml(finding.rowUid)}"><strong>${escapeHtml(finding.level)}</strong>: ${escapeHtml(finding.message)}</button>`;
+                    return `
+                        <div class="offer-finding-shell">
+                            <button type="button" class="offer-finding-item" data-row-uid="${escapeHtml(finding.rowUid)}"><strong>${escapeHtml(finding.level)}</strong>: ${escapeHtml(finding.message)}</button>
+                            <div class="offer-finding-decision-row">
+                                <span class="offer-finding-decision-label">Beslutning: ${escapeHtml(getOfferDecisionLabel(decision))}</span>
+                                <div class="offer-finding-decision-actions">
+                                    <button type="button" class="secondary-button${decision === "review" ? " is-active" : ""}" data-offer-decision="${escapeHtml(findingKey)}" data-offer-decision-value="review">Må avklares</button>
+                                    <button type="button" class="secondary-button${decision === "accepted" ? " is-active" : ""}" data-offer-decision="${escapeHtml(findingKey)}" data-offer-decision-value="accepted">Akseptert</button>
+                                    <button type="button" class="secondary-button${decision === "rejected" ? " is-active" : ""}" data-offer-decision="${escapeHtml(findingKey)}" data-offer-decision-value="rejected">Avvist</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
                 }
-                return `<p><strong>${escapeHtml(finding.level)}</strong>: ${escapeHtml(finding.message)}</p>`;
+                return `
+                    <div class="offer-finding-shell">
+                        <p class="offer-finding-static"><strong>${escapeHtml(finding.level)}</strong>: ${escapeHtml(finding.message)}</p>
+                        <div class="offer-finding-decision-row">
+                            <span class="offer-finding-decision-label">Beslutning: ${escapeHtml(getOfferDecisionLabel(decision))}</span>
+                            <div class="offer-finding-decision-actions">
+                                <button type="button" class="secondary-button${decision === "review" ? " is-active" : ""}" data-offer-decision="${escapeHtml(findingKey)}" data-offer-decision-value="review">Må avklares</button>
+                                <button type="button" class="secondary-button${decision === "accepted" ? " is-active" : ""}" data-offer-decision="${escapeHtml(findingKey)}" data-offer-decision-value="accepted">Akseptert</button>
+                                <button type="button" class="secondary-button${decision === "rejected" ? " is-active" : ""}" data-offer-decision="${escapeHtml(findingKey)}" data-offer-decision-value="rejected">Avvist</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
             }).join("");
+        }
+    }
+
+    if (offerDecisionSummary) {
+        const findings = lastOfferAnalysis?.findings || [];
+        if (!findings.length) {
+            offerDecisionSummary.innerHTML = "<p>Ingen tilbudsbeslutninger registrert ennå.</p>";
+        } else {
+            const stats = getOfferDecisionStats();
+            const unresolved = stats.pending + stats.review;
+            offerDecisionSummary.innerHTML = `
+                <p><strong>${unresolved}</strong> funn står fortsatt til vurdering.</p>
+                <p><strong>${stats.accepted}</strong> funn er akseptert og <strong>${stats.rejected}</strong> er avvist.</p>
+                <p>${unresolved ? "Bruk beslutningsknappene under hvert funn for å lukke kontrollen." : "Alle registrerte funn har fått en beslutning."}</p>
+            `;
         }
     }
 
@@ -4825,6 +6130,12 @@ async function analyzeOffersAgainstMatrix() {
         warningCount: findings.filter(function(item) { return item.level === "Advarsel"; }).length,
         findings,
     };
+    findings.forEach(function(finding, index) {
+        const key = getOfferFindingKey(finding, index);
+        if (!offerDecisionState.has(key)) {
+            setOfferFindingDecision(key, finding.level === "Konflikt" ? "review" : "pending");
+        }
+    });
 
     if (offerAnalysisStatus) {
         offerAnalysisStatus.textContent = `Tilbudsanalyse ferdig. ${lastOfferAnalysis.findingCount} funn registrert mot gjeldende matrisegrunnlag.`;
@@ -5033,7 +6344,7 @@ function deriveTueRecommendation(signals, score, _projectType) {
         return {
             coreModel: "totaltechnical",
             locksModel: hasLocks || hasAccessControl ? "separate" : "integrated",
-            adkModel: hasAccessControl ? "locks" : "el",
+            adkModel: hasAccessControl ? "separate" : "separate",
             summary: "Totalteknisk pakke anbefales",
             reason: "Prosjektet har mange tverrfaglige avhengigheter mellom EL, AUT og SD. " +
                     "Med en totalteknisk pakke reduseres grensesnittene betydelig, og én aktør " +
@@ -5046,7 +6357,7 @@ function deriveTueRecommendation(signals, score, _projectType) {
         return {
             coreModel: "el_aut_sd",
             locksModel: hasLocks || hasAccessControl ? "separate" : "integrated",
-            adkModel: hasAccessControl ? "locks" : "el",
+            adkModel: hasAccessControl ? "separate" : "separate",
             summary: "EL + AUT + SD i felles pakke anbefales",
             reason: "Underlaget nevner både SD/BAS-signaler og automasjonskomponenter. " +
                     "Å samle disse i én leveranse gir enklere grensesnitt og bedre koordinering " +
@@ -5059,7 +6370,7 @@ function deriveTueRecommendation(signals, score, _projectType) {
         return {
             coreModel: "el_aut",
             locksModel: hasLocks || hasAccessControl ? "separate" : "integrated",
-            adkModel: hasAccessControl ? "locks" : "el",
+            adkModel: hasAccessControl ? "separate" : "separate",
             summary: "EL + AUT i felles pakke anbefales",
             reason: "Prosjektet har automasjonsavhengigheter som gjør det fornuftig å samle " +
                     "EL og AUT. SD kan fortsatt håndteres separat for tydeligere grensesnitt."
@@ -5070,7 +6381,7 @@ function deriveTueRecommendation(signals, score, _projectType) {
     return {
         coreModel: "separate",
         locksModel: hasLocks ? "separate" : "integrated",
-        adkModel: "el",
+        adkModel: hasAccessControl ? "separate" : "separate",
         standalone: [],
         summary: "Separate tekniske UE-er anbefales",
         reason: "Prosjektet ser ut til å ha relativt tydelige faggrenser. " +
@@ -5080,6 +6391,11 @@ function deriveTueRecommendation(signals, score, _projectType) {
 
 function deriveMatrixScope(signals, score, projectType) {
     const signalCategories = new Set(signals.map(function(s) { return s.category; }));
+    const sectionTargetsByLevel = {
+        minimal: getScopedSectionTargets("minimal", projectType),
+        standard: getScopedSectionTargets("standard", projectType),
+        full: getScopedSectionTargets("full", projectType),
+    };
 
     // Define which TFM sections/keywords are relevant per complexity level
     let relevantKeywords = [];
@@ -5097,10 +6413,11 @@ function deriveMatrixScope(signals, score, projectType) {
             level: "minimal",
             label: "Forenklet matrise",
             description: `For et enkelt ${getProjectTypeLabel(projectType).toLowerCase()}-prosjekt trenger du bare grunnleggende rader. ` +
-                         `Systemet fjerner avanserte rader som ikke er relevante. Anslagsvis ${rowEstimate}.`,
+                         `Systemet prioriterer representative rader i alle hovedseksjoner, uten å dra med hele katalogen. Anslagsvis ${rowEstimate}.`,
             relevantKeywords: relevantKeywords,
             excludeKeywords: excludeKeywords,
-            rowEstimate: rowEstimate
+            rowEstimate: rowEstimate,
+            sectionTargets: sectionTargetsByLevel.minimal,
         };
     }
 
@@ -5115,10 +6432,11 @@ function deriveMatrixScope(signals, score, projectType) {
             level: "standard",
             label: "Standard matrise",
             description: `Middels kompleksitet for ${getProjectTypeLabel(projectType).toLowerCase()}. ` +
-                         `Matrisen tilpasses basert på identifiserte signaler. Anslagsvis ${rowEstimate}.`,
+                         `Matrisen tilpasses med balanserte seksjoner og ekstra tyngde på fagområdene dokumentene peker mot. Anslagsvis ${rowEstimate}.`,
             relevantKeywords: relevantKeywords,
             excludeKeywords: excludeKeywords,
-            rowEstimate: rowEstimate
+            rowEstimate: rowEstimate,
+            sectionTargets: sectionTargetsByLevel.standard,
         };
     }
 
@@ -5132,7 +6450,8 @@ function deriveMatrixScope(signals, score, projectType) {
                      `Anslagsvis ${rowEstimate}.`,
         relevantKeywords: [],
         excludeKeywords: [],
-        rowEstimate: rowEstimate
+        rowEstimate: rowEstimate,
+        sectionTargets: sectionTargetsByLevel.full,
     };
 }
 
@@ -5425,7 +6744,7 @@ if (analyzeBhButton) {
     analyzeBhButton.addEventListener("click", function() {
         const allText = getAllDocumentText();
         if (!allText.trim()) {
-            showToast("Ingen dokumenter eller tekst å analysere.", "error");
+            showToast("Ingen dokumenter å analysere.", "error");
             return;
         }
 
@@ -5509,30 +6828,13 @@ if (applyMatrixScopeButton) {
             // Use all rows
             replaceRows(allRows);
         } else {
-            // Filter rows based on scope
-            const filteredRows = allRows.filter(function(row) {
-                if (row.section) return true;
-                const desc = (row.description || "").toLowerCase();
-                const comment = (row.comments || "").toLowerCase();
-                const combined = desc + " " + comment;
-
-                // Check if row matches any exclude keyword
-                const isExcluded = scope.excludeKeywords.some(function(kw) {
-                    return combined.indexOf(kw.toLowerCase()) >= 0;
-                });
-
-                if (isExcluded) return false;
-
-                // For minimal scope, only include rows matching relevant keywords
-                if (scope.level === "minimal" && scope.relevantKeywords.length > 0) {
-                    return scope.relevantKeywords.some(function(kw) {
-                        return combined.indexOf(kw.toLowerCase()) >= 0;
-                    });
-                }
-
-                return true;
+            const filteredRows = getScopedCatalogRows(allRows, {
+                projectType: projectTypeSelect?.value || "bolig",
+                scopeLevel: scope.level,
+                sectionTargets: scope.sectionTargets,
+                excludeKeywords: scope.excludeKeywords,
+                signals: lastComplexityResult?.signals || [],
             });
-
             replaceRows(filteredRows);
         }
 
@@ -5630,19 +6932,22 @@ function syncPhaseSidebar() {
     if (phaseBtns[3]) phaseBtns[3].disabled = false;
 }
 
-// Patch updateWorkflowOverview to also sync sidebar
-var _prevUpdateWorkflowOverview = updateWorkflowOverview;
-updateWorkflowOverview = function patchedUpdateWorkflowOverview2() {
-    _prevUpdateWorkflowOverview();
+// Consolidated patches — single wrapper for each function
+const _baseSetWorkflowStep = setWorkflowStep;
+setWorkflowStep = function(stepNumber, options) {
+    _baseSetWorkflowStep(stepNumber, options);
+    syncTopbarStep(stepNumber);
     syncPhaseSidebar();
 };
 
-// Patch setWorkflowStep to also sync sidebar active state
-var _prevSetWorkflowStep = setWorkflowStep;
-setWorkflowStep = function patchedSetWorkflowStep2(stepNumber, options) {
-    _prevSetWorkflowStep(stepNumber, options);
+const _baseUpdateWorkflowOverview = updateWorkflowOverview;
+updateWorkflowOverview = function() {
+    _baseUpdateWorkflowOverview();
+    syncTopbarProgress();
     syncPhaseSidebar();
 };
 
 // Initial sync
+populateRowStatusOptions();
+populateRowOwnerOptions();
 syncPhaseSidebar();

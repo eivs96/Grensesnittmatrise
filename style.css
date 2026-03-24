@@ -452,6 +452,11 @@ body {
     box-shadow: var(--shadow-soft);
 }
 
+.step-checklist[hidden]:empty,
+.step-checklist[hidden] {
+    display: none;
+}
+
 .checklist-item {
     display: flex;
     gap: 10px;
@@ -939,7 +944,8 @@ h1 {
 .field-help {
     font-weight: 500;
     color: rgba(31, 42, 48, 0.72);
-    line-height: 1.45;
+    line-height: 1.35;
+    font-size: 0.85rem;
 }
 
 .bh-analysis-insights {
@@ -971,6 +977,45 @@ h1 {
 .analysis-findings p {
     margin: 0;
     line-height: 1.5;
+}
+
+.offer-finding-shell {
+    display: grid;
+    gap: 8px;
+}
+
+.offer-finding-static {
+    margin: 0;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(12, 110, 112, 0.12);
+}
+
+.offer-finding-decision-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    padding: 0 4px 6px;
+}
+
+.offer-finding-decision-label {
+    font-size: 0.86rem;
+    color: var(--muted);
+    font-weight: 700;
+}
+
+.offer-finding-decision-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.offer-finding-decision-actions .secondary-button.is-active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
 }
 
 .tue-builder-grid select {
@@ -1048,7 +1093,7 @@ h1 {
     display: flex;
     gap: 10px;
     align-items: center;
-    padding: 14px 16px;
+    padding: 12px 14px;
     border-radius: 16px;
     border: 1px solid rgba(9, 79, 83, 0.14);
     background: #fcfaf5;
@@ -1166,7 +1211,22 @@ h1 {
     flex-wrap: wrap;
     gap: 8px;
     align-items: center;
-    padding: 8px 0;
+    padding: 10px 0 12px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid rgba(12, 110, 112, 0.08);
+}
+
+.matrix-view-toggle {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-right: 8px;
+}
+
+.matrix-view-toggle .secondary-button.is-active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
 }
 
 .matrix-toolbar-compact input[type="search"] {
@@ -1204,6 +1264,7 @@ h1 {
     border: 1px solid var(--grid-soft);
     border-radius: var(--radius-sm);
     padding: 0;
+    box-shadow: var(--shadow-soft);
 }
 
 .row-detail-panel > summary {
@@ -1236,16 +1297,19 @@ h1 {
 }
 
 .row-detail-field input,
+.row-detail-field select,
 .row-detail-field textarea {
     padding: 6px 10px;
     border: 1.5px solid var(--grid);
     border-radius: 6px;
+    background: #fff;
     font-family: inherit;
     font-size: 0.88rem;
     outline: none;
 }
 
 .row-detail-field input:focus,
+.row-detail-field select:focus,
 .row-detail-field textarea:focus {
     border-color: var(--accent);
 }
@@ -1264,6 +1328,8 @@ h1 {
     flex-wrap: wrap;
     gap: 16px;
     align-items: flex-start;
+    padding-top: 14px;
+    border-top: 1px solid rgba(12, 110, 112, 0.08);
 }
 
 .matrix-footer-actions {
@@ -1283,6 +1349,17 @@ h1 {
 @media (max-width: 900px) {
     .chapter-tabs { overflow-x: auto; flex-wrap: nowrap; }
     .row-detail-grid { grid-template-columns: 1fr; }
+    .interface-card-admin,
+    .interface-card-assignments,
+    .matrix-command-metrics { grid-template-columns: 1fr; }
+    .interface-card-grid,
+    .interface-card-assignments {
+        grid-template-columns: 1fr;
+    }
+    .interface-card-workspace-header {
+        align-items: start;
+        flex-direction: column;
+    }
 }
 
 .workspace-side {
@@ -1494,7 +1571,7 @@ h1 {
 
 .matrix-command-metrics {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 10px;
     margin-bottom: 10px;
 }
@@ -1535,6 +1612,267 @@ h1 {
     gap: 10px;
 }
 
+.interface-card-workspace-shell {
+    display: grid;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.interface-card-workspace-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    align-items: end;
+    padding: 16px 18px;
+    border-radius: 20px;
+    background: linear-gradient(180deg, rgba(230, 240, 239, 0.9), rgba(255, 255, 255, 0.96));
+    border: 1px solid rgba(12, 110, 112, 0.12);
+    box-shadow: var(--shadow-soft);
+}
+
+.interface-card-workspace-header h3 {
+    margin: 0 0 6px;
+    font-size: 1.08rem;
+    color: var(--accent-strong);
+}
+
+.interface-card-workspace-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.interface-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 14px;
+}
+
+.interface-card {
+    display: grid;
+    gap: 14px;
+    padding: 18px;
+    border-radius: 22px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(249, 253, 252, 0.96));
+    border: 1px solid rgba(12, 110, 112, 0.12);
+    box-shadow: var(--shadow-soft);
+    content-visibility: auto;
+    contain-intrinsic-size: auto 360px;
+}
+
+.interface-card.needs-attention {
+    border-color: rgba(193, 131, 55, 0.28);
+}
+
+.interface-card.is-complete {
+    border-color: rgba(39, 140, 86, 0.24);
+}
+
+.interface-card.is-active {
+    border-color: rgba(9, 79, 83, 0.35);
+    box-shadow: 0 18px 32px rgba(9, 79, 83, 0.16);
+}
+
+.interface-card-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: start;
+}
+
+.interface-card-kicker {
+    margin: 0 0 6px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    font-weight: 800;
+}
+
+.interface-card-header h4 {
+    margin: 0 0 8px;
+    font-size: 1.08rem;
+    color: var(--accent-strong);
+}
+
+.interface-card-summary {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.interface-card-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.interface-card-chips span {
+    display: inline-flex;
+    padding: 7px 10px;
+    border-radius: 999px;
+    background: rgba(12, 110, 112, 0.08);
+    color: var(--accent-strong);
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.interface-card-guidance {
+    display: grid;
+    gap: 4px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    background: rgba(12, 110, 112, 0.06);
+}
+
+.interface-card-guidance strong {
+    color: var(--accent-strong);
+}
+
+.interface-card-guidance span {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.45;
+}
+
+.interface-card-admin {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.interface-card-context {
+    display: grid;
+    gap: 10px;
+}
+
+.interface-card-context-block {
+    display: grid;
+    gap: 4px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    background: rgba(255, 251, 244, 0.9);
+    border: 1px solid rgba(193, 131, 55, 0.12);
+}
+
+.interface-card-context-block.project-note {
+    background: rgba(230, 240, 239, 0.72);
+    border-color: rgba(12, 110, 112, 0.12);
+}
+
+.interface-card-context-block span {
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    font-weight: 800;
+}
+
+.interface-card-context-block p {
+    margin: 0;
+    line-height: 1.5;
+    color: var(--text);
+}
+
+.interface-card-assignments {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.interface-card-assignment {
+    display: grid;
+    gap: 6px;
+}
+
+.interface-card-assignment span {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    font-weight: 700;
+}
+
+.interface-card-assignment.is-next span {
+    color: var(--accent-strong);
+}
+
+.interface-card-assignment select,
+.interface-card-note textarea {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid rgba(9, 79, 83, 0.16);
+    border-radius: 14px;
+    background: #fff;
+    color: var(--text);
+    font: inherit;
+}
+
+.interface-card-assignment select:focus,
+.interface-card-note textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(12, 110, 112, 0.08);
+}
+
+.interface-card-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.interface-card-confirm {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    color: var(--accent-strong);
+}
+
+.interface-card-confirm input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--accent);
+}
+
+.interface-card-note {
+    display: grid;
+    gap: 6px;
+}
+
+.interface-card-review-state {
+    display: grid;
+    gap: 4px;
+    padding: 12px 14px;
+    border-radius: 16px;
+    background: rgba(193, 131, 55, 0.08);
+    border: 1px solid rgba(193, 131, 55, 0.14);
+}
+
+.interface-card-review-state.is-ready {
+    background: rgba(39, 140, 86, 0.1);
+    border-color: rgba(39, 140, 86, 0.18);
+}
+
+.interface-card-review-state strong {
+    color: var(--accent-strong);
+}
+
+.interface-card-review-state span {
+    color: var(--muted);
+    line-height: 1.45;
+}
+
+.interface-card-note span {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    font-weight: 700;
+}
+
 .row-description-stack {
     display: grid;
     gap: 6px;
@@ -1573,6 +1911,28 @@ h1 {
 .row-status-badge.status-confirmed {
     background: rgba(39, 140, 86, 0.14);
     color: #207247;
+}
+
+.row-status-badge.status-ready,
+.row-status-badge.status-clarified {
+    background: rgba(39, 140, 86, 0.14);
+    color: #207247;
+}
+
+.row-status-badge.status-owner,
+.row-status-badge.status-in_progress {
+    background: rgba(12, 110, 112, 0.1);
+    color: var(--accent-strong);
+}
+
+.row-status-badge.status-blocked {
+    background: rgba(171, 34, 32, 0.12);
+    color: #8d2323;
+}
+
+.row-status-badge.status-open {
+    background: rgba(193, 131, 55, 0.12);
+    color: #8a5600;
 }
 
 .row-status-badge.status-comment {
@@ -1880,7 +2240,23 @@ h1 {
 .matrix-empty-state p {
     margin: 0;
     line-height: 1.5;
-    font-weight: 700;
+}
+
+.matrix-empty-state-title {
+    font-weight: 800;
+    font-size: 0.98rem;
+}
+
+.matrix-empty-state-detail {
+    margin-top: 4px;
+    color: var(--muted);
+}
+
+.matrix-empty-state-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
 }
 
 .matrix-meta-card {
@@ -2140,6 +2516,12 @@ body.review-mode .contract-summary {
     border-collapse: collapse;
     table-layout: fixed;
     font-size: 0.72rem;
+    contain: layout style paint;
+}
+
+.matrix tbody tr {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 32px;
 }
 
 .matrix th,
@@ -2224,15 +2606,15 @@ body.review-mode .contract-summary {
 .description-cell {
     background: #fffaf0;
     text-align: left;
-    padding: 4px 6px;
+    padding: 3px 6px;
     font-weight: 600;
     z-index: 1;
-    line-height: 1.2;
+    line-height: 1.15;
     width: 160px;
     max-width: 160px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    font-size: 0.65rem;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 .tfm-cell {
@@ -2384,6 +2766,7 @@ body.review-mode .contract-summary {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 12px;
+    margin-top: 16px;
 }
 
 .summary-panel {
@@ -2392,6 +2775,15 @@ body.review-mode .contract-summary {
     background: #fcfaf5;
     border: 1px solid rgba(31, 42, 48, 0.08);
     box-shadow: var(--shadow-soft);
+}
+
+.summary-eyebrow {
+    margin: 0 0 8px;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    font-weight: 800;
 }
 
 .summary-panel h3 {
@@ -2417,7 +2809,7 @@ body.review-mode .contract-summary {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
-    margin-top: 18px;
+    margin-top: 8px;
 }
 
 .contract-actions button {

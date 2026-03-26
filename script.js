@@ -42,6 +42,24 @@ const tueCoreHelp = document.getElementById("tue-core-help");
 const tueLocksHelp = document.getElementById("tue-locks-help");
 const tueAdkHelp = document.getElementById("tue-adk-help");
 const tueRecommendation = document.getElementById("tue-recommendation");
+const coreOptionCards = Array.from(document.querySelectorAll("[data-core-option]"));
+const locksOptionButtons = Array.from(document.querySelectorAll("[data-locks-option]"));
+const adkOptionButtons = Array.from(document.querySelectorAll("[data-adk-option]"));
+const disciplineAssignGroups = Array.from(document.querySelectorAll("[data-assign]"));
+const matrixColumnPreviewEl = document.getElementById("matrix-column-preview");
+const packagePreviewPower = document.getElementById("package-preview-power");
+const packagePreviewAutomation = document.getElementById("package-preview-automation");
+const packagePreviewSd = document.getElementById("package-preview-sd");
+const packagePreviewSecurity = document.getElementById("package-preview-security");
+const packageStructureSummary = document.getElementById("package-structure-summary");
+const packageStructureGrid = document.getElementById("package-structure-grid");
+const packageInterfaceSummary = document.getElementById("package-interface-summary");
+const packageInterfaceList = document.getElementById("package-interface-list");
+const bhPackageGuidance = document.getElementById("bh-package-guidance");
+const bhPackageGuidanceSummary = document.getElementById("bh-package-guidance-summary");
+const bhPackageGuidanceModel = document.getElementById("bh-package-guidance-model");
+const bhPackageGuidanceMatch = document.getElementById("bh-package-guidance-match");
+const bhPackageGuidanceInterfaces = document.getElementById("bh-package-guidance-interfaces");
 const applyPackagePresetButton = document.getElementById("apply-package-preset");
 const bhUploadInput = document.getElementById("bh-upload");
 const analyzeBhButton = document.getElementById("analyze-bh");
@@ -55,9 +73,6 @@ const loadProjectButton = document.getElementById("load-project");
 const exportExcelButton = document.getElementById("export-excel");
 const exportPdfButton = document.getElementById("export-pdf");
 const persistenceStatus = document.getElementById("persistence-status");
-const workspaceReadinessLabel = document.getElementById("workspace-readiness-label");
-const workspaceNextAction = document.getElementById("workspace-next-action");
-const workspaceBlockers = document.getElementById("workspace-blockers");
 const autosaveStatus = document.getElementById("autosave-status");
 const projectList = document.getElementById("project-list");
 const revisionList = document.getElementById("revision-list");
@@ -88,27 +103,6 @@ const matrixViewToggleButton = document.getElementById("matrix-view-toggle");
 const addRowButton = document.getElementById("add-row");
 const deleteRowButton = document.getElementById("delete-row");
 const jumpUnresolvedButton = document.getElementById("jump-unresolved");
-const toggleReviewModeButton = document.getElementById("toggle-review-mode");
-const reviewFilterButtons = Array.from(document.querySelectorAll("[data-review-filter]"));
-const matrixVisibleCount = document.getElementById("matrix-visible-count");
-const matrixVisibleDetail = document.getElementById("matrix-visible-detail");
-const matrixConfirmedCount = document.getElementById("matrix-confirmed-count");
-const matrixConfirmedDetail = document.getElementById("matrix-confirmed-detail");
-const matrixOpenCount = document.getElementById("matrix-open-count");
-const matrixOpenDetail = document.getElementById("matrix-open-detail");
-const matrixFilterCount = document.getElementById("matrix-filter-count");
-const matrixFilterStatus = document.getElementById("matrix-filter-status");
-const matrixSectionCards = document.getElementById("matrix-section-cards");
-const matrixSectionResetButton = document.getElementById("matrix-section-reset");
-const matrixSectionFocusEyebrow = document.getElementById("matrix-section-focus-eyebrow");
-const matrixSectionFocusTitle = document.getElementById("matrix-section-focus-title");
-const matrixSectionFocusSummary = document.getElementById("matrix-section-focus-summary");
-const matrixSectionFocusKpis = document.getElementById("matrix-section-focus-kpis");
-const matrixSectionFocusThemes = document.getElementById("matrix-section-focus-themes");
-const matrixSectionFocusRisks = document.getElementById("matrix-section-focus-risks");
-const matrixSectionFocusDeliverables = document.getElementById("matrix-section-focus-deliverables");
-const matrixSectionFirstRowButton = document.getElementById("matrix-section-first-row");
-const matrixSectionNextOpenButton = document.getElementById("matrix-section-next-open");
 const currentRowInsightSummary = document.getElementById("current-row-insight-summary");
 const currentRowInsightDisciplines = document.getElementById("current-row-insight-disciplines");
 const currentRowInsightFocus = document.getElementById("current-row-insight-focus");
@@ -138,23 +132,6 @@ const step1Checklist = document.getElementById("step-1-checklist");
 const step2Checklist = document.getElementById("step-2-checklist");
 const step3Checklist = document.getElementById("step-3-checklist");
 const step4Checklist = document.getElementById("step-4-checklist");
-const cockpitProgressValue = document.getElementById("cockpit-progress-value");
-const cockpitProgressText = document.getElementById("cockpit-progress-text");
-const cockpitNextStep = document.getElementById("cockpit-next-step");
-const cockpitNextStepDetail = document.getElementById("cockpit-next-step-detail");
-const cockpitMatrixHealth = document.getElementById("cockpit-matrix-health");
-const cockpitMatrixHealthDetail = document.getElementById("cockpit-matrix-health-detail");
-const cockpitOfferHealth = document.getElementById("cockpit-offer-health");
-const cockpitOfferHealthDetail = document.getElementById("cockpit-offer-health-detail");
-const matrixQueueList = document.getElementById("matrix-queue-list");
-const matrixCommentGapCount = document.getElementById("matrix-comment-gap-count");
-const matrixConflictCount = document.getElementById("matrix-conflict-count");
-const matrixOwnerGapCount = document.getElementById("matrix-owner-gap-count");
-const matrixReviewReadyCount = document.getElementById("matrix-review-ready-count");
-const matrixCommandDetail = document.getElementById("matrix-command-detail");
-const jumpConflictRowButton = document.getElementById("jump-conflict-row");
-const jumpUncommentedRowButton = document.getElementById("jump-uncommented-row");
-const focusOfferStepButton = document.getElementById("focus-offer-step");
 
 const defaultRows = [
     {
@@ -657,6 +634,7 @@ const commentState = new Map();
 const rowOwnerState = new Map();
 const rowStatusState = new Map();
 const offerDecisionState = new Map();
+const offerDecisionNoteState = new Map();
 let baseMarksByRow = rows.map((row) => ({ ...row.marks }));
 const collapsedSections = new Map();
 let uploadedBhText = "";
@@ -665,8 +643,6 @@ let autosaveTimer = null;
 let isApplyingSavedState = false;
 let isSavingProject = false;
 const LAST_PROJECT_KEY = "grensesnittmatrise:last-project";
-const REVIEW_MODE_KEY = "grensesnittmatrise:review-mode";
-const REVIEW_FILTER_KEY = "grensesnittmatrise:review-filter";
 const INTERFACE_VIEW_KEY = "grensesnittmatrise:interface-view";
 let activeRowIndex = -1;
 let cachedProjects = [];
@@ -679,13 +655,12 @@ let usingImportedBaseRows = false;
 let hasProjectSpecificRows = false;
 let matrixBuildInProgress = false;
 let activeSectionFilter = "all";
-let reviewModeEnabled = false;
-let activeReviewFilter = "all";
 let activeInterfaceView = "cards";
 let showAllInterfaceCards = false;
 let _interfaceCardRenderTimer = null;
 const uploadedOfferDocuments = [];
 let lastOfferAnalysis = null;
+let activeOfferFindingKey = "";
 
 function populateRowStatusOptions() {
     if (!currentRowStatus) {
@@ -721,7 +696,13 @@ const packageLabels = {
     adk: "ADK separat",
     las: "Lås og beslag separat",
     el_aut: "EL + AUT",
+    aut_sd: "AUT + SD",
+    el_sd: "EL + SD",
     el_aut_sd: "EL + AUT + SD",
+    ror_aut: "Rør + AUT",
+    ror_aut_sd: "Rør + AUT + SD",
+    vent_aut: "Vent + AUT",
+    vent_aut_sd: "Vent + AUT + SD",
     totaltechnical: "Totalteknisk pakke",
 };
 
@@ -736,11 +717,613 @@ function getTueConfig() {
     };
 }
 
+function getSecurityPackageLabel(config = getTueConfig()) {
+    const locksOwner =
+        config.locksModel === "separate"
+            ? "Lås og beslag"
+            : config.locksModel === "integrated"
+                ? "Bygg / dør"
+                : config.locksModel === "el"
+                    ? "Elektro"
+                    : "ADK / sikkerhet";
+
+    const adkOwner =
+        config.adkModel === "separate"
+            ? "Adgangskontroll"
+            : config.adkModel === "el"
+                ? "Elektro"
+                : config.adkModel === "locks"
+                    ? "Lås og beslag"
+                    : config.adkModel === "aut"
+                        ? "Automasjon"
+                        : config.adkModel === "sd"
+                            ? "SD / systemintegrator"
+                            : "Sikkerhetspakke";
+
+    if (config.locksModel === "adk" || config.adkModel === "security") {
+        return "Samlet sikkerhetspakke";
+    }
+
+    if (locksOwner === adkOwner) {
+        return locksOwner;
+    }
+
+    return `${locksOwner} + ${adkOwner}`;
+}
+
+function getTuePreview(config = getTueConfig()) {
+    const previewByCoreModel = {
+        separate: {
+            power: "Elektro",
+            automation: "Automasjon",
+            sd: "SD / systemintegrator",
+        },
+        el_aut: {
+            power: "Elektro + automasjon",
+            automation: "Elektro + automasjon",
+            sd: "SD / systemintegrator",
+        },
+        aut_sd: {
+            power: "Elektro",
+            automation: "Automasjon + SD",
+            sd: "Automasjon + SD",
+        },
+        el_sd: {
+            power: "Elektro",
+            automation: "Elektro",
+            sd: "Elektro + SD",
+        },
+        el_aut_sd: {
+            power: "Elektro",
+            automation: "Elektro + automasjon + SD",
+            sd: "Elektro + automasjon + SD",
+        },
+        ror_aut: {
+            power: "Elektro",
+            automation: "Rør",
+            sd: "Rør / egen SD-avklaring",
+        },
+        ror_aut_sd: {
+            power: "Elektro",
+            automation: "Rør",
+            sd: "Rør + SD",
+        },
+        vent_aut: {
+            power: "Elektro",
+            automation: "Ventilasjon",
+            sd: "Vent / egen SD-avklaring",
+        },
+        vent_aut_sd: {
+            power: "Elektro",
+            automation: "Ventilasjon",
+            sd: "Vent + SD",
+        },
+        totaltechnical: {
+            power: "Totalteknisk leverandør",
+            automation: "Totalteknisk leverandør",
+            sd: "Totalteknisk leverandør",
+        },
+    };
+
+    return {
+        ...(previewByCoreModel[config.coreModel] || previewByCoreModel.separate),
+        security: getSecurityPackageLabel(config),
+    };
+}
+
+function getPackageStructure(config = getTueConfig(), projectType = projectTypeSelect?.value || "bolig") {
+    const packages = [];
+    const pushPackage = (title, items, tone = "default") => {
+        packages.push({
+            title,
+            items: items.filter(Boolean),
+            tone,
+        });
+    };
+
+    const corePackageMap = {
+        separate: [
+            { title: "Elektro", items: ["Kabling", "Kraft", "Tavler"], tone: "el" },
+            { title: "Automasjon", items: ["Styring", "IO", "Funksjon"], tone: "aut" },
+            { title: "SD / systemintegrator", items: ["SD-integrasjon", "Toppsystem", "Grensesnitt"], tone: "sd" },
+        ],
+        el_aut: [
+            { title: "Elektro + automasjon", items: ["Kabling", "Kraft", "Styring", "IO"], tone: "el" },
+            { title: "SD / systemintegrator", items: ["SD-integrasjon", "Toppsystem"], tone: "sd" },
+        ],
+        aut_sd: [
+            { title: "Elektro", items: ["Kabling", "Kraft"], tone: "el" },
+            { title: "Automasjon + SD", items: ["Styring", "IO", "SD-integrasjon", "Toppsystem"], tone: "aut" },
+        ],
+        el_sd: [
+            { title: "Elektro + SD", items: ["Kabling", "Kraft", "SD-integrasjon", "Enkel styring"], tone: "el" },
+        ],
+        el_aut_sd: [
+            { title: "Elektro + automasjon + SD", items: ["Kabling", "Kraft", "Styring", "IO", "SD-integrasjon"], tone: "el" },
+        ],
+        ror_aut: [
+            { title: "Elektro", items: ["Kabling", "Kraft"], tone: "el" },
+            { title: "Rør + automasjon", items: ["Pumper", "Følere", "Mindre styring"], tone: "ror" },
+        ],
+        ror_aut_sd: [
+            { title: "Elektro", items: ["Kabling", "Kraft"], tone: "el" },
+            { title: "Rør + automasjon + SD", items: ["Pumper", "Følere", "Styring", "SD-integrasjon"], tone: "ror" },
+        ],
+        vent_aut: [
+            { title: "Elektro", items: ["Kabling", "Kraft"], tone: "el" },
+            { title: "Vent + automasjon", items: ["Aggregatstyring", "Følere", "Mindre styring"], tone: "vent" },
+        ],
+        vent_aut_sd: [
+            { title: "Elektro", items: ["Kabling", "Kraft"], tone: "el" },
+            { title: "Vent + automasjon + SD", items: ["Aggregatstyring", "Følere", "Styring", "SD-integrasjon"], tone: "vent" },
+        ],
+        totaltechnical: [
+            { title: "Totalteknisk pakke", items: ["Kabling", "Kraft", "Styring", "SD-integrasjon", "Teknisk koordinering"], tone: "all" },
+        ],
+    };
+
+    (corePackageMap[config.coreModel] || corePackageMap.separate).forEach((pkg) => {
+        pushPackage(pkg.title, pkg.items, pkg.tone);
+    });
+
+    if (["bolig", "leilighet", "rekkehus", "studentbolig"].includes(projectType)) {
+        pushPackage("Rør", ["Sanitær", "Varme", "VVS-utstyr"], "ror");
+        pushPackage("Ventilasjon", ["Kanaler", "Aggregater", "Innregulering"], "vent");
+    } else {
+        if (!packages.some((pkg) => pkg.title.toLowerCase().includes("rør"))) {
+            pushPackage("Rør", ["Sanitær", "Varme", "Kjøling"], "ror");
+        }
+        if (!packages.some((pkg) => pkg.title.toLowerCase().includes("vent"))) {
+            pushPackage("Ventilasjon", ["Luftbehandling", "Kanaler", "Innregulering"], "vent");
+        }
+    }
+
+    if (config.locksModel === "separate") {
+        pushPackage("Lås og beslag", ["Lås", "Beslag", "Dørmiljø"], "security");
+    } else if (config.locksModel === "adk" && !packages.some((pkg) => pkg.title.includes("Sikkerhet"))) {
+        pushPackage("Sikkerhetspakke", ["Lås", "Beslag"], "security");
+    }
+
+    if (config.adkModel === "separate") {
+        pushPackage("Adgangskontroll", ["Kortlesere", "Kontrollere", "Programmering"], "security");
+    } else if (config.adkModel === "security") {
+        const existingSecurity = packages.find((pkg) => pkg.title === "Sikkerhetspakke");
+        if (existingSecurity) {
+            existingSecurity.items.push("Adgangskontroll");
+        } else {
+            pushPackage("Sikkerhetspakke", ["Adgangskontroll", "Kortlesere", "Kontrollere"], "security");
+        }
+    }
+
+    pushPackage("BH / totalentreprenør", ["Premisser", "Ansvarsstyring", "Kontraktsgrensesnitt"], "owner");
+    return packages;
+}
+
+function getCriticalInterfaces(config = getTueConfig(), projectType = projectTypeSelect?.value || "bolig") {
+    const items = [];
+    const pushItem = (title, ownerA, ownerB, focus, severity = "medium") => {
+        items.push({ title, ownerA, ownerB, focus, severity });
+    };
+
+    const powerOwner = getTuePreview(config).power;
+    const automationOwner = getTuePreview(config).automation;
+    const sdOwner = getTuePreview(config).sd;
+    const securityOwner = getTuePreview(config).security;
+
+    if (powerOwner !== automationOwner) {
+        pushItem(
+            "Kraft, kabling og styresignal til teknisk utstyr",
+            powerOwner,
+            automationOwner,
+            "Avklar hvem som leverer kabler, aktuatorer, frekvensomformere og spenningssetting.",
+            "high"
+        );
+    }
+
+    if (automationOwner !== sdOwner) {
+        pushItem(
+            "IO-lister, datapunkter og SD-integrasjon",
+            automationOwner,
+            sdOwner,
+            "Beskriv hvem som eier signalpunkter, nettverk, adressering og komplett oppkobling mot SD.",
+            "high"
+        );
+    }
+
+    if (securityOwner !== "Bygg / dør") {
+        pushItem(
+            "Dørmiljø, beslag, kortlesere og låslogikk",
+            securityOwner,
+            "Bygg / dør",
+            "Avklar fysisk dørmiljø, utsparinger, beslag, strømforsyning og programmering.",
+            "high"
+        );
+    }
+
+    if (["ror_aut", "ror_aut_sd"].includes(config.coreModel)) {
+        pushItem(
+            "Pumper, følere og VVS-funksjon",
+            "Rør",
+            powerOwner,
+            "Vær tydelig på om rør eller elektro leverer motorvern, kabling og igangkjøring.",
+            "medium"
+        );
+    }
+
+    if (["vent_aut", "vent_aut_sd"].includes(config.coreModel)) {
+        pushItem(
+            "Aggregatstyring, spjeld og lufttekniske signaler",
+            "Ventilasjon",
+            powerOwner,
+            "Avklar leveranse av motorer, givere, frekvensomformere og funksjonstest.",
+            "medium"
+        );
+    }
+
+    if (!["bolig", "leilighet", "rekkehus", "studentbolig"].includes(projectType)) {
+        pushItem(
+            "BH / TE-premisser mot alle UE-pakker",
+            "BH / totalentreprenør",
+            "Alle tekniske UE-er",
+            "Bruk matrisen til å låse ansvar før utsendelse slik at tilbudene prises på samme grunnlag.",
+            "medium"
+        );
+    }
+
+    return items;
+}
+
+function getBhDrivenInterfaceAlerts(result = lastComplexityResult) {
+    if (!result?.signals?.length) {
+        return [];
+    }
+
+    const categories = new Set(result.signals.map((signal) => signal.category));
+    const alerts = [];
+
+    if (categories.has("automation") && categories.has("electrical")) {
+        alerts.push({
+            title: "EL ↔ automasjon",
+            detail: "Kabling, motorvern, frekvensomformere og styresignaler bør låses tydelig før forespørsel sendes ut.",
+        });
+    }
+
+    if (categories.has("sdBas")) {
+        alerts.push({
+            title: "Automasjon ↔ SD / toppsystem",
+            detail: "Definer eierskap til IO-lister, datapunkter, protokoller, adressering og komplett integrasjon.",
+        });
+    }
+
+    if (categories.has("accessControl") || categories.has("locks")) {
+        alerts.push({
+            title: "Lås / beslag ↔ ADK ↔ bygg",
+            detail: "Avklar fysisk dørmiljø, strømforsyning, beslag, lesere og programmering i samme grensesnitt.",
+        });
+    }
+
+    if (categories.has("cooling")) {
+        alerts.push({
+            title: "Rør / Vent ↔ EL / automasjon",
+            detail: "Kjøling og pumper peker ofte mot uklart ansvar for givere, ventiler, pumper og funksjonstest.",
+        });
+    }
+
+    if (categories.has("breeam")) {
+        alerts.push({
+            title: "Fag ↔ SD / EOS / dokumentasjon",
+            detail: "BREEAM-signaler krever tydelig måledata, integrasjon og ansvar for dokumentasjon og testing.",
+        });
+    }
+
+    return alerts.slice(0, 4);
+}
+
+function renderBhPackageGuidance(config = getTueConfig()) {
+    if (!bhPackageGuidance) {
+        return;
+    }
+
+    const recommendation = lastComplexityResult?.tueRecommendation;
+    const exposedInterfaces = getBhDrivenInterfaceAlerts(lastComplexityResult);
+    const hasAnalysis = Boolean(recommendation || lastBhAnalysis);
+
+    if (!hasAnalysis) {
+        bhPackageGuidance.classList.remove("has-analysis");
+        if (bhPackageGuidanceSummary) bhPackageGuidanceSummary.textContent = "Kjør analyse i steg 2 for å få anbefalt fagmodell og utsatte grensesnitt.";
+        if (bhPackageGuidanceModel) bhPackageGuidanceModel.textContent = "Ingen analyse ennå";
+        if (bhPackageGuidanceMatch) bhPackageGuidanceMatch.textContent = "Ikke vurdert";
+        if (bhPackageGuidanceInterfaces) {
+            bhPackageGuidanceInterfaces.innerHTML = "";
+        }
+        return;
+    }
+
+    bhPackageGuidance.classList.add("has-analysis");
+    const recommendedModel = recommendation?.coreModel || lastBhAnalysis?.coreModel || "separate";
+    const currentModel = config.coreModel;
+    const matches = recommendedModel === currentModel;
+    const modelText = packageLabels[recommendedModel] || describeTueConfig({ ...config, coreModel: recommendedModel });
+
+    if (bhPackageGuidanceSummary) {
+        bhPackageGuidanceSummary.textContent = recommendation?.reason || "BH-underlaget peker på noen grensesnitt som bør få ekstra oppmerksomhet.";
+    }
+    if (bhPackageGuidanceModel) {
+        bhPackageGuidanceModel.textContent = modelText;
+    }
+    if (bhPackageGuidanceMatch) {
+        bhPackageGuidanceMatch.textContent = matches ? "Matcher anbefalt modell" : "Avviker fra anbefalt modell";
+    }
+    if (bhPackageGuidanceInterfaces) {
+        bhPackageGuidanceInterfaces.innerHTML = exposedInterfaces.length
+            ? exposedInterfaces.map((item) => `
+                <article class="builder-guidance-item">
+                    <strong>${escapeHtml(item.title)}</strong>
+                    <p>${escapeHtml(item.detail)}</p>
+                </article>
+            `).join("")
+            : `
+                <article class="builder-guidance-item">
+                    <strong>Ingen tydelige avviksspor ennå</strong>
+                    <p>BH-underlaget peker foreløpig ikke på noen tydelige røde flagg mellom fagpakkene.</p>
+                </article>
+            `;
+    }
+}
+
+function renderPackageStructure(config = getTueConfig()) {
+    if (!packageStructureGrid) {
+        return;
+    }
+
+    const packages = getPackageStructure(config);
+    packageStructureGrid.innerHTML = "";
+
+    packages.forEach((pkg) => {
+        const card = document.createElement("article");
+        card.className = `builder-structure-card tone-${pkg.tone || "default"}`;
+
+        const title = document.createElement("strong");
+        title.className = "builder-structure-title";
+        title.textContent = pkg.title;
+        card.appendChild(title);
+
+        const list = document.createElement("div");
+        list.className = "builder-structure-tags";
+        pkg.items.forEach((item) => {
+            const tag = document.createElement("span");
+            tag.className = "builder-structure-tag";
+            tag.textContent = item;
+            list.appendChild(tag);
+        });
+        card.appendChild(list);
+        packageStructureGrid.appendChild(card);
+    });
+
+    if (packageStructureSummary) {
+        packageStructureSummary.textContent = `${packages.length} kontraktspakker i valgt modell for ${projectTypeSelect?.selectedOptions?.[0]?.textContent || "prosjektet"}.`;
+    }
+}
+
+function renderCriticalInterfaces(config = getTueConfig()) {
+    if (!packageInterfaceList) {
+        return;
+    }
+
+    const items = getCriticalInterfaces(config);
+    packageInterfaceList.innerHTML = "";
+
+    items.forEach((item) => {
+        const card = document.createElement("article");
+        card.className = `builder-interface-item severity-${item.severity}`;
+
+        const top = document.createElement("div");
+        top.className = "builder-interface-top";
+
+        const title = document.createElement("strong");
+        title.textContent = item.title;
+        top.appendChild(title);
+
+        const severity = document.createElement("span");
+        severity.className = "builder-interface-severity";
+        severity.textContent = item.severity === "high" ? "Må låses" : "Bør avklares";
+        top.appendChild(severity);
+
+        const pair = document.createElement("p");
+        pair.className = "builder-interface-pair";
+        pair.textContent = `${item.ownerA} ↔ ${item.ownerB}`;
+
+        const focus = document.createElement("p");
+        focus.className = "builder-interface-focus";
+        focus.textContent = item.focus;
+
+        card.appendChild(top);
+        card.appendChild(pair);
+        card.appendChild(focus);
+        packageInterfaceList.appendChild(card);
+    });
+
+    if (packageInterfaceSummary) {
+        packageInterfaceSummary.textContent = `${items.length} kritiske grensesnitt bør beskrives tydelig i utsendt grunnlag.`;
+    }
+}
+
+function getDisciplineAssignments() {
+    const assignments = { aut: "separate", sd: "separate", locks: "separate", adk: "separate" };
+    disciplineAssignGroups.forEach((group) => {
+        const key = group.dataset.assign;
+        const active = group.querySelector(".builder-chip.is-active");
+        if (active && key) {
+            assignments[key] = active.dataset.assignValue || "separate";
+        }
+    });
+    return assignments;
+}
+
+function deriveCoreModelFromAssignments(a) {
+    const aut = a.aut || "separate";
+    const sd = a.sd || "separate";
+    if (sd === "aut") {
+        if (aut === "separate") return "aut_sd";
+        if (aut === "el") return "el_aut_sd";
+        if (aut === "ror") return "ror_aut_sd";
+        if (aut === "vent") return "vent_aut_sd";
+    }
+    if (aut === "separate" && sd === "separate") return "separate";
+    if (aut === "el" && sd === "separate") return "el_aut";
+    if (aut === "el" && sd === "el") return "el_aut_sd";
+    if (aut === "separate" && sd === "el") return "el_sd";
+    if (aut === "ror" && sd === "separate") return "ror_aut";
+    if (aut === "ror" && sd === "ror") return "ror_aut_sd";
+    if (aut === "vent" && sd === "separate") return "vent_aut";
+    if (aut === "vent" && sd === "vent") return "vent_aut_sd";
+    if (aut === "ror" && sd === "el") return "ror_aut";
+    if (aut === "vent" && sd === "el") return "vent_aut";
+    return "separate";
+}
+
+function setAssignmentChipsFromConfig(config) {
+    const coreModel = config.coreModel || "separate";
+    const autMap = {
+        separate: "separate", el_aut: "el", aut_sd: "separate", el_sd: "separate",
+        el_aut_sd: "el", ror_aut: "ror", ror_aut_sd: "ror", vent_aut: "vent",
+        vent_aut_sd: "vent", totaltechnical: "el",
+    };
+    const sdMap = {
+        separate: "separate", el_aut: "separate", aut_sd: "aut", el_sd: "el",
+        el_aut_sd: "aut", ror_aut: "separate", ror_aut_sd: "aut", vent_aut: "separate",
+        vent_aut_sd: "aut", totaltechnical: "aut",
+    };
+    const wanted = {
+        aut: autMap[coreModel] || "separate",
+        sd: sdMap[coreModel] || "separate",
+        locks: config.locksModel || "separate",
+        adk: config.adkModel || "separate",
+    };
+    disciplineAssignGroups.forEach((group) => {
+        const key = group.dataset.assign;
+        const target = wanted[key] || "separate";
+        group.querySelectorAll(".builder-chip").forEach((btn) => {
+            const match = btn.dataset.assignValue === target;
+            btn.classList.toggle("is-active", match);
+            btn.setAttribute("aria-pressed", match ? "true" : "false");
+        });
+    });
+}
+
+function renderMatrixColumnPreview(config = getTueConfig()) {
+    if (!matrixColumnPreviewEl) return;
+    const cols = [];
+    const subs = ["P", "L", "M", "K", "F", "I"];
+    const cm = config.coreModel || "separate";
+    const a = getDisciplineAssignments();
+
+    // SD follows aut if sd === "aut" — resolve the actual host
+    const sdHost = a.sd === "aut" ? a.aut : a.sd; // e.g. sd="aut", aut="vent" → sdHost="vent"
+
+    cols.push({ name: "BH", merged: false, inactive: false });
+    cols.push({ name: "Byggfag", merged: false, inactive: false });
+
+    const locksInactive = a.locks !== "separate" && a.locks !== "adk";
+    cols.push({ name: a.locks === "adk" ? "Lås + ADK" : "Lås/beslag", merged: a.locks === "adk", inactive: locksInactive });
+
+    // Build Rør, Vent, EL labels with merged disciplines
+    const buildLabel = (base, host) => {
+        let label = base;
+        if (a.aut === host) label += " + Aut";
+        if (sdHost === host) label += " + SD";
+        return label;
+    };
+
+    const rorMerged = a.aut === "ror" || sdHost === "ror";
+    cols.push({ name: buildLabel("Rør", "ror"), merged: rorMerged, inactive: false });
+
+    const ventMerged = a.aut === "vent" || sdHost === "vent";
+    cols.push({ name: buildLabel("Vent", "vent"), merged: ventMerged, inactive: false });
+
+    const elMerged = a.aut === "el" || sdHost === "el";
+    cols.push({ name: buildLabel("EL", "el"), merged: elMerged, inactive: false });
+
+    const autInactive = a.aut !== "separate";
+    const autLabel = a.sd === "aut" && a.aut === "separate" ? "Aut + SD" : "Aut";
+    cols.push({ name: autLabel, merged: a.sd === "aut" && a.aut === "separate", inactive: autInactive });
+
+    const sdInactive = a.sd !== "separate";
+    cols.push({ name: "SD", merged: false, inactive: sdInactive });
+
+    if (a.adk === "separate") {
+        cols.push({ name: "ADK", merged: false, inactive: false });
+    }
+
+    let html = "";
+    for (const col of cols) {
+        const cls = ["matrix-col-group"];
+        if (col.merged) cls.push("is-merged");
+        if (col.inactive) cls.push("is-inactive");
+        html += `<div class="${cls.join(" ")}">`;
+        html += `<div class="matrix-col-header" title="${col.name}">${col.name}</div>`;
+        html += `<div class="matrix-col-subs">`;
+        for (const s of subs) {
+            html += `<div class="matrix-col-sub">${s}</div>`;
+        }
+        html += `</div></div>`;
+    }
+    matrixColumnPreviewEl.innerHTML = html;
+}
+
+function syncTueBuilderVisualState(config = getTueConfig()) {
+    coreOptionCards.forEach((button) => {
+        button.classList.toggle("is-active", button.dataset.coreOption === config.coreModel);
+        button.setAttribute("aria-pressed", button.dataset.coreOption === config.coreModel ? "true" : "false");
+    });
+
+    locksOptionButtons.forEach((button) => {
+        button.classList.toggle("is-active", button.dataset.locksOption === config.locksModel);
+        button.setAttribute("aria-pressed", button.dataset.locksOption === config.locksModel ? "true" : "false");
+    });
+
+    adkOptionButtons.forEach((button) => {
+        button.classList.toggle("is-active", button.dataset.adkOption === config.adkModel);
+        button.setAttribute("aria-pressed", button.dataset.adkOption === config.adkModel ? "true" : "false");
+    });
+
+    setAssignmentChipsFromConfig(config);
+
+    // Dim linked rows: if locks="adk" → dim ADK row, if adk="locks" → dim locks row
+    const currentAssign = getDisciplineAssignments();
+    disciplineAssignGroups.forEach((group) => {
+        const key = group.dataset.assign;
+        const row = group.closest(".discipline-row");
+        if (!row) return;
+        const isLinked =
+            (key === "adk" && currentAssign.locks === "adk") ||
+            (key === "locks" && currentAssign.adk === "locks" && currentAssign.locks !== "adk");
+        row.classList.toggle("is-linked", isLinked);
+    });
+
+    const preview = getTuePreview(config);
+
+    if (packagePreviewPower) packagePreviewPower.textContent = preview.power;
+    if (packagePreviewAutomation) packagePreviewAutomation.textContent = preview.automation;
+    if (packagePreviewSd) packagePreviewSd.textContent = preview.sd;
+    if (packagePreviewSecurity) packagePreviewSecurity.textContent = preview.security;
+    renderBhPackageGuidance(config);
+    renderPackageStructure(config);
+    renderCriticalInterfaces(config);
+    renderMatrixColumnPreview(config);
+}
+
 function describeTueConfig(config = getTueConfig()) {
     const coreDescriptions = {
         separate: "Separate tekniske UE-er",
         el_aut: "EL + AUT i felles pakke",
+        aut_sd: "AUT + SD i felles pakke",
+        el_sd: "EL + SD i felles pakke",
         el_aut_sd: "EL + AUT + SD i felles pakke",
+        ror_aut: "Rør + mindre automasjon i felles pakke",
+        ror_aut_sd: "Rør + AUT + SD i felles pakke",
+        vent_aut: "Vent + mindre automasjon i felles pakke",
+        vent_aut_sd: "Vent + AUT + SD i felles pakke",
         totaltechnical: "Totalteknisk pakke",
     };
     const parts = [coreDescriptions[config.coreModel] || coreDescriptions.separate];
@@ -752,14 +1335,24 @@ function describeTueConfig(config = getTueConfig()) {
     parts.push(
         config.locksModel === "separate"
             ? "Lås og beslag som egen UE"
-            : "Lås og beslag integrert i dør-/byggleveranse"
+            : config.locksModel === "integrated"
+                ? "Lås og beslag integrert i dør-/byggleveranse"
+                : config.locksModel === "el"
+                    ? "Lås og beslag i elektroleveransen"
+                    : "Lås og beslag samlet med ADK/sikkerhet"
     );
     parts.push(
         config.adkModel === "separate"
             ? "ADK som egen UE"
             : config.adkModel === "el"
                 ? "ADK i elektrikerleveransen"
-                : "ADK i lås og beslagsleveransen"
+                : config.adkModel === "locks"
+                    ? "ADK i lås og beslagsleveransen"
+                    : config.adkModel === "aut"
+                        ? "ADK i automasjonsleveransen"
+                        : config.adkModel === "sd"
+                            ? "ADK i SD-/systemintegratorleveransen"
+                            : "ADK i samlet sikkerhetspakke"
     );
 
     return parts.join(" • ");
@@ -769,13 +1362,25 @@ function getTueGuidance(config = getTueConfig()) {
     const coreHelpText = {
         separate: "Best når EL, AUT og SD konkurranseutsettes eller styres hver for seg.",
         el_aut: "Passer når elektro og automasjon jobber tett og leveres som én teknisk pakke.",
+        aut_sd: "Passer når styring og SD samles hos samme aktør, mens elektro fortsatt prises separat.",
+        el_sd: "Passer når elektro tar med mindre styring og SD uten egen automasjonspakke.",
         el_aut_sd: "Passer når styring, automasjon og SD skal samordnes i én leveranse.",
+        ror_aut: "Passer i mindre VVS-tunge bygg der rørlegger tar pumper, følere og enkel styring.",
+        ror_aut_sd: "Passer når rørentreprenøren også skal bære VVS-automasjon og SD-integrasjon.",
+        vent_aut: "Passer der ventilasjonsentreprenøren tar aggregatstyring og enkel automasjon.",
+        vent_aut_sd: "Passer når ventilasjonsentreprenøren skal levere luftsiden med automasjon og SD-integrasjon.",
         totaltechnical: "Best når hele det tekniske omfanget skal styres som én samlet kontrakt.",
     };
     const recommendationText = {
         separate: "Velg separate UE-er når prosjektet trenger mest mulig fleksibilitet og tydelige faggrenser.",
         el_aut: "Velg EL + AUT når integrasjoner er viktige, men SD fortsatt ønskes som tydelig eget grensesnitt.",
+        aut_sd: "Velg AUT + SD når systemintegrasjon er viktigst, men du vil beholde elektro som rent kraft- og kablingsfag.",
+        el_sd: "Velg EL + SD når teknisk styring er begrenset og elektrikeren kan bære helheten.",
         el_aut_sd: "Velg EL + AUT + SD når du vil minimere koordinering mellom tekniske styringsfag.",
+        ror_aut: "Velg Rør + automasjon når VVS-anleggene er små og styringen naturlig følger rørfaget.",
+        ror_aut_sd: "Velg Rør + AUT + SD når rør skal eie funksjon, automasjon og integrasjon for VVS-systemene.",
+        vent_aut: "Velg Vent + automasjon når luftbehandling er hoveddriver og styringen er begrenset til ventilasjon.",
+        vent_aut_sd: "Velg Vent + AUT + SD når ventilasjonsentreprenøren skal eie både styring og oppkobling mot SD.",
         totaltechnical: "Velg totalteknisk når du vil redusere grensesnitt og legge helhetsansvar hos én aktør.",
     };
 
@@ -784,13 +1389,23 @@ function getTueGuidance(config = getTueConfig()) {
         locksHelp:
             config.locksModel === "separate"
                 ? "Brukes når lås og beslag kontraheres og følges opp som eget fag."
-                : "Brukes når dørleveranse og beslag håndteres samlet i bygg- eller dørentreprisen.",
+                : config.locksModel === "integrated"
+                    ? "Brukes når dørleveranse og beslag håndteres samlet i bygg- eller dørentreprisen."
+                    : config.locksModel === "el"
+                        ? "Brukes når elektrikeren også koordinerer elektriske sluttstykker, beslag og dørmiljø."
+                        : "Brukes når lås, beslag og adgangskontroll prises som én samlet sikkerhetspakke.",
         adkHelp:
             config.adkModel === "separate"
                 ? "Bruk dette når adgangskontroll prises og følges opp som eget fag."
                 : config.adkModel === "el"
                     ? "Bruk dette når adgangskontroll følger elektroleveransen."
-                    : "Bruk dette når adgangskontroll følger dørmiljø, beslag og låsleveransen.",
+                    : config.adkModel === "locks"
+                        ? "Bruk dette når adgangskontroll følger dørmiljø, beslag og låsleveransen."
+                        : config.adkModel === "aut"
+                            ? "Bruk dette når adgangskontroll knyttes tett til automasjonsleveransen."
+                            : config.adkModel === "sd"
+                                ? "Bruk dette når adgangskontroll leveres av systemintegrator eller SD-aktør."
+                                : "Bruk dette når sikkerhetsfagene prises samlet i én pakke.",
         recommendation: recommendationText[config.coreModel] || recommendationText.separate,
     };
 }
@@ -831,6 +1446,8 @@ function syncTueBuilderUI() {
     if (tueRecommendation) {
         tueRecommendation.textContent = guidance.recommendation;
     }
+
+    syncTueBuilderVisualState(config);
 }
 
 function getSelectedPackages() {
@@ -1107,84 +1724,7 @@ function buildSectionExportSummary() {
 }
 
 function updateMatrixOverview(visibleContentRows = null) {
-    const totalContentRows = getContentRowCount();
-    const confirmedCount = getConfirmedRowCount();
-    const openRiskCount = getOpenRiskCount();
-    const visibleCount = visibleContentRows ?? totalContentRows;
-    const completionRate = totalContentRows ? Math.round((confirmedCount / totalContentRows) * 100) : 0;
-
-    if (matrixVisibleCount) {
-        matrixVisibleCount.textContent = String(totalContentRows);
-    }
-
-    if (matrixVisibleDetail) {
-        matrixVisibleDetail.textContent = `${visibleCount} synlige`;
-    }
-
-    if (matrixConfirmedCount) {
-        matrixConfirmedCount.textContent = String(confirmedCount);
-    }
-
-    if (matrixConfirmedDetail) {
-        matrixConfirmedDetail.textContent = `${completionRate} % ferdig`;
-    }
-
-    if (matrixOpenCount) {
-        matrixOpenCount.textContent = String(openRiskCount);
-    }
-
-    if (matrixOpenDetail) {
-        matrixOpenDetail.textContent = openRiskCount === 0 ? "Ingen åpne punkter" : "Åpne punkter";
-    }
-
-    renderMatrixSectionCards();
-    renderMatrixSectionFocusPanel();
-    updateMatrixCommandCenter();
-}
-
-function updateMatrixCommandCenter() {
-    const commentGaps = getRowsNeedingComment();
-    const conflictRows = rows.filter((row) => !row.section && getOfferConflictRowIds().has(row.uid));
-    const stats = computeMatrixStats();
-    const reviewReadyCount = stats.reviewReadyCount;
-    const ownerGaps = rows
-        .map((row, rowIndex) => ({ row, rowIndex }))
-        .filter(({ row, rowIndex }) => !row.section && !getRowOwner(rowIndex));
-    const queueItems = [
-        conflictRows[0] ? `${conflictRows[0].tfm} ${conflictRows[0].description} - tilbudsavvik bør vurderes.` : "",
-        commentGaps[0] ? `${commentGaps[0].row.tfm} ${commentGaps[0].row.description} - mangler vurderingskommentar på uavklart rad.` : "",
-        ownerGaps[0] ? `${ownerGaps[0].row.tfm} ${ownerGaps[0].row.description} - mangler ansvarlig koordinator for videre avklaring.` : "",
-        getOpenRiskCount() > 0 ? `${getOpenRiskCount()} rad(er) står fortsatt uavklart i matrisen.` : "Ingen uavklarte rader gjenstår i matrisen.",
-    ].filter(Boolean);
-
-    if (matrixCommentGapCount) {
-        matrixCommentGapCount.textContent = String(commentGaps.length);
-    }
-    if (matrixConflictCount) {
-        matrixConflictCount.textContent = String(conflictRows.length);
-    }
-    if (matrixOwnerGapCount) {
-        matrixOwnerGapCount.textContent = String(stats.ownerGapCount);
-    }
-    if (matrixReviewReadyCount) {
-        matrixReviewReadyCount.textContent = String(reviewReadyCount);
-    }
-    if (matrixCommandDetail) {
-        matrixCommandDetail.textContent = conflictRows.length
-            ? "Tilbudskontrollen har funnet rader som bør gjennomgås direkte i matrisen."
-            : reviewReadyCount
-                ? `${reviewReadyCount} rad(er) kan tas videre til review eller tilbudskontroll.`
-                : "Bruk arbeidskøen til å lukke uavklarte punkter, sette koordinator og dokumentere vurderingene dine.";
-    }
-    if (matrixQueueList) {
-        matrixQueueList.innerHTML = queueItems.map((item) => `<p>${escapeHtml(item)}</p>`).join("");
-    }
-    if (jumpConflictRowButton) {
-        jumpConflictRowButton.disabled = !conflictRows.length;
-    }
-    if (jumpUncommentedRowButton) {
-        jumpUncommentedRowButton.disabled = !commentGaps.length;
-    }
+    void visibleContentRows;
 }
 
 function updateMatrixFilterFeedback(visibleCount, query, openOnly) {
@@ -1202,44 +1742,20 @@ function updateMatrixFilterFeedback(visibleCount, query, openOnly) {
         filterParts.push(getSectionDetails(Number(activeSectionFilter)).shortTitle.toLowerCase());
     }
 
-    if (activeReviewFilter !== "all") {
-        filterParts.push(`review: ${getReviewFilterLabel().toLowerCase()}`);
-    }
-
-    if (matrixFilterCount) {
-        matrixFilterCount.textContent = filterParts.length ? String(visibleCount) : "Alle";
-    }
-
-    if (matrixFilterStatus) {
-        matrixFilterStatus.textContent = filterParts.length
-            ? `${visibleCount} treff med ${filterParts.join(" + ")}`
-            : "Ingen aktiv filtrering";
-    }
-
     if (matrixEmptyState) {
         matrixEmptyState.hidden = visibleCount > 0;
         const emptyStateTitle = matrixEmptyState.querySelector(".matrix-empty-state-title");
         const emptyStateDetail = matrixEmptyState.querySelector(".matrix-empty-state-detail");
 
         if (emptyStateTitle && emptyStateDetail) {
-            if (activeReviewFilter === "conflicts") {
-                emptyStateTitle.textContent = "Ingen tilbudsavvik i dette utvalget";
-                emptyStateDetail.textContent = "Kjør tilbudskontroll eller bytt arbeidsvisning for å se andre rader.";
-            } else if (activeReviewFilter === "ready") {
-                emptyStateTitle.textContent = "Ingen review-klare rader i dette utvalget";
-                emptyStateDetail.textContent = "Sett koordinator, fyll ut vurderingskommentar og marker status som klar for review.";
-            } else if (activeReviewFilter === "confirmed") {
-                emptyStateTitle.textContent = "Ingen bekreftede rader i dette utvalget";
-                emptyStateDetail.textContent = "Bekreft flere rader eller bytt arbeidsvisning for å se andre avklaringer.";
-            } else if (activeReviewFilter === "open") {
-                emptyStateTitle.textContent = "Ingen uavklarte rader i dette utvalget";
-                emptyStateDetail.textContent = "Det kan bety at dette utvalget er ferdig gjennomgått, eller at filtreringen er for snever.";
-            } else if (activeSectionFilter !== "all") {
+            if (activeSectionFilter !== "all") {
                 emptyStateTitle.textContent = "Ingen rader matcher valgt kapittel";
                 emptyStateDetail.textContent = "Vis hele matrisen eller nullstill filtreringen for å fortsette gjennomgangen.";
             } else {
                 emptyStateTitle.textContent = "Ingen rader matcher filtreringen";
-                emptyStateDetail.textContent = "Tøm søket eller slå av filteret for uavklarte rader.";
+                emptyStateDetail.textContent = filterParts.length
+                    ? `${visibleCount} treff med ${filterParts.join(" + ")}`
+                    : "Tøm søket eller slå av filteret for uavklarte rader.";
             }
         }
     }
@@ -1279,26 +1795,7 @@ function syncChapterTabs() {
 }
 
 function updateMatrixSectionWorkspace() {
-    if (matrixSectionResetButton) {
-        const hasSectionFocus = activeSectionFilter !== "all";
-        matrixSectionResetButton.hidden = !hasSectionFocus;
-        matrixSectionResetButton.disabled = !hasSectionFocus;
-        matrixSectionResetButton.textContent = hasSectionFocus
-            ? "Tilbake til hele matrisen"
-            : "Vis hele matrisen";
-    }
-
-    if (matrixSectionFirstRowButton) {
-        matrixSectionFirstRowButton.textContent = activeSectionFilter === "all"
-            ? "Gå til første synlige rad"
-            : "Gå til første rad i kapittelet";
-    }
-
-    if (matrixSectionNextOpenButton) {
-        matrixSectionNextOpenButton.textContent = activeSectionFilter === "all"
-            ? "Gå til neste uavklarte"
-            : "Gå til neste uavklarte i kapittelet";
-    }
+    return;
 }
 
 function getSavedInterfaceView() {
@@ -1382,8 +1879,6 @@ function getAssignableDisciplines(row) {
 function getVisibleInterfaceRows() {
     const query = (matrixSearchInput?.value || "").trim().toLowerCase();
     const showOpenOnly = Boolean(showOpenOnlyInput?.checked);
-    const conflictRowIds = getOfferConflictRowIds();
-
     return rows
         .map((row, rowIndex) => ({ row, rowIndex }))
         .filter(({ row, rowIndex }) => {
@@ -1394,11 +1889,7 @@ function getVisibleInterfaceRows() {
             const searchableText = `${row.tfm} ${row.description} ${commentState.get(rowIndex) ?? row.comments ?? ""}`.toLowerCase();
             const rowMatchesQuery = !query || searchableText.includes(query);
             const sectionMatches = activeSectionFilter === "all" || getRowSectionCode(row) === activeSectionFilter;
-            const reviewMatches = activeReviewFilter === "conflicts"
-                ? conflictRowIds.has(row.uid)
-                : rowMatchesReviewFilter(row, rowIndex);
-
-            if (!rowMatchesQuery || !sectionMatches || !reviewMatches) {
+            if (!rowMatchesQuery || !sectionMatches) {
                 return false;
             }
 
@@ -1505,7 +1996,7 @@ function renderInterfaceCards() {
 
     const allVisibleRows = getVisibleInterfaceRows();
     const hasQuery = Boolean((matrixSearchInput?.value || "").trim());
-    const shouldUseCriticalSubset = !showAllInterfaceCards && !hasQuery && activeReviewFilter === "all";
+    const shouldUseCriticalSubset = !showAllInterfaceCards && !hasQuery;
     const criticalIndexes = shouldUseCriticalSubset ? new Set(getCriticalInterfaceRowIndexes(allVisibleRows)) : null;
     const visibleRows = criticalIndexes
         ? allVisibleRows.filter(({ rowIndex }) => criticalIndexes.has(rowIndex))
@@ -1678,60 +2169,6 @@ function renderInterfaceCards() {
     `;
 }
 
-function renderMatrixSectionFocusPanel() {
-    if (!matrixSectionFocusTitle || !matrixSectionFocusKpis) {
-        return;
-    }
-
-    if (activeSectionFilter === "all") {
-        const totalContentRows = getContentRowCount();
-        const confirmedCount = getConfirmedRowCount();
-        const openCount = getOpenRiskCount();
-        const completionRate = totalContentRows ? Math.round((confirmedCount / totalContentRows) * 100) : 0;
-
-        if (matrixSectionFocusEyebrow) matrixSectionFocusEyebrow.textContent = "Fokusmodus";
-        if (matrixSectionFocusTitle) matrixSectionFocusTitle.textContent = "Hele matrisen";
-        if (matrixSectionFocusSummary) {
-            matrixSectionFocusSummary.textContent = "Du ser hele matrisen samlet. Velg et kapittel for en mer fokusert gjennomgang.";
-        }
-
-        matrixSectionFocusKpis.innerHTML = `
-            <div class="overview-card"><span class="overview-label">Totalt</span><strong>${totalContentRows}</strong><span class="overview-detail">Rader i prosjektet</span></div>
-            <div class="overview-card"><span class="overview-label">Bekreftet</span><strong>${confirmedCount}</strong><span class="overview-detail">${completionRate} % ferdig</span></div>
-            <div class="overview-card"><span class="overview-label">Åpne</span><strong>${openCount}</strong><span class="overview-detail">Tverrfaglige avklaringer</span></div>
-            <div class="overview-card"><span class="overview-label">Anbefaling</span><strong>Velg kategori</strong><span class="overview-detail">Jobb en del av bygget av gangen</span></div>
-        `;
-
-        renderTagList(matrixSectionFocusThemes, ["Start med største åpne seksjon", "Lukk gråsoner fortløpende", "Bruk kommentarer for forbehold"], "Ingen tema valgt");
-        renderTagList(matrixSectionFocusRisks, ["For bred arbeidsflate gir treg gjennomgang", "Åpen matrise kan skjule hvor risikoen ligger"], "Ingen risiko valgt");
-        renderTagList(matrixSectionFocusDeliverables, ["Kategoriavklart matrise", "Eksportgrunnlag med tydelige UE-grenser", "Kort vei til neste åpne punkt"], "Ingen leveranser valgt");
-        return;
-    }
-
-    const sectionCode = Number(activeSectionFilter);
-    const details = getSectionDetails(sectionCode);
-    const stats = getSectionStats(sectionCode);
-    const completionRate = stats.total ? Math.round((stats.confirmed / stats.total) * 100) : 0;
-    const shareOfMatrix = getContentRowCount() ? Math.round((stats.total / getContentRowCount()) * 100) : 0;
-
-    if (matrixSectionFocusEyebrow) matrixSectionFocusEyebrow.textContent = `Kategori ${sectionCode}`;
-    if (matrixSectionFocusTitle) matrixSectionFocusTitle.textContent = `${sectionCode} ${details.shortTitle}`;
-    if (matrixSectionFocusSummary) {
-        matrixSectionFocusSummary.textContent = details.summary;
-    }
-
-    matrixSectionFocusKpis.innerHTML = `
-        <div class="overview-card"><span class="overview-label">Rader</span><strong>${stats.total}</strong><span class="overview-detail">${shareOfMatrix} % av matrisen</span></div>
-        <div class="overview-card"><span class="overview-label">Bekreftet</span><strong>${stats.confirmed}</strong><span class="overview-detail">${completionRate} % ferdig</span></div>
-        <div class="overview-card"><span class="overview-label">Åpne</span><strong>${stats.open}</strong><span class="overview-detail">${stats.open ? "Bør lukkes før eksport" : "Ingen åpne punkt"}</span></div>
-        <div class="overview-card"><span class="overview-label">Arbeidsmodus</span><strong>Fokus</strong><span class="overview-detail">Viser kun valgt kategori</span></div>
-    `;
-
-    renderTagList(matrixSectionFocusThemes, details.themes, "Legg til faglige tema for denne kategorien");
-    renderTagList(matrixSectionFocusRisks, details.risks, "Legg til typiske gråsoner for denne kategorien");
-    renderTagList(matrixSectionFocusDeliverables, details.deliverables, "Legg til forventede leveranser for denne kategorien");
-}
-
 function getVisibleContentRowIndexes({ openOnly = false } = {}) {
     return rows
         .map((row, rowIndex) => ({ row, rowIndex, element: getRowElement(rowIndex) }))
@@ -1859,61 +2296,6 @@ function renderCurrentRowInsight(data) {
     renderTagList(currentRowInsightDeliverables, data.deliverables, "Ingen leveranser valgt");
 }
 
-function renderMatrixSectionCards() {
-    if (!matrixSectionCards) {
-        return;
-    }
-
-    matrixSectionCards.innerHTML = "";
-
-    Object.keys(sectionDefinitions)
-        .map((key) => Number(key))
-        .filter((sectionCode) => sectionCode < 800)
-        .forEach((sectionCode) => {
-            const details = getSectionDetails(sectionCode);
-            const stats = getSectionStats(sectionCode);
-            const completionRate = stats.total ? Math.round((stats.confirmed / stats.total) * 100) : 0;
-            const isActive = activeSectionFilter === sectionCode;
-            const button = document.createElement("button");
-            let stateLabel = "Tom kategori";
-            let stateClass = "";
-
-            if (stats.total) {
-                if (stats.open > 0) {
-                    stateLabel = `${stats.open} åpne`;
-                    stateClass = "state-warning";
-                } else {
-                    stateLabel = "Klar";
-                    stateClass = "state-ok";
-                }
-            }
-
-            button.type = "button";
-            button.className = `matrix-section-card${isActive ? " is-active" : ""}${stats.total ? "" : " is-empty"}`;
-            button.setAttribute("aria-pressed", isActive ? "true" : "false");
-            button.innerHTML = `
-                <div class="matrix-section-card-top">
-                    <span class="matrix-section-code">${sectionCode}</span>
-                    <span class="matrix-section-state ${stateClass}">${escapeHtml(stateLabel)}</span>
-                </div>
-                <div>
-                    <p class="matrix-section-title">${escapeHtml(details.shortTitle)}</p>
-                    <p class="matrix-section-copy">${escapeHtml(details.summary)}</p>
-                </div>
-                <div class="matrix-section-meta">
-                    <span>${stats.total} rader</span>
-                    <span>${completionRate} % bekreftet</span>
-                </div>
-            `;
-
-            button.addEventListener("click", () => {
-                setActiveSectionFilter(isActive ? "all" : sectionCode);
-            });
-
-            matrixSectionCards.appendChild(button);
-        });
-}
-
 function getSectionFilterFromHash() {
     const hash = String(window.location.hash || "").replace(/^#/, "").trim().toLowerCase();
     const match = hash.match(/(?:kategori|section)-(\d{3})/);
@@ -1943,9 +2325,6 @@ function setActiveSectionFilter(nextFilter, options = {}) {
         updateAllRiskCells();
     });
     syncChapterTabs();
-    updateMatrixSectionWorkspace();
-    renderMatrixSectionCards();
-    renderMatrixSectionFocusPanel();
 }
 
 function focusAdjacentContentRow(direction) {
@@ -2323,6 +2702,30 @@ function getPresetOwners(selectedPackages) {
         owners.K = "EL";
         owners.F = "Aut";
         owners.I = "SD";
+    } else if (selectedPackages.includes("aut_sd")) {
+        owners.K = "EL";
+        owners.F = "Aut";
+        owners.I = "SD";
+    } else if (selectedPackages.includes("el_sd")) {
+        owners.K = "EL";
+        owners.F = "EL";
+        owners.I = "SD";
+    } else if (selectedPackages.includes("ror_aut")) {
+        owners.K = "EL";
+        owners.F = "Rør";
+        owners.I = "Rør";
+    } else if (selectedPackages.includes("ror_aut_sd")) {
+        owners.K = "EL";
+        owners.F = "Rør";
+        owners.I = "Rør";
+    } else if (selectedPackages.includes("vent_aut")) {
+        owners.K = "EL";
+        owners.F = "Vent";
+        owners.I = "Vent";
+    } else if (selectedPackages.includes("vent_aut_sd")) {
+        owners.K = "EL";
+        owners.F = "Vent";
+        owners.I = "Vent";
     } else {
         if (selectedPackages.includes("el") || selectedPackages.includes("el_aut")) {
             owners.K = "EL";
@@ -2825,33 +3228,6 @@ function getRememberedProject() {
     }
 }
 
-function getSavedReviewMode() {
-    try {
-        return window.localStorage.getItem(REVIEW_MODE_KEY) === "true";
-    } catch (_error) {
-        return false;
-    }
-}
-
-function getSavedReviewFilter() {
-    try {
-        const savedFilter = window.localStorage.getItem(REVIEW_FILTER_KEY) || "all";
-        return ["all", "open", "ready", "conflicts", "confirmed"].includes(savedFilter) ? savedFilter : "all";
-    } catch (_error) {
-        return "all";
-    }
-}
-
-function getReviewFilterLabel(filter = activeReviewFilter) {
-    return {
-        all: "Alle rader",
-        open: "Åpne rader",
-        ready: "Review-klare",
-        conflicts: "Konflikter",
-        confirmed: "Bekreftede",
-    }[filter] || "Alle rader";
-}
-
 let _cachedOfferConflictRowIds = null;
 let _cachedOfferAnalysisRef = null;
 
@@ -2903,6 +3279,14 @@ function getOfferDecisionStats() {
     return stats;
 }
 
+function getOfferDecisionNote(findingKey) {
+    return offerDecisionNoteState.get(findingKey) || "";
+}
+
+function setOfferDecisionNote(findingKey, note) {
+    offerDecisionNoteState.set(findingKey, note || "");
+}
+
 function getRowStatusFlags(rowIndex) {
     if (rows[rowIndex]?.section) {
         return [];
@@ -2935,83 +3319,6 @@ function getRowStatusFlags(rowIndex) {
     }
 
     return flags;
-}
-
-function getRowsNeedingComment() {
-    return rows
-        .map((row, rowIndex) => ({ row, rowIndex }))
-        .filter(({ row, rowIndex }) => {
-            if (row.section) {
-                return false;
-            }
-            if (getRiskState(rowIndex).level === "ok") {
-                return false;
-            }
-            return !String(commentState.get(rowIndex) ?? row.comments ?? "").trim();
-        });
-}
-
-function getReviewReadyCount() {
-    return computeMatrixStats().reviewReadyCount;
-}
-
-function rowMatchesReviewFilter(row, rowIndex) {
-    switch (activeReviewFilter) {
-        case "open":
-            return getRiskState(rowIndex).level !== "ok";
-        case "ready":
-            return isRowReviewReady(rowIndex);
-        case "confirmed":
-            return Boolean(confirmationState.get(rowIndex));
-        case "conflicts":
-            return getOfferConflictRowIds().has(row.uid);
-        case "all":
-        default:
-            return true;
-    }
-}
-
-function updateReviewFilterButtons() {
-    reviewFilterButtons.forEach((button) => {
-        const isActive = button.dataset.reviewFilter === activeReviewFilter;
-        button.setAttribute("aria-pressed", isActive ? "true" : "false");
-        button.classList.toggle("is-active", isActive);
-    });
-}
-
-function applyReviewFilter(nextFilter, options = {}) {
-    const normalizedFilter = ["all", "open", "ready", "conflicts", "confirmed"].includes(nextFilter) ? nextFilter : "all";
-    activeReviewFilter = normalizedFilter;
-    updateReviewFilterButtons();
-
-    try {
-        window.localStorage.setItem(REVIEW_FILTER_KEY, activeReviewFilter);
-    } catch (_error) {
-        // Ignore storage issues.
-    }
-
-    if (!options.skipRefilter) {
-        filterMatrixRows();
-    }
-}
-
-function applyReviewMode(enabled) {
-    reviewModeEnabled = Boolean(enabled);
-    document.body.classList.toggle("review-mode", reviewModeEnabled);
-
-    if (toggleReviewModeButton) {
-        toggleReviewModeButton.setAttribute("aria-pressed", reviewModeEnabled ? "true" : "false");
-        toggleReviewModeButton.textContent = reviewModeEnabled ? "Vanlig visning" : "Review mode";
-    }
-
-    try {
-        window.localStorage.setItem(REVIEW_MODE_KEY, reviewModeEnabled ? "true" : "false");
-    } catch (_error) {
-        // Ignore storage issues.
-    }
-
-    updateReviewFilterButtons();
-    filterMatrixRows();
 }
 
 function formatRelativeTime(dateValue) {
@@ -3232,50 +3539,6 @@ function updateWorkflowOverview() {
     renderStepChecklist(step2Checklist, health.step2Checks);
     renderStepChecklist(step3Checklist, health.step3Checks);
     renderStepChecklist(step4Checklist, health.step4Checks);
-
-    updateProductCockpit(health, progressPercent, recommendedMeta);
-}
-
-function updateProductCockpit(health, progressPercent, recommendedMeta) {
-    const openRows = getOpenRiskCount();
-    const commentGaps = getRowsNeedingComment().length;
-    const offerConflicts = lastOfferAnalysis?.conflictCount || 0;
-    const hasOfferAnalysis = Boolean(lastOfferAnalysis);
-    const offerDecisionStats = getOfferDecisionStats();
-    const unresolvedOfferFindings = offerDecisionStats.pending + offerDecisionStats.review;
-
-    if (cockpitProgressValue) {
-        cockpitProgressValue.textContent = `${progressPercent} %`;
-    }
-    if (cockpitProgressText) {
-        cockpitProgressText.textContent = progressPercent === 100
-            ? "Alle hovedsteg er ferdig gjennomfort."
-            : `${health.completionRate || 0} % av matriseradene er bekreftet.`;
-    }
-    if (cockpitNextStep) {
-        cockpitNextStep.textContent = recommendedMeta.title;
-    }
-    if (cockpitNextStepDetail) {
-        cockpitNextStepDetail.textContent = recommendedMeta.description;
-    }
-    if (cockpitMatrixHealth) {
-        cockpitMatrixHealth.textContent = openRows === 0 ? "Kontrollert" : `${openRows} åpne`;
-    }
-    if (cockpitMatrixHealthDetail) {
-        cockpitMatrixHealthDetail.textContent = commentGaps
-            ? `${commentGaps} åpne rad(er) mangler kommentar eller vurdering.`
-            : "Kommentarer og avklaringer ser ryddige ut i arbeidsflaten.";
-    }
-    if (cockpitOfferHealth) {
-        cockpitOfferHealth.textContent = hasOfferAnalysis
-            ? (unresolvedOfferFindings ? `${unresolvedOfferFindings} til vurdering` : offerConflicts ? `${offerConflicts} konflikter` : "Avklart")
-            : "Ikke startet";
-    }
-    if (cockpitOfferHealthDetail) {
-        cockpitOfferHealthDetail.textContent = hasOfferAnalysis
-            ? `${lastOfferAnalysis.findingCount} funn er registrert. ${offerDecisionStats.accepted} akseptert og ${offerDecisionStats.rejected} avvist.`
-            : "Tilbudslaget blir synlig her nar UE-/TUE-tilbud er lastet opp.";
-    }
 }
 
 function getRecommendedWorkflowStep() {
@@ -3336,6 +3599,11 @@ function setWorkflowStep(stepNumber, options = {}) {
     }
 
     updateWorkflowOverview();
+
+    // Sync topbar pills
+    document.querySelectorAll(".topbar-step-pill").forEach((pill) => {
+        pill.classList.toggle("active", Number(pill.dataset.stepTarget) === nextStep);
+    });
 
     if (options.scroll !== false) {
         document.getElementById("top")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -3437,6 +3705,7 @@ function renderBhAnalysisInsights(analysis = lastBhAnalysis) {
                 <p class="status-value">Ingen tydelige signaler funnet ennå. Legg inn mer tekst eller last opp et mer detaljert underlag.</p>
             </div>
         `;
+        renderBhPackageGuidance();
         updateWorkflowOverview();
         return;
     }
@@ -3471,6 +3740,7 @@ function renderBhAnalysisInsights(analysis = lastBhAnalysis) {
             ${findingsMarkup}
         </article>
     `;
+    renderBhPackageGuidance();
     updateWorkflowOverview();
 }
 
@@ -3518,6 +3788,10 @@ function collectOfferDecisions() {
     return Object.fromEntries(offerDecisionState.entries());
 }
 
+function collectOfferDecisionNotes() {
+    return Object.fromEntries(offerDecisionNoteState.entries());
+}
+
 function collectRowDefinitions() {
     return rows
         .map((row, rowIndex) => ({ row, rowIndex }))
@@ -3548,6 +3822,7 @@ function collectProjectState() {
         rowOwners: collectRowOwners(),
         rowStatuses: collectRowStatuses(),
         offerDecisions: collectOfferDecisions(),
+        offerDecisionNotes: collectOfferDecisionNotes(),
         confirmations: Object.fromEntries(confirmationState.entries()),
         savedAt: new Date().toISOString(),
     };
@@ -3557,6 +3832,18 @@ function applySavedTueConfig(tueConfig, selectedPackages = []) {
     const fallbackConfig = {
         coreModel: selectedPackages.includes("totaltechnical")
             ? "totaltechnical"
+            : selectedPackages.includes("vent_aut_sd")
+                ? "vent_aut_sd"
+                : selectedPackages.includes("vent_aut")
+                    ? "vent_aut"
+                    : selectedPackages.includes("ror_aut_sd")
+                        ? "ror_aut_sd"
+                        : selectedPackages.includes("ror_aut")
+                            ? "ror_aut"
+                            : selectedPackages.includes("el_sd")
+                                ? "el_sd"
+                                : selectedPackages.includes("aut_sd")
+                                    ? "aut_sd"
             : selectedPackages.includes("el_aut_sd")
                 ? "el_aut_sd"
                 : selectedPackages.includes("el_aut")
@@ -3640,6 +3927,13 @@ function applySavedOfferDecisions(offerDecisions = {}) {
     offerDecisionState.clear();
     Object.entries(offerDecisions || {}).forEach(([key, value]) => {
         setOfferFindingDecision(key, value);
+    });
+}
+
+function applySavedOfferDecisionNotes(offerDecisionNotes = {}) {
+    offerDecisionNoteState.clear();
+    Object.entries(offerDecisionNotes || {}).forEach(([key, value]) => {
+        setOfferDecisionNote(key, value);
     });
 }
 
@@ -3897,6 +4191,7 @@ function applyProjectState(data) {
     applySavedConfirmations(data.confirmations || {});
     applySavedRowStatuses(data.rowStatuses || {});
     applySavedOfferDecisions(data.offerDecisions || {});
+    applySavedOfferDecisionNotes(data.offerDecisionNotes || {});
     updateAllRiskCells();
     lastBhAnalysis = null;
     renderBhAnalysisInsights();
@@ -3994,6 +4289,8 @@ function resetProjectState() {
     uploadedOfferDocuments.length = 0;
     lastOfferAnalysis = null;
     offerDecisionState.clear();
+    offerDecisionNoteState.clear();
+    activeOfferFindingKey = "";
     if (projectTypeSelect) {
         projectTypeSelect.value = "bolig";
     }
@@ -4204,7 +4501,7 @@ function buildContractSummary() {
     const completionRate = contentRows ? Math.round((confirmedCount / contentRows) * 100) : 0;
     const ownerGapCount = stats.ownerGapCount;
     const reviewReadyCount = stats.reviewReadyCount;
-    const commentGapCount = getRowsNeedingComment().length;
+    const commentGapCount = rows.filter((row, i) => !row.section && getRiskState(i).level !== "ok" && !String(commentState.get(i) ?? row.comments ?? "").trim()).length;
     const readinessLabel = openRiskCount === 0 && completionRate === 100
         ? ownerGapCount === 0 && commentGapCount === 0
             ? "Klar for eksport"
@@ -4274,20 +4571,6 @@ function buildContractSummary() {
     `;
 
     contractSummary.hidden = false;
-
-    if (workspaceReadinessLabel) {
-        workspaceReadinessLabel.textContent = readinessLabel;
-    }
-
-    if (workspaceNextAction) {
-        workspaceNextAction.textContent = nextActionText;
-    }
-
-    if (workspaceBlockers) {
-        workspaceBlockers.innerHTML = blockers.length
-            ? blockers.map((item) => `<p>${escapeHtml(item)}</p>`).join("")
-            : "<p>Ingen uavklarte rader. Prosjektet er klart for siste eksportkontroll.</p>";
-    }
 
     if (exportExcelButton) {
         exportExcelButton.disabled = !exportReady;
@@ -4711,12 +4994,11 @@ function focusRowByUid(rowUid, options = {}) {
 function filterMatrixRows() {
     const query = (matrixSearchInput?.value || "").trim().toLowerCase();
     const showOpenOnly = Boolean(showOpenOnlyInput?.checked);
-    const conflictRowIds = getOfferConflictRowIds();
     let firstVisibleRow = null;
     let visibleContentRows = 0;
     const rowMatches = rows.map((row, rowIndex) => {
         const searchableText = `${row.tfm} ${row.description} ${commentState.get(rowIndex) ?? row.comments ?? ""}`.toLowerCase();
-        return !query || searchableText.includes(query);
+        return (!query || searchableText.includes(query));
     });
     const sectionHasMatch = new Map();
     let currentSectionIndex = -1;
@@ -4729,13 +5011,9 @@ function filterMatrixRows() {
         }
 
         const sectionMatches = activeSectionFilter === "all" || getRowSectionCode(row) === activeSectionFilter;
-        const reviewMatches = activeReviewFilter === "conflicts"
-            ? conflictRowIds.has(row.uid)
-            : rowMatchesReviewFilter(row, rowIndex);
         const rowMatchesFilter = rowMatches[rowIndex]
             && sectionMatches
-            && (!showOpenOnly || getRiskState(rowIndex).level !== "ok")
-            && reviewMatches;
+            && (!showOpenOnly || getRiskState(rowIndex).level !== "ok");
 
         if (currentSectionIndex >= 0 && rowMatchesFilter) {
             sectionHasMatch.set(currentSectionIndex, true);
@@ -4763,12 +5041,6 @@ function filterMatrixRows() {
 
             if (showOpenOnly && getRiskState(rowIndex).level === "ok") {
                 isVisible = false;
-            }
-
-            if (isVisible) {
-                isVisible = activeReviewFilter === "conflicts"
-                    ? conflictRowIds.has(row.uid)
-                    : rowMatchesReviewFilter(row, rowIndex);
             }
 
             if (currentSectionIndex >= 0 && isSectionCollapsed(currentSectionIndex) && !query && !showOpenOnly) {
@@ -4837,9 +5109,11 @@ function applyProjectLogic() {
     const sdIntegrationActive = projectType !== "bolig";
     const packageMessage = `Valgt TUE-oppsett: ${tueDescription}.`;
 
-    projectLogicStatus.textContent = sdIntegrationActive
-        ? `SD-integrasjon er aktiv for ${projectType}. ${packageMessage}`
-        : `SD-integrasjon er deaktivert for boligprosjekt. ${packageMessage}`;
+    if (projectLogicStatus) {
+        projectLogicStatus.textContent = sdIntegrationActive
+            ? `SD-integrasjon er aktiv for ${projectType}. ${packageMessage}`
+            : `SD-integrasjon er deaktivert for boligprosjekt. ${packageMessage}`;
+    }
 
     buildContractSummary();
 }
@@ -5064,14 +5338,97 @@ packageOptionInputs.forEach((input) => input.addEventListener("change", () => {
     applyProjectLogic();
     scheduleAutosave();
 }));
+/* ── Discipline assignment chip handlers ── */
+function setAssignGroupValue(groupKey, value) {
+    const group = disciplineAssignGroups.find((g) => g.dataset.assign === groupKey);
+    if (!group) return;
+    group.querySelectorAll(".builder-chip").forEach((b) => {
+        const match = b.dataset.assignValue === value;
+        b.classList.toggle("is-active", match);
+        b.setAttribute("aria-pressed", match ? "true" : "false");
+    });
+}
+
+disciplineAssignGroups.forEach((group) => {
+    group.querySelectorAll(".builder-chip").forEach((btn) => {
+        btn.addEventListener("click", () => {
+            group.querySelectorAll(".builder-chip").forEach((b) => {
+                b.classList.remove("is-active");
+                b.setAttribute("aria-pressed", "false");
+            });
+            btn.classList.add("is-active");
+            btn.setAttribute("aria-pressed", "true");
+
+            const key = group.dataset.assign;
+            const val = btn.dataset.assignValue;
+
+            // Auto-link Lås ↔ ADK
+            if (key === "locks" && val === "adk") {
+                setAssignGroupValue("adk", "locks");
+            } else if (key === "locks" && val !== "adk") {
+                // If ADK was "Med Lås", reset it to "Eget fag"
+                const adkA = getDisciplineAssignments();
+                if (adkA.adk === "locks") setAssignGroupValue("adk", "separate");
+            }
+            if (key === "adk" && val === "locks") {
+                setAssignGroupValue("locks", "adk");
+            } else if (key === "adk" && val !== "locks") {
+                const locksA = getDisciplineAssignments();
+                if (locksA.locks === "adk") setAssignGroupValue("locks", "separate");
+            }
+
+            const a = getDisciplineAssignments();
+            const coreModel = deriveCoreModelFromAssignments(a);
+            if (tueCoreModelSelect) tueCoreModelSelect.value = coreModel;
+            if (tueLocksModelSelect) tueLocksModelSelect.value = a.locks;
+            if (tueAdkModelSelect) tueAdkModelSelect.value = a.adk;
+            syncTueBuilderUI();
+            applyProjectLogic();
+            scheduleAutosave();
+        });
+    });
+});
+
+/* ── Legacy card handlers (backward compat) ── */
+coreOptionCards.forEach((button) => button.addEventListener("click", () => {
+    if (!tueCoreModelSelect) {
+        return;
+    }
+    tueCoreModelSelect.value = button.dataset.coreOption || "separate";
+    syncTueBuilderUI();
+    applyProjectLogic();
+    scheduleAutosave();
+}));
+locksOptionButtons.forEach((button) => button.addEventListener("click", () => {
+    if (!tueLocksModelSelect) {
+        return;
+    }
+    tueLocksModelSelect.value = button.dataset.locksOption || "separate";
+    syncTueBuilderUI();
+    applyProjectLogic();
+    scheduleAutosave();
+}));
+adkOptionButtons.forEach((button) => button.addEventListener("click", () => {
+    if (!tueAdkModelSelect) {
+        return;
+    }
+    tueAdkModelSelect.value = button.dataset.adkOption || "separate";
+    const adkOptionInput = packageOptionInputs.find((input) => input.value === "adk");
+    if (adkOptionInput && (tueCoreModelSelect?.value || "separate") === "separate") {
+        adkOptionInput.checked = tueAdkModelSelect.value === "separate";
+    }
+    syncTueBuilderUI();
+    applyProjectLogic();
+    scheduleAutosave();
+}));
 refreshSummaryButton.addEventListener("click", buildContractSummary);
 exportExcelButton?.addEventListener("click", exportProjectToExcel);
 exportPdfButton?.addEventListener("click", exportProjectToPrintView);
-applyPackagePresetButton.addEventListener("click", () => {
+applyPackagePresetButton?.addEventListener("click", () => {
     ensureMatrixInitialized();
     applyPackagePreset();
-    setWorkflowStep(3, { scroll: false });
     scheduleAutosave();
+    showToast("Fagpakke brukt i matrisen. Gå videre til steg 2 for å laste opp BH-dokumenter.");
 });
 matrixSearchInput?.addEventListener("input", filterMatrixRows);
 showOpenOnlyInput?.addEventListener("change", filterMatrixRows);
@@ -5278,7 +5635,7 @@ projectIdInput?.addEventListener("change", () => {
     scheduleAutosave();
 });
 analyzeBhButton.addEventListener("click", () => {
-    const sourceText = `${uploadedBhText}`.trim();
+    const sourceText = getAllDocumentText().trim();
 
     if (!sourceText) {
         bhAnalysisStatus.textContent = "Last opp ett eller flere dokumenter fra byggherre først.";
@@ -5289,23 +5646,10 @@ analyzeBhButton.addEventListener("click", () => {
 
     const analysis = applyBhSuggestionsFromText(sourceText);
     applyProjectLogic();
-    bhAnalysisStatus.textContent = `Underlaget er analysert. ${analysis.keywordScore} signaler ble funnet, og forslag til prosjekttype/TUE er oppdatert. Trykk deretter på 'Bruk pakkeoppsett i matrisen' for å klargjore utsendelsesgrunnlaget.`;
-    setWorkflowStep(2, { scroll: false });
+    bhAnalysisStatus.textContent = `Underlaget er analysert. ${analysis.keywordScore} signaler ble funnet i ${uploadedDocuments.length} dokument(er).`;
     scheduleAutosave();
 });
-bhUploadInput.addEventListener("change", async () => {
-    const [file] = bhUploadInput.files || [];
-
-    if (!file) {
-        uploadedBhText = "";
-        return;
-    }
-
-    uploadedBhText = await file.text();
-    bhAnalysisStatus.textContent = `Lastet inn underlag: ${file.name}. Klar for analyse.`;
-    setWorkflowStep(2, { scroll: false });
-    scheduleAutosave();
-});
+/* Upload handling moved to consolidated doc handler below (handleFiles/processFiles) */
 analyzeOffersButton?.addEventListener("click", analyzeOffersAgainstMatrix);
 renderBhAnalysisInsights();
 renderProjectLibraryStats();
@@ -5313,11 +5657,22 @@ renderOfferAnalysis();
 updateWorkflowOverview();
 offerFindingsList?.addEventListener("click", (event) => {
     const eventTarget = event.target instanceof HTMLElement ? event.target : null;
+    const detailButton = eventTarget?.closest("[data-offer-detail]");
+    if (detailButton) {
+        const findingKey = detailButton.getAttribute("data-offer-detail");
+        if (findingKey) {
+            activeOfferFindingKey = findingKey;
+            renderOfferAnalysis();
+        }
+        return;
+    }
+
     const decisionButton = eventTarget?.closest("[data-offer-decision]");
     if (decisionButton) {
         const findingKey = decisionButton.getAttribute("data-offer-decision");
         const nextDecision = decisionButton.getAttribute("data-offer-decision-value");
         if (findingKey && nextDecision) {
+            activeOfferFindingKey = findingKey;
             setOfferFindingDecision(findingKey, nextDecision);
             renderOfferAnalysis();
             updateWorkflowOverview();
@@ -5329,23 +5684,22 @@ offerFindingsList?.addEventListener("click", (event) => {
     const target = eventTarget?.closest("[data-row-uid]");
     const rowUid = target?.getAttribute("data-row-uid");
     if (rowUid) {
+        const shell = eventTarget?.closest(".offer-finding-shell");
+        const detailKey = shell?.querySelector("[data-offer-detail]")?.getAttribute("data-offer-detail");
+        if (detailKey) {
+            activeOfferFindingKey = detailKey;
+            renderOfferAnalysis();
+        }
         focusRowByUid(rowUid, { step: 3 });
     }
 });
-jumpConflictRowButton?.addEventListener("click", () => {
-    const conflictRowUid = lastOfferAnalysis?.findings?.find((finding) => finding.rowUid)?.rowUid;
-    if (conflictRowUid) {
-        focusRowByUid(conflictRowUid, { step: 3 });
+offerFindingDetail?.addEventListener("input", (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLTextAreaElement) || !target.dataset.offerNote) {
+        return;
     }
-});
-jumpUncommentedRowButton?.addEventListener("click", () => {
-    const firstCommentGap = getRowsNeedingComment()[0];
-    if (firstCommentGap) {
-        focusRow(firstCommentGap.rowIndex);
-    }
-});
-focusOfferStepButton?.addEventListener("click", () => {
-    setWorkflowStep(4);
+    setOfferDecisionNote(target.dataset.offerNote, target.value);
+    scheduleAutosave();
 });
 
 document.addEventListener("keydown", (event) => {
@@ -5392,16 +5746,17 @@ document.addEventListener("keydown", (event) => {
 });
 
 async function initializeApp() {
+    if (localOpenWarning) {
+        localOpenWarning.hidden = !isLocalFileMode();
+    }
+
     initializeRows(defaultRows);
     void hydrateStarterRowsFromCatalog();
     syncTueBuilderUI();
     applyProjectLogic();
-    applyReviewFilter(getSavedReviewFilter(), { skipRefilter: true });
-    applyReviewMode(getSavedReviewMode());
     activeInterfaceView = getSavedInterfaceView();
     activeSectionFilter = getSectionFilterFromHash();
     syncChapterTabs();
-    updateMatrixSectionWorkspace();
     setActiveInterfaceView(activeInterfaceView);
     setWorkflowStep(1, { scroll: false });
     updateAllRiskCells();
@@ -5422,10 +5777,6 @@ async function initializeApp() {
 }
 
 initializeApp();
-
-toggleReviewModeButton?.addEventListener("click", () => {
-    applyReviewMode(!reviewModeEnabled);
-});
 
 // ── Chapter tabs (delegated) ──
 const chapterTabNav = document.querySelector(".chapter-tabs");
@@ -5458,8 +5809,6 @@ resetMatrixFiltersButton?.addEventListener("click", () => {
     if (showOpenOnlyInput) {
         showOpenOnlyInput.checked = false;
     }
-
-    applyReviewFilter("all");
     setActiveSectionFilter("all");
     filterMatrixRows();
 });
@@ -5503,32 +5852,6 @@ if (matrixBody) {
         else if (key === "Delete" || key === "Backspace") { e.preventDefault(); setResponsibilityValue(ri, disc, resp, ""); }
     });
 }
-
-reviewFilterButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-        applyReviewFilter(button.dataset.reviewFilter || "all");
-    });
-});
-
-matrixSectionResetButton?.addEventListener("click", () => {
-    setActiveSectionFilter("all");
-});
-
-matrixSectionFirstRowButton?.addEventListener("click", () => {
-    focusFirstVisibleContentRow();
-});
-
-matrixSectionNextOpenButton?.addEventListener("click", () => {
-    const openRows = getVisibleContentRowIndexes({ openOnly: true });
-
-    if (!openRows.length) {
-        showToast("Ingen åpne avklaringer i dette utvalget akkurat nå.", "success");
-        return;
-    }
-
-    const nextOpen = openRows.find((rowIndex) => rowIndex > focusedRowIndex) ?? openRows[0];
-    focusRow(nextOpen);
-});
 
 window.addEventListener("hashchange", () => {
     setActiveSectionFilter(getSectionFilterFromHash(), { updateHash: false });
@@ -5648,11 +5971,6 @@ if (exportPdfButton) {
     });
 }
 
-if (applyPackagePresetButton) {
-    applyPackagePresetButton.addEventListener("click", () => {
-        showToast("Pakkeoppsett er brukt i matrisen.", "success");
-    });
-}
 
 if (analyzeBhButton) {
     analyzeBhButton.addEventListener("click", () => {
@@ -5675,6 +5993,8 @@ const docListSection = document.getElementById("doc-list-section");
 const docList = document.getElementById("doc-list");
 const docCountLabel = document.getElementById("doc-count-label");
 const clearAllDocsButton = document.getElementById("clear-all-docs");
+const bhUploadButton = document.getElementById("bh-upload-button");
+const localOpenWarning = document.getElementById("local-open-warning");
 const complexityResult = document.getElementById("complexity-result");
 const complexityFill = document.getElementById("complexity-fill");
 const complexityLevel = document.getElementById("complexity-level");
@@ -5700,10 +6020,12 @@ const offerListSection = document.getElementById("offer-list-section");
 const offerList = document.getElementById("offer-list");
 const offerCountLabel = document.getElementById("offer-count-label");
 const clearAllOffersButton = document.getElementById("clear-all-offers");
+const offerUploadButton = document.getElementById("offer-upload-button");
 const analyzeOffersButton = document.getElementById("analyze-offers");
 const offerAnalysisStatus = document.getElementById("offer-analysis-status");
 const offerAnalysisKpis = document.getElementById("offer-analysis-kpis");
 const offerFindingsList = document.getElementById("offer-findings-list");
+const offerFindingDetail = document.getElementById("offer-finding-detail");
 const offerDecisionSummary = document.getElementById("offer-decision-summary");
 
 function formatFileSize(bytes) {
@@ -5727,6 +6049,8 @@ function addOfferDocument(name, content, size) {
     uploadedOfferDocuments.push({ name, content, size, id: Date.now() + Math.random() });
     lastOfferAnalysis = null;
     offerDecisionState.clear();
+    offerDecisionNoteState.clear();
+    activeOfferFindingKey = "";
     renderOfferDocumentList();
     renderOfferAnalysis();
 }
@@ -5778,6 +6102,9 @@ function removeOfferDocument(id) {
     const idx = uploadedOfferDocuments.findIndex(function(d) { return d.id === id; });
     if (idx >= 0) uploadedOfferDocuments.splice(idx, 1);
     lastOfferAnalysis = null;
+    offerDecisionState.clear();
+    offerDecisionNoteState.clear();
+    activeOfferFindingKey = "";
     renderOfferDocumentList();
     renderOfferAnalysis();
 }
@@ -5872,18 +6199,33 @@ function processFiles(fileList, addCallback) {
 }
 
 // Prevent browser from opening dropped files anywhere on the page
-document.addEventListener("dragover", function(e) { e.preventDefault(); });
-document.addEventListener("drop", function(e) { e.preventDefault(); });
+document.addEventListener("dragover", function(e) {
+    if (isFileDragEvent(e)) e.preventDefault();
+}, true);
+document.addEventListener("drop", function(e) {
+    if (isFileDragEvent(e)) e.preventDefault();
+}, true);
 
 // Drag & drop + click to open file picker
 if (docDropzone) {
+    const openBhPicker = function() {
+        openNativeFilePicker(bhUploadInput);
+    };
+
     docDropzone.addEventListener("click", function(e) {
-        if (e.target.closest(".doc-item-remove")) return;
-        if (bhUploadInput) bhUploadInput.click();
+        if (e.target.closest(".doc-item-remove, .dropzone-button")) return;
+        openBhPicker();
+    });
+
+    docDropzone.addEventListener("keydown", function(e) {
+        if (e.key !== "Enter" && e.key !== " ") return;
+        e.preventDefault();
+        openBhPicker();
     });
 
     ["dragenter", "dragover"].forEach(function(evt) {
         docDropzone.addEventListener(evt, function(e) {
+            if (!isFileDragEvent(e)) return;
             e.preventDefault();
             e.stopPropagation();
             docDropzone.classList.add("drag-over");
@@ -5898,12 +6240,21 @@ if (docDropzone) {
     });
 
     docDropzone.addEventListener("drop", function(e) {
+        if (!isFileDragEvent(e)) return;
         e.preventDefault();
         e.stopPropagation();
         docDropzone.classList.remove("drag-over");
         if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) {
             handleFiles(e.dataTransfer.files);
         }
+    });
+}
+
+if (bhUploadButton) {
+    bhUploadButton.addEventListener("click", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        openNativeFilePicker(bhUploadInput);
     });
 }
 
@@ -5920,6 +6271,29 @@ function handleFiles(fileList) {
     processFiles(fileList, addDocument);
 }
 
+function openNativeFilePicker(fileInput) {
+    if (!fileInput) return;
+    if (typeof fileInput.showPicker === "function") {
+        try {
+            fileInput.showPicker();
+            return;
+        } catch (error) {
+            // Fall back to click() when showPicker() is unavailable or blocked.
+        }
+    }
+    fileInput.click();
+}
+
+function isFileDragEvent(event) {
+    const types = event.dataTransfer?.types;
+    if (!types) return false;
+    return Array.from(types).includes("Files");
+}
+
+function isLocalFileMode() {
+    return window.location.protocol === "file:";
+}
+
 if (clearAllDocsButton) {
     clearAllDocsButton.addEventListener("click", function() {
         uploadedDocuments.length = 0;
@@ -5929,13 +6303,24 @@ if (clearAllDocsButton) {
 }
 
 if (offerDropzone) {
+    const openOfferPicker = function() {
+        openNativeFilePicker(offerUploadInput);
+    };
+
     offerDropzone.addEventListener("click", function(e) {
-        if (e.target.closest(".doc-item-remove")) return;
-        if (offerUploadInput) offerUploadInput.click();
+        if (e.target.closest(".doc-item-remove, .dropzone-button")) return;
+        openOfferPicker();
+    });
+
+    offerDropzone.addEventListener("keydown", function(e) {
+        if (e.key !== "Enter" && e.key !== " ") return;
+        e.preventDefault();
+        openOfferPicker();
     });
 
     ["dragenter", "dragover"].forEach(function(evt) {
         offerDropzone.addEventListener(evt, function(e) {
+            if (!isFileDragEvent(e)) return;
             e.preventDefault();
             e.stopPropagation();
             offerDropzone.classList.add("drag-over");
@@ -5950,12 +6335,21 @@ if (offerDropzone) {
     });
 
     offerDropzone.addEventListener("drop", function(e) {
+        if (!isFileDragEvent(e)) return;
         e.preventDefault();
         e.stopPropagation();
         offerDropzone.classList.remove("drag-over");
         if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) {
             processFiles(e.dataTransfer.files, addOfferDocument);
         }
+    });
+}
+
+if (offerUploadButton) {
+    offerUploadButton.addEventListener("click", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        openNativeFilePicker(offerUploadInput);
     });
 }
 
@@ -5998,11 +6392,13 @@ function renderOfferAnalysis() {
             offerFindingsList.innerHTML = findings.map(function(finding, index) {
                 const findingKey = getOfferFindingKey(finding, index);
                 const decision = getOfferFindingDecision(finding, index);
+                const isActive = activeOfferFindingKey === findingKey;
                 if (finding.rowUid) {
                     return `
-                        <div class="offer-finding-shell">
+                        <div class="offer-finding-shell${isActive ? " is-active" : ""}">
                             <button type="button" class="offer-finding-item" data-row-uid="${escapeHtml(finding.rowUid)}"><strong>${escapeHtml(finding.level)}</strong>: ${escapeHtml(finding.message)}</button>
                             <div class="offer-finding-decision-row">
+                                <button type="button" class="secondary-button" data-offer-detail="${escapeHtml(findingKey)}">Vis detalj</button>
                                 <span class="offer-finding-decision-label">Beslutning: ${escapeHtml(getOfferDecisionLabel(decision))}</span>
                                 <div class="offer-finding-decision-actions">
                                     <button type="button" class="secondary-button${decision === "review" ? " is-active" : ""}" data-offer-decision="${escapeHtml(findingKey)}" data-offer-decision-value="review">Må avklares</button>
@@ -6014,9 +6410,10 @@ function renderOfferAnalysis() {
                     `;
                 }
                 return `
-                    <div class="offer-finding-shell">
+                    <div class="offer-finding-shell${isActive ? " is-active" : ""}">
                         <p class="offer-finding-static"><strong>${escapeHtml(finding.level)}</strong>: ${escapeHtml(finding.message)}</p>
                         <div class="offer-finding-decision-row">
+                            <button type="button" class="secondary-button" data-offer-detail="${escapeHtml(findingKey)}">Vis detalj</button>
                             <span class="offer-finding-decision-label">Beslutning: ${escapeHtml(getOfferDecisionLabel(decision))}</span>
                             <div class="offer-finding-decision-actions">
                                 <button type="button" class="secondary-button${decision === "review" ? " is-active" : ""}" data-offer-decision="${escapeHtml(findingKey)}" data-offer-decision-value="review">Må avklares</button>
@@ -6027,6 +6424,35 @@ function renderOfferAnalysis() {
                     </div>
                 `;
             }).join("");
+        }
+    }
+
+    if (offerFindingDetail) {
+        const findings = lastOfferAnalysis?.findings || [];
+        const detailFindingIndex = findings.findIndex((finding, index) => getOfferFindingKey(finding, index) === activeOfferFindingKey);
+        const detailFinding = detailFindingIndex >= 0 ? findings[detailFindingIndex] : null;
+        if (!detailFinding) {
+            offerFindingDetail.innerHTML = "<p>Velg et funn for å se radkobling, kontrollvurdering og beslutningsnotat.</p>";
+        } else {
+            const rowIndex = detailFinding.rowUid ? rows.findIndex((row) => row.uid === detailFinding.rowUid) : -1;
+            const linkedRow = rowIndex >= 0 ? rows[rowIndex] : null;
+            const findingKey = getOfferFindingKey(detailFinding, detailFindingIndex);
+            const note = escapeHtml(getOfferDecisionNote(findingKey));
+            const linkedRowMeta = linkedRow
+                ? `${escapeHtml(linkedRow.tfm)} ${escapeHtml(linkedRow.description)}`
+                : "Generelt tilbudssignal uten direkte radkobling";
+            const reviewReadiness = rowIndex >= 0 ? getRowReviewReadinessText(rowIndex) : "Ingen direkte rad.";
+            offerFindingDetail.innerHTML = `
+                <p><strong>Nivå:</strong> ${escapeHtml(detailFinding.level)}</p>
+                <p><strong>Koblet rad:</strong> ${linkedRowMeta}</p>
+                <p><strong>Matrisestatus:</strong> ${linkedRow ? escapeHtml(getRowStatusLabel(getRowStatus(rowIndex))) : "Ikke relevant"}</p>
+                <p><strong>Review-klarhet:</strong> ${escapeHtml(reviewReadiness)}</p>
+                <p><strong>Funn:</strong> ${escapeHtml(detailFinding.message)}</p>
+                <label class="offer-detail-note">
+                    <span>Beslutningsnotat</span>
+                    <textarea data-offer-note="${escapeHtml(findingKey)}" rows="4" placeholder="Hva ble vurdert, og hva blir neste steg?">${note}</textarea>
+                </label>
+            `;
         }
     }
 
@@ -6045,11 +6471,6 @@ function renderOfferAnalysis() {
         }
     }
 
-    if (activeReviewFilter === "conflicts") {
-        filterMatrixRows();
-    }
-
-    updateMatrixCommandCenter();
 }
 
 function getOfferKeywordsForRow(row) {
@@ -6136,6 +6557,9 @@ async function analyzeOffersAgainstMatrix() {
             setOfferFindingDecision(key, finding.level === "Konflikt" ? "review" : "pending");
         }
     });
+    if (!activeOfferFindingKey && findings.length) {
+        activeOfferFindingKey = getOfferFindingKey(findings[0], 0);
+    }
 
     if (offerAnalysisStatus) {
         offerAnalysisStatus.textContent = `Tilbudsanalyse ferdig. ${lastOfferAnalysis.findingCount} funn registrert mot gjeldende matrisegrunnlag.`;
@@ -6758,6 +7182,7 @@ if (analyzeBhButton) {
         renderComplexityResult(result);
         renderTueRecommendation(result.tueRecommendation);
         renderMatrixScope(result.matrixScope);
+        renderBhPackageGuidance();
 
         // Auto-detect BREEAM from document text and show card
         var breeamLevel = getBreeamLevel();
@@ -6860,94 +7285,19 @@ if (applyMatrixScopeButton) {
 // PHASE SIDEBAR (left vertical stepper)
 // ══════════════════════════════════════════════════════════════
 
-const phaseBtns = [
-    document.getElementById("phase-btn-1"),
-    document.getElementById("phase-btn-2"),
-    document.getElementById("phase-btn-3"),
-    document.getElementById("phase-btn-4"),
-];
-const phaseStatuses = [
-    document.getElementById("phase-status-1"),
-    document.getElementById("phase-status-2"),
-    document.getElementById("phase-status-3"),
-    document.getElementById("phase-status-4"),
-];
-const phaseLines = [
-    document.getElementById("phase-line-1"),
-    document.getElementById("phase-line-2"),
-    document.getElementById("phase-line-3"),
-];
-
-// Phase buttons navigate steps
-phaseBtns.forEach(function(btn) {
-    if (!btn) return;
-    btn.addEventListener("click", function() {
-        var target = Number(btn.dataset.stepTarget);
-        if (target >= 1 && target <= 4) {
-            setWorkflowStep(target);
-        }
-    });
-});
-
-function syncPhaseSidebar() {
-    var health = getWorkflowHealth();
-    var stepChecks = [health.step1Checks, health.step2Checks, health.step3Checks, health.step4Checks];
-
-    // Determine state per phase
-    stepChecks.forEach(function(checks, i) {
-        var allDone = checks.every(function(c) { return c.done; });
-        var anyDone = checks.some(function(c) { return c.done; });
-        var isActive = (i + 1) === currentWorkflowStep;
-
-        var btn = phaseBtns[i];
-        var status = phaseStatuses[i];
-        if (!btn) return;
-
-        btn.classList.remove("active", "done");
-        if (isActive) {
-            btn.classList.add("active");
-        }
-        if (allDone) {
-            btn.classList.add("done");
-        }
-
-        if (status) {
-            if (allDone) {
-                status.textContent = "Ferdig";
-            } else if (isActive) {
-                status.textContent = "Pågår";
-            } else if (anyDone) {
-                status.textContent = "Startet";
-            } else {
-                status.textContent = "Venter";
-            }
-        }
-
-        // Connector line
-        if (phaseLines[i]) {
-            phaseLines[i].classList.toggle("filled", allDone);
-        }
-    });
-
-    if (phaseBtns[3]) phaseBtns[3].disabled = false;
-}
-
 // Consolidated patches — single wrapper for each function
 const _baseSetWorkflowStep = setWorkflowStep;
 setWorkflowStep = function(stepNumber, options) {
     _baseSetWorkflowStep(stepNumber, options);
     syncTopbarStep(stepNumber);
-    syncPhaseSidebar();
 };
 
 const _baseUpdateWorkflowOverview = updateWorkflowOverview;
 updateWorkflowOverview = function() {
     _baseUpdateWorkflowOverview();
     syncTopbarProgress();
-    syncPhaseSidebar();
 };
 
 // Initial sync
 populateRowStatusOptions();
 populateRowOwnerOptions();
-syncPhaseSidebar();

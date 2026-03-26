@@ -54,11 +54,6 @@
         </div>
     </header>
 
-    <div class="demo-banner" id="demo-banner" hidden>
-        <div class="demo-banner-inner">
-            <strong>Gratisversjon</strong> — Verktøyet er gratis i denne fasen og kan brukes fritt i prosjektarbeidet.
-        </div>
-    </div>
 
     <main class="page">
         <section class="hero" id="top">
@@ -81,57 +76,6 @@
         <strong id="step-4-state" hidden>Venter</strong>
         <span id="step-4-hint" hidden></span>
 
-        <section class="product-cockpit" aria-label="Prosjektoversikt">
-            <article class="status-card cockpit-card">
-                <p class="status-label">Fremdrift</p>
-                <p id="cockpit-progress-value" class="status-value">0 %</p>
-                <p id="cockpit-progress-text" class="helper-text">Arbeidsflyten er ikke startet ennå.</p>
-            </article>
-            <article class="status-card cockpit-card">
-                <p class="status-label">Neste steg</p>
-                <p id="cockpit-next-step" class="status-value">Opprett prosjekt</p>
-                <p id="cockpit-next-step-detail" class="helper-text">Gi prosjektet et navn og velg bygningstype.</p>
-            </article>
-            <article class="status-card cockpit-card">
-                <p class="status-label">Matrisekvalitet</p>
-                <p id="cockpit-matrix-health" class="status-value">Ingen data</p>
-                <p id="cockpit-matrix-health-detail" class="helper-text">Kvalitet og avklaringer vises her når matrisen er i bruk.</p>
-            </article>
-            <article class="status-card cockpit-card">
-                <p class="status-label">Tilbudskontroll</p>
-                <p id="cockpit-offer-health" class="status-value">Ikke startet</p>
-                <p id="cockpit-offer-health-detail" class="helper-text">Last opp tilbud for å få konfliktstatus og kontrollgrunnlag.</p>
-            </article>
-        </section>
-
-        <nav class="phase-sidebar" id="phase-sidebar" aria-label="Prosjektfaser">
-            <div class="phase-sidebar-inner">
-                <button class="phase-item active" type="button" data-step-target="1" id="phase-btn-1">
-                    <span class="phase-number">1</span>
-                    <span class="phase-label">Prosjekt</span>
-                    <span class="phase-status" id="phase-status-1">Pågår</span>
-                </button>
-                <div class="phase-connector"><span class="phase-connector-line" id="phase-line-1"></span></div>
-                <button class="phase-item" type="button" data-step-target="2" id="phase-btn-2">
-                    <span class="phase-number">2</span>
-                    <span class="phase-label">Dokumenter</span>
-                    <span class="phase-status" id="phase-status-2">Venter</span>
-                </button>
-                <div class="phase-connector"><span class="phase-connector-line" id="phase-line-2"></span></div>
-                <button class="phase-item" type="button" data-step-target="3" id="phase-btn-3">
-                    <span class="phase-number">3</span>
-                    <span class="phase-label">Matrise</span>
-                    <span class="phase-status" id="phase-status-3">Venter</span>
-                </button>
-                <div class="phase-connector"><span class="phase-connector-line" id="phase-line-3"></span></div>
-                <button class="phase-item" type="button" data-step-target="4" id="phase-btn-4" disabled>
-                    <span class="phase-number">4</span>
-                    <span class="phase-label">Tilbud</span>
-                    <span class="phase-status" id="phase-status-4">Venter</span>
-                </button>
-            </div>
-        </nav>
-
         <section class="workflow-shell" aria-label="Arbeidsflyt">
             <!-- Hidden tabs for JS compatibility -->
             <div class="workflow-steps" role="tablist" aria-label="Arbeidsflytsteg" hidden>
@@ -145,8 +89,8 @@
                 <div class="step-intro">
                     <div class="step-intro-copy">
                         <p class="status-label">Steg 1</p>
-                        <h3>Opprett prosjektet</h3>
-                        <p class="helper-text">Gi prosjektet et navn og velg hva slags bygg det gjelder. Resten kan systemet foreslå for deg i neste steg.</p>
+                        <h3>Definer prosjekt og fagpakker</h3>
+                        <p class="helper-text">Velg prosjekttype og hvordan du ønsker å bygge opp fagpakkene. Dette styrer hvordan AI-en skal plassere ansvar, automasjon og SD i matrisen.</p>
                     </div>
                     <div id="step-1-checklist" class="step-checklist" hidden></div>
                 </div>
@@ -206,26 +150,134 @@
 
             <details class="package-builder-details">
                 <summary class="package-builder-summary">Teknisk fagmodell</summary>
-                <p class="helper-text" style="margin: 12px 0 16px;">Velg hvordan fagene typisk skal prises og kontraheres. Du kan også la steg 2 foreslå dette.</p>
+                <p class="helper-text" style="margin: 12px 0 8px;">Velg hvordan fagene typisk skal prises og kontraheres. Du kan også la steg 2 foreslå dette.</p>
+                <p class="helper-text" style="margin: 0 0 16px;">Tenk på hvem som faktisk skal bære automasjon, signaler og integrasjon mot SD i dette prosjektet.</p>
             <div class="package-builder">
-                <div class="tue-builder-grid">
+                <div class="package-builder-shell">
+                    <section class="builder-panel">
+                        <div class="builder-panel-head">
+                            <p class="status-label">Fagpakker</p>
+                            <h4>Hvor skal hvert fag ligge?</h4>
+                            <p class="helper-text">Velg hvem som bærer hvert teknisk fag. Rør, ventilasjon og elektro er alltid egne basisfag.</p>
+                        </div>
+                        <div class="discipline-assignment-grid">
+                            <div class="discipline-row">
+                                <span class="discipline-label">Automasjon</span>
+                                <div class="discipline-options" data-assign="aut">
+                                    <button type="button" class="builder-chip is-active" data-assign-value="separate">Eget fag</button>
+                                    <button type="button" class="builder-chip" data-assign-value="el">Med Elektro</button>
+                                    <button type="button" class="builder-chip" data-assign-value="ror">Med Rør</button>
+                                    <button type="button" class="builder-chip" data-assign-value="vent">Med Ventilasjon</button>
+                                </div>
+                            </div>
+                            <div class="discipline-row">
+                                <span class="discipline-label">SD-integrasjon</span>
+                                <div class="discipline-options" data-assign="sd">
+                                    <button type="button" class="builder-chip is-active" data-assign-value="separate">Eget fag</button>
+                                    <button type="button" class="builder-chip" data-assign-value="aut">Med Automasjon</button>
+                                    <button type="button" class="builder-chip" data-assign-value="el">Med Elektro</button>
+                                </div>
+                            </div>
+                            <div class="discipline-row">
+                                <span class="discipline-label">Lås og beslag</span>
+                                <div class="discipline-options" data-assign="locks">
+                                    <button type="button" class="builder-chip is-active" data-assign-value="separate">Eget fag</button>
+                                    <button type="button" class="builder-chip" data-assign-value="integrated">Bygg / dør</button>
+                                    <button type="button" class="builder-chip" data-assign-value="el">Med Elektro</button>
+                                    <button type="button" class="builder-chip" data-assign-value="adk">Med ADK</button>
+                                </div>
+                                <p id="tue-locks-help" class="field-help"></p>
+                            </div>
+                            <div class="discipline-row">
+                                <span class="discipline-label">Adgangskontroll</span>
+                                <div class="discipline-options" data-assign="adk">
+                                    <button type="button" class="builder-chip is-active" data-assign-value="separate">Eget fag</button>
+                                    <button type="button" class="builder-chip" data-assign-value="el">Med Elektro</button>
+                                    <button type="button" class="builder-chip" data-assign-value="locks">Med Lås</button>
+                                    <button type="button" class="builder-chip" data-assign-value="aut">Med Automasjon</button>
+                                    <button type="button" class="builder-chip" data-assign-value="sd">Med SD</button>
+                                    <button type="button" class="builder-chip" data-assign-value="security">Sikkerhetspakke</button>
+                                </div>
+                                <p id="tue-adk-help" class="field-help"></p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="builder-panel builder-preview-panel">
+                        <div class="builder-panel-head">
+                            <p class="status-label">Forhåndsvisning</p>
+                            <h4>Slik blir matrisekolonnene</h4>
+                            <p id="tue-core-help" class="field-help"></p>
+                        </div>
+                        <div id="matrix-column-preview" class="matrix-column-preview"></div>
+                        <div id="bh-package-guidance" class="builder-guidance-shell">
+                            <div class="builder-structure-head">
+                                <p class="builder-group-title">Anbefaling fra BH-underlaget</p>
+                                <p id="bh-package-guidance-summary" class="helper-text">Kjør analyse i steg 2 for å få anbefalt fagmodell og utsatte grensesnitt.</p>
+                            </div>
+                            <div class="builder-guidance-grid">
+                                <article class="builder-guidance-card">
+                                    <span>Anbefalt modell</span>
+                                    <strong id="bh-package-guidance-model">Ingen analyse ennå</strong>
+                                </article>
+                                <article class="builder-guidance-card">
+                                    <span>Status mot valget ditt</span>
+                                    <strong id="bh-package-guidance-match">Ikke vurdert</strong>
+                                </article>
+                            </div>
+                            <div id="bh-package-guidance-interfaces" class="builder-guidance-list"></div>
+                        </div>
+                        <!-- Kritiske grensesnitt vises i steg 3 -->
+                        <div id="package-interface-summary" hidden></div>
+                        <div id="package-interface-list" hidden></div>
+                        <div class="status-card tue-summary-card">
+                            <p class="status-label">Valgt struktur</p>
+                            <p id="tue-composition-summary" class="status-value"></p>
+                            <p id="tue-recommendation" class="helper-text"></p>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Hidden elements kept for backward compatibility -->
+                <div hidden aria-hidden="true">
+                    <span id="package-preview-power"></span>
+                    <span id="package-preview-automation"></span>
+                    <span id="package-preview-sd"></span>
+                    <span id="package-preview-security"></span>
+                    <span id="package-structure-summary"></span>
+                    <div id="package-structure-grid"></div>
+                </div>
+
+                <div class="tue-builder-grid tue-builder-grid-assist" hidden>
                     <label>
-                        EL, automasjon og SD
+                        Teknisk samspill: EL, automasjon og SD
                         <select id="tue-core-model">
-                            <option value="separate">Hvert fag for seg (vanligst)</option>
-                            <option value="el_aut">Elektro + Automasjon sammen</option>
-                            <option value="el_aut_sd">Elektro + Automasjon + SD sammen</option>
-                            <option value="totaltechnical">Alt teknisk i én pakke</option>
+                            <optgroup label="Separate og klassiske modeller">
+                                <option value="separate">EL separat, automasjon separat, SD separat</option>
+                                <option value="el_aut">EL + automasjon sammen, SD separat</option>
+                                <option value="aut_sd">Automasjon + SD sammen, EL separat</option>
+                                <option value="el_sd">EL + SD sammen, mindre automasjon hos EL</option>
+                                <option value="el_aut_sd">EL + automasjon + SD samlet</option>
+                            </optgroup>
+                            <optgroup label="Bolig og mindre tekniske anlegg">
+                                <option value="ror_aut">Rør + mindre automasjon, EL separat</option>
+                                <option value="ror_aut_sd">Rør + automasjon + SD for VVS</option>
+                                <option value="vent_aut">Ventilasjon + mindre automasjon, EL separat</option>
+                                <option value="vent_aut_sd">Ventilasjon + automasjon + SD for luft</option>
+                            </optgroup>
+                            <optgroup label="Samlet leveranse">
+                                <option value="totaltechnical">Alt teknisk samlet i én pakke</option>
+                            </optgroup>
                         </select>
-                        <span id="tue-core-help" class="field-help"></span>
                     </label>
                     <label>
                         Lås og beslag
                         <select id="tue-locks-model">
                             <option value="separate">Eget fag</option>
                             <option value="integrated">Inkludert i dør-/byggleveranse</option>
+                            <option value="el">Inkludert i elektroleveransen</option>
+                            <option value="adk">Samlet med adgangskontroll/sikkerhet</option>
                         </select>
-                        <span id="tue-locks-help" class="field-help"></span>
                     </label>
                     <label>
                         Adgangskontroll
@@ -233,8 +285,10 @@
                             <option value="separate">Eget fag</option>
                             <option value="el">Elektrikeren</option>
                             <option value="locks">Lås og beslag</option>
+                            <option value="aut">Automasjon</option>
+                            <option value="sd">SD/systemintegrator</option>
+                            <option value="security">Samlet sikkerhetspakke</option>
                         </select>
-                        <span id="tue-adk-help" class="field-help"></span>
                     </label>
                 </div>
                 <div id="tue-standalone-builder" class="tue-standalone-builder">
@@ -258,29 +312,16 @@
                         </label>
                     </div>
                 </div>
-                <div class="status-card tue-summary-card">
-                    <p class="status-label">Valgt struktur</p>
-                    <p id="tue-composition-summary" class="status-value"></p>
-                    <p id="tue-recommendation" class="helper-text"></p>
-                </div>
             </div>
             <div class="package-actions">
-                <button id="apply-package-preset" type="button">Bruk oppsett i matrisen</button>
-                <p class="helper-text">Du kan alltid justere radene manuelt etterpå.</p>
+                <button id="apply-package-preset" type="button">Lagre fagpakke</button>
+                <p class="helper-text">Fagpakken lagres og brukes når matrisen bygges i steg 3.</p>
             </div>
             </details>
         </section>
                     <aside class="step-side">
-            <div class="project-notes">
-                <div class="status-card">
-                    <p class="status-label">Status</p>
-                    <p id="project-logic-status" class="status-value"></p>
-                </div>
-            </div>
-            <div class="project-library">
-                <div class="section-heading compact-heading">
-                    <h2>Dine prosjekter</h2>
-                </div>
+            <details class="project-library">
+                <summary class="project-library-summary">Lagrede prosjekter</summary>
                 <div class="project-library-actions">
                     <div class="project-library-buttons">
                         <button id="new-project" type="button">Nytt prosjekt</button>
@@ -303,12 +344,12 @@
                     </div>
                     <div id="revision-list" class="revision-list"></div>
                 </div>
-            </div>
+            </details>
                     </aside>
                 </div>
                 <div class="step-actions">
                     <div class="step-actions-copy">
-                        <p class="helper-text">Klar? Gå videre for å laste opp dokumenter fra byggherre.</p>
+                        <p class="helper-text">Når fagpakkene er satt, går vi videre til BH-underlaget og lar AI-en lese dokumentene med riktig prioritet.</p>
                     </div>
                     <div class="step-actions-buttons">
                         <button type="button" data-step-target="2">Neste: Last opp dokumenter</button>
@@ -320,8 +361,8 @@
                 <div class="step-intro">
                     <div class="step-intro-copy">
                         <p class="status-label">Steg 2</p>
-                        <h3>Last opp anbudsdokumenter fra byggherre</h3>
-                        <p class="helper-text">Dra inn konkurransegrunnlaget du har mottatt. Systemet analyserer underlaget og bygger et forslag til grensesnittmatrise som kan sendes ut sammen med TUE-anbudet, med utgangspunkt i norsk totalentreprisepraksis og tydelige faggrenser.</p>
+                        <h3>Les BH-underlaget og bygg grunnlaget</h3>
+                        <p class="helper-text">Last opp konkurransegrunnlaget fra byggherre. AI-en tolker tekstene, løser konflikter etter dokumentprioritet og bygger et første ansvarsbilde for matrisen.</p>
                     </div>
                     <div id="step-2-checklist" class="step-checklist" hidden></div>
                 </div>
@@ -331,13 +372,20 @@
                 <p class="eyebrow">Dokumentinnsamling</p>
                 <h2>Last opp BH-dokumenter</h2>
             </div>
+            <div id="local-open-warning" class="status-card local-open-warning" hidden>
+                <p class="status-label">Lokal åpning oppdaget</p>
+                <p class="helper-text">Du har åpnet siden direkte som fil. Opplasting og lagring fungerer best når appen startes via <strong>http://localhost:3000</strong> med kommandoen <strong>npm start</strong>.</p>
+            </div>
 
             <input id="bh-upload" type="file" accept=".txt,.md,.csv,.json,.pdf,.xlsx,.xls" multiple class="dropzone-input">
-            <div id="doc-dropzone" class="doc-dropzone" role="region" aria-label="Slipp dokumenter her">
+            <div id="doc-dropzone" class="doc-dropzone" role="button" tabindex="0" aria-label="Last opp BH-dokumenter" aria-describedby="doc-dropzone-hint">
                 <div class="dropzone-content">
                     <span class="dropzone-icon">+</span>
                     <p class="dropzone-title">Dra og slipp dokumenter her</p>
-                    <p class="dropzone-hint">eller klikk for å velge filer. Støtter .txt, .md, .csv, .json, .pdf, .xlsx og .xls.</p>
+                    <p id="doc-dropzone-hint" class="dropzone-hint">Du kan også bruke knappen under. Støtter .txt, .md, .csv, .json, .pdf, .xlsx og .xls.</p>
+                    <div class="dropzone-actions">
+                        <label id="bh-upload-button" for="bh-upload" class="dropzone-button">Velg dokumenter</label>
+                    </div>
                 </div>
             </div>
 
@@ -353,9 +401,9 @@
             </div>
 
             <div class="status-card" style="margin-top: 16px;">
-                <p class="status-label">Anbudsprosess</p>
-                <p class="status-value">Bygg matrisen fra BH-underlaget, send den ut til TUE for prising, og bruk den senere som kontrollgrunnlag mot mottatte tilbud.</p>
-                <p class="helper-text">Neste fase etter utsendelse er at tilbud fra UE/TUE lastes opp og sammenlignes mot avtalte grensesnitt, slik at avvik, forbehold og manglende leveranser blir synlige tidlig. Matrisen bør derfor være tydelig nok til å fungere som kontraktsnært kontrollgrunnlag.</p>
+                <p class="status-label">Målet i dette steget</p>
+                <p class="status-value">Vi skal gå fra BH-dokumenter til et strukturert ansvarsbilde som kan danne grunnlaget for grensesnittmatrisen.</p>
+                <p class="helper-text">Hvis to dokumenter sier ulike ting, skal dokumentet med høyest prioritet vinne. Dette er avgjørende for at matrisen skal bli kontraktsnær og brukbar videre i tilbudsfasen.</p>
             </div>
 
             <div class="package-actions">
@@ -365,14 +413,14 @@
         </section>
                     <aside class="step-side">
                         <div class="status-card import-guide-card">
-                            <p class="status-label">Slik brukes det i anbud</p>
-                            <p class="status-value">Last opp konkurransegrunnlaget fra byggherre. Systemet leser gjennom underlaget og bygger et forslag som brukes til utsendelse mot TUE:</p>
+                            <p class="status-label">Hva AI-en skal gjøre</p>
+                            <p class="status-value">Systemet leser BH-underlaget og bruker det til å bygge et første forslag som totalentreprenøren senere sender ut til TUE:</p>
                             <ul class="import-guide-list">
-                                <li><strong>Prosjekttype</strong> - bolig, sykehus, skole osv.</li>
-                                <li><strong>Kompleksitet</strong> - liten, middels eller stor</li>
-                                <li><strong>TUE-pakke</strong> - bør SD, AUT og EL samles?</li>
-                                <li><strong>Matriserader</strong> - hvilke rader som skal prises og avklares</li>
-                                <li><strong>Tilbudskontroll</strong> - grunnlag for senere sjekk av avvik, forbehold og motstrid mot mottatte tilbud</li>
+                                <li><strong>Dokumentprioritet</strong> - høyere prioritet vinner ved konflikt</li>
+                                <li><strong>Ansvar</strong> - hvem som prosjekterer, leverer, monterer, kabler og integrerer</li>
+                                <li><strong>Fagpakker</strong> - hvordan valgt TE-struktur påvirker ansvar</li>
+                                <li><strong>Matrisegrunnlag</strong> - hvilke rader som må med i utsendelsen</li>
+                                <li><strong>Tilbudskontroll</strong> - samme grunnlag brukes senere når TUE-tilbudene kommer inn</li>
                             </ul>
                         </div>
 
@@ -415,7 +463,7 @@
                 <div class="step-actions">
                     <div class="step-actions-copy">
                         <p class="status-label">Neste steg</p>
-                        <p class="helper-text">Når analysen er gjennomgått og forslagene er vurdert, gå videre til matrisen og klargjør utsendelsesgrunnlaget for TUE.</p>
+                        <p class="helper-text">Når dokumentene er analysert, går vi videre til selve matrisen og kvalitetssikrer hva som skal sendes ut til TUE for prising.</p>
                     </div>
                     <div class="step-actions-buttons">
                         <button type="button" class="secondary-button" data-step-target="1">Tilbake til prosjekt</button>
@@ -428,8 +476,8 @@
                 <div class="step-intro">
                     <div class="step-intro-copy">
                         <p class="status-label">Steg 3</p>
-                        <h3>Avklar grensesnitt og bygg utsendelsesgrunnlag</h3>
-                        <p class="helper-text">Velg kapittel, avklar ansvar og bygg grunnlaget for utsendelse og tilbudskontroll.</p>
+                        <h3>Bygg grensesnittmatrisen som skal sendes ut</h3>
+                        <p class="helper-text">Her kvalitetssikrer du ansvar, grensesnitt og kommentarer før underlaget går til TUE. Dette er dokumentet tilbudene senere skal måles mot.</p>
                     </div>
                     <div id="step-3-checklist" class="step-checklist" hidden></div>
                 </div>
@@ -454,105 +502,15 @@
                 </div>
                 <input id="matrix-search" type="search" placeholder="Søk i TFM, beskrivelse eller kommentar">
                 <label class="matrix-toggle-compact"><input id="show-open-only" type="checkbox"> Kun uavklarte</label>
-                <button id="add-row" type="button">Ny rad</button>
-                <button id="delete-row" type="button" class="secondary-button">Slett rad</button>
+                <button id="add-row" type="button" class="secondary-button">Ny rad</button>
                 <button id="jump-unresolved" type="button" class="secondary-button">Neste uavklarte</button>
-                <button id="toggle-review-mode" type="button" class="secondary-button">Kontrollvisning</button>
             </div>
-
-            <!-- Review-filter -->
-            <div class="review-filter-bar" aria-label="Arbeidsvisning for review">
-                <div class="review-filter-copy">
-                    <span class="status-label">Arbeidsvisning</span>
-                </div>
-                <div class="review-filter-actions" role="group" aria-label="Velg review-filter">
-                    <button id="review-filter-all" type="button" class="secondary-button" data-review-filter="all">Alle</button>
-                    <button id="review-filter-open" type="button" class="secondary-button" data-review-filter="open">Åpne</button>
-                    <button id="review-filter-ready" type="button" class="secondary-button" data-review-filter="ready">Review-klare</button>
-                    <button id="review-filter-conflicts" type="button" class="secondary-button" data-review-filter="conflicts">Konflikter</button>
-                    <button id="review-filter-confirmed" type="button" class="secondary-button" data-review-filter="confirmed">Bekreftede</button>
-                </div>
-            </div>
-
-            <!-- Kompakt oversikt -->
-            <div class="matrix-overview matrix-overview-compact" aria-label="Matriseoversikt">
-                <div class="overview-card"><span class="overview-label">Rader</span><strong id="matrix-visible-count">0</strong><span id="matrix-visible-detail" class="overview-detail">0 synlige</span></div>
-                <div class="overview-card"><span class="overview-label">Bekreftet</span><strong id="matrix-confirmed-count">0</strong><span id="matrix-confirmed-detail" class="overview-detail">0 % ferdig</span></div>
-                <div class="overview-card"><span class="overview-label">Åpne</span><strong id="matrix-open-count">0</strong><span id="matrix-open-detail" class="overview-detail">Åpne punkter</span></div>
-                <div class="overview-card"><span class="overview-label">Filter</span><strong id="matrix-filter-count">Alle</strong><span id="matrix-filter-status" class="overview-detail">Ingen filter aktivt</span></div>
-            </div>
-            <div class="matrix-command-center" aria-label="Arbeidskontroll">
-                <section class="status-card matrix-command-card">
-                    <p class="status-label">Arbeidskø</p>
-                    <div id="matrix-queue-list" class="matrix-queue-list">
-                        <p>Ingen arbeidskø ennå.</p>
-                    </div>
-                </section>
-                <section class="status-card matrix-command-card">
-                    <p class="status-label">Kvalitetsbilde</p>
-                    <div class="matrix-command-metrics">
-                        <div><strong id="matrix-comment-gap-count">0</strong><span>uten kommentar</span></div>
-                        <div><strong id="matrix-conflict-count">0</strong><span>konfliktrader</span></div>
-                        <div><strong id="matrix-owner-gap-count">0</strong><span>uten koordinator</span></div>
-                        <div><strong id="matrix-review-ready-count">0</strong><span>klare rader</span></div>
-                    </div>
-                    <p id="matrix-command-detail" class="helper-text">Arbeidsbildet oppdateres når du begynner å jobbe i matrisen.</p>
-                </section>
-                <section class="status-card matrix-command-card">
-                    <p class="status-label">Hurtighandlinger</p>
-                    <div class="matrix-command-actions">
-                        <button id="jump-conflict-row" type="button" class="secondary-button">Gå til konflikt</button>
-                        <button id="jump-uncommented-row" type="button" class="secondary-button">Gå til rad uten kommentar</button>
-                        <button id="focus-offer-step" type="button" class="secondary-button">Åpne tilbudskontroll</button>
-                    </div>
-                </section>
-            </div>
-
-            <section class="matrix-section-hub" aria-label="Kapitteloversikt">
-                <div class="matrix-section-hub-header">
-                    <div>
-                        <h3>Arbeid per bygningsdelstabell</h3>
-                        <p class="helper-text">Velg ett kapittel om gangen for raskere og ryddigere avklaring.</p>
-                    </div>
-                    <button id="matrix-section-reset" type="button" class="secondary-button">Vis hele matrisen</button>
-                </div>
-                <div id="matrix-section-cards"></div>
-            </section>
-            <section id="matrix-section-focus" class="matrix-section-focus" aria-label="Kapittelfokus">
-                <div class="matrix-section-focus-hero">
-                    <div class="matrix-section-focus-copy">
-                        <p id="matrix-section-focus-eyebrow" class="status-label"></p>
-                        <h3 id="matrix-section-focus-title"></h3>
-                        <p id="matrix-section-focus-summary" class="helper-text"></p>
-                    </div>
-                    <div class="matrix-section-focus-actions">
-                        <button id="matrix-section-first-row" type="button" class="secondary-button">Gå til første rad</button>
-                        <button id="matrix-section-next-open" type="button">Gå til neste uavklarte</button>
-                    </div>
-                </div>
-                <div id="matrix-section-focus-kpis"></div>
-                <div class="matrix-section-focus-grid">
-                    <section class="matrix-section-focus-card">
-                        <p class="status-label">Tema i kapittelet</p>
-                        <div id="matrix-section-focus-themes" class="matrix-focus-list"></div>
-                    </section>
-                    <section class="matrix-section-focus-card">
-                        <p class="status-label">Typiske gråsoner</p>
-                        <div id="matrix-section-focus-risks" class="matrix-focus-list"></div>
-                    </section>
-                    <section class="matrix-section-focus-card">
-                        <p class="status-label">Forventet leveranse</p>
-                        <div id="matrix-section-focus-deliverables" class="matrix-focus-list"></div>
-                    </section>
-                </div>
-            </section>
 
             <div id="matrix-empty-state" class="matrix-empty-state" hidden>
                 <p class="matrix-empty-state-title">Ingen rader vises i dette utvalget</p>
-                <p class="matrix-empty-state-detail">Juster søk, kapittel eller arbeidsvisning for å fortsette gjennomgangen.</p>
+                <p class="matrix-empty-state-detail">Juster søk eller kapittelvalg for å fortsette gjennomgangen.</p>
                 <div class="matrix-empty-state-actions">
                     <button id="reset-matrix-search" type="button" class="secondary-button">Tøm søk</button>
-                    <button id="reset-matrix-filters" type="button" class="secondary-button">Nullstill filter</button>
                     <button id="show-all-chapters" type="button" class="secondary-button">Vis alle kapitler</button>
                 </div>
             </div>
@@ -637,12 +595,6 @@
                     </div>
                 </details>
                 <div class="matrix-footer-actions">
-                    <section class="status-card workspace-command-card" aria-label="Status">
-                        <p class="status-label">Status</p>
-                        <p id="workspace-readiness-label" class="status-value">Under arbeid</p>
-                        <p id="workspace-next-action" class="helper-text">Gå gjennom uavklarte rader før utsendelse.</p>
-                        <div id="workspace-blockers" class="workspace-blockers"></div>
-                    </section>
                     <div class="contract-actions">
                         <button id="refresh-summary" type="button">Oppdater sammendrag</button>
                         <button id="save-project" type="button">Lagre prosjekt</button>
@@ -685,16 +637,26 @@
                 </div>
                 <div class="workspace-grid">
                     <section class="matrix-card workspace-main offer-workspace-main">
+                        <div class="offer-workspace-hero">
+                            <div>
+                                <p class="status-label">Tilbud mot matrise</p>
+                                <h3>Fang opp avvik, forbehold og beslutninger før kontrahering</h3>
+                                <p class="helper-text">Bruk analysen som første kontroll, og lås hvert funn med en konkret beslutning før dere går videre.</p>
+                            </div>
+                        </div>
                         <div class="section-heading">
                             <p class="eyebrow">Tilbudskontroll</p>
                             <h2>Opplasting og analyse</h2>
                         </div>
                         <input id="offer-upload" type="file" accept=".txt,.md,.csv,.json,.pdf,.xlsx,.xls" multiple class="dropzone-input">
-                        <div id="offer-dropzone" class="doc-dropzone" role="region" aria-label="Slipp tilbudsdokumenter her">
+                        <div id="offer-dropzone" class="doc-dropzone" role="button" tabindex="0" aria-label="Last opp tilbudsdokumenter" aria-describedby="offer-dropzone-hint">
                             <div class="dropzone-content">
                                 <span class="dropzone-icon">+</span>
                                 <p class="dropzone-title">Dra og slipp tilbud her</p>
-                                <p class="dropzone-hint">Last opp UE-/TUE-tilbud, følgebrev og forbeholdslister for kontroll mot matrisen.</p>
+                                <p id="offer-dropzone-hint" class="dropzone-hint">Last opp UE-/TUE-tilbud, følgebrev og forbeholdslister for kontroll mot matrisen.</p>
+                                <div class="dropzone-actions">
+                                    <label id="offer-upload-button" for="offer-upload" class="dropzone-button">Velg tilbudsfiler</label>
+                                </div>
                             </div>
                         </div>
                         <div id="offer-list-section" class="doc-list-section" hidden>
@@ -716,6 +678,12 @@
                             <p class="status-label">Funn</p>
                             <div id="offer-findings-list" class="workspace-blockers">
                                 <p>Ingen analyse kjørt ennå.</p>
+                            </div>
+                        </section>
+                        <section class="status-card offer-analysis-results-card offer-finding-detail-card">
+                            <p class="status-label">Valgt funn</p>
+                            <div id="offer-finding-detail" class="workspace-blockers">
+                                <p>Velg et funn for å se radkobling, kontrollvurdering og beslutningsnotat.</p>
                             </div>
                         </section>
                         <section class="status-card offer-analysis-results-card">
@@ -779,7 +747,6 @@
             var userEl = document.getElementById('topbar-user');
             var nameEl = document.getElementById('topbar-user-name');
             var logoutBtn = document.getElementById('topbar-logout');
-            var demoBanner = document.getElementById('demo-banner');
             var isGuest = true;
 
             try {
@@ -788,20 +755,17 @@
                     var data = await res.json();
                     nameEl.textContent = data.user.name;
                     userEl.style.display = 'flex';
-                    demoBanner.hidden = false;
                     isGuest = false;
                     window.__gmUser = data.user;
                     window.__gmDemo = false;
                 } else {
                     userEl.style.display = 'flex';
-                    nameEl.textContent = 'Gratis';
-                    demoBanner.hidden = false;
+                    nameEl.textContent = 'Gjest';
                     window.__gmDemo = false;
                 }
             } catch (e) {
                 userEl.style.display = 'flex';
-                nameEl.textContent = 'Gratis';
-                demoBanner.hidden = false;
+                nameEl.textContent = 'Gjest';
                 window.__gmDemo = false;
             }
 

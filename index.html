@@ -48,21 +48,70 @@
             </div>
             <span id="topbar-progress-label">0 %</span>
         </div>
+        <span id="topbar-last-saved" class="topbar-last-saved" hidden></span>
         <div class="topbar-user" id="topbar-user">
             <span id="topbar-user-name"></span>
             <button id="topbar-logout" type="button" class="topbar-logout-btn">Logg ut</button>
         </div>
     </header>
 
+    <div id="guest-banner" class="guest-banner" hidden>
+        <span class="guest-banner-icon" aria-hidden="true">ℹ</span>
+        <p>Du er ikke innlogget — arbeidet ditt lagres <strong>ikke</strong> på serveren og vil gå tapt når du lukker nettleseren. <a href="/login.html">Logg inn</a> eller <a href="/login.html#register">opprett konto</a> for å beholde prosjektene dine.</p>
+        <button type="button" id="guest-banner-close" class="guest-banner-close" aria-label="Lukk melding">✕</button>
+    </div>
 
-    <main class="page">
-        <section class="hero" id="top">
-            <h1>Grensesnittmatrise</h1>
-            <p class="intro">
-                Fra byggherreunderlag til utsendt TUE-anbud, mottatte tilbud og kontroll mot avtalte grensesnitt.
-            </p>
-        </section>
+    <!-- Onboarding modal — shown once to new users -->
+    <div id="onboarding-modal" class="onboarding-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="onboarding-title">
+        <div class="onboarding-modal">
+            <div class="onboarding-header">
+                <span class="onboarding-logo">GM</span>
+                <div>
+                    <h2 id="onboarding-title">Velkommen til Grensesnittmatrise</h2>
+                    <p class="onboarding-sub">Verktøy for teknisk grensesnittavklaring i byggeprosjekter</p>
+                </div>
+            </div>
+            <div class="onboarding-body">
+                <p class="onboarding-intro">Verktøyet hjelper deg å avklare <strong>hvem som har ansvar for hva</strong> mellom tekniske fag — fra prosjektering til ferdig anlegg.</p>
+                <ol class="onboarding-steps">
+                    <li>
+                        <span class="onboarding-step-num">1</span>
+                        <div>
+                            <strong>Prosjektoppsett</strong>
+                            <span>Sett prosjektnavn, bygningstype og velg hvilke fagpakker (EL, Aut, SD, Lås, ADK) som er egne entrepriser.</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="onboarding-step-num">2</span>
+                        <div>
+                            <strong>BH-underlag</strong>
+                            <span>Last opp dokumenter fra byggherren (PDF, Excel, tekstfiler). Analysen foreslår prosjekttype og hvilke grensesnitt som bør prioriteres.</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="onboarding-step-num">3</span>
+                        <div>
+                            <strong>Matrise</strong>
+                            <span>Gå gjennom hvert grensesnitt og angi P / L / M / K / F / I (prosjektering, levering, montering, kabling, funksjon, integrasjon) per fag. Eksporter til Excel eller PDF når matrisen er avklart.</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="onboarding-step-num">4</span>
+                        <div>
+                            <strong>Tilbudskontroll</strong>
+                            <span>Last opp mottatte tilbud og sjekk dem automatisk mot matrisen. Avvik og forbehold flagges for avklaringsmøte.</span>
+                        </div>
+                    </li>
+                </ol>
+                <p class="onboarding-legend">Symboler i matrisen: <strong>P</strong> Prosjektering · <strong>L</strong> Levering · <strong>M</strong> Montering · <strong>K</strong> Kabling · <strong>F</strong> Funksjon · <strong>I</strong> Integrasjon til SD · <strong>H</strong> Hovedansvar · <strong>D</strong> Delansvar</p>
+            </div>
+            <div class="onboarding-footer">
+                <button type="button" id="onboarding-close" class="onboarding-cta">Kom i gang</button>
+            </div>
+        </div>
+    </div>
 
+    <main class="page" id="top">
         <!-- Hidden elements for JS compatibility -->
         <p id="workflow-step-status" hidden>Steg 1 av 4</p>
         <span id="workflow-progress-value" hidden>0 %</span>
@@ -86,19 +135,9 @@
             </div>
 
             <section id="step-panel-1" class="step-panel active" data-step-panel="1" role="tabpanel" aria-labelledby="step-tab-1">
-                <div class="step-intro">
-                    <div class="step-intro-copy">
-                        <p class="status-label">Steg 1</p>
-                        <h3>Definer prosjekt og fagpakker</h3>
-                        <p class="helper-text">Velg prosjekttype og hvordan du ønsker å bygge opp fagpakkene. Dette styrer hvordan AI-en skal plassere ansvar, automasjon og SD i matrisen.</p>
-                    </div>
-                    <div id="step-1-checklist" class="step-checklist" hidden></div>
-                </div>
+                <div id="step-1-checklist" class="step-checklist" hidden></div>
                 <div class="step-shell step-shell-project">
         <section class="project-settings step-main" id="settings">
-            <div class="section-heading">
-                <h2>Prosjektinfo</h2>
-            </div>
             <div class="settings-grid">
                 <label>
                     Prosjektnavn
@@ -148,10 +187,6 @@
                 </label>
             </div>
 
-            <details class="package-builder-details">
-                <summary class="package-builder-summary">Teknisk fagmodell</summary>
-                <p class="helper-text" style="margin: 12px 0 8px;">Velg hvordan fagene typisk skal prises og kontraheres. Du kan også la steg 2 foreslå dette.</p>
-                <p class="helper-text" style="margin: 0 0 16px;">Tenk på hvem som faktisk skal bære automasjon, signaler og integrasjon mot SD i dette prosjektet.</p>
             <div class="package-builder">
                 <div class="package-builder-shell">
                     <section class="builder-panel">
@@ -164,39 +199,39 @@
                             <div class="discipline-row">
                                 <span class="discipline-label">Automasjon</span>
                                 <div class="discipline-options" data-assign="aut">
-                                    <button type="button" class="builder-chip is-active" data-assign-value="separate">Eget fag</button>
-                                    <button type="button" class="builder-chip" data-assign-value="el">Med Elektro</button>
-                                    <button type="button" class="builder-chip" data-assign-value="ror">Med Rør</button>
-                                    <button type="button" class="builder-chip" data-assign-value="vent">Med Ventilasjon</button>
+                                    <button type="button" class="builder-chip is-active" data-assign-value="separate" title="Automasjon prises som separat entreprise. Anbefalt for mellomstore til store bygg med kompleks styring.">Eget fag</button>
+                                    <button type="button" class="builder-chip" data-assign-value="el" title="Automasjon inngår i elektroleveransen. Elektrikeren bærer ansvar for styring og regulering.">Med Elektro</button>
+                                    <button type="button" class="builder-chip" data-assign-value="ror" title="Automasjon leveres av rørentreprenøren. Vanlig for enklere VVS-anlegg med pumper og ventiler.">Med Rør</button>
+                                    <button type="button" class="builder-chip" data-assign-value="vent" title="Automasjon leveres av ventilasjonsteknikeren. Vanlig ved kompakte aggregatpakker.">Med Ventilasjon</button>
                                 </div>
                             </div>
                             <div class="discipline-row">
                                 <span class="discipline-label">SD-integrasjon</span>
                                 <div class="discipline-options" data-assign="sd">
-                                    <button type="button" class="builder-chip is-active" data-assign-value="separate">Eget fag</button>
-                                    <button type="button" class="builder-chip" data-assign-value="aut">Med Automasjon</button>
-                                    <button type="button" class="builder-chip" data-assign-value="el">Med Elektro</button>
+                                    <button type="button" class="builder-chip is-active" data-assign-value="separate" title="SD-integrasjon prises separat. Anbefalt for bygg med BACnet/Modbus-krav og mange tilknyttede anlegg.">Eget fag</button>
+                                    <button type="button" class="builder-chip" data-assign-value="aut" title="SD-integratoren leverer også automasjon. Vanlig ved én leverandør for hele styringslaget.">Med Automasjon</button>
+                                    <button type="button" class="builder-chip" data-assign-value="el" title="Elektrikeren bærer SD-integrasjonen. Vanlig i mindre bygg uten separat automasjonsleverandør.">Med Elektro</button>
                                 </div>
                             </div>
                             <div class="discipline-row">
                                 <span class="discipline-label">Lås og beslag</span>
                                 <div class="discipline-options" data-assign="locks">
-                                    <button type="button" class="builder-chip is-active" data-assign-value="separate">Eget fag</button>
-                                    <button type="button" class="builder-chip" data-assign-value="integrated">Bygg / dør</button>
-                                    <button type="button" class="builder-chip" data-assign-value="el">Med Elektro</button>
-                                    <button type="button" class="builder-chip" data-assign-value="adk">Med ADK</button>
+                                    <button type="button" class="builder-chip is-active" data-assign-value="separate" title="Lås og beslag kontraheres og følges opp som eget fag. Anbefalt når ADK er kompleks.">Eget fag</button>
+                                    <button type="button" class="builder-chip" data-assign-value="integrated" title="Beslag og lås inngår i bygg- eller dørleveransen. Vanlig i enklere boligprosjekter.">Bygg / dør</button>
+                                    <button type="button" class="builder-chip" data-assign-value="el" title="Elektrikeren koordinerer elektriske sluttstykker, beslag og dørmiljø.">Med Elektro</button>
+                                    <button type="button" class="builder-chip" data-assign-value="adk" title="Lås og beslag leveres samlet med adgangskontroll i én sikkerhetspakke.">Med ADK</button>
                                 </div>
                                 <p id="tue-locks-help" class="field-help"></p>
                             </div>
                             <div class="discipline-row">
                                 <span class="discipline-label">Adgangskontroll</span>
                                 <div class="discipline-options" data-assign="adk">
-                                    <button type="button" class="builder-chip is-active" data-assign-value="separate">Eget fag</button>
-                                    <button type="button" class="builder-chip" data-assign-value="el">Med Elektro</button>
-                                    <button type="button" class="builder-chip" data-assign-value="locks">Med Lås</button>
-                                    <button type="button" class="builder-chip" data-assign-value="aut">Med Automasjon</button>
-                                    <button type="button" class="builder-chip" data-assign-value="sd">Med SD</button>
-                                    <button type="button" class="builder-chip" data-assign-value="security">Sikkerhetspakke</button>
+                                    <button type="button" class="builder-chip is-active" data-assign-value="separate" title="ADK prises og følges opp som eget fag med dedikert leverandør.">Eget fag</button>
+                                    <button type="button" class="builder-chip" data-assign-value="el" title="Adgangskontroll følger elektroleveransen. Elektrikeren bærer kabling, lesere og system.">Med Elektro</button>
+                                    <button type="button" class="builder-chip" data-assign-value="locks" title="ADK leveres samlet med lås og beslag. Én leverandør bærer hele dørmiljøet.">Med Lås</button>
+                                    <button type="button" class="builder-chip" data-assign-value="aut" title="ADK knyttes tett til automasjonsleveransen. Vanlig ved integrerte byggsystemer.">Med Automasjon</button>
+                                    <button type="button" class="builder-chip" data-assign-value="sd" title="ADK leveres av systemintegrator eller SD-aktør. Vanlig ved sentralisert tilgangsstyring.">Med SD</button>
+                                    <button type="button" class="builder-chip" data-assign-value="security" title="Lås, beslag og ADK prises samlet i én sikkerhetspakke fra én leverandør.">Sikkerhetspakke</button>
                                 </div>
                                 <p id="tue-adk-help" class="field-help"></p>
                             </div>
@@ -317,7 +352,6 @@
                 <button id="apply-package-preset" type="button">Lagre fagpakke</button>
                 <p class="helper-text">Fagpakken lagres og brukes når matrisen bygges i steg 3.</p>
             </div>
-            </details>
         </section>
                     <aside class="step-side">
             <details class="project-library">
@@ -358,14 +392,7 @@
             </section>
 
             <section id="step-panel-2" class="step-panel" data-step-panel="2" role="tabpanel" aria-labelledby="step-tab-2" hidden>
-                <div class="step-intro">
-                    <div class="step-intro-copy">
-                        <p class="status-label">Steg 2</p>
-                        <h3>Les BH-underlaget og bygg grunnlaget</h3>
-                        <p class="helper-text">Last opp konkurransegrunnlaget fra byggherre. AI-en tolker tekstene, løser konflikter etter dokumentprioritet og bygger et første ansvarsbilde for matrisen.</p>
-                    </div>
-                    <div id="step-2-checklist" class="step-checklist" hidden></div>
-                </div>
+                <div id="step-2-checklist" class="step-checklist" hidden></div>
                 <div class="step-shell step-shell-import">
         <section class="project-settings step-main" id="import">
             <div class="section-heading">
@@ -400,41 +427,12 @@
                 <div id="doc-list" class="doc-list"></div>
             </div>
 
-            <div class="status-card" style="margin-top: 16px;">
-                <p class="status-label">Målet i dette steget</p>
-                <p class="status-value">Vi skal gå fra BH-dokumenter til et strukturert ansvarsbilde som kan danne grunnlaget for grensesnittmatrisen.</p>
-                <p class="helper-text">Hvis to dokumenter sier ulike ting, skal dokumentet med høyest prioritet vinne. Dette er avgjørende for at matrisen skal bli kontraktsnær og brukbar videre i tilbudsfasen.</p>
-            </div>
-
             <div class="package-actions">
                 <button id="analyze-bh" type="button">Analyser alle dokumenter</button>
                 <p class="helper-text" id="bh-analysis-status">Systemet analyserer innholdet og foreslår prosjekttype, TUE-struktur og hvilket matrisegrunnlag som skal sendes ut i anbud.</p>
             </div>
         </section>
                     <aside class="step-side">
-                        <div class="status-card import-guide-card">
-                            <p class="status-label">Hva AI-en skal gjøre</p>
-                            <p class="status-value">Systemet leser BH-underlaget og bruker det til å bygge et første forslag som totalentreprenøren senere sender ut til TUE:</p>
-                            <ul class="import-guide-list">
-                                <li><strong>Dokumentprioritet</strong> - høyere prioritet vinner ved konflikt</li>
-                                <li><strong>Ansvar</strong> - hvem som prosjekterer, leverer, monterer, kabler og integrerer</li>
-                                <li><strong>Fagpakker</strong> - hvordan valgt TE-struktur påvirker ansvar</li>
-                                <li><strong>Matrisegrunnlag</strong> - hvilke rader som må med i utsendelsen</li>
-                                <li><strong>Tilbudskontroll</strong> - samme grunnlag brukes senere når TUE-tilbudene kommer inn</li>
-                            </ul>
-                        </div>
-
-                        <div id="complexity-result" class="status-card complexity-result-card" hidden>
-                            <p class="status-label">Prosjektkompleksitet</p>
-                            <div class="complexity-meter">
-                                <div class="complexity-bar">
-                                    <div id="complexity-fill" class="complexity-fill" style="width: 0%"></div>
-                                </div>
-                                <strong id="complexity-level" class="complexity-level">-</strong>
-                            </div>
-                            <p id="complexity-description" class="helper-text"></p>
-                        </div>
-
                         <div id="tue-recommendation-card" class="status-card" hidden>
                             <p class="status-label">Anbefalt TUE-struktur</p>
                             <p id="tue-rec-summary" class="status-value"></p>
@@ -449,15 +447,20 @@
                             <button id="apply-matrix-scope" type="button" class="secondary-button" style="margin-top: 10px;">Tilpass matrisen</button>
                         </div>
 
-                        <div id="breeam-card" class="status-card breeam-card" hidden>
-                            <p class="status-label">BREEAM-NOR v6</p>
-                            <p id="breeam-card-level" class="status-value"></p>
-                            <p id="breeam-card-detail" class="helper-text"></p>
-                            <p id="breeam-row-count" class="helper-text"></p>
-                            <button id="apply-breeam-rows" type="button" class="secondary-button" style="margin-top: 10px;">Legg til BREEAM-rader i matrisen</button>
+                        <!-- Hidden for JS compat -->
+                        <div id="complexity-result" hidden>
+                            <div class="complexity-bar"><div id="complexity-fill" style="width:0%"></div></div>
+                            <strong id="complexity-level">-</strong>
+                            <p id="complexity-description"></p>
+                        </div>
+                        <div id="breeam-card" hidden>
+                            <p id="breeam-card-level"></p>
+                            <p id="breeam-card-detail"></p>
+                            <p id="breeam-row-count"></p>
+                            <button id="apply-breeam-rows" type="button">Legg til BREEAM-rader</button>
                         </div>
 
-            <div id="bh-analysis-insights" class="bh-analysis-insights"></div>
+                        <div id="bh-analysis-insights" class="bh-analysis-insights"></div>
                     </aside>
                 </div>
                 <div class="step-actions">
@@ -473,14 +476,7 @@
             </section>
 
             <section id="step-panel-3" class="step-panel" data-step-panel="3" role="tabpanel" aria-labelledby="step-tab-3" hidden>
-                <div class="step-intro">
-                    <div class="step-intro-copy">
-                        <p class="status-label">Steg 3</p>
-                        <h3>Bygg grensesnittmatrisen som skal sendes ut</h3>
-                        <p class="helper-text">Her kvalitetssikrer du ansvar, grensesnitt og kommentarer før underlaget går til TUE. Dette er dokumentet tilbudene senere skal måles mot.</p>
-                    </div>
-                    <div id="step-3-checklist" class="step-checklist" hidden></div>
-                </div>
+                <div id="step-3-checklist" class="step-checklist" hidden></div>
                 <section class="matrix-card" id="matrix-section" style="max-width:100%">
             <!-- Kapittel-faner -->
             <nav class="chapter-tabs" aria-label="Bygningsdelkapitler">
@@ -503,7 +499,7 @@
                 <input id="matrix-search" type="search" placeholder="Søk i TFM, beskrivelse eller kommentar">
                 <label class="matrix-toggle-compact"><input id="show-open-only" type="checkbox"> Kun uavklarte</label>
                 <button id="add-row" type="button" class="secondary-button">Ny rad</button>
-                <button id="jump-unresolved" type="button" class="secondary-button">Neste uavklarte</button>
+                <button id="jump-unresolved" type="button" class="secondary-button" title="Hopp til neste uavklarte rad (snarvei: N)">Neste uavklarte <kbd>N</kbd></button>
             </div>
 
             <div id="matrix-empty-state" class="matrix-empty-state" hidden>
@@ -627,27 +623,9 @@
                 </div>
             </section>
             <section id="step-panel-4" class="step-panel" data-step-panel="4" role="tabpanel" aria-labelledby="step-tab-4" hidden>
-                <div class="step-intro">
-                    <div class="step-intro-copy">
-                        <p class="status-label">Steg 4</p>
-                        <h3>Last opp tilbud og kontroller mot matrisen</h3>
-                        <p class="helper-text">Når UE/TUE har sendt inn tilbud, kan du laste dem opp her og bruke matrisen som kontrollgrunnlag for avvik, forbehold og manglende omfang.</p>
-                    </div>
-                    <div id="step-4-checklist" class="step-checklist" hidden></div>
-                </div>
+                <div id="step-4-checklist" class="step-checklist" hidden></div>
                 <div class="workspace-grid">
                     <section class="matrix-card workspace-main offer-workspace-main">
-                        <div class="offer-workspace-hero">
-                            <div>
-                                <p class="status-label">Tilbud mot matrise</p>
-                                <h3>Fang opp avvik, forbehold og beslutninger før kontrahering</h3>
-                                <p class="helper-text">Bruk analysen som første kontroll, og lås hvert funn med en konkret beslutning før dere går videre.</p>
-                            </div>
-                        </div>
-                        <div class="section-heading">
-                            <p class="eyebrow">Tilbudskontroll</p>
-                            <h2>Opplasting og analyse</h2>
-                        </div>
                         <input id="offer-upload" type="file" accept=".txt,.md,.csv,.json,.pdf,.xlsx,.xls" multiple class="dropzone-input">
                         <div id="offer-dropzone" class="doc-dropzone" role="button" tabindex="0" aria-label="Last opp tilbudsdokumenter" aria-describedby="offer-dropzone-hint">
                             <div class="dropzone-content">
@@ -695,7 +673,7 @@
                     </section>
                     <aside class="workspace-side">
                         <div class="workspace-side-group">
-                            <section class="status-card">
+                            <section class="status-card" hidden>
                                 <p class="status-label">Hva analysen ser etter</p>
                                 <div class="matrix-focus-list">
                                     <span>Forbehold</span>
@@ -705,7 +683,7 @@
                                     <span>Uavklarte grensesnitt</span>
                                 </div>
                             </section>
-                            <section class="status-card">
+                            <section class="status-card" hidden>
                                 <p class="status-label">Arbeidsflyt</p>
                                 <p class="status-value">Send ut matrisen sammen med anbudet, motta tilbud tilbake og bruk denne siden til å fange opp motstrid mot satt ansvar og omfang.</p>
                                 <p class="helper-text">Dette er en første kontroll. Funnene bør brukes som grunnlag for avklaringsmøter og tilbudsevaluering.</p>
@@ -726,16 +704,6 @@
         </section>
     </main>
 
-    <footer class="site-footer">
-        <div class="site-footer-inner">
-            <span class="footer-brand">Grensesnittmatrise.no</span>
-            <div class="footer-links">
-                <span>Teknisk grensesnittverktøy for byggebransjen</span>
-                <span>TFM-basert arbeidsflyt</span>
-            </div>
-            <p class="footer-copy">Laget for effektiv avklaring av tekniske grensesnitt i norske byggeprosjekter.</p>
-        </div>
-    </footer>
 
     <button class="back-to-top" id="back-to-top" type="button" aria-label="Tilbake til toppen" title="Tilbake til toppen">&#8593;</button>
 
@@ -762,11 +730,25 @@
                     userEl.style.display = 'flex';
                     nameEl.textContent = 'Gjest';
                     window.__gmDemo = false;
+                    showGuestBanner();
                 }
             } catch (e) {
                 userEl.style.display = 'flex';
                 nameEl.textContent = 'Gjest';
                 window.__gmDemo = false;
+                showGuestBanner();
+            }
+
+            function showGuestBanner() {
+                var banner = document.getElementById('guest-banner');
+                if (!banner) return;
+                banner.removeAttribute('hidden');
+                var closeBtn = document.getElementById('guest-banner-close');
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', function() {
+                        banner.setAttribute('hidden', '');
+                    });
+                }
             }
 
             logoutBtn.addEventListener('click', async function() {
@@ -782,6 +764,23 @@
         })();
     </script>
     <script src="script.js" defer></script>
+    <script>
+        // Add tooltips to matrix column headers (P/L/M/K/F/I)
+        document.addEventListener('DOMContentLoaded', function() {
+            var tips = {
+                P: 'Prosjekteringsansvar – hvem prosjekterer anlegget',
+                L: 'Leveringsansvar – hvem leverer utstyret',
+                M: 'Monteringsansvar – hvem monterer på plass',
+                K: 'Kablingsansvar – hvem utfører kabling og tilkobling',
+                F: 'Funksjonsansvar – hvem er ansvarlig for at funksjonen virker',
+                I: 'Integrasjon til SD – hvem integrerer signaler mot SD-system'
+            };
+            document.querySelectorAll('.subhead th').forEach(function(th) {
+                var key = th.textContent.trim();
+                if (tips[key]) th.title = tips[key];
+            });
+        });
+    </script>
 </body>
 </html>
 

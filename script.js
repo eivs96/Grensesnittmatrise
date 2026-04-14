@@ -661,6 +661,142 @@ let _interfaceCardRenderTimer = null;
 const uploadedOfferDocuments = [];
 let lastOfferAnalysis = null;
 let activeOfferFindingKey = "";
+let currentMarksByRow = rows.map((row) => ({ ...row.marks }));
+const rowElementCache = [];
+const rowDescriptionCellCache = [];
+const matrixButtonGroupCache = new Map();
+const matrixButtonCache = new Map();
+const rowSearchTextCache = [];
+let matrixFilterTimer = null;
+
+function getMatrixButtonGroupKey(rowIndex, responsibility) {
+    return `${rowIndex}:${responsibility}`;
+}
+
+function getMatrixButtonKey(rowIndex, discipline, responsibility) {
+    return `${rowIndex}:${discipline}:${responsibility}`;
+}
+
+function resetMatrixDomCache() {
+    rowElementCache.length = 0;
+    rowDescriptionCellCache.length = 0;
+    matrixButtonGroupCache.clear();
+    matrixButtonCache.clear();
+}
+
+function resetRowSearchTextCache() {
+    rowSearchTextCache.length = 0;
+}
+
+function invalidateRowSearchText(rowIndex = -1) {
+    if (Number.isInteger(rowIndex) && rowIndex >= 0) {
+        rowSearchTextCache[rowIndex] = null;
+        return;
+    }
+
+    resetRowSearchTextCache();
+}
+
+function getRowMarksState(rowIndex) {
+    if (!currentMarksByRow[rowIndex]) {
+        currentMarksByRow[rowIndex] = {};
+    }
+
+    return currentMarksByRow[rowIndex];
+}
+
+function setStoredCellState(rowIndex, discipline, responsibility, state) {
+    const rowMarks = getRowMarksState(rowIndex);
+    const key = `${discipline}:${responsibility}`;
+
+    if (state) {
+        rowMarks[key] = state;
+        return;
+    }
+
+    delete rowMarks[key];
+}
+
+function clearStoredResponsibility(rowIndex, responsibility) {
+    const rowMarks = getRowMarksState(rowIndex);
+
+    Object.keys(rowMarks).forEach((key) => {
+        if (key.endsWith(`:${responsibility}`)) {
+            delete rowMarks[key];
+        }
+    });
+}
+
+function getStoredResponsibilitySelection(rowIndex, responsibility) {
+    const rowMarks = currentMarksByRow[rowIndex] || {};
+    const match = Object.entries(rowMarks).find(([key, value]) => {
+        const [discipline, currentResponsibility] = key.split(":");
+        return currentResponsibility === responsibility && value && discipline;
+    });
+
+    if (!match) {
+        return { discipline: "", state: "" };
+    }
+
+    return {
+        discipline: match[0].split(":")[0],
+        state: match[1],
+    };
+}
+
+function registerMatrixRowElement(rowIndex, rowElement, descriptionCell) {
+    rowElementCache[rowIndex] = rowElement;
+    rowDescriptionCellCache[rowIndex] = descriptionCell || null;
+}
+
+function registerMatrixButton(button) {
+    const rowIndex = Number(button.dataset.row);
+    const discipline = button.dataset.discipline;
+    const responsibility = button.dataset.responsibility;
+
+    if (!Number.isFinite(rowIndex) || !discipline || !responsibility) {
+        return;
+    }
+
+    const groupKey = getMatrixButtonGroupKey(rowIndex, responsibility);
+    const group = matrixButtonGroupCache.get(groupKey) || [];
+    group.push(button);
+    matrixButtonGroupCache.set(groupKey, group);
+    matrixButtonCache.set(getMatrixButtonKey(rowIndex, discipline, responsibility), button);
+}
+
+function getResponsibilityButtons(rowIndex, responsibility) {
+    return matrixButtonGroupCache.get(getMatrixButtonGroupKey(rowIndex, responsibility)) || [];
+}
+
+function getMatrixButton(rowIndex, discipline, responsibility) {
+    return matrixButtonCache.get(getMatrixButtonKey(rowIndex, discipline, responsibility)) || null;
+}
+
+function getCachedRowSearchText(rowIndex) {
+    const cachedText = rowSearchTextCache[rowIndex];
+    if (typeof cachedText === "string") {
+        return cachedText;
+    }
+
+    const row = rows[rowIndex] || {};
+    const nextText = `${row.tfm || ""} ${row.description || ""} ${commentState.get(rowIndex) ?? row.comments ?? ""}`.toLowerCase();
+    rowSearchTextCache[rowIndex] = nextText;
+    return nextText;
+}
+
+function setRowComment(rowIndex, value) {
+    commentState.set(rowIndex, value);
+    invalidateRowSearchText(rowIndex);
+}
+
+function scheduleMatrixFilter() {
+    window.clearTimeout(matrixFilterTimer);
+    matrixFilterTimer = window.setTimeout(() => {
+        matrixFilterTimer = null;
+        filterMatrixRows();
+    }, 80);
+}
 
 function populateRowStatusOptions() {
     if (!currentRowStatus) {
@@ -1472,6 +1608,14 @@ function getSelectedPackages() {
 }
 
 function applyState(button, state) {
+    const rowIndex = Number(button.dataset.row);
+    const discipline = button.dataset.discipline;
+    const responsibility = button.dataset.responsibility;
+
+    if (Number.isFinite(rowIndex) && discipline && responsibility) {
+        setStoredCellState(rowIndex, discipline, responsibility, state);
+    }
+
     button.dataset.state = state;
     invalidateMatrixStats();
     button.classList.remove("active", "state-d");
@@ -1495,12 +1639,7 @@ function nextState(currentState) {
 }
 
 function getResponsibilityState(rowIndex, responsibility) {
-    const rowButtons = matrixBody.querySelectorAll(
-        `button[data-row="${rowIndex}"][data-responsibility="${responsibility}"]`
-    );
-
-    const selectedButton = Array.from(rowButtons).find((button) => button.dataset.state !== "");
-    return selectedButton ? selectedButton.dataset.state : "";
+    return getStoredResponsibilitySelection(rowIndex, responsibility).state || "";
 }
 
 function getRiskState(rowIndex) {
@@ -1746,16 +1885,41 @@ function updateMatrixFilterFeedback(visibleCount, query, openOnly) {
         matrixEmptyState.hidden = visibleCount > 0;
         const emptyStateTitle = matrixEmptyState.querySelector(".matrix-empty-state-title");
         const emptyStateDetail = matrixEmptyState.querySelector(".matrix-empty-state-detail");
+        const emptyStateActions = matrixEmptyState.querySelector(".matrix-empty-state-actions");
 
         if (emptyStateTitle && emptyStateDetail) {
-            if (activeSectionFilter !== "all") {
+            const totalContentRows = rows.filter((r) => !r.section).length;
+            if (totalContentRows === 0) {
+                // Matrix has no rows at all
+                emptyStateTitle.textContent = "Matrisen er tom";
+                emptyStateDetail.textContent = "Legg til rader manuelt, eller gå tilbake og importer fra BH-dokumenter i steg 2.";
+                if (emptyStateActions) {
+                    emptyStateActions.innerHTML = `
+                        <button type="button" class="secondary-button" data-step-target="2">Gå til BH-underlag</button>
+                        <button id="reset-matrix-search" type="button" class="secondary-button">Tøm søk</button>
+                        <button id="show-all-chapters" type="button" class="secondary-button">Vis alle kapitler</button>
+                    `;
+                }
+            } else if (activeSectionFilter !== "all") {
                 emptyStateTitle.textContent = "Ingen rader matcher valgt kapittel";
                 emptyStateDetail.textContent = "Vis hele matrisen eller nullstill filtreringen for å fortsette gjennomgangen.";
+                if (emptyStateActions) {
+                    emptyStateActions.innerHTML = `
+                        <button id="reset-matrix-search" type="button" class="secondary-button">Tøm søk</button>
+                        <button id="show-all-chapters" type="button" class="secondary-button">Vis alle kapitler</button>
+                    `;
+                }
             } else {
                 emptyStateTitle.textContent = "Ingen rader matcher filtreringen";
                 emptyStateDetail.textContent = filterParts.length
                     ? `${visibleCount} treff med ${filterParts.join(" + ")}`
                     : "Tøm søket eller slå av filteret for uavklarte rader.";
+                if (emptyStateActions) {
+                    emptyStateActions.innerHTML = `
+                        <button id="reset-matrix-search" type="button" class="secondary-button">Tøm søk</button>
+                        <button id="show-all-chapters" type="button" class="secondary-button">Vis alle kapitler</button>
+                    `;
+                }
             }
         }
     }
@@ -1835,37 +1999,11 @@ function setActiveInterfaceView(nextView) {
 }
 
 function getSelectedDisciplineForResponsibility(rowIndex, responsibility) {
-    const selectedButton = findSelectedButton(rowIndex, responsibility);
-    if (selectedButton?.dataset.discipline) {
-        return selectedButton.dataset.discipline;
-    }
-
-    const rowMarks = rows[rowIndex]?.marks || {};
-    const match = Object.entries(rowMarks).find(([key, value]) => {
-        const [discipline, currentResponsibility] = key.split(":");
-        return currentResponsibility === responsibility && value && discipline;
-    });
-
-    return match ? match[0].split(":")[0] : "";
+    return getStoredResponsibilitySelection(rowIndex, responsibility).discipline;
 }
 
 function getSelectedDisciplineAndState(rowIndex, responsibility) {
-    const selectedButton = findSelectedButton(rowIndex, responsibility);
-    if (selectedButton?.dataset.discipline) {
-        return { discipline: selectedButton.dataset.discipline, state: selectedButton.dataset.state || "H" };
-    }
-
-    const rowMarks = rows[rowIndex]?.marks || {};
-    const match = Object.entries(rowMarks).find(([key, value]) => {
-        const [, currentResponsibility] = key.split(":");
-        return currentResponsibility === responsibility && value;
-    });
-
-    if (match) {
-        return { discipline: match[0].split(":")[0], state: match[1] };
-    }
-
-    return { discipline: "", state: "" };
+    return getStoredResponsibilitySelection(rowIndex, responsibility);
 }
 
 function getAssignableDisciplines(row) {
@@ -1886,8 +2024,7 @@ function getVisibleInterfaceRows() {
                 return false;
             }
 
-            const searchableText = `${row.tfm} ${row.description} ${commentState.get(rowIndex) ?? row.comments ?? ""}`.toLowerCase();
-            const rowMatchesQuery = !query || searchableText.includes(query);
+            const rowMatchesQuery = !query || getCachedRowSearchText(rowIndex).includes(query);
             const sectionMatches = activeSectionFilter === "all" || getRowSectionCode(row) === activeSectionFilter;
             if (!rowMatchesQuery || !sectionMatches) {
                 return false;
@@ -1943,7 +2080,7 @@ function getCriticalInterfaceRowIndexes(inputRows) {
 
 function getInterfacePriorityScore(row, rowIndex) {
     const sectionCode = getRowSectionCode(row);
-    const text = `${row.tfm} ${row.description} ${commentState.get(rowIndex) ?? row.comments ?? ""}`.toLowerCase();
+    const text = getCachedRowSearchText(rowIndex);
     const profile = getProjectTypeScopeProfile(projectTypeSelect?.value || "bolig");
     const matchedRules = matchInsightRules(text);
     const baseScore = (profile.sectionWeights?.[sectionCode] || 0.75) * 10;
@@ -2001,14 +2138,19 @@ function renderInterfaceCards() {
     const visibleRows = criticalIndexes
         ? allVisibleRows.filter(({ rowIndex }) => criticalIndexes.has(rowIndex))
         : allVisibleRows;
-    const prioritizedRows = [...visibleRows].sort((left, right) => {
-        const scoreDifference = getInterfacePriorityScore(right.row, right.rowIndex) - getInterfacePriorityScore(left.row, left.rowIndex);
-        if (scoreDifference !== 0) {
-            return scoreDifference;
-        }
+    const prioritizedRows = visibleRows
+        .map((item) => ({
+            ...item,
+            priorityScore: getInterfacePriorityScore(item.row, item.rowIndex),
+        }))
+        .sort((left, right) => {
+            const scoreDifference = right.priorityScore - left.priorityScore;
+            if (scoreDifference !== 0) {
+                return scoreDifference;
+            }
 
-        return getPrimaryTfmCode(left.row.tfm) - getPrimaryTfmCode(right.row.tfm);
-    });
+            return getPrimaryTfmCode(left.row.tfm) - getPrimaryTfmCode(right.row.tfm);
+        });
     const hiddenCount = Math.max(0, allVisibleRows.length - visibleRows.length);
 
     if (!prioritizedRows.length) {
@@ -2516,7 +2658,7 @@ function refreshMatrixRowVisuals() {
             return;
         }
 
-        const descriptionCell = rowElement.querySelector(".description-cell");
+        const descriptionCell = rowDescriptionCellCache[rowIndex] || rowElement.querySelector(".description-cell");
         if (descriptionCell) {
             descriptionCell.innerHTML = "";
             descriptionCell.appendChild(renderRowDescriptionContent(rowIndex));
@@ -2565,9 +2707,7 @@ function moveMatrixButtonFocus(button, rowStep, responsibilityStep) {
 
     const nextVisibleRow = visibleContentRows[Math.max(0, Math.min(visibleContentRows.length - 1, visibleRowPosition + rowStep))];
     const nextResponsibility = responsibilities[Math.max(0, Math.min(responsibilities.length - 1, responsibilityIndex + responsibilityStep))];
-    const nextButton = matrixBody.querySelector(
-        `button[data-row="${nextVisibleRow.index}"][data-discipline="${discipline}"][data-responsibility="${nextResponsibility}"]`
-    );
+    const nextButton = getMatrixButton(nextVisibleRow.index, discipline, nextResponsibility);
 
     if (nextButton) {
         nextButton.focus();
@@ -2576,26 +2716,25 @@ function moveMatrixButtonFocus(button, rowStep, responsibilityStep) {
 }
 
 function setResponsibilityValue(rowIndex, discipline, responsibility, state) {
-    const activityButtons = matrixBody.querySelectorAll(
-        `button[data-row="${rowIndex}"][data-responsibility="${responsibility}"]`
-    );
-    const targetButton = matrixBody.querySelector(
-        `button[data-row="${rowIndex}"][data-discipline="${discipline}"][data-responsibility="${responsibility}"]`
-    );
+    const activityButtons = getResponsibilityButtons(rowIndex, responsibility);
+    const targetButton = getMatrixButton(rowIndex, discipline, responsibility);
 
+    clearStoredResponsibility(rowIndex, responsibility);
     activityButtons.forEach((activityButton) => {
         applyState(activityButton, "");
     });
 
-    if (targetButton && state) {
+    if (state && discipline && targetButton) {
         applyState(targetButton, state);
+    } else if (state && discipline) {
+        setStoredCellState(rowIndex, discipline, responsibility, state);
     }
 
     updateRowAfterMatrixEdit(rowIndex);
 }
 
 function getRowElement(rowIndex) {
-    return matrixBody.querySelector(`tr[data-row-index="${rowIndex}"]`);
+    return rowElementCache[rowIndex] || null;
 }
 
 function updateRowDisplay(rowIndex) {
@@ -2605,7 +2744,7 @@ function updateRowDisplay(rowIndex) {
     }
 
     const tfmCell = rowElement.querySelector(".tfm-cell");
-    const descriptionCell = rowElement.querySelector(".description-cell");
+    const descriptionCell = rowDescriptionCellCache[rowIndex] || rowElement.querySelector(".description-cell");
 
     if (tfmCell) {
         tfmCell.textContent = rows[rowIndex].tfm;
@@ -2630,27 +2769,29 @@ function updateRowDisplay(rowIndex) {
 }
 
 function findSelectedButton(rowIndex, responsibility) {
-    const rowButtons = matrixBody.querySelectorAll(
-        `button[data-row="${rowIndex}"][data-responsibility="${responsibility}"]`
-    );
+    const selected = getStoredResponsibilitySelection(rowIndex, responsibility);
 
-    return Array.from(rowButtons).find((button) => button.dataset.state !== "");
+    if (!selected.discipline) {
+        return null;
+    }
+
+    return getMatrixButton(rowIndex, selected.discipline, responsibility);
 }
 
 function setCellState(rowIndex, discipline, responsibility, state) {
-    const button = matrixBody.querySelector(
-        `button[data-row="${rowIndex}"][data-discipline="${discipline}"][data-responsibility="${responsibility}"]`
-    );
+    const button = getMatrixButton(rowIndex, discipline, responsibility);
 
     if (button) {
         applyState(button, state);
+        return;
     }
+
+    setStoredCellState(rowIndex, discipline, responsibility, state);
 }
 
 function clearResponsibility(rowIndex, responsibility) {
-    const buttons = matrixBody.querySelectorAll(
-        `button[data-row="${rowIndex}"][data-responsibility="${responsibility}"]`
-    );
+    const buttons = getResponsibilityButtons(rowIndex, responsibility);
+    clearStoredResponsibility(rowIndex, responsibility);
     buttons.forEach((button) => applyState(button, ""));
 }
 
@@ -2931,6 +3072,17 @@ function setAutosaveMessage(message, isError = false) {
 
     autosaveStatus.textContent = message;
     autosaveStatus.style.color = isError ? "#ab2220" : "";
+
+    // Sync topbar save indicator
+    const topbarSaved = document.getElementById("topbar-last-saved");
+    if (topbarSaved) {
+        if (isError) {
+            topbarSaved.setAttribute("hidden", "");
+        } else {
+            topbarSaved.textContent = message;
+            topbarSaved.removeAttribute("hidden");
+        }
+    }
 }
 
 function getCurrentProjectId() {
@@ -2967,6 +3119,9 @@ function loadExcelRowsData() {
 function initializeRows(rowSource) {
     rows = normalizeRowsByTfm(Array.isArray(rowSource) && rowSource.length ? rowSource : defaultRows);
     baseMarksByRow = rows.map((row) => ({ ...row.marks }));
+    currentMarksByRow = rows.map((row) => ({ ...row.marks }));
+    resetRowSearchTextCache();
+    resetMatrixDomCache();
 }
 
 const starterRowDescriptionsBySection = {
@@ -3761,12 +3916,12 @@ async function readResponsePayload(response) {
 function collectMatrixMarks() {
     const matrixMarks = {};
 
-    // Collect all states in one DOM query instead of ~10,800 individual queries
-    const allButtons = matrixBody.querySelectorAll("button[data-row][data-state]");
-    allButtons.forEach((button) => {
-        if (button.dataset.state) {
-            matrixMarks[`${button.dataset.row}:${button.dataset.discipline}:${button.dataset.responsibility}`] = button.dataset.state;
-        }
+    currentMarksByRow.forEach((rowMarks, rowIndex) => {
+        Object.entries(rowMarks || {}).forEach(([cellKey, state]) => {
+            if (state) {
+                matrixMarks[`${rowIndex}:${cellKey}`] = state;
+            }
+        });
     });
 
     return matrixMarks;
@@ -3802,7 +3957,7 @@ function collectRowDefinitions() {
             description: row.description,
             comments: commentState.get(rowIndex) ?? row.comments ?? "",
             section: false,
-            marks: { ...baseMarksByRow[rowIndex] },
+            marks: { ...(currentMarksByRow[rowIndex] || {}) },
         }));
 }
 
@@ -3893,7 +4048,7 @@ function applySavedConfirmations(confirmations = {}) {
 function applySavedComments(comments = {}) {
     rows.forEach((row, rowIndex) => {
         const nextComment = comments[rowIndex] ?? row.comments ?? "";
-        commentState.set(rowIndex, nextComment);
+        setRowComment(rowIndex, nextComment);
     });
 
     updateRowMetaPanel();
@@ -3941,11 +4096,14 @@ function replaceRows(nextRows) {
     const normalizedRows = normalizeRowsByTfm(nextRows);
     rows.splice(0, rows.length, ...normalizedRows);
     baseMarksByRow.splice(0, baseMarksByRow.length, ...normalizedRows.map((row) => ({ ...(row.marks || {}) })));
+    currentMarksByRow.splice(0, currentMarksByRow.length, ...normalizedRows.map((row) => ({ ...(row.marks || {}) })));
     commentState.clear();
     confirmationState.clear();
     rowOwnerState.clear();
     rowStatusState.clear();
     hasProjectSpecificRows = true;
+    resetRowSearchTextCache();
+    resetMatrixDomCache();
     invalidateMatrixStats();
 }
 
@@ -3959,7 +4117,7 @@ function getContentRows() {
             description: row.description,
             comments: commentState.get(rowIndex) ?? row.comments ?? "",
             section: false,
-            marks: { ...baseMarksByRow[rowIndex] },
+            marks: { ...(currentMarksByRow[rowIndex] || {}) },
         }));
 }
 
@@ -4104,14 +4262,30 @@ function renderProjectList(projects) {
 
             rememberLastProject(project.id);
             await loadProject();
-            await loadProjectList();
-            await loadRevisionList(project.id);
         });
 
         item.appendChild(meta);
         item.appendChild(button);
         projectList.appendChild(item);
     });
+}
+
+function upsertCachedProject(projectId, updatedAt) {
+    const nextProjects = [
+        { id: projectId, updatedAt },
+        ...cachedProjects.filter((project) => project.id !== projectId),
+    ].sort((left, right) => new Date(right.updatedAt || 0).getTime() - new Date(left.updatedAt || 0).getTime());
+
+    renderProjectList(nextProjects);
+}
+
+function prependCachedRevision(revisionId, createdAt) {
+    const nextRevisions = [
+        { revisionId, createdAt },
+        ...cachedRevisions.filter((revision) => String(revision.revisionId) !== String(revisionId)),
+    ].slice(0, 20);
+
+    renderRevisionList(nextRevisions);
 }
 
 async function loadProjectList() {
@@ -4226,8 +4400,8 @@ async function saveProject() {
         setPersistenceMessage(`Prosjekt "${projectId}" lagret ${new Date(result.updatedAt).toLocaleString("no-NO")}.`);
         setAutosaveMessage(`Sist autolagret ${new Date(result.updatedAt).toLocaleTimeString("no-NO")}.`);
         rememberLastProject(projectId);
-        await loadProjectList();
-        await loadRevisionList(projectId);
+        upsertCachedProject(projectId, result.updatedAt);
+        prependCachedRevision(result.revisionId, result.updatedAt);
     } catch (error) {
         setPersistenceMessage(`Kunne ikke lagre prosjektet. ${error.message}`, true);
         setAutosaveMessage("Autolagring feilet.", true);
@@ -4329,7 +4503,7 @@ function resetProjectState() {
                 setCellState(rowIndex, discipline, responsibility, state);
             });
         });
-        commentState.set(rowIndex, rows[rowIndex].comments || "");
+        setRowComment(rowIndex, rows[rowIndex].comments || "");
         rowOwnerState.set(rowIndex, "");
         rowStatusState.set(rowIndex, "open");
         setConfirmation(rowIndex, false);
@@ -4412,11 +4586,12 @@ function addNewRow() {
 function swapRowState(firstIndex, secondIndex) {
     [rows[firstIndex], rows[secondIndex]] = [rows[secondIndex], rows[firstIndex]];
     [baseMarksByRow[firstIndex], baseMarksByRow[secondIndex]] = [baseMarksByRow[secondIndex], baseMarksByRow[firstIndex]];
+    [currentMarksByRow[firstIndex], currentMarksByRow[secondIndex]] = [currentMarksByRow[secondIndex], currentMarksByRow[firstIndex]];
 
     const firstComment = commentState.get(firstIndex) ?? rows[firstIndex].comments ?? "";
     const secondComment = commentState.get(secondIndex) ?? rows[secondIndex].comments ?? "";
-    commentState.set(firstIndex, secondComment);
-    commentState.set(secondIndex, firstComment);
+    setRowComment(firstIndex, secondComment);
+    setRowComment(secondIndex, firstComment);
 
     const firstConfirmation = Boolean(confirmationState.get(firstIndex));
     const secondConfirmation = Boolean(confirmationState.get(secondIndex));
@@ -4992,13 +5167,14 @@ function focusRowByUid(rowUid, options = {}) {
 }
 
 function filterMatrixRows() {
+    window.clearTimeout(matrixFilterTimer);
+    matrixFilterTimer = null;
     const query = (matrixSearchInput?.value || "").trim().toLowerCase();
     const showOpenOnly = Boolean(showOpenOnlyInput?.checked);
     let firstVisibleRow = null;
     let visibleContentRows = 0;
     const rowMatches = rows.map((row, rowIndex) => {
-        const searchableText = `${row.tfm} ${row.description} ${commentState.get(rowIndex) ?? row.comments ?? ""}`.toLowerCase();
-        return (!query || searchableText.includes(query));
+        return !query || getCachedRowSearchText(rowIndex).includes(query);
     });
     const sectionHasMatch = new Map();
     let currentSectionIndex = -1;
@@ -5141,8 +5317,9 @@ function createChoiceCell(rowIndex, discipline, responsibility) {
 
     // Event handling delegated to matrixBody (see bottom of file)
 
-    const initialState = rows[rowIndex].marks[`${discipline}:${responsibility}`] || "";
+    const initialState = (currentMarksByRow[rowIndex] || {})[`${discipline}:${responsibility}`] || "";
     applyState(button, initialState);
+    registerMatrixButton(button);
     cell.appendChild(button);
     return cell;
 }
@@ -5151,7 +5328,7 @@ function createMatrixRow(rowData, rowIndex) {
     const row = document.createElement("tr");
     row.dataset.rowIndex = String(rowIndex);
     confirmationState.set(rowIndex, Boolean(confirmationState.get(rowIndex)));
-    commentState.set(rowIndex, commentState.get(rowIndex) ?? rowData.comments ?? "");
+    setRowComment(rowIndex, commentState.get(rowIndex) ?? rowData.comments ?? "");
     rowOwnerState.set(rowIndex, rowOwnerState.get(rowIndex) ?? "");
     rowStatusState.set(rowIndex, rowStatusState.get(rowIndex) ?? (confirmationState.get(rowIndex) ? "clarified" : "open"));
 
@@ -5200,6 +5377,7 @@ function createMatrixRow(rowData, rowIndex) {
     }
 
     row.appendChild(descriptionCell);
+    registerMatrixRowElement(rowIndex, row, descriptionCell);
 
     disciplines.forEach((discipline) => {
         responsibilities.forEach((responsibility) => {
@@ -5211,6 +5389,7 @@ function createMatrixRow(rowData, rowIndex) {
 }
 
 function buildMatrix() {
+    resetMatrixDomCache();
     rows.forEach((rowData, rowIndex) => {
         matrixBody.appendChild(createMatrixRow(rowData, rowIndex));
     });
@@ -5232,6 +5411,7 @@ function getVisibleRowIndices() {
 
 function buildMatrixInBatches(batchSize = 40) {
     matrixBody.innerHTML = "";
+    resetMatrixDomCache();
     matrixBuildInProgress = true;
 
     const visibleIndices = getVisibleRowIndices();
@@ -5270,6 +5450,7 @@ function buildMatrixInBatches(batchSize = 40) {
 
 function rebuildMatrix() {
     matrixBody.innerHTML = "";
+    resetMatrixDomCache();
     activeRowIndex = -1;
     focusedRowIndex = -1;
     buildMatrix();
@@ -5430,7 +5611,7 @@ applyPackagePresetButton?.addEventListener("click", () => {
     scheduleAutosave();
     showToast("Fagpakke brukt i matrisen. Gå videre til steg 2 for å laste opp BH-dokumenter.");
 });
-matrixSearchInput?.addEventListener("input", filterMatrixRows);
+matrixSearchInput?.addEventListener("input", scheduleMatrixFilter);
 showOpenOnlyInput?.addEventListener("change", filterMatrixRows);
 cardViewToggleButton?.addEventListener("click", () => {
     setActiveInterfaceView("cards");
@@ -5474,7 +5655,7 @@ interfaceCardWorkspace?.addEventListener("change", async (event) => {
 
     if (target instanceof HTMLTextAreaElement && target.dataset.cardComment) {
         const rowIndex = Number(target.dataset.cardComment);
-        commentState.set(rowIndex, target.value);
+        setRowComment(rowIndex, target.value);
         updateRowAfterMatrixEdit(rowIndex);
     }
 });
@@ -5544,7 +5725,7 @@ quickClearCommentButton?.addEventListener("click", () => {
         return;
     }
 
-    commentState.set(activeRowIndex, "");
+    setRowComment(activeRowIndex, "");
     if (currentRowComment) {
         currentRowComment.value = "";
     }
@@ -5567,7 +5748,12 @@ currentRowTfm?.addEventListener("input", () => {
     }
 
     rows[activeRowIndex].tfm = currentRowTfm.value;
+    invalidateRowSearchText(activeRowIndex);
     updateRowDisplay(activeRowIndex);
+    scheduleInterfaceCardRender();
+    if (matrixSearchInput?.value) {
+        filterMatrixRows();
+    }
     scheduleAutosave();
 });
 currentRowDescription?.addEventListener("input", () => {
@@ -5577,7 +5763,12 @@ currentRowDescription?.addEventListener("input", () => {
     }
 
     rows[activeRowIndex].description = currentRowDescription.value;
+    invalidateRowSearchText(activeRowIndex);
     updateRowDisplay(activeRowIndex);
+    scheduleInterfaceCardRender();
+    if (matrixSearchInput?.value) {
+        filterMatrixRows();
+    }
     scheduleAutosave();
 });
 currentRowStatus?.addEventListener("change", () => {
@@ -5604,7 +5795,7 @@ currentRowComment?.addEventListener("input", () => {
         return;
     }
 
-    commentState.set(activeRowIndex, currentRowComment.value);
+    setRowComment(activeRowIndex, currentRowComment.value);
     updateRowAfterMatrixEdit(activeRowIndex);
 });
 saveProjectButton?.addEventListener("click", saveProject);
@@ -5736,6 +5927,23 @@ document.addEventListener("keydown", (event) => {
     if (event.key === "ArrowUp") {
         event.preventDefault();
         focusAdjacentContentRow(-1);
+        return;
+    }
+
+    // N = jump to next unresolved row
+    if (event.key === "n" || event.key === "N") {
+        event.preventDefault();
+        ensureMatrixInitialized();
+        jumpToNextUnresolvedRow();
+        return;
+    }
+
+    // Enter = confirm active row (when not typing)
+    if (event.key === "Enter" && activeRowIndex >= 0 && !rows[activeRowIndex]?.section) {
+        event.preventDefault();
+        setConfirmation(activeRowIndex, !Boolean(confirmationState.get(activeRowIndex)));
+        buildContractSummary();
+        scheduleAutosave();
         return;
     }
 
@@ -7172,9 +7380,6 @@ if (analyzeBhButton) {
             return;
         }
 
-        // Run original BH analysis
-        applyBhSuggestionsFromText(allText);
-
         // Run complexity analysis
         const result = analyzeComplexity(allText);
         lastComplexityResult = result;
@@ -7301,3 +7506,105 @@ updateWorkflowOverview = function() {
 // Initial sync
 populateRowStatusOptions();
 populateRowOwnerOptions();
+
+// ── Mobile warning in matrix step (step 3) ─────────────────────────────
+// Shown on small screens (< 900px) where the expert matrix is unusable.
+(function() {
+    const MOBILE_WARN_KEY = "grensesnittmatrise:mobile-warn-dismissed";
+    const matrixSection = document.getElementById("matrix-section");
+    if (!matrixSection) return;
+
+    function maybShowMobileWarn() {
+        if (window.innerWidth >= 900) return;
+        if (!document.querySelector(".topbar-step-pill.active[data-step-target='3']")) return;
+        let dismissed = false;
+        try { dismissed = window.localStorage.getItem(MOBILE_WARN_KEY) === "1"; } catch (_) { /* ignore */ }
+        if (dismissed) return;
+        if (document.getElementById("matrix-mobile-warn")) return; // already shown
+
+        const warn = document.createElement("div");
+        warn.id = "matrix-mobile-warn";
+        warn.className = "matrix-mobile-warn";
+        warn.innerHTML = `
+            <span aria-hidden="true">📐</span>
+            <p>Ekspertmatrisen krever bred skjerm. Kortvisningen fungerer bedre på mobil — bruk knappen <strong>Kortvisning</strong> i verktøylinjen.</p>
+            <button type="button" class="matrix-mobile-warn-close" aria-label="Lukk">✕</button>
+        `;
+        warn.querySelector(".matrix-mobile-warn-close").addEventListener("click", function() {
+            warn.remove();
+            try { window.localStorage.setItem(MOBILE_WARN_KEY, "1"); } catch (_) { /* ignore */ }
+        });
+        matrixSection.insertAdjacentElement("afterbegin", warn);
+    }
+
+    // Check when step changes to step 3
+    const _origSetWorkflowStep = typeof setWorkflowStep === "function" ? setWorkflowStep : null;
+    document.addEventListener("click", function(e) {
+        const btn = e.target.closest("[data-step-target='3']");
+        if (btn) setTimeout(maybShowMobileWarn, 100);
+    });
+    window.addEventListener("resize", maybShowMobileWarn);
+}());
+
+// ── Onboarding modal ───────────────────────────────────────────────────
+const ONBOARDED_KEY = "grensesnittmatrise:onboarded";
+
+(function initOnboarding() {
+    const modal = document.getElementById("onboarding-modal");
+    const closeBtn = document.getElementById("onboarding-close");
+    if (!modal || !closeBtn) return;
+
+    let seen = false;
+    try { seen = window.localStorage.getItem(ONBOARDED_KEY) === "1"; } catch (_) { /* ignore */ }
+
+    if (!seen) {
+        modal.removeAttribute("hidden");
+    }
+
+    function dismiss() {
+        modal.setAttribute("hidden", "");
+        try { window.localStorage.setItem(ONBOARDED_KEY, "1"); } catch (_) { /* ignore */ }
+    }
+
+    closeBtn.addEventListener("click", dismiss);
+    modal.addEventListener("click", function(e) {
+        if (e.target === modal) dismiss(); // click backdrop to close
+    });
+    document.addEventListener("keydown", function(e) {
+        if (e.key === "Escape" && !modal.hidden) dismiss();
+    });
+}());
+
+// ── Delegated step-navigation for dynamically created [data-step-target] buttons ──
+// workflowStepButtons covers only elements present at load time.
+// This handles buttons rendered later (e.g. the empty-state "Gå til BH-underlag").
+document.addEventListener("click", function(e) {
+    const btn = e.target.closest("[data-step-target]");
+    if (btn && !workflowStepButtons.includes(btn)) {
+        const targetStep = Number(btn.dataset.stepTarget || 1);
+        setWorkflowStep(targetStep);
+    }
+});
+
+// ── BH analysis loading state ──────────────────────────────────────────
+// Runs in capture phase (before existing handlers) to set button to loading,
+// then resets after a short delay to give the user clear visual feedback.
+(function() {
+    if (!analyzeBhButton) return;
+    analyzeBhButton.addEventListener("click", function() {
+        if (!getAllDocumentText().trim()) return; // no docs — let existing handler show the message
+        analyzeBhButton.disabled = true;
+        analyzeBhButton.textContent = "Analyserer...";
+        if (bhAnalysisStatus) {
+            bhAnalysisStatus.classList.remove("updated");
+        }
+        setTimeout(function() {
+            analyzeBhButton.disabled = false;
+            analyzeBhButton.textContent = "Analyser alle dokumenter";
+            if (bhAnalysisStatus) {
+                bhAnalysisStatus.classList.add("updated");
+                setTimeout(function() { bhAnalysisStatus.classList.remove("updated"); }, 1500);
+            }
+        }, 350);
+    }, true); // capture — fires before addEventListener(bubble) handlers
+}());

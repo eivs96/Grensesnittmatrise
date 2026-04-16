@@ -6368,6 +6368,10 @@ function processFiles(fileList, addCallback) {
     Array.from(fileList).forEach(function(file) {
         const name = file.name.toLowerCase();
         if (name.endsWith(".xlsx") || name.endsWith(".xls")) {
+            if (typeof XLSX === "undefined") {
+                showToast(`Kan ikke lese "${file.name}": Excel-biblioteket er ikke lastet ennå. Last siden på nytt og prøv igjen.`, "error");
+                return;
+            }
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
@@ -6384,8 +6388,15 @@ function processFiles(fileList, addCallback) {
                     showToast(`Kunne ikke lese "${file.name}": ${err.message}`, "error");
                 }
             };
+            reader.onerror = function() {
+                showToast(`Kunne ikke lese filen "${file.name}".`, "error");
+            };
             reader.readAsArrayBuffer(file);
-        } else if (file.name.toLowerCase().endsWith(".pdf")) {
+        } else if (name.endsWith(".pdf")) {
+            if (typeof pdfjsLib === "undefined") {
+                showToast(`Kan ikke lese "${file.name}": PDF-biblioteket er ikke lastet ennå. Last siden på nytt og prøv igjen.`, "error");
+                return;
+            }
             const reader = new FileReader();
             reader.onload = async function(e) {
                 try {
@@ -6403,6 +6414,9 @@ function processFiles(fileList, addCallback) {
                     showToast(`Kunne ikke lese "${file.name}": ${err.message}`, "error");
                 }
             };
+            reader.onerror = function() {
+                showToast(`Kunne ikke lese filen "${file.name}".`, "error");
+            };
             reader.readAsArrayBuffer(file);
         } else {
             const reader = new FileReader();
@@ -6410,6 +6424,9 @@ function processFiles(fileList, addCallback) {
                 const content = e.target.result || "";
                 addCallback(file.name, content, file.size);
                 showToast(`"${file.name}" lagt til.`, "info");
+            };
+            reader.onerror = function() {
+                showToast(`Kunne ikke lese filen "${file.name}".`, "error");
             };
             reader.readAsText(file);
         }
@@ -6491,14 +6508,6 @@ function handleFiles(fileList) {
 
 function openNativeFilePicker(fileInput) {
     if (!fileInput) return;
-    if (typeof fileInput.showPicker === "function") {
-        try {
-            fileInput.showPicker();
-            return;
-        } catch (error) {
-            // Fall back to click() when showPicker() is unavailable or blocked.
-        }
-    }
     fileInput.click();
 }
 

@@ -3969,6 +3969,8 @@ function collectProjectState() {
         tueConfig: getTueConfig(),
         selectedPackages: getSelectedPackages(),
         uploadedBhText,
+        bhDocuments: uploadedDocuments,
+        bhAnalysis: lastBhAnalysis,
         offerDocuments: uploadedOfferDocuments,
         offerAnalysis: lastOfferAnalysis,
         rowDefinitions: collectRowDefinitions(),
@@ -4367,7 +4369,12 @@ function applyProjectState(data) {
     applySavedOfferDecisions(data.offerDecisions || {});
     applySavedOfferDecisionNotes(data.offerDecisionNotes || {});
     updateAllRiskCells();
-    lastBhAnalysis = null;
+    uploadedDocuments.splice(0, uploadedDocuments.length, ...(Array.isArray(data.bhDocuments) ? data.bhDocuments : []));
+    renderDocumentList();
+    lastBhAnalysis = data.bhAnalysis || null;
+    if (lastBhAnalysis && bhAnalysisStatus) {
+        bhAnalysisStatus.textContent = `Analysert ${uploadedDocuments.length} dokument(er). ${lastBhAnalysis.keywordScore} signaler funnet (gjenopprettet).`;
+    }
     renderBhAnalysisInsights();
     applyProjectLogic();
     setWorkflowStep(getRecommendedWorkflowStep(), { scroll: false });
@@ -4460,6 +4467,8 @@ function resetProjectState() {
     isApplyingSavedState = true;
     hasProjectSpecificRows = false;
     uploadedBhText = "";
+    uploadedDocuments.length = 0;
+    lastBhAnalysis = null;
     uploadedOfferDocuments.length = 0;
     lastOfferAnalysis = null;
     offerDecisionState.clear();
@@ -4510,6 +4519,7 @@ function resetProjectState() {
     });
     updateAllRiskCells();
     applyProjectLogic();
+    renderDocumentList();
     renderOfferDocumentList();
     renderOfferAnalysis();
     isApplyingSavedState = false;

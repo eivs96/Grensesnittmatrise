@@ -96,6 +96,8 @@ db.serialize(() => {
             expires_at TEXT NOT NULL
         )
     `);
+    db.run(`CREATE INDEX IF NOT EXISTS idx_project_revisions_project_id ON project_revisions (project_id)`);
+    db.run(`CREATE INDEX IF NOT EXISTS idx_user_sessions_expires_at ON user_sessions (expires_at)`);
 });
 
 function runQuery(sql, params = []) {
@@ -209,6 +211,7 @@ app.use((_req, res, next) => {
 });
 
 // ── Page routes ──
+app.use(compression());
 app.get("/", (_req, res) => sendPage(res, landingPagePath));
 app.get("/app", (_req, res) => sendPage(res, appPagePath));
 app.get("/login", (_req, res) => sendPage(res, loginPagePath));
@@ -252,9 +255,7 @@ app.get("/robots.txt", (_req, res) => {
 });
 
 // ── Gzip compression ──
-app.use(compression());
-
-app.use(express.json({ limit: "2mb" }));
+app.use(express.json({ limit: "10mb" }));
 
 // ── Static files with caching ──
 app.use(express.static(staticDir, {
@@ -863,4 +864,3 @@ app.use((error, _req, res, _next) => {
 app.listen(port, () => {
     console.log(`Server kjører på http://localhost:${port}`);
 });
-

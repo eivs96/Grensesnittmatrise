@@ -111,6 +111,8 @@ const matrixEmptyState = document.getElementById("matrix-empty-state");
 const interfaceCardWorkspace = document.getElementById("interface-card-workspace");
 const matrixExpertWorkspace = document.getElementById("matrix-expert-workspace");
 const matrixDetailWorkspace = document.getElementById("matrix-detail-workspace");
+const overviewMatrixWorkspace = document.getElementById("overview-matrix-workspace");
+const overviewViewToggleButton = document.getElementById("overview-view-toggle");
 const resetMatrixSearchButton = document.getElementById("reset-matrix-search");
 const resetMatrixFiltersButton = document.getElementById("reset-matrix-filters");
 const showAllChaptersButton = document.getElementById("show-all-chapters");
@@ -402,61 +404,61 @@ const defaultRows = [
 let rowIdCounter = 0;
 
 const sectionDefinitions = {
-    100: "100 Generelt",
-    200: "200 Bygningsdeler",
-    300: "300 Sanitær og VVS",
-    400: "400 Elektrofag",
-    500: "500 Tele og automatisering",
-    600: "600 Andre installasjoner",
-    700: "700 Utendørs",
-    800: "800 BREEAM-NOR v6",
+    100: "Generelle temaer",
+    200: "Dører, lås og beslag",
+    300: "VVS-systemer (NS 3451)",
+    400: "Elektroinstallasjoner",
+    500: "Tele og automatiseringsfag",
+    600: "Andre tekniske systemer",
+    700: "Utendørs systemer",
+    800: "BREEAM-NOR v6",
 };
 
 const sectionCatalog = {
     100: {
-        shortTitle: "Generelt",
+        shortTitle: "Generelle temaer",
         summary: "Felles premisser, koordinering og overordnede grensesnitt.",
         themes: ["Koordinering", "Fellestegninger", "Tverrfaglige leveranser", "Prosjektkrav"],
         risks: ["Ingen tydelig eier av samordning", "Manglende leveransegrenser", "Uavklarte BIM- og tegningsansvar"],
         deliverables: ["Grensesnittstrategi", "Overordnet ansvarsdeling", "Felles premisser for UE-er"],
     },
     200: {
-        shortTitle: "Byggfag",
-        summary: "Bygningsdeler, utsparinger, dører og fysiske avklaringer mot tekniske fag.",
+        shortTitle: "Dører, lås og beslag",
+        summary: "Dører, lås, beslag, solavskjerming og fysiske avklaringer mot tekniske fag.",
         themes: ["Dorer", "Utsparinger", "Sjakter", "Innfesting", "Plassbehov"],
         risks: ["Tekniske behov kolliderer med byggleveranse", "Manglende spikerslag eller innkassinger", "Dormiljo uten tydelig grensesnittboks"],
         deliverables: ["Tegninger for innfesting", "Utsparingsunderlag", "Samordnet dør- og romavklaring"],
     },
     300: {
-        shortTitle: "VVS",
-        summary: "Sanitær, varme, kjøling og rørtekniske grensesnitt.",
+        shortTitle: "VVS-systemer",
+        summary: "Sanitær, varme, kjøling og rørtekniske grensesnitt iht. NS 3451:2022.",
         themes: ["Pumper", "Ventiler", "Sensorer", "Varmekabler", "SD-signaler"],
         risks: ["Uklart ansvar for givere og motorer", "Manglende avklaring mellom ROR, EL og AUT", "Driftssignaler ikke beskrevet"],
         deliverables: ["Systemskjema", "Komponentlister", "Signal- og funksjonsoversikt"],
     },
     400: {
-        shortTitle: "Elektro",
+        shortTitle: "Elektroinstallasjoner",
         summary: "Kraft, fordelinger, føringsveier og elektriske grensesnitt.",
         themes: ["Fordelinger", "Foringsveier", "Belysning", "Kraft til utstyr", "Tavleplass"],
         risks: ["Utstyr mangler spenningssetting", "For liten tavleplass", "Foringsveier samordnes for sent"],
         deliverables: ["Kraftbehovsliste", "Tavlereservasjon", "Koordinert foringsveisplan"],
     },
     500: {
-        shortTitle: "Automasjon",
-        summary: "Automasjon, sikkerhet og integrasjoner mellom systemer.",
+        shortTitle: "Tele og automatisering",
+        summary: "Automasjon, sikkerhet, tele og integrasjoner mellom systemer.",
         themes: ["SD/BAS", "ADK", "AIA/ABA", "KNX", "Systemintegrasjon"],
         risks: ["Systemer snakker ikke sammen", "Uklart ansvar for grensesnittboks", "Signalpunkter beskrives ulikt per fag"],
         deliverables: ["IO-lister", "Integrasjonsbeskrivelse", "Koordinerte koblingsskjema"],
     },
     600: {
-        shortTitle: "Heis og spesial",
+        shortTitle: "Andre tekniske systemer",
         summary: "Heis og spesialinstallasjoner med egne leveransegrenser.",
         themes: ["Heissjakt", "Heisfordeling", "Kortleser", "Alarmoverforing", "Maskinrom"],
         risks: ["Kabling til heis blir glemt", "Heisleveranse og elektro har ulike forutsetninger", "Adgang og alarm er ikke koordinert"],
         deliverables: ["Heisgrensesnitt", "Forsyningsavklaringer", "Signal- og kablingsplan"],
     },
     700: {
-        shortTitle: "Utendors",
+        shortTitle: "Utendørs systemer",
         summary: "Utvendige anlegg, VA, grunn og tekniske grensesnitt utenfor bygget.",
         themes: ["Utendors VA", "Lavspent forsyning", "Lys i grunn", "Automatisering ute", "Pumpekummer"],
         risks: ["Grensesnitt mot grunnentreprise er uklart", "IP- og SD-integrasjon beskrives ikke", "Kabel og ror i grunn mangler koordinering"],
@@ -655,7 +657,7 @@ let usingImportedBaseRows = false;
 let hasProjectSpecificRows = false;
 let matrixBuildInProgress = false;
 let activeSectionFilter = "all";
-let activeInterfaceView = "cards";
+let activeInterfaceView = "overview";
 let showAllInterfaceCards = false;
 let _interfaceCardRenderTimer = null;
 const uploadedOfferDocuments = [];
@@ -1965,15 +1967,26 @@ function updateMatrixSectionWorkspace() {
 function getSavedInterfaceView() {
     try {
         const savedView = window.localStorage.getItem(INTERFACE_VIEW_KEY);
-        return savedView === "matrix" ? "matrix" : "cards";
+        if (savedView === "matrix") return "matrix";
+        if (savedView === "cards") return "cards";
+        return "overview";
     } catch (_error) {
-        return "cards";
+        return "overview";
     }
 }
 
 function setActiveInterfaceView(nextView) {
-    activeInterfaceView = nextView === "matrix" ? "matrix" : "cards";
+    if (nextView === "matrix") {
+        activeInterfaceView = "matrix";
+    } else if (nextView === "cards") {
+        activeInterfaceView = "cards";
+    } else {
+        activeInterfaceView = "overview";
+    }
 
+    if (overviewMatrixWorkspace) {
+        overviewMatrixWorkspace.hidden = activeInterfaceView !== "overview";
+    }
     if (interfaceCardWorkspace) {
         interfaceCardWorkspace.hidden = activeInterfaceView !== "cards";
     }
@@ -1984,8 +1997,10 @@ function setActiveInterfaceView(nextView) {
         matrixDetailWorkspace.hidden = activeInterfaceView !== "matrix";
     }
 
+    overviewViewToggleButton?.classList.toggle("is-active", activeInterfaceView === "overview");
     cardViewToggleButton?.classList.toggle("is-active", activeInterfaceView === "cards");
     matrixViewToggleButton?.classList.toggle("is-active", activeInterfaceView === "matrix");
+    overviewViewToggleButton?.setAttribute("aria-pressed", activeInterfaceView === "overview" ? "true" : "false");
     cardViewToggleButton?.setAttribute("aria-pressed", activeInterfaceView === "cards" ? "true" : "false");
     matrixViewToggleButton?.setAttribute("aria-pressed", activeInterfaceView === "matrix" ? "true" : "false");
 
@@ -1996,6 +2011,7 @@ function setActiveInterfaceView(nextView) {
     }
 
     renderInterfaceCards();
+    renderOverviewMatrix();
 }
 
 function getSelectedDisciplineForResponsibility(rowIndex, responsibility) {
@@ -2005,6 +2021,301 @@ function getSelectedDisciplineForResponsibility(rowIndex, responsibility) {
 function getSelectedDisciplineAndState(rowIndex, responsibility) {
     return getStoredResponsibilitySelection(rowIndex, responsibility);
 }
+
+// --- Overview matrix helpers ---
+
+const DISC_ABBR = {
+    "BH": "BH",
+    "Byggfag": "BYG",
+    "Lås og beslag": "LÅS",
+    "Dørleverandør": "DØR",
+    "Rør": "RØR",
+    "Vent": "VEN",
+    "EL": "EL",
+    "Aut": "AUT",
+    "SD": "SD",
+};
+
+const DISC_KEY = {
+    "BH": "bh",
+    "Byggfag": "byg",
+    "Lås og beslag": "las",
+    "Dørleverandør": "dor",
+    "Rør": "ror",
+    "Vent": "ven",
+    "EL": "el",
+    "Aut": "aut",
+    "SD": "sd",
+};
+
+function getDiscAbbr(discipline) {
+    return DISC_ABBR[discipline] || discipline.substring(0, 3).toUpperCase();
+}
+
+function getDiscKey(discipline) {
+    return DISC_KEY[discipline] || "other";
+}
+
+function getAllDisciplinesForResponsibility(rowIndex, responsibility) {
+    const rowMarks = currentMarksByRow[rowIndex] || {};
+    return Object.entries(rowMarks)
+        .filter(([key, state]) => {
+            const colonIndex = key.lastIndexOf(":");
+            return colonIndex > -1 && key.substring(colonIndex + 1) === responsibility && state;
+        })
+        .map(([key, state]) => ({ discipline: key.substring(0, key.lastIndexOf(":")), state }))
+        .sort((a, b) => (a.state === "H" ? -1 : 1) - (b.state === "H" ? -1 : 1));
+}
+
+let _overviewRenderTimer = null;
+
+function scheduleOverviewRender() {
+    window.clearTimeout(_overviewRenderTimer);
+    _overviewRenderTimer = window.setTimeout(renderOverviewMatrix, 80);
+}
+
+let _ovActiveEditRow = -1;  // track which row has the editor open
+
+function renderOverviewMatrix() {
+    window.clearTimeout(_overviewRenderTimer);
+    if (!overviewMatrixWorkspace) return;
+    if (activeInterfaceView !== "overview") {
+        overviewMatrixWorkspace.innerHTML = "";
+        _ovActiveEditRow = -1;
+        return;
+    }
+
+    // Don't re-render while user is actively using a select in the editor
+    const activeEl = document.activeElement;
+    const editorPanel = overviewMatrixWorkspace.querySelector("#ov-editor-panel");
+    if (editorPanel && !editorPanel.hidden && activeEl && editorPanel.contains(activeEl) &&
+        (activeEl.tagName === "SELECT" || activeEl.tagName === "TEXTAREA")) {
+        return;
+    }
+
+    const visibleRows = getVisibleInterfaceRows();
+
+    if (!visibleRows.length) {
+        overviewMatrixWorkspace.innerHTML = `
+            <div class="overview-empty-state">
+                <p class="overview-empty-title">Ingen rader i dette utvalget</p>
+                <p class="overview-empty-hint">Juster søk eller kapittelvalg for å se innhold.</p>
+            </div>`;
+        return;
+    }
+
+    const respLabels = {
+        P: "Prosjekteringsansvar",
+        L: "Leveringsansvar",
+        M: "Monteringsansvar",
+        K: "Koblingsansvar",
+        F: "Funksjonsansvar",
+        I: "Integrasjon til SD",
+    };
+
+    // Group by section code
+    const bySection = new Map();
+    visibleRows.forEach(({ row, rowIndex }) => {
+        const code = getRowSectionCode(row);
+        if (!bySection.has(code)) bySection.set(code, []);
+        bySection.get(code).push({ row, rowIndex });
+    });
+
+    const sectionBlocks = Array.from(bySection.entries())
+        .sort(([a], [b]) => a - b)
+        .map(([sectionCode, sectionRows]) => {
+            const det = getSectionDetails(sectionCode);
+            const showHeader = activeSectionFilter === "all";
+
+            const rowsMarkup = sectionRows.map(({ row, rowIndex }) => {
+                const confirmed = Boolean(confirmationState.get(rowIndex));
+                const missing = getMissingResponsibilities(rowIndex);
+                const statusClass = confirmed ? "is-confirmed" : missing.length === 0 ? "is-complete" : "is-open";
+                const statusIcon = confirmed
+                    ? `<span class="ov-status ov-ok" title="Avklart">✓</span>`
+                    : missing.length === 0
+                        ? `<span class="ov-status ov-ready" title="Klar for review">○</span>`
+                        : `<span class="ov-status ov-open" title="Uavklart (${missing.length} mangler)">${missing.length}</span>`;
+
+                const cells = responsibilities.map((resp) => {
+                    const discs = getAllDisciplinesForResponsibility(rowIndex, resp);
+                    const isFunk = resp === "F";
+                    const chipsMarkup = discs.length
+                        ? discs.map(({ discipline, state }) =>
+                            `<span class="ov-chip ov-${escapeHtml(getDiscKey(discipline))} ${state === "H" ? "ov-main" : "ov-part"}" title="${escapeHtml(discipline)} – ${state === "H" ? "Hoved" : "Del"}ansvar">${escapeHtml(getDiscAbbr(discipline))}${state === "D" ? "<sup>d</sup>" : ""}</span>`
+                        ).join("")
+                        : `<span class="ov-chip ov-none">—</span>`;
+                    return `<td class="ov-resp${isFunk ? " ov-funk" : ""}">${chipsMarkup}</td>`;
+                }).join("");
+
+                return `
+                    <tr class="ov-row ${statusClass}" data-ov-row="${rowIndex}" tabindex="0" role="button" aria-label="Rediger: ${escapeHtml(row.description)}">
+                        <td class="ov-st-cell">${statusIcon}</td>
+                        <td class="ov-tfm-cell">${escapeHtml(row.tfm)}</td>
+                        <td class="ov-desc-cell">${escapeHtml(row.description)}</td>
+                        ${cells}
+                    </tr>`;
+            }).join("");
+
+            return showHeader
+                ? `<tr class="ov-section-head"><td colspan="9"><span class="ov-section-num">${sectionCode}</span><span class="ov-section-name">${escapeHtml(det.shortTitle)}</span></td></tr>${rowsMarkup}`
+                : rowsMarkup;
+        }).join("");
+
+    const legend = responsibilities.map((resp) => {
+        const isFunk = resp === "F";
+        return `<span class="ov-legend-item${isFunk ? " ov-funk-legend" : ""}"><strong>${escapeHtml(resp)}</strong> ${escapeHtml(respLabels[resp])}</span>`;
+    }).join("");
+
+    overviewMatrixWorkspace.innerHTML = `
+        <div class="ov-shell">
+            <div class="ov-table-wrap">
+                <table class="ov-table" aria-label="Oversiktsmatrise">
+                    <thead>
+                        <tr class="ov-head-row">
+                            <th class="ov-st-head" aria-label="Status"></th>
+                            <th class="ov-tfm-head">TFM</th>
+                            <th class="ov-desc-head">Beskrivelse / System</th>
+                            ${responsibilities.map((resp) => `
+                                <th class="ov-resp-head${resp === "F" ? " ov-funk-head" : ""}" title="${escapeHtml(respLabels[resp])}">
+                                    <span class="ov-resp-letter">${escapeHtml(resp)}</span>
+                                    <span class="ov-resp-name">${escapeHtml(respLabels[resp])}</span>
+                                </th>`).join("")}
+                        </tr>
+                    </thead>
+                    <tbody>${sectionBlocks}</tbody>
+                </table>
+            </div>
+            <div id="ov-editor-panel" class="ov-editor-panel" hidden></div>
+            <div class="ov-legend">${legend}</div>
+        </div>`;
+
+    // Row click: open inline editor panel
+    overviewMatrixWorkspace.querySelectorAll(".ov-row").forEach((tr) => {
+        const handler = () => openOverviewEditor(Number(tr.dataset.ovRow));
+        tr.addEventListener("click", handler);
+        tr.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handler(); } });
+    });
+
+    // Re-open editor for previously active row (preserves editing context after data changes)
+    if (_ovActiveEditRow >= 0) {
+        openOverviewEditor(_ovActiveEditRow);
+    }
+}
+
+function openOverviewEditor(rowIndex) {
+    const panel = overviewMatrixWorkspace?.querySelector("#ov-editor-panel");
+    if (!panel) return;
+    const row = rows[rowIndex];
+    if (!row || row.section) return;
+
+    _ovActiveEditRow = rowIndex;
+
+    // Highlight selected row
+    overviewMatrixWorkspace.querySelectorAll(".ov-row").forEach((tr) => {
+        tr.classList.toggle("ov-row-selected", Number(tr.dataset.ovRow) === rowIndex);
+    });
+
+    const assignableDisciplines = getAssignableDisciplines(row);
+    const isConfirmed = Boolean(confirmationState.get(rowIndex));
+    const rowStatus = getRowStatus(rowIndex);
+
+    const respLabels = { P: "Prosjektering", L: "Levering", M: "Montering", K: "Kabling", F: "Funksjon", I: "Integrasjon til SD" };
+
+    const fields = responsibilities.map((resp) => {
+        const isFunk = resp === "F";
+        // All currently assigned disciplines for this responsibility
+        const currentDiscs = getAllDisciplinesForResponsibility(rowIndex, resp);
+        const selectedValue = currentDiscs.length ? `${currentDiscs[0].discipline}:${currentDiscs[0].state}` : "";
+        const options = [
+            `<option value="">— Velg fag —</option>`,
+            ...assignableDisciplines.flatMap((d) => [
+                `<option value="${escapeHtml(d)}:H"${selectedValue === `${d}:H` ? " selected" : ""}>${escapeHtml(d)} — Hoved (H)</option>`,
+                `<option value="${escapeHtml(d)}:D"${selectedValue === `${d}:D` ? " selected" : ""}>${escapeHtml(d)} — Del (D)</option>`,
+            ]),
+        ].join("");
+        return `
+            <div class="ov-editor-field${isFunk ? " ov-editor-funk" : ""}">
+                <label class="ov-editor-label" title="${escapeHtml(respLabels[resp])}">
+                    <span class="ov-editor-resp-letter">${escapeHtml(resp)}</span>
+                    <span class="ov-editor-resp-name">${escapeHtml(respLabels[resp])}</span>
+                </label>
+                <select class="ov-editor-select" data-ov-edit-row="${rowIndex}" data-ov-edit-resp="${resp}">${options}</select>
+            </div>`;
+    }).join("");
+
+    const statusOptions = rowStatusOptions
+        .map((opt) => `<option value="${opt.value}"${rowStatus === opt.value ? " selected" : ""}>${escapeHtml(opt.label)}</option>`)
+        .join("");
+
+    panel.hidden = false;
+    panel.innerHTML = `
+        <div class="ov-editor-head">
+            <div class="ov-editor-title-group">
+                <span class="ov-editor-tfm">${escapeHtml(row.tfm)}</span>
+                <strong class="ov-editor-desc">${escapeHtml(row.description)}</strong>
+            </div>
+            <button type="button" class="ov-editor-close" aria-label="Lukk editor">✕</button>
+        </div>
+        <div class="ov-editor-fields">${fields}</div>
+        <div class="ov-editor-meta">
+            <label class="ov-editor-meta-field">
+                <span>Status</span>
+                <select id="ov-meta-status">${statusOptions}</select>
+            </label>
+            <label class="ov-editor-meta-field">
+                <span>Kommentar</span>
+                <textarea id="ov-meta-comment" rows="2" placeholder="Forbehold, avhengighet...">${escapeHtml(commentState.get(rowIndex) || "")}</textarea>
+            </label>
+            <label class="ov-editor-confirm">
+                <input type="checkbox" id="ov-meta-confirm"${isConfirmed ? " checked" : ""}>
+                <span>Merk rad som avklart</span>
+            </label>
+        </div>`;
+
+    // Wire up selects
+    panel.querySelectorAll(".ov-editor-select").forEach((sel) => {
+        sel.addEventListener("change", () => {
+            const ri = Number(sel.dataset.ovEditRow);
+            const resp = sel.dataset.ovEditResp;
+            const val = sel.value;
+            clearStoredResponsibility(ri, resp);
+            if (val) {
+                const [disc, state] = val.split(":");
+                setResponsibilityValue(ri, disc, resp, state || "H");
+            }
+            updateRowAfterMatrixEdit(ri);
+            scheduleOverviewRender();
+        });
+    });
+
+    panel.querySelector("#ov-meta-status")?.addEventListener("change", (e) => {
+        setRowStatus(rowIndex, e.target.value);
+    });
+
+    panel.querySelector("#ov-meta-comment")?.addEventListener("input", (e) => {
+        commentState.set(rowIndex, e.target.value);
+        scheduleAutosave();
+    });
+
+    panel.querySelector("#ov-meta-confirm")?.addEventListener("change", (e) => {
+        confirmationState.set(rowIndex, e.target.checked);
+        invalidateMatrixStats();
+        scheduleAutosave();
+        scheduleOverviewRender();
+    });
+
+    panel.querySelector(".ov-editor-close")?.addEventListener("click", () => {
+        panel.hidden = true;
+        _ovActiveEditRow = -1;
+        overviewMatrixWorkspace.querySelectorAll(".ov-row").forEach((tr) => tr.classList.remove("ov-row-selected"));
+    });
+
+    // Scroll panel into view
+    panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+// --- end overview matrix ---
 
 function getAssignableDisciplines(row) {
     const disciplinesInRow = getDisciplinesForRow(row);
@@ -2111,6 +2422,7 @@ function setResponsibilityOwner(rowIndex, responsibility, disciplineValue) {
 function scheduleInterfaceCardRender() {
     window.clearTimeout(_interfaceCardRenderTimer);
     _interfaceCardRenderTimer = window.setTimeout(renderInterfaceCards, 80);
+    scheduleOverviewRender();
 }
 
 function renderInterfaceCards() {
@@ -2467,6 +2779,7 @@ function setActiveSectionFilter(nextFilter, options = {}) {
         updateAllRiskCells();
     });
     syncChapterTabs();
+    scheduleOverviewRender();
 }
 
 function focusAdjacentContentRow(direction) {
@@ -5623,6 +5936,9 @@ applyPackagePresetButton?.addEventListener("click", () => {
 });
 matrixSearchInput?.addEventListener("input", scheduleMatrixFilter);
 showOpenOnlyInput?.addEventListener("change", filterMatrixRows);
+overviewViewToggleButton?.addEventListener("click", () => {
+    setActiveInterfaceView("overview");
+});
 cardViewToggleButton?.addEventListener("click", () => {
     setActiveInterfaceView("cards");
 });

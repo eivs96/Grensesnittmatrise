@@ -478,23 +478,24 @@
             <section id="step-panel-3" class="step-panel" data-step-panel="3" role="tabpanel" aria-labelledby="step-tab-3" hidden>
                 <div id="step-3-checklist" class="step-checklist" hidden></div>
                 <section class="matrix-card" id="matrix-section" style="max-width:100%">
-            <!-- Kapittel-faner -->
+            <!-- Kapittel-faner (NS 3451:2022) -->
             <nav class="chapter-tabs" aria-label="Bygningsdelkapitler">
-                <button class="chapter-tab active" data-chapter="all" type="button">Alle</button>
-                <button class="chapter-tab" data-chapter="100" type="button">100 Generelt</button>
-                <button class="chapter-tab" data-chapter="200" type="button">200 Bygningsdeler</button>
-                <button class="chapter-tab" data-chapter="300" type="button">300 VVS</button>
-                <button class="chapter-tab" data-chapter="400" type="button">400 Elektro</button>
-                <button class="chapter-tab" data-chapter="500" type="button">500 Automasjon</button>
-                <button class="chapter-tab" data-chapter="600" type="button">600 Heis/spesial</button>
-                <button class="chapter-tab" data-chapter="700" type="button">700 Utendørs</button>
+                <button class="chapter-tab active" data-chapter="all" type="button">Alle kapitler</button>
+                <button class="chapter-tab" data-chapter="100" type="button"><span class="tab-num">1</span><span class="tab-label">Generelt</span></button>
+                <button class="chapter-tab" data-chapter="200" type="button"><span class="tab-num">2</span><span class="tab-label">Dører &amp; beslag</span></button>
+                <button class="chapter-tab" data-chapter="300" type="button"><span class="tab-num">3</span><span class="tab-label">VVS</span></button>
+                <button class="chapter-tab" data-chapter="400" type="button"><span class="tab-num">4</span><span class="tab-label">Elektro</span></button>
+                <button class="chapter-tab" data-chapter="500" type="button"><span class="tab-num">5</span><span class="tab-label">Tele &amp; aut.</span></button>
+                <button class="chapter-tab" data-chapter="600" type="button"><span class="tab-num">6</span><span class="tab-label">Heis &amp; spesial</span></button>
+                <button class="chapter-tab" data-chapter="700" type="button"><span class="tab-num">7</span><span class="tab-label">Utendørs</span></button>
             </nav>
 
             <!-- Kompakt verktøylinje -->
             <div class="matrix-toolbar-compact">
                 <div class="matrix-view-toggle" role="group" aria-label="Velg arbeidsvisning">
-                    <button id="card-view-toggle" type="button" class="secondary-button is-active">Kortvisning</button>
-                    <button id="matrix-view-toggle" type="button" class="secondary-button">Ekspertmatrise</button>
+                    <button id="overview-view-toggle" type="button" class="secondary-button is-active" title="Kompakt oversiktsmatrise — se hvem som har hvert ansvar for alle systemer">Oversiktsmatrise</button>
+                    <button id="card-view-toggle" type="button" class="secondary-button" title="Kortvisning med guidede valg per grensesnitt">Kortvisning</button>
+                    <button id="matrix-view-toggle" type="button" class="secondary-button" title="Full ekspertmatrise med alle kolonner">Ekspertmatrise</button>
                 </div>
                 <input id="matrix-search" type="search" placeholder="Søk i TFM, beskrivelse eller kommentar">
                 <label class="matrix-toggle-compact"><input id="show-open-only" type="checkbox"> Kun uavklarte</label>
@@ -511,7 +512,10 @@
                 </div>
             </div>
 
-            <section id="interface-card-workspace" class="interface-card-workspace-shell" aria-label="Kortvisning av grensesnitt"></section>
+            <!-- Oversiktsmatrise (ny standardvisning) -->
+            <div id="overview-matrix-workspace" class="overview-matrix-workspace" aria-label="Oversiktsmatrise"></div>
+
+            <section id="interface-card-workspace" class="interface-card-workspace-shell" aria-label="Kortvisning av grensesnitt" hidden></section>
 
             <div id="matrix-expert-workspace" class="matrix-expert-workspace" hidden>
                 <!-- Matrisen full bredde -->

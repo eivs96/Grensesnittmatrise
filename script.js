@@ -4695,12 +4695,35 @@ function applyProjectState(data) {
     isApplyingSavedState = false;
 }
 
+const LOCAL_PROJECT_PREFIX = "gm:project:";
+
+function saveProjectToLocalStorage(projectId, payload) {
+    try {
+        window.localStorage.setItem(LOCAL_PROJECT_PREFIX + projectId, JSON.stringify(payload));
+        return true;
+    } catch (_err) {
+        return false;
+    }
+}
+
+function loadProjectFromLocalStorage(projectId) {
+    try {
+        const raw = window.localStorage.getItem(LOCAL_PROJECT_PREFIX + projectId);
+        return raw ? JSON.parse(raw) : null;
+    } catch (_err) {
+        return null;
+    }
+}
+
 async function saveProject() {
     const projectId = getCurrentProjectId();
     const payload = collectProjectState();
 
     isSavingProject = true;
     setPersistenceMessage("Lagrer prosjekt...");
+
+    // Always save to localStorage as immediate backup
+    const localOk = saveProjectToLocalStorage(projectId, payload);
 
     try {
         const response = await fetch(`/api/projects/${encodeURIComponent(projectId)}`, {
@@ -4722,9 +4745,17 @@ async function saveProject() {
         rememberLastProject(projectId);
         upsertCachedProject(projectId, result.updatedAt);
         prependCachedRevision(result.revisionId, result.updatedAt);
-    } catch (error) {
-        setPersistenceMessage(`Kunne ikke lagre prosjektet. ${error.message}`, true);
-        setAutosaveMessage("Autolagring feilet.", true);
+    } catch (_serverError) {
+        // Server save failed — localStorage is our fallback
+        if (localOk) {
+            const now = new Date().toLocaleTimeString("no-NO");
+            setPersistenceMessage(`Lagret lokalt i nettleseren (${now}). Logg inn for å lagre på serveren.`);
+            setAutosaveMessage(`Sist lagret lokalt ${now}.`);
+            rememberLastProject(projectId);
+        } else {
+            setPersistenceMessage("Kunne ikke lagre prosjektet. Lagring i nettleseren feilet også.", true);
+            setAutosaveMessage("Autolagring feilet.", true);
+        }
     } finally {
         isSavingProject = false;
     }
@@ -4749,8 +4780,19 @@ async function loadProject() {
         rememberLastProject(projectId);
         await loadProjectList();
         await loadRevisionList(projectId);
-    } catch (error) {
-        setPersistenceMessage(`Kunne ikke hente prosjektet. ${error.message}`, true);
+    } catch (_serverError) {
+        // Server load failed — try localStorage fallback
+        const localData = loadProjectFromLocalStorage(projectId);
+        if (localData) {
+            applyProjectState(localData);
+            const savedAt = localData.savedAt ? new Date(localData.savedAt).toLocaleString("no-NO") : "ukjent tidspunkt";
+            setPersistenceMessage(`Prosjekt "${projectId}" gjenopprettet fra nettleseren (${savedAt}).`);
+            setAutosaveMessage(`Arbeider i lokalt lagret prosjekt.`);
+            rememberLastProject(projectId);
+            showToast("Prosjektet ble lastet fra nettleserens lokale lagring.", "info");
+        } else {
+            setPersistenceMessage("Ingen lagret data funnet. Start med å sette opp fagpakker.");
+        }
     }
 }
 
@@ -6586,6 +6628,7 @@ function getFileExtIcon(filename) {
 function addDocument(name, content, size) {
     uploadedDocuments.push({ name, content, size, id: Date.now() + Math.random() });
     renderDocumentList();
+    scheduleAutosave();
 }
 
 function addOfferDocument(name, content, size) {

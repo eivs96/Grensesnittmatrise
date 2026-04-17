@@ -5928,11 +5928,20 @@ adkOptionButtons.forEach((button) => button.addEventListener("click", () => {
 refreshSummaryButton.addEventListener("click", buildContractSummary);
 exportExcelButton?.addEventListener("click", exportProjectToExcel);
 exportPdfButton?.addEventListener("click", exportProjectToPrintView);
-applyPackagePresetButton?.addEventListener("click", () => {
-    ensureMatrixInitialized();
-    applyPackagePreset();
-    scheduleAutosave();
-    showToast("Fagpakke brukt i matrisen. Gå videre til steg 2 for å laste opp BH-dokumenter.");
+applyPackagePresetButton?.addEventListener("click", async () => {
+    applyPackagePresetButton.disabled = true;
+    applyPackagePresetButton.textContent = "Lagrer…";
+    try {
+        await ensureMatrixInitialized();
+        applyPackagePreset();
+        scheduleAutosave();
+        showToast("Fagpakke lagret og brukt i matrisen.", "success");
+    } catch (err) {
+        showToast("Kunne ikke lagre fagpakke. Prøv igjen.", "error");
+    } finally {
+        applyPackagePresetButton.disabled = false;
+        applyPackagePresetButton.textContent = "Lagre fagpakke";
+    }
 });
 matrixSearchInput?.addEventListener("input", scheduleMatrixFilter);
 showOpenOnlyInput?.addEventListener("change", filterMatrixRows);

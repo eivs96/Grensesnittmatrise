@@ -11,9 +11,11 @@ RUN npm ci --omit=dev
 
 COPY . .
 
-RUN mkdir -p /app/data && chown -R appuser:appgroup /app/data
+# Persistent data directory — mount a Railway Volume here at /data
+RUN mkdir -p /data && chown -R appuser:appgroup /data
 
 ENV NODE_ENV=production
+ENV DATA_DIR=/data
 
 USER appuser
 
